@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MenubarModule} from 'primeng/menubar';
-import {MenuItem} from "primeng/api";
+import {MenuItem, PrimeIcons} from "primeng/api";
 
 @Component({
   selector: 'app-header',
@@ -22,6 +22,11 @@ export class HeaderComponent implements OnInit {
       {
         label: "Music",
         command: (event?: any) => {alert("Click");}
+      },
+      {
+        label: "Processing",
+        icon: PrimeIcons.DATABASE,
+        routerLink: ['/processing']
       }
       ];
   }

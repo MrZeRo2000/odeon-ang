@@ -7,18 +7,24 @@ import { HeaderComponent } from './components/header/header.component';
 import {MenubarModule} from "primeng/menubar";
 import {SharedModule} from "primeng/api";
 import { AppInfoComponent } from './components/app-info/app-info.component';
+import { LandingComponent } from './components/landing/landing.component';
+import { ProcessingComponent } from './components/processing/processing.component';
+import {TreeModule} from "primeng/tree";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    AppInfoComponent
+    AppInfoComponent,
+    LandingComponent,
+    ProcessingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MenubarModule,
-    SharedModule
+    SharedModule,
+    TreeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
