@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PROCESSOR_TYPE_NAMES, ProcessorType} from "../../model/processor-type";
 
 @Component({
   selector: 'app-processing',
@@ -13,7 +14,7 @@ export class ProcessingComponent implements OnInit {
       children: [
         {
           label: "Artists",
-          data: "ARTISTS",
+          data: ProcessorType.ARTISTS_IMPORTER,
           leaf: true
         }
       ]
@@ -23,7 +24,27 @@ export class ProcessingComponent implements OnInit {
       children: [
         {
           label: "MP3",
-          data: "MP3_VALIDATE",
+          data: ProcessorType.MP3_VALIDATOR,
+          leaf: true
+        },
+        {
+          label: "LA",
+          data: ProcessorType.LA_VALIDATOR,
+          leaf: true
+        }
+      ]
+    },
+    {
+      label: "Load",
+      children: [
+        {
+          label: "MP3",
+          data: ProcessorType.MP3_LOADER,
+          leaf: true
+        },
+        {
+          label: "LA",
+          data: ProcessorType.LA_LOADER,
           leaf: true
         }
       ]
@@ -37,7 +58,7 @@ export class ProcessingComponent implements OnInit {
   }
 
   nodeSelect(event: any) : void {
-    if (!event.node.data) {
+    if (event.node.data == undefined) {
       event.node.expanded = !event.node.expanded;
     } else {
       console.log('Note select:' + event.node.data);
