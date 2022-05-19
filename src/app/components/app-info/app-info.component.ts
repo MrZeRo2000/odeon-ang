@@ -15,7 +15,6 @@ export class AppInfoComponent implements OnInit {
   appInfo$ = this.appService.appInfo$.pipe(
     switchMap(value => {return of(value)}),
     catchError(e => {
-      console.log("Caught error!");
       this.messageService.add({severity:'error', summary:'Error', detail:`Error getting version information`});
       return of(undefined);
     })
