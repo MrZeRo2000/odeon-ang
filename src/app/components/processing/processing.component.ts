@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {PROCESSOR_TYPE_NAMES, ProcessorType} from "../../model/processor-type";
+import {ConfirmationService, PrimeNGConfig} from "primeng/api";
 
 @Component({
   selector: 'app-processing',
   templateUrl: './processing.component.html',
-  styleUrls: ['./processing.component.scss']
+  styleUrls: ['./processing.component.scss'],
+  providers: [ConfirmationService]
 })
 export class ProcessingComponent implements OnInit {
   readonly treeValues = [
@@ -51,10 +53,10 @@ export class ProcessingComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) { }
 
   ngOnInit(): void {
-
+    this.primengConfig.ripple = true;
   }
 
   nodeSelect(event: any) : void {
@@ -62,6 +64,15 @@ export class ProcessingComponent implements OnInit {
       event.node.expanded = !event.node.expanded;
     } else {
       console.log('Note select:' + event.node.data);
+      const processorAction: ProcessorType = event.node.data;
+      this.confirmationService.confirm({
+        message: `Are you sure that you want to execute <strong> ${PROCESSOR_TYPE_NAMES[processorAction]}</strong>?`,
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          //Actual logic to perform a confirmation
+        }
+      });
     }
   }
 
