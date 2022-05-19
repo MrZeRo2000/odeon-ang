@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import packageJson from '../../../../package.json';
+import {AppService} from "../../service/app.service";
+import {catchError, Observable, of, switchMap} from "rxjs";
+import {Message, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-app-info',
@@ -9,9 +12,23 @@ import packageJson from '../../../../package.json';
 export class AppInfoComponent implements OnInit {
   version: string = packageJson.version;
 
-  constructor() { }
+  appInfo$ = this.appService.appInfo$.pipe(
+    switchMap(value => {return of(value)}),
+    catchError(e => {
+      console.log("Caught error!");
+      this.messageService.add({severity:'error', summary:'Error', detail:`Error getting version information`});
+      return of(undefined);
+    })
+  );
+
+  constructor(private appService: AppService, private messageService: MessageService) { }
 
   ngOnInit(): void {
+
+  }
+
+  onClick() {
+
   }
 
 }

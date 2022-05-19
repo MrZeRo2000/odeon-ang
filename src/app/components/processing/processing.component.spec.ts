@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProcessingComponent } from './processing.component';
+import {TreeModule} from "primeng/tree";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 describe('ProcessingComponent', () => {
   let component: ProcessingComponent;
@@ -8,7 +10,11 @@ describe('ProcessingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProcessingComponent ]
+      declarations: [ ProcessingComponent ],
+      imports: [
+        TreeModule,
+        ConfirmDialogModule
+      ]
     })
     .compileComponents();
   });

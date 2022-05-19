@@ -11,9 +11,15 @@ import { LandingComponent } from './components/landing/landing.component';
 import { ProcessingComponent } from './components/processing/processing.component';
 
 import {MenubarModule} from "primeng/menubar";
-import {SharedModule} from "primeng/api";
+import {ConfirmationService, MessageService, SharedModule} from "primeng/api";
 import {TreeModule} from "primeng/tree";
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {ServiceModule} from "./service/service.module";
+import {DataSourceModule} from "./data-source/data-source.module";
+import {MessageModule} from "primeng/message";
+import {ToastModule} from "primeng/toast";
+import {ConfirmPopupModule} from "primeng/confirmpopup";
+import {MessagesModule} from "primeng/messages";
 
 
 @NgModule({
@@ -31,9 +37,14 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     MenubarModule,
     SharedModule,
     TreeModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ToastModule,
+    MessageModule,
+    DataSourceModule,
+    ServiceModule,
+    MessagesModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

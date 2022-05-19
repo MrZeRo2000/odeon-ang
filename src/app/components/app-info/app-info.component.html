@@ -1,1 +1,5 @@
-<small>{{version}}</small>
+<p-toast></p-toast>
+<small>
+  <span (click)="onClick()">{{version}}</span>
+  <span *ngIf="appInfo$ | async as appInfo">({{appInfo.version}})</span>
+</small>

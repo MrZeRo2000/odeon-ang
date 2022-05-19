@@ -6,6 +6,6 @@ describe('ProcessorType', () => {
   });
 
   it('resolve MP3 loader to string', () => {
-    expect(PROCESSOR_TYPE_NAMES[ProcessorType.MP3_LOADER]).toEqual("MP3 Loader")
+    expect(PROCESSOR_TYPE_NAMES[ProcessorType.MP3_LOADER]).toEqual("MP3 Load")
   })
 });
