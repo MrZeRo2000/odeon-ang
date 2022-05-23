@@ -20,6 +20,7 @@ import {MessageModule} from "primeng/message";
 import {ToastModule} from "primeng/toast";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {MessagesModule} from "primeng/messages";
+import { BaseComponent } from './components/base/base.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {MessagesModule} from "primeng/messages";
     HeaderComponent,
     AppInfoComponent,
     LandingComponent,
-    ProcessingComponent
+    ProcessingComponent,
+    BaseComponent
   ],
   imports: [
     BrowserModule,

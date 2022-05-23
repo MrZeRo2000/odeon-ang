@@ -1,4 +1,4 @@
-import {ProcessorType, PROCESSOR_TYPE_NAMES} from './processor-type';
+import {ProcessorType, PROCESSOR_TYPE_NAMES} from './process-info';
 
 describe('ProcessorType', () => {
   it('should resolve to string', () => {
