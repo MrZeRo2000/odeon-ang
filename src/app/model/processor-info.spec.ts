@@ -1,4 +1,4 @@
-import {ProcessorType, PROCESSOR_TYPE_NAMES} from './process-info';
+import {PROCESSING_STATUS_NAMES, ProcessingStatus, PROCESSOR_TYPE_NAMES, ProcessorType} from './process-info';
 
 describe('ProcessorType', () => {
   it('should resolve to string', () => {
@@ -11,5 +11,10 @@ describe('ProcessorType', () => {
 
   it('resolve MP3 loader to string', () => {
     expect(PROCESSOR_TYPE_NAMES[ProcessorType.MP3_LOADER]).toEqual("MP3 Load")
+  })
+
+  it ('resolve processing status', () => {
+    expect(ProcessingStatus["FAILURE"]).toEqual(ProcessingStatus.FAILURE);
+    expect(PROCESSING_STATUS_NAMES[ProcessingStatus["FAILURE"]]).toEqual("Failure");
   })
 });

@@ -4,7 +4,7 @@ import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {ProcessService} from "../../service/process.service";
 import {BaseComponent} from "../base/base.component";
 import {ProcessorRequest} from "../../model/processor-request";
-import {catchError, map, of, Subject, switchMap, takeUntil, tap, throwError} from "rxjs";
+import {catchError, map, of, Subject, switchMap, takeUntil, takeWhile, tap, throwError} from "rxjs";
 
 @Component({
   selector: 'app-processing',
@@ -57,15 +57,13 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
     }
   ];
 
-  processInfo$ = this.processService.processInfo$;
-
   private processorTypeAction = new Subject<ProcessorType | undefined>();
 
-  pi$ = this.processorTypeAction.pipe(
+  processInfo$ = this.processorTypeAction.pipe(
     tap(v => {console.log(`Processor type value: ${v || "undefined"}`)}),
     switchMap(v => {
       if (v == undefined) {
-        return of({message: ""})
+        return of({message: undefined})
       } else {
         return this.processService.startProcess({
           processorType: ProcessorType[v]
@@ -74,7 +72,7 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
             console.error(`Caught error: ${err.error?.message}`);
             this.messageService.add({severity:'error', summary:'Error', detail:`Error starting process: ${err.error?.message || err.message}`});
             //return throwError(err);
-            return of({message: err.error?.message});
+            return of({message: undefined});
           }),
         )
       }

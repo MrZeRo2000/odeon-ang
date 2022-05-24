@@ -21,6 +21,8 @@ import {ToastModule} from "primeng/toast";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {MessagesModule} from "primeng/messages";
 import { BaseComponent } from './components/base/base.component';
+import { ProcessingStatusNamePipe } from './pipes/processing-status-name.pipe';
+import { ProcessorTypeNamePipe } from './pipes/processor-type-name.pipe';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { BaseComponent } from './components/base/base.component';
     AppInfoComponent,
     LandingComponent,
     ProcessingComponent,
-    BaseComponent
+    BaseComponent,
+    ProcessingStatusNamePipe,
+    ProcessorTypeNamePipe
   ],
   imports: [
     BrowserModule,

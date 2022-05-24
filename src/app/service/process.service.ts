@@ -46,7 +46,8 @@ export class ProcessService {
       tap(() => console.log("Getting info")),
       switchMap(() => {
         return this.restDataSource.getResponse<ProcessInfo>("process").pipe(
-          map(response => response.body || {processingStatus: undefined})
+          map(response => response.body || {processingStatus: undefined}
+          )
         )
       }),
       catchError(err => {
