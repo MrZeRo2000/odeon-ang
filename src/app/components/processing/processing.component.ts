@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {PROCESSOR_TYPE_NAMES, ProcessorType} from "../../model/process-info";
 import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {ProcessService} from "../../service/process.service";
 import {BaseComponent} from "../base/base.component";
 import {ProcessorRequest} from "../../model/processor-request";
-import {catchError, switchMap, takeUntil, tap, throwError} from "rxjs";
+import {catchError, map, of, Subject, switchMap, takeUntil, tap, throwError} from "rxjs";
 
 @Component({
   selector: 'app-processing',
@@ -12,7 +12,7 @@ import {catchError, switchMap, takeUntil, tap, throwError} from "rxjs";
   styleUrls: ['./processing.component.scss'],
   providers: [ConfirmationService]
 })
-export class ProcessingComponent extends BaseComponent implements OnInit {
+export class ProcessingComponent extends BaseComponent implements OnInit, AfterViewInit {
   readonly treeValues = [
     {
       label: "Import",
@@ -57,9 +57,31 @@ export class ProcessingComponent extends BaseComponent implements OnInit {
     }
   ];
 
-  processing = false;
-
   processInfo$ = this.processService.processInfo$;
+
+  private processorTypeAction = new Subject<ProcessorType | undefined>();
+
+  pi$ = this.processorTypeAction.pipe(
+    tap(v => {console.log(`Processor type value: ${v || "undefined"}`)}),
+    switchMap(v => {
+      if (v == undefined) {
+        return of({message: ""})
+      } else {
+        return this.processService.startProcess({
+          processorType: ProcessorType[v]
+        }).pipe(
+          catchError(err => {
+            console.error(`Caught error: ${err.error?.message}`);
+            this.messageService.add({severity:'error', summary:'Error', detail:`Error starting process: ${err.error?.message || err.message}`});
+            //return throwError(err);
+            return of({message: err.error?.message});
+          }),
+        )
+      }
+    }),
+    tap(v => {console.log(`Start process value: ${v.message}`)}),
+    switchMap(v => this.processService.getProcessInfo())
+  );
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -71,6 +93,10 @@ export class ProcessingComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    setTimeout(() => {this.processorTypeAction.next(undefined);}, 0);
+  }
+
+  ngAfterViewInit(): void {
   }
 
   nodeSelect(event: any) : void {
@@ -85,28 +111,11 @@ export class ProcessingComponent extends BaseComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           //Actual logic to perform a confirmation
-          this.startProcess(processorAction);
+          //this.startProcess(processorAction);
+          this.processorTypeAction.next(processorAction);
         }
       });
     }
-  }
-
-  private startProcess(processorType: ProcessorType): void {
-    this.processing = true;
-    this.processService.startProcess({processorType: ProcessorType[processorType]}).pipe(
-      takeUntil(this.destroy$),
-      catchError(err => {
-        this.processing = false;
-        console.error(`Caught error: ${err.error?.message}`);
-        this.messageService.add({severity:'error', summary:'Error', detail:`Error starting process: ${err.error?.message || err.message}`});
-        return throwError(err);
-      })
-    ).subscribe(message => {
-      this.processing = false;
-      console.log(message.message);
-      this.processInfo$ = this.processService.getProcessInfo();
-    })
-    ;
   }
 
 }

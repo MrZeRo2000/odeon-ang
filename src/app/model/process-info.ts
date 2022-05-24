@@ -33,5 +33,5 @@ export const PROCESSING_STATUS_NAMES : {[processingStatus: number] : string} = {
 }
 
 export interface ProcessInfo {
-  processingStatus: string
+  processingStatus?: string
 }
