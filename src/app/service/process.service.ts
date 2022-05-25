@@ -40,7 +40,7 @@ export class ProcessService {
   getProcessInfo(): Observable<ProcessInfo> {
     this.initProcessingStatus();
 
-    return timer(0, 5000).pipe(
+    return timer(0, 1000).pipe(
       tap(() => console.log("Before takeUntil")),
       takeUntil(this.processingStatus$),
       tap(() => console.log("Getting info")),

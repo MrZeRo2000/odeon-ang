@@ -23,6 +23,12 @@ import {MessagesModule} from "primeng/messages";
 import { BaseComponent } from './components/base/base.component';
 import { ProcessingStatusNamePipe } from './pipes/processing-status-name.pipe';
 import { ProcessorTypeNamePipe } from './pipes/processor-type-name.pipe';
+import {TableModule} from "primeng/table";
+import {PanelModule} from "primeng/panel";
+import {BadgeModule} from "primeng/badge";
+import { ProcessingStatusIndicatorComponent } from './components/processing-status-indicator/processing-status-indicator.component';
+import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {ProgressBarModule} from "primeng/progressbar";
 
 
 @NgModule({
@@ -34,7 +40,8 @@ import { ProcessorTypeNamePipe } from './pipes/processor-type-name.pipe';
     ProcessingComponent,
     BaseComponent,
     ProcessingStatusNamePipe,
-    ProcessorTypeNamePipe
+    ProcessorTypeNamePipe,
+    ProcessingStatusIndicatorComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +55,12 @@ import { ProcessorTypeNamePipe } from './pipes/processor-type-name.pipe';
     MessageModule,
     DataSourceModule,
     ServiceModule,
-    MessagesModule
+    MessagesModule,
+    TableModule,
+    PanelModule,
+    BadgeModule,
+    ProgressSpinnerModule,
+    ProgressBarModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

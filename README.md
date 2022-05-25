@@ -29,3 +29,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Set Node Env var
 
 $Env:PATH += ";D:\WinApp\node-v16.15.0-win-x64\"
+
+## Red cross without cursor
+
+<div pButton icon="pi pi-times" class="p-button-danger p-button-text" style="cursor: auto;"></div>
+
+## Processing status
+      {{pi.processingStatus | processingStatusName}}
+      {{pi.lastUpdated | date:'dd.MM.YYYY HH:mm:ss'}}

@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {PROCESSOR_TYPE_NAMES, ProcessorType} from "../../model/process-info";
+import {PROCESSING_STATUS_NAMES, ProcessingStatus, PROCESSOR_TYPE_NAMES, ProcessorType} from "../../model/process-info";
 import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {ProcessService} from "../../service/process.service";
 import {BaseComponent} from "../base/base.component";
@@ -58,6 +58,8 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
   ];
 
   private processorTypeAction = new Subject<ProcessorType | undefined>();
+
+  readonly PROGRESS_STATUS = ProcessingStatus[ProcessingStatus.IN_PROGRESS];
 
   processInfo$ = this.processorTypeAction.pipe(
     tap(v => {console.log(`Processor type value: ${v || "undefined"}`)}),

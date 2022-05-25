@@ -9,8 +9,8 @@
 
 </p-confirmDialog>
 
-<div class="grid">
-  <div class="lg:col-6 md:col-12 col-12">
+<div class="grid" *ngIf="processInfo$ | async as pi">
+  <div [ngClass]="pi.processingStatus ? 'lg:col-3 md:col-12 col-12' : 'col-12'">
     <p-tree [value]="treeValues" selectionMode="single"
             (onNodeSelect)="nodeSelect($event)">
     </p-tree>
@@ -20,11 +20,30 @@
     Table
   </div>
   -->
-  <div class="lg:col-6 md:col-12 col-12" *ngIf="processInfo$ | async as pi">
-    <div *ngIf="pi.processingStatus">
-      {{pi.processingStatus | processingStatusName}}
-      {{pi.lastUpdated | date}}
-      {{pi.processorType | processorTypeName}}
-    </div>
-  </div>
+  <div class="lg:col-9 md:col-12 col-12" *ngIf="pi.processingStatus">
+    <div class="p-header p-panel-header p-component p-panel-title">Header</div>
+    <p-panel header="{{pi.processorType | processorTypeName}}" >
+      <p-table [value]="pi.progressDetails || []" styleClass="p-datatable-sm" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:auto">Time</th>
+            <th style="width:100%">Info</th>
+            <th style="width:auto">Status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-progressDetail>
+          <tr>
+            <td style="white-space: nowrap">{{progressDetail.time | date:'dd.MM.YYYY HH:mm:ss'}}</td>
+            <td>{{progressDetail.info}}</td>
+            <td><app-processing-status-indicator processingStatus="{{progressDetail.status}}"></app-processing-status-indicator></td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <tr class="p-rowgroup-footer" *ngIf="pi.processingStatus === PROGRESS_STATUS">
+            <td colspan="3"><p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar></td>
+          </tr>
+        </ng-template>
+      </p-table>
+  </p-panel>
+</div>
 </div>

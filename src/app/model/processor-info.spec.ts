@@ -17,4 +17,9 @@ describe('ProcessorType', () => {
     expect(ProcessingStatus["FAILURE"]).toEqual(ProcessingStatus.FAILURE);
     expect(PROCESSING_STATUS_NAMES[ProcessingStatus["FAILURE"]]).toEqual("Failure");
   })
+
+  it('erroneous processing status', () => {
+    const ps = "STUFF";
+    expect(ProcessingStatus[ps as keyof typeof ProcessingStatus]).toBeUndefined();
+  })
 });
