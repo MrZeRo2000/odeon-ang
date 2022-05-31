@@ -26,7 +26,8 @@
         <th>Name</th>
         <th style="width:0">Genre</th>
         <th style="width:50%">Styles</th>
-        <th style="width:0">Details</th>
+        <th style="width:0">Info</th>
+        <th style="width:0">Lyrics</th>
         <th style="width:0"></th>
       </tr>
     </ng-template>
@@ -46,13 +47,13 @@
           </div>
         </td>
         <td>
-          <!--
-          <div class="flex">
-            <button pButton pRipple icon="pi pi-info" class="p-button-rounded"></button>
+          <div class="flex justify-content-center" *ngIf="item.detailId">
+            <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined"></button>
           </div>
-          -->
+        </td>
+        <td>
           <div class="flex justify-content-center">
-            <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-outlined"></button>
+            <button pButton pRipple icon="pi pi-book" class="p-button-rounded p-button-secondary p-button-outlined"></button>
           </div>
         </td>
         <td>
