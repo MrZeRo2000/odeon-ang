@@ -15,13 +15,7 @@
             (onNodeSelect)="nodeSelect($event)">
     </p-tree>
   </div>
-  <!--
-  <div class="lg:col-6 md:col-12 col-12" *ngIf="processInfo$  | async">
-    Table
-  </div>
-  -->
   <div class="lg:col-9 md:col-12 col-12" *ngIf="pi.processingStatus">
-    <div class="p-header p-panel-header p-component p-panel-title">Header</div>
     <p-panel header="{{pi.processorType | processorTypeName}}" >
       <p-table [value]="pi.progressDetails || []" styleClass="p-datatable-sm" responsiveLayout="scroll">
         <ng-template pTemplate="header">

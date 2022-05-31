@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {AppService} from "./app.service";
 import {ProcessService} from "./process.service";
+import {ArtistService} from "./artist.service";
 
 
 
@@ -12,7 +13,8 @@ import {ProcessService} from "./process.service";
   ],
   providers: [
     AppService,
-    ProcessService
+    ProcessService,
+    ArtistService
   ]
 })
 export class ServiceModule { }

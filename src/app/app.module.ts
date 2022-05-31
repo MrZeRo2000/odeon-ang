@@ -29,6 +29,11 @@ import {BadgeModule} from "primeng/badge";
 import { ProcessingStatusIndicatorComponent } from './components/processing-status-indicator/processing-status-indicator.component';
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {ProgressBarModule} from "primeng/progressbar";
+import { ArtistsTableComponent } from './components/artists-table/artists-table.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import {ChipModule} from "primeng/chip";
+import {TagModule} from "primeng/tag";
+import {InputTextModule} from "primeng/inputtext";
 
 
 @NgModule({
@@ -41,27 +46,32 @@ import {ProgressBarModule} from "primeng/progressbar";
     BaseComponent,
     ProcessingStatusNamePipe,
     ProcessorTypeNamePipe,
-    ProcessingStatusIndicatorComponent
+    ProcessingStatusIndicatorComponent,
+    ArtistsTableComponent,
+    LoadingComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    MenubarModule,
-    SharedModule,
-    TreeModule,
-    ConfirmDialogModule,
-    ToastModule,
-    MessageModule,
-    DataSourceModule,
-    ServiceModule,
-    MessagesModule,
-    TableModule,
-    PanelModule,
-    BadgeModule,
-    ProgressSpinnerModule,
-    ProgressBarModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        MenubarModule,
+        SharedModule,
+        TreeModule,
+        ConfirmDialogModule,
+        ToastModule,
+        MessageModule,
+        DataSourceModule,
+        ServiceModule,
+        MessagesModule,
+        TableModule,
+        PanelModule,
+        BadgeModule,
+        ProgressSpinnerModule,
+        ProgressBarModule,
+        ChipModule,
+        TagModule,
+        InputTextModule
+    ],
   providers: [MessageService],
   bootstrap: [AppComponent]
 })

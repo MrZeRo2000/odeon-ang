@@ -1,0 +1,54 @@
+<p-toast></p-toast>
+
+<ng-template #loadingOrError>
+  <ng-container *ngIf="!errorObject">
+    <app-loading></app-loading>
+  </ng-container>
+</ng-template>
+
+<div *ngIf="artistTable$ | async as artistTable; else loadingOrError">
+
+  <p-table #dt [value]="artistTable" [rows]="10" [paginator]="true"
+           [globalFilterFields]="['artistName', 'styles']">
+
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <div class="flex align-items-center justify-content-between text-xl">Artists</div>
+        <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+                </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th style="width:0">Genre</th>
+        <th style="width:50%">Styles</th>
+        <th style="width:0">Details</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>{{item.artistName}}</td>
+        <td>
+          <p-tag value="N/A" *ngIf="!item.genre" severity="warning"></p-tag>
+          <p-tag value="{{item.genre}}" *ngIf="item.genre"></p-tag>
+        </td>
+        <td>
+          <div class="flex flex-wrap" *ngIf="item.styles">
+            <div *ngFor="let style of item.styles">
+              <p-tag value="{{style}}" styleClass="flex mr-1 mb-1" [rounded]="true" *ngIf="style"></p-tag>
+            </div>
+          </div>
+        </td>
+        <td>Details</td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+
+</div>
+

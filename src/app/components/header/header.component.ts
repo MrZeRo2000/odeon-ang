@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
     this.items = [
       {
         label: "Artists",
-        command: (event?: any) => {alert("Click");}
+        routerLink: ['/artists']
       },
       {
         label: "Music",
