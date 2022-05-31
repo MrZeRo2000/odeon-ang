@@ -27,6 +27,7 @@
         <th style="width:0">Genre</th>
         <th style="width:50%">Styles</th>
         <th style="width:0">Details</th>
+        <th style="width:0"></th>
       </tr>
     </ng-template>
 
@@ -44,7 +45,22 @@
             </div>
           </div>
         </td>
-        <td>Details</td>
+        <td>
+          <!--
+          <div class="flex">
+            <button pButton pRipple icon="pi pi-info" class="p-button-rounded"></button>
+          </div>
+          -->
+          <div class="flex justify-content-center">
+            <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-outlined"></button>
+          </div>
+        </td>
+        <td>
+          <div class="flex">
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-button-success mr-1"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded  p-button-outlined p-button-danger"></button>
+          </div>
+        </td>
       </tr>
     </ng-template>
 

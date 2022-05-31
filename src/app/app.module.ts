@@ -34,6 +34,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import {ChipModule} from "primeng/chip";
 import {TagModule} from "primeng/tag";
 import {InputTextModule} from "primeng/inputtext";
+import {RippleModule} from "primeng/ripple";
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import {InputTextModule} from "primeng/inputtext";
         ProgressBarModule,
         ChipModule,
         TagModule,
-        InputTextModule
+        InputTextModule,
+        RippleModule
     ],
   providers: [MessageService],
   bootstrap: [AppComponent]
