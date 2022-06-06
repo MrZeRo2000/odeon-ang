@@ -1,6 +1,4 @@
-<!--
-<p-toast></p-toast>
--->
+<app-confirm-dialog></app-confirm-dialog>
 
 <ng-template #loadingOrError>
   <ng-container *ngIf="!errorObject">
@@ -63,7 +61,7 @@
         </td>
         <td>
           <div class="flex justify-content-center" *ngIf="item.detailId">
-            <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayArtistDetail(item.artistName, item.detailId)"></button>
+            <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayArtistDetail(item)"></button>
           </div>
         </td>
         <td>
@@ -74,7 +72,7 @@
         <td>
           <div class="flex">
             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-button-success mr-1"></button>
-            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded  p-button-outlined p-button-danger"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded  p-button-outlined p-button-danger" (click)="deleteArtist(item)"></button>
           </div>
         </td>
       </tr>

@@ -36,6 +36,7 @@ import {TagModule} from "primeng/tag";
 import {InputTextModule} from "primeng/inputtext";
 import {RippleModule} from "primeng/ripple";
 import {DialogModule} from "primeng/dialog";
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {DialogModule} from "primeng/dialog";
     ProcessorTypeNamePipe,
     ProcessingStatusIndicatorComponent,
     ArtistsTableComponent,
-    LoadingComponent
+    LoadingComponent,
+    ConfirmDialogComponent
   ],
     imports: [
         BrowserModule,
@@ -76,7 +78,7 @@ import {DialogModule} from "primeng/dialog";
         RippleModule,
         DialogModule
     ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
