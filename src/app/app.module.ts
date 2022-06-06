@@ -35,6 +35,7 @@ import {ChipModule} from "primeng/chip";
 import {TagModule} from "primeng/tag";
 import {InputTextModule} from "primeng/inputtext";
 import {RippleModule} from "primeng/ripple";
+import {DialogModule} from "primeng/dialog";
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import {RippleModule} from "primeng/ripple";
         ChipModule,
         TagModule,
         InputTextModule,
-        RippleModule
+        RippleModule,
+        DialogModule
     ],
   providers: [MessageService],
   bootstrap: [AppComponent]

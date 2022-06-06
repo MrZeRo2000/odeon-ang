@@ -1,4 +1,6 @@
+<!--
 <p-toast></p-toast>
+-->
 
 <ng-template #loadingOrError>
   <ng-container *ngIf="!errorObject">
@@ -7,6 +9,19 @@
 </ng-template>
 
 <div *ngIf="artistTable$ | async as artistTable; else loadingOrError">
+
+  <div *ngIf="artistDetail$ | async as artistDetail">
+
+    <p-dialog [header]="displayArtistName" [(visible)]="displayArtistInfo" [modal]="true" [style]="{width: '50vw'}"
+              [draggable]="false" [resizable]="false">
+      <p class="m-0" [innerHTML]=artistDetail.biography>
+      </p>
+      <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayArtistInfo=false" label="Ok" styleClass="p-button-text"></p-button>
+      </ng-template>
+    </p-dialog>
+
+  </div>
 
   <p-table #dt [value]="artistTable" [rows]="10" [paginator]="true"
            [globalFilterFields]="['artistName', 'styles']">
@@ -48,7 +63,7 @@
         </td>
         <td>
           <div class="flex justify-content-center" *ngIf="item.detailId">
-            <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined"></button>
+            <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayArtistDetail(item.artistName, item.detailId)"></button>
           </div>
         </td>
         <td>
