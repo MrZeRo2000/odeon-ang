@@ -1,0 +1,27 @@
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Artist Edit">
+  <ng-template pTemplate="content">
+    <form [formGroup]="editForm">
+      <div class="grid">
+        <div class="col">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" formControlName="artistName" required autofocus />
+            <small class="p-error" *ngIf="submitted && editForm.controls['artistName'].errors">Name is required.</small>
+          </div>
+          <div class="field">
+            <label for="biography">Biography</label>
+            <textarea id="biography" pInputTextarea required rows="5" cols="20" formControlName="biography"></textarea>
+          </div>
+        </div>
+        <div class="col">
+          Another column
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveArtist()"></button>
+  </ng-template>
+  <ng-container *ngIf="editFormChanges$ | async"></ng-container>
+</p-dialog>

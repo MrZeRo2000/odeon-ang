@@ -17,54 +17,11 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
   displayArtistInfo = false;
   displayArtistName: string = "";
 
+  displayForm = false;
+
   errorObject: any = undefined;
 
   private crudOperationAction: Subject<CRUDOperation<ArtistTableItem>> = new Subject();
-
-  /*
-  artistTable$ = this.crudOperationAction.pipe(
-    tap(v => console.log(`To do something with ${JSON.stringify(v)}`)),
-    delay(3000),
-    switchMap(v => {
-        return of(CRUDAction.EA_READ);
-    }),
-    switchMap(v => {
-      console.log(`Requesting with ${v}`);
-        return this.artistService.artistTable$.pipe(
-          catchError(err => {
-            if (this.errorObject == undefined) {
-              this.errorObject = err;
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: `Error getting artists: ${err.error?.message || err.message}`
-              });
-            }
-            return [];
-          })
-        )
-    }
-    ),
-  );
-
-   */
-
-  /*
-  artistTable$ = this.artistService.artistTable$.pipe(
-    catchError(err => {
-      if (this.errorObject == undefined) {
-        this.errorObject = err;
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `Error getting artists: ${err.error?.message || err.message}`
-        });
-      }
-      return [];
-    })
-  );
-
-   */
 
   artistTable$ = this.getArtistTable({action: CRUDAction.EA_READ} as CRUDOperation<ArtistTableItem>)
 
@@ -106,8 +63,6 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
     this.crudOperationAction.next({action: CRUDAction.EA_READ} as CRUDOperation<ArtistTableItem>);
   }
 
-
-
   displayArtistDetail(item: ArtistTableItem) : void {
     this.displayArtistName = item.artistName;
     this.showArtistDetailAction.next(item.detailId as number);
@@ -126,6 +81,10 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
         this.artistTable$ = this.getArtistTable({action: CRUDAction.EA_DELETE, data: item});
       }
     });
+  }
+
+  newArtist(): void {
+    this.displayForm = true;
   }
 
   getArtistTable(operation: CRUDOperation<ArtistTableItem>): Observable<ArtistTableItem[]> {

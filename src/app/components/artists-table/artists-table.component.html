@@ -26,7 +26,8 @@
 
     <ng-template pTemplate="caption">
       <div class="flex">
-        <div class="flex align-items-center justify-content-between text-xl">Artists</div>
+        <div class="flex align-items-center justify-content-between text-xl mr-2">Artists</div>
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-button-outlined" (click)="newArtist()"></button>
         <span class="p-input-icon-left ml-auto">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
@@ -79,6 +80,8 @@
     </ng-template>
 
   </p-table>
+
+  <app-artist-form [(display)]="displayForm"></app-artist-form>
 
 </div>
 
