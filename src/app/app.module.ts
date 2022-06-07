@@ -40,6 +40,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { ArtistFormComponent } from './components/artist-form/artist-form.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
+import {AutoCompleteModule} from "primeng/autocomplete";
 
 
 @NgModule({
@@ -58,32 +59,33 @@ import {InputTextareaModule} from "primeng/inputtextarea";
     ConfirmDialogComponent,
     ArtistFormComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    MenubarModule,
-    SharedModule,
-    TreeModule,
-    ConfirmDialogModule,
-    ToastModule,
-    MessageModule,
-    DataSourceModule,
-    ServiceModule,
-    MessagesModule,
-    TableModule,
-    PanelModule,
-    BadgeModule,
-    ProgressSpinnerModule,
-    ProgressBarModule,
-    ChipModule,
-    TagModule,
-    InputTextModule,
-    RippleModule,
-    DialogModule,
-    InputTextareaModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        MenubarModule,
+        SharedModule,
+        TreeModule,
+        ConfirmDialogModule,
+        ToastModule,
+        MessageModule,
+        DataSourceModule,
+        ServiceModule,
+        MessagesModule,
+        TableModule,
+        PanelModule,
+        BadgeModule,
+        ProgressSpinnerModule,
+        ProgressBarModule,
+        ChipModule,
+        TagModule,
+        InputTextModule,
+        RippleModule,
+        DialogModule,
+        InputTextareaModule,
+        AutoCompleteModule
+    ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })

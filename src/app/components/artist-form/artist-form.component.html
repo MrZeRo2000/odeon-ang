@@ -14,7 +14,31 @@
           </div>
         </div>
         <div class="col">
-          Another column
+          <div class="field">
+            <label for="genre">Genre</label>
+              <p-autoComplete
+                [suggestions]="filteredGenres"
+                [dropdown]="true"
+                (completeMethod)="searchGenres($event)"
+                id="genre"
+                formControlName="genre"
+                class="mt-2"
+              >
+              </p-autoComplete>
+          </div>
+          <div class="field">
+            <label for="styles">Styles</label>
+            <p-autoComplete
+              [suggestions]="filteredStyles"
+              (completeMethod)="searchStyles($event)"
+              id="styles"
+              formControlName="styles"
+              [multiple]="true"
+              class="mt-2"
+              (onKeyUp)="stylesKeyUp($event)"
+            >
+            </p-autoComplete>
+          </div>
         </div>
       </div>
     </form>
