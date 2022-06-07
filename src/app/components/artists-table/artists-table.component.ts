@@ -134,14 +134,12 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
         if (v.action == CRUDAction.EA_DELETE) {
           return this.artistService.deleteArtist(v.data.id).pipe(
             catchError(err => {
-              if (this.errorObject == undefined) {
                 this.errorObject = err;
                 this.messageService.add({
                   severity: 'error',
                   summary: 'Error',
                   detail: `Error deleting artist: ${err.error?.message || err.message}`
                 });
-              }
               return of(undefined);
             })
           );
@@ -153,14 +151,12 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
           console.log(`Requesting with ${v}`);
           return this.artistService.artistTable$.pipe(
             catchError(err => {
-              if (this.errorObject == undefined) {
-                this.errorObject = err;
-                this.messageService.add({
-                  severity: 'error',
-                  summary: 'Error',
-                  detail: `Error getting artists: ${err.error?.message || err.message}`
-                });
-              }
+              this.errorObject = err;
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: `Error getting artists: ${err.error?.message || err.message}`
+              });
               return [];
             })
           )
