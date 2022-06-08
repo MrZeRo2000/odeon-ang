@@ -84,7 +84,8 @@ import {AutoCompleteModule} from "primeng/autocomplete";
         RippleModule,
         DialogModule,
         InputTextareaModule,
-        AutoCompleteModule
+        AutoCompleteModule,
+        ConfirmPopupModule
     ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

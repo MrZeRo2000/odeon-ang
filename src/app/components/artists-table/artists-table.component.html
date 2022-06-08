@@ -72,7 +72,7 @@
         </td>
         <td>
           <div class="flex">
-            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-button-success mr-1"></button>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-button-success mr-1" (click)="editArtist(item)"></button>
             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded  p-button-outlined p-button-danger" (click)="deleteArtist(item)"></button>
           </div>
         </td>
@@ -81,7 +81,9 @@
 
   </p-table>
 
-  <app-artist-form [(display)]="displayForm" [table]="artistTable"></app-artist-form>
+  <div *ngIf="artistEdit$ | async as artistEdit">
+    <app-artist-form *ngIf="displayForm" [(display)]="displayForm" [artist]="artistEdit" [table]="artistTable"></app-artist-form>
+  </div>
 
 </div>
 

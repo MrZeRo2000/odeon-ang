@@ -1,3 +1,5 @@
+<p-confirmPopup key="styles"></p-confirmPopup>
+
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Artist Edit">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
@@ -5,8 +7,9 @@
         <div class="col">
           <div class="field">
             <label for="name">Name</label>
-            <input type="text" pInputText id="name" formControlName="artistName" required autofocus />
-            <small class="p-error" *ngIf="submitted && editForm.controls['artistName'].errors">Name is required.</small>
+              <input type="text" pInputText id="name" formControlName="artistName" required autofocus
+                     [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['artistName'].errors}"
+              />
           </div>
           <div class="field">
             <label for="biography">Biography</label>
@@ -40,6 +43,9 @@
             </p-autoComplete>
           </div>
         </div>
+      </div>
+      <div>
+        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['artistName'].errors ? 'visible' : 'hidden'}" >Name is required.</small>
       </div>
     </form>
   </ng-template>

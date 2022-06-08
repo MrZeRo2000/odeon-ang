@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ArtistService} from "../../service/artist.service";
-import {catchError, Observable, of, Subject, switchMap, tap} from "rxjs";
+import {catchError, map, Observable, of, Subject, switchMap, tap, throwError} from "rxjs";
 import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {Biography} from "../../model/biography";
 import {BaseComponent} from "../base/base.component";
-import {ArtistTableItem} from "../../model/artists";
+import {ArtistEditItem, ArtistTableItem} from "../../model/artists";
 import {CRUDAction, CRUDOperation} from "../../model/crud";
 
 @Component({
@@ -26,6 +26,7 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
   artistTable$ = this.getArtistTable({action: CRUDAction.EA_READ} as CRUDOperation<ArtistTableItem>)
 
   private showArtistDetailAction: Subject<number> = new Subject();
+  private artistEditAction: Subject<ArtistTableItem> = new Subject();
 
   artistDetail$ = this.showArtistDetailAction.pipe(
     tap(v => {console.log(`Show artist action: ${v}`)}),
@@ -44,6 +45,33 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
     })
   )
 
+  artistEdit$ = this.artistEditAction.pipe(
+    switchMap( v => {
+      if (Object.keys(v).length === 0) {
+        return of({} as ArtistEditItem);
+      } else {
+        return this.artistService.getArtistDetail(v.detailId as number).pipe(
+          map(d => {return {
+            id: v.id,
+            artistName: v.artistName,
+            biography: d.biography,
+            genre: v.genre,
+            styles: v.styles
+          } as ArtistEditItem}),
+          catchError(err => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: `Error getting artist details: ${err.error?.message || err.message}`
+            });
+            return of({id: -1} as ArtistTableItem);
+          })
+        )
+      }
+    }),
+    tap(v => {console.log(`Obtained artistEdit: ${JSON.stringify(v)}`); this.displayForm = v.id !== -1;})
+  )
+
   constructor(
     private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig,
@@ -54,9 +82,6 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
   }
 
   ngOnInit(): void {
-    console.log('On init');
-    //setTimeout(() => this.crudOperationAction.next({action: CRUDAction.EA_READ} as CRUDOperation<ArtistTableItem>), 100)
-
   }
 
   ngAfterViewInit(): void {
@@ -74,17 +99,17 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        //Actual logic to perform a confirmation
-        //this.startProcess(processorAction);
-        //alert('Accepted')
-        //this.crudOperationAction.next({action: CRUDAction.EA_DELETE, data: item})
         this.artistTable$ = this.getArtistTable({action: CRUDAction.EA_DELETE, data: item});
       }
     });
   }
 
+  editArtist(item: ArtistTableItem) : void {
+    this.artistEditAction.next(item);
+  }
+
   newArtist(): void {
-    this.displayForm = true;
+    this.artistEditAction.next({} as ArtistTableItem);
   }
 
   getArtistTable(operation: CRUDOperation<ArtistTableItem>): Observable<ArtistTableItem[]> {
