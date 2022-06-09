@@ -26,7 +26,7 @@ export class ArtistFormComponent extends BaseComponent implements OnInit, OnChan
   editForm = this.fb.group({
     artistName: ['', Validators.required],
     biography: [''],
-    genre: [''],
+    genre: ['', Validators.required],
     styles: [[]]
   })
 

@@ -20,6 +20,7 @@
               id="genre"
               formControlName="genre"
               class="mt-2"
+              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['genre'].errors}"
             >
             </p-autoComplete>
           </div>
@@ -38,6 +39,7 @@
           </div>
           <div>
             <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['artistName'].errors ? 'visible' : 'hidden'}" >Name is required.</small>
+            <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['genre'].errors ? 'visible' : 'hidden'}" >Genre is required.</small>
           </div>
         </div>
         <div class="col">
@@ -64,7 +66,7 @@
   <ng-container *ngIf="editFormChanges$ | async as editForm">
   </ng-container>
   <app-biography-form
-    *ngIf="!!editForm.value.biography"
+      *ngIf="!!editForm.value.biography"
     [(display)]="displayBiography"
     [header]="editForm.value.artistName"
     [biography]="editForm.value.biography">
