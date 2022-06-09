@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ArtistService} from "../../service/artist.service";
-import {catchError, map, Observable, of, Subject, switchMap, tap, throwError} from "rxjs";
+import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {Biography} from "../../model/biography";
 import {BaseComponent} from "../base/base.component";
@@ -23,7 +23,7 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
 
   private crudOperationAction: Subject<CRUDOperation<ArtistTableItem>> = new Subject();
 
-  artistTable$ = this.getArtistTable({action: CRUDAction.EA_READ} as CRUDOperation<ArtistTableItem>)
+  artistTable$ = this.getArtistTable({action: CRUDAction.EA_READ} as CRUDOperation<ArtistTableItem | ArtistEditItem>)
 
   private showArtistDetailAction: Subject<number> = new Subject();
   private artistEditAction: Subject<ArtistTableItem> = new Subject();
@@ -53,7 +53,8 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
         return of ({
           id: v.id,
           artistName: v.artistName,
-          biography: '',
+          artistType: v.artistType,
+          artistBiography: '',
           genre: v.genre,
           styles: v.styles
         } as ArtistEditItem);
@@ -62,7 +63,8 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
           map(d => {return {
             id: v.id,
             artistName: v.artistName,
-            biography: d.biography,
+            artistType: v.artistType,
+            artistBiography: d.biography,
             genre: v.genre,
             styles: v.styles
           } as ArtistEditItem}),
@@ -72,7 +74,7 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
               summary: 'Error',
               detail: `Error getting artist details: ${err.error?.message || err.message}`
             });
-            return of({id: -1} as ArtistTableItem);
+            return of({} as ArtistEditItem);
           })
         )
       }
@@ -120,10 +122,16 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
     this.artistEditAction.next({} as ArtistTableItem);
   }
 
-  getArtistTable(operation: CRUDOperation<ArtistTableItem>): Observable<ArtistTableItem[]> {
+  saveArtist(item: ArtistEditItem): void {
+    console.log(`Saving ${JSON.stringify(item)}`);
+    //const action = item.id ? CRUDAction.EA_UPDATE: CRUDAction.EA_CREATE;
+    this.artistTable$ = this.getArtistTable({action: CRUDAction.EA_READ, data: item});
+  }
+
+  getArtistTable(operation: CRUDOperation<ArtistTableItem | ArtistEditItem>): Observable<ArtistTableItem[]> {
     return of(operation).pipe(
       switchMap(v => {
-        if (v.action == CRUDAction.EA_DELETE) {
+        if ((v.action == CRUDAction.EA_DELETE) && !!v.data.id) {
           return this.artistService.deleteArtist(v.data.id).pipe(
             catchError(err => {
                 this.errorObject = err;
@@ -132,6 +140,18 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
                   summary: 'Error',
                   detail: `Error deleting artist: ${err.error?.message || err.message}`
                 });
+              return of(undefined);
+            })
+          );
+        } else if (v.action === CRUDAction.EA_CREATE) {
+          return this.artistService.createArtist(v.data as ArtistEditItem).pipe(
+            catchError(err => {
+              this.errorObject = err;
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: `Error creating artist: ${err.error?.message || err.message}`
+              });
               return of(undefined);
             })
           );

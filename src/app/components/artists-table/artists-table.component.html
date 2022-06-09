@@ -47,7 +47,7 @@
         <td>{{item.artistName}}</td>
         <td>
           <p-tag value="N/A" *ngIf="!item.genre" severity="warning"></p-tag>
-          <p-tag value="{{item.genre}}" *ngIf="item.genre"></p-tag>
+          <p-tag value="{{item.genre}}" *ngIf="item.genre" styleClass="mb-1"></p-tag>
         </td>
         <td>
           <div class="flex flex-wrap" *ngIf="item.styles">
@@ -78,7 +78,7 @@
   </p-table>
 
   <div *ngIf="artistEdit$ | async as artistEdit">
-    <app-artist-form *ngIf="displayForm" [(display)]="displayForm" [artist]="artistEdit" [table]="artistTable"></app-artist-form>
+    <app-artist-form *ngIf="displayForm" [(display)]="displayForm" [artist]="artistEdit" [table]="artistTable" (saveArtistEvent)="saveArtist($event)"></app-artist-form>
   </div>
 
 </div>

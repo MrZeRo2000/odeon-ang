@@ -42,6 +42,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import { BiographyFormComponent } from './components/biography-form/biography-form.component';
+import {SelectButtonModule} from "primeng/selectbutton";
 
 
 @NgModule({
@@ -87,7 +88,8 @@ import { BiographyFormComponent } from './components/biography-form/biography-fo
         DialogModule,
         InputTextareaModule,
         AutoCompleteModule,
-        ConfirmPopupModule
+        ConfirmPopupModule,
+        SelectButtonModule
     ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

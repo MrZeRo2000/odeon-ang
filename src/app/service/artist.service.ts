@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
-import {ArtistTableItem} from "../model/artists";
+import {ArtistEditItem, ArtistTableItem} from "../model/artists";
 import {catchError, map, Observable} from "rxjs";
 import {Biography} from "../model/biography";
 import {HttpParams} from "@angular/common/http";
@@ -26,6 +26,10 @@ export class ArtistService {
     return this.restDataSource.deleteResponseData("artist-category-details", id).pipe(
       map(v => {return true})
     )
+  }
+
+  createArtist(data: ArtistEditItem): Observable<ArtistEditItem> {
+    return this.restDataSource.postResponseData<ArtistEditItem>("artist-category-details", data);
   }
 
 }
