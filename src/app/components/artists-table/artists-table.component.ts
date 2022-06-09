@@ -49,6 +49,14 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
     switchMap( v => {
       if (Object.keys(v).length === 0) {
         return of({} as ArtistEditItem);
+      } else if (!v.detailId) {
+        return of ({
+          id: v.id,
+          artistName: v.artistName,
+          biography: '',
+          genre: v.genre,
+          styles: v.styles
+        } as ArtistEditItem);
       } else {
         return this.artistService.getArtistDetail(v.detailId as number).pipe(
           map(d => {return {

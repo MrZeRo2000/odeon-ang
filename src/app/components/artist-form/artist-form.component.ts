@@ -39,6 +39,8 @@ export class ArtistFormComponent extends BaseComponent implements OnInit, OnChan
 
   submitted = false;
 
+  displayBiography = false;
+
   @Input()
   artist: ArtistTableItem = {} as ArtistTableItem;
 
@@ -83,6 +85,12 @@ export class ArtistFormComponent extends BaseComponent implements OnInit, OnChan
 
   saveArtist(): void {
     this.submitted = true;
+  }
+
+  previewBiography(): void {
+    if (!!this.editForm.value.biography) {
+      this.displayBiography = true;
+    }
   }
 
   searchGenres(event: any): void {

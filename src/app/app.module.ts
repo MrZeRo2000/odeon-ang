@@ -41,6 +41,7 @@ import { ArtistFormComponent } from './components/artist-form/artist-form.compon
 import {ReactiveFormsModule} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {AutoCompleteModule} from "primeng/autocomplete";
+import { BiographyFormComponent } from './components/biography-form/biography-form.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import {AutoCompleteModule} from "primeng/autocomplete";
     ArtistsTableComponent,
     LoadingComponent,
     ConfirmDialogComponent,
-    ArtistFormComponent
+    ArtistFormComponent,
+    BiographyFormComponent
   ],
     imports: [
         BrowserModule,
