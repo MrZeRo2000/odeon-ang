@@ -32,4 +32,8 @@ export class ArtistService {
     return this.restDataSource.postResponseData<ArtistEditItem>("artist-category-details", data);
   }
 
+  updateArtist(data: ArtistEditItem): Observable<ArtistEditItem> {
+    return this.restDataSource.putResponseData<ArtistEditItem>("artist-category-details", data);
+  }
+
 }

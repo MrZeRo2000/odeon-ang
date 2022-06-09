@@ -29,6 +29,10 @@ export class RestDataSourceService {
     return this.http.post<T>(`${this.restUrl}${resourceName}`, body);
   }
 
+  putResponseData<T>(resourceName: string, body: any, httpParams?: HttpParams, headers?: HttpHeaders): Observable<T> {
+    return this.http.put<T>(`${this.restUrl}${resourceName}`, body);
+  }
+
   deleteResponseData<T>(resourceName: string, id: number): Observable<T> {
     return this.http.delete<T>(`${this.restUrl}${resourceName}/${id}`);
   }

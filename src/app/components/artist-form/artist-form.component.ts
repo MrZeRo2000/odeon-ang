@@ -63,12 +63,14 @@ export class ArtistFormComponent extends BaseComponent implements OnInit, OnChan
 
   saver$ = this.saveAction.pipe(
     switchMap(data => {
-      return this.artistService.createArtist(data).pipe(
+      const action$ = data.id ? this.artistService.updateArtist(data) : this.artistService.createArtist(data);
+      const actionName = data.id ? 'updating' : 'creating';
+      return action$.pipe(
         catchError(err => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: `Error creating artist: ${err.error?.message || err.message}`
+            detail: `Error ${actionName} artist: ${err.error?.message || err.message}`
           });
           return of(undefined);
         })
