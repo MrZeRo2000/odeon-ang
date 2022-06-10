@@ -17,7 +17,7 @@
     </app-biography-form>
   </div>
 
-  <p-table #dt [value]="artistTable" [rows]="10" [paginator]="true"
+  <p-table #dt [value]="artistTable" [rows]="10" [paginator]="true" dataKey="id" stateStorage="session" stateKey="artist-table-session"
            [globalFilterFields]="['artistName', 'styles']">
 
     <ng-template pTemplate="caption">
