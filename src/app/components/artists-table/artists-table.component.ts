@@ -82,6 +82,8 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
     tap(v => {console.log(`Obtained artistEdit: ${JSON.stringify(v)}`); this.displayForm = v.id !== -1;})
   )
 
+  globalFilterValue = '';
+
   constructor(
     private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig,
@@ -181,6 +183,10 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
       ),
       tap(v => console.log(`Returned ${JSON.stringify(v)}`))
     )
+  }
+
+  onFilter(event: any): void {
+    this.globalFilterValue = event.filters?.global?.value || '';
   }
 
 }

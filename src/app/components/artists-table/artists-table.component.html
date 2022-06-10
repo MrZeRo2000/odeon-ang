@@ -18,7 +18,7 @@
   </div>
 
   <p-table #dt [value]="artistTable" [rows]="10" [paginator]="true" dataKey="id" stateStorage="session" stateKey="artist-table-session"
-           [globalFilterFields]="['artistName', 'styles']">
+           [globalFilterFields]="['artistName', 'styles']" (onFilter)="onFilter($event)">
 
     <ng-template pTemplate="caption">
       <div class="flex">
@@ -26,14 +26,14 @@
         <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-button-outlined" (click)="newArtist()"></button>
         <div class="flex justify-content-end flex-grow-1">
           <div class="flex align-items-center mr-2">
-            <p-columnFilter type="boolean" field="isGenre" display="menu" class="flex align-items-center"></p-columnFilter>Genre exists
+            <p-columnFilter type="boolean" field="isGenre" display="menu" class="flex align-items-center mr-1"></p-columnFilter>Genre exists
           </div>
           <div class="flex align-items-center mr-2">
-            <p-columnFilter type="boolean" field="isDetail" display="menu" class="flex align-items-center"></p-columnFilter>Info exists
+            <p-columnFilter type="boolean" field="isDetail" display="menu" class="flex align-items-center mr-1"></p-columnFilter>Info exists
           </div>
           <span class="p-input-icon-left flex align-items-center">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+            <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
           </span>
         </div>
       </div>
