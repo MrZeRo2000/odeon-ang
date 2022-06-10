@@ -4,7 +4,22 @@ import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {ProcessService} from "../../service/process.service";
 import {BaseComponent} from "../base/base.component";
 import {ProcessorRequest} from "../../model/processor-request";
-import {catchError, map, of, Subject, switchMap, takeUntil, takeWhile, tap, throwError} from "rxjs";
+import {
+  catchError, combineLatest, combineLatestWith,
+  concat,
+  map,
+  of,
+  race,
+  startWith,
+  Subject,
+  switchMap,
+  takeUntil,
+  takeWhile,
+  tap,
+  throwError
+} from "rxjs";
+import {CRUDAction} from "../../model/crud";
+import {ArtistService} from "../../service/artist.service";
 
 @Component({
   selector: 'app-processing',
@@ -57,18 +72,23 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
     }
   ];
 
-  private processorTypeAction = new Subject<ProcessorType | undefined>();
+  //private processorTypeAction = new Subject<ProcessorType | undefined>();
+  //private addArtistAction = new Subject<string>();
+
+  private action = new Subject<ProcessorType | string | undefined>();
 
   readonly PROGRESS_STATUS = ProcessingStatus[ProcessingStatus.IN_PROGRESS];
 
-  processInfo$ = this.processorTypeAction.pipe(
-    tap(v => {console.log(`Processor type value: ${v || "undefined"}`)}),
+  processInfo$ = this.action.pipe(
+    tap(v => {console.log(`value: ${JSON.stringify(v)}`)}),
+    startWith(undefined),
     switchMap(v => {
       if (v == undefined) {
         return of({message: undefined})
-      } else {
+      } else if (typeof v === 'number') {
+        console.log('value is ProcessorType')
         return this.processService.startProcess({
-          processorType: ProcessorType[v]
+          processorType: ProcessorType[v as ProcessorType]
         }).pipe(
           catchError(err => {
             console.error(`Caught error: ${err.error?.message}`);
@@ -77,6 +97,8 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
             return of({message: undefined});
           }),
         )
+      } else {
+        return of({message: undefined})
       }
     }),
     tap(v => {console.log(`Start process value: ${v.message}`)}),
@@ -87,13 +109,14 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
     private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig,
     private messageService: MessageService,
-    private processService: ProcessService) {
+    private processService: ProcessService,
+    private artistService: ArtistService
+  ) {
     super();
   }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    setTimeout(() => {this.processorTypeAction.next(undefined);}, 0);
   }
 
   ngAfterViewInit(): void {
@@ -112,10 +135,22 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
         accept: () => {
           //Actual logic to perform a confirmation
           //this.startProcess(processorAction);
-          this.processorTypeAction.next(processorAction);
+          this.action.next(processorAction);
         }
       });
     }
+  }
+
+  newArtist(artistName: string) {
+    this.confirmationService.confirm({
+      message: `Are you sure that you want to add <strong> ${artistName}</strong>?`,
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        //this.artistTable$ = this.getArtistTable({action: CRUDAction.EA_DELETE, data: item});
+        this.action.next(artistName);
+      }
+    });
   }
 
 }

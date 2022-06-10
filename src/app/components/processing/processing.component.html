@@ -19,7 +19,16 @@
         <ng-template pTemplate="body" let-progressDetail>
           <tr>
             <td style="white-space: nowrap">{{progressDetail.time | date:'dd.MM.YYYY HH:mm:ss'}}</td>
-            <td>{{progressDetail.info}}</td>
+            <td>
+              <div class="flex align-content-center">
+                <div class="flex align-items-center">
+                  {{progressDetail.info}}
+                  <span *ngIf="progressDetail.processingAction?.actionType === 'ADD_ARTIST'">
+                    <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined ml-2" (click)="newArtist(progressDetail.processingAction.value)"></button>
+                  </span>
+                </div>
+              </div>
+            </td>
             <td><app-processing-status-indicator processingStatus="{{progressDetail.status}}"></app-processing-status-indicator></td>
           </tr>
         </ng-template>

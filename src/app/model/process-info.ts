@@ -32,10 +32,16 @@ export const PROCESSING_STATUS_NAMES : {[processingStatus: number] : string} = {
   [ProcessingStatus.NOT_RUNNING]: "Not Running",
 }
 
+export interface ProcessingAction {
+  actionType: string,
+  value: string
+}
+
 export interface ProgressDetail {
   time: string,
   info: string,
-  status: string
+  status: string,
+  processingAction: ProcessingAction
 }
 
 export interface ProcessInfo {
