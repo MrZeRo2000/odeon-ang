@@ -29,7 +29,7 @@ export class ArtistFormComponent extends BaseComponent implements OnInit, OnChan
     artistName: ['', Validators.required],
     artistType: [ARTIST_TYPES[0].code],
     biography: [''],
-    genre: ['', Validators.required],
+    genre: [''],
     styles: [[]]
   })
 

@@ -3,8 +3,10 @@ export interface ArtistTableItem {
   artistName: string;
   artistType: string;
   genre?: string;
+  isGenre: boolean;
   styles?: Array<String>;
   detailId?: number;
+  isDetail: boolean;
 }
 
 export interface ArtistEditItem {

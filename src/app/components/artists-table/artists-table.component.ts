@@ -170,10 +170,16 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
                 detail: `Error getting artists: ${err.error?.message || err.message}`
               });
               return [];
-            })
+            }),
+            map( v => v.map(v => {
+              v.isGenre = !!v.genre;
+              v.isDetail = !!v.detailId;
+              return v;
+            }))
           )
         }
-      )
+      ),
+      tap(v => console.log(`Returned ${JSON.stringify(v)}`))
     )
   }
 
