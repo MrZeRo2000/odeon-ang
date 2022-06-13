@@ -24,7 +24,7 @@
                 <div class="flex align-items-center">
                   {{progressDetail.info}}
                   <span *ngIf="progressDetail.processingAction?.actionType === 'ADD_ARTIST'">
-                    <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined ml-2" (click)="newArtist(progressDetail.processingAction.value)"></button>
+                    <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined ml-2" (click)="resolveActionAddArtist(progressDetail.processingAction)"></button>
                   </span>
                 </div>
               </div>

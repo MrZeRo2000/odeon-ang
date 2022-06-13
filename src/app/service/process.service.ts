@@ -16,7 +16,7 @@ import {
 } from "rxjs";
 import {Message} from "../model/message";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
-import {ProcessInfo, ProcessingStatus} from "../model/process-info";
+import {ProcessInfo, ProcessingAction, ProcessingStatus} from "../model/process-info";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +35,10 @@ export class ProcessService {
 
   startProcess(processorRequest: ProcessorRequest): Observable<Message> {
     return this.restDataSource.postResponseData<Message>("process", processorRequest)
+  }
+
+  resolveAction(processingAction: ProcessingAction): Observable<ProcessInfo> {
+    return this.restDataSource.postResponseData<ProcessInfo>("process/resolve", processingAction);
   }
 
   getProcessInfo(): Observable<ProcessInfo> {

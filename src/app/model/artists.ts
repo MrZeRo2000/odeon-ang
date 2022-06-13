@@ -13,7 +13,7 @@ export interface ArtistEditItem {
   id?: number;
   artistName: string;
   artistType: string;
-  artistBiography: string;
+  artistBiography?: string;
   genre?: string;
   styles?: Array<String>;
 }

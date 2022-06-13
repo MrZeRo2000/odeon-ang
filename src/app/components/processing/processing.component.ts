@@ -1,5 +1,12 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {PROCESSING_STATUS_NAMES, ProcessingStatus, PROCESSOR_TYPE_NAMES, ProcessorType} from "../../model/process-info";
+import {
+  ProcessInfo,
+  PROCESSING_STATUS_NAMES,
+  ProcessingAction,
+  ProcessingStatus,
+  PROCESSOR_TYPE_NAMES,
+  ProcessorType
+} from "../../model/process-info";
 import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {ProcessService} from "../../service/process.service";
 import {BaseComponent} from "../base/base.component";
@@ -20,6 +27,8 @@ import {
 } from "rxjs";
 import {CRUDAction} from "../../model/crud";
 import {ArtistService} from "../../service/artist.service";
+import {ARTIST_TYPES, ArtistEditItem} from "../../model/artists";
+import {A} from "@angular/cdk/keycodes";
 
 @Component({
   selector: 'app-processing',
@@ -75,11 +84,11 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
   //private processorTypeAction = new Subject<ProcessorType | undefined>();
   //private addArtistAction = new Subject<string>();
 
-  private action = new Subject<ProcessorType | string | undefined>();
+  private action = new Subject<ProcessorType | ProcessingAction | undefined>();
 
   readonly PROGRESS_STATUS = ProcessingStatus[ProcessingStatus.IN_PROGRESS];
 
-  processInfo$ = this.action.pipe(
+  processInfo$ = this.action.asObservable().pipe(
     tap(v => {console.log(`value: ${JSON.stringify(v)}`)}),
     startWith(undefined),
     switchMap(v => {
@@ -97,12 +106,59 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
             return of({message: undefined});
           }),
         )
+      } else if ('actionType' in v) {
+        console.log(`Got action: ${JSON.stringify(v)}`);
+        const processingAction: ProcessingAction = v as ProcessingAction;
+        const artistData: ArtistEditItem = {
+          artistName: v.value,
+          artistType: ARTIST_TYPES[0].code
+        }
+        return this.artistService.createArtist(artistData).pipe(
+          catchError(err => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: `Error creating artist: ${err.error?.message || err.message}`
+            });
+            return of(undefined);
+          }),
+          switchMap(v => {
+            if (!!v) {
+              return this.processService.resolveAction(processingAction).pipe(
+                catchError(err => {
+                  this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: `Error resolving action: ${err.error?.message || err.message}`
+                  });
+                  return of(undefined);
+                }),
+                tap(() => {
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Info',
+                    detail: `Artist ${v.artistName} added`
+                  });
+                })
+              )
+            } else {
+              return of(undefined);
+            }
+          })
+        );
       } else {
         return of({message: undefined})
       }
     }),
-    tap(v => {console.log(`Start process value: ${v.message}`)}),
-    switchMap(v => this.processService.getProcessInfo())
+    tap(v => {console.log(`Before get process info: ${JSON.stringify(v)}`)}),
+    switchMap(v => {
+      if (v !== undefined && 'processingStatus' in v) {
+        return of(v as ProcessInfo);
+      } else {
+        return this.processService.getProcessInfo();
+      }
+    }
+    )
   );
 
   constructor(
@@ -141,14 +197,14 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
     }
   }
 
-  newArtist(artistName: string) {
+  resolveActionAddArtist(processingAction: ProcessingAction): void {
     this.confirmationService.confirm({
-      message: `Are you sure that you want to add <strong> ${artistName}</strong>?`,
+      message: `Are you sure that you want to add <strong> ${processingAction.value}</strong>?`,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //this.artistTable$ = this.getArtistTable({action: CRUDAction.EA_DELETE, data: item});
-        this.action.next(artistName);
+        this.action.next(processingAction);
       }
     });
   }
