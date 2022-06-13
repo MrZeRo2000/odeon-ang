@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
       },
       {
         label: "Music",
-        command: (event?: any) => {alert("Click");}
+        routerLink: ['/artifacts']
       },
       {
         label: "Processing",
@@ -30,5 +30,4 @@ export class HeaderComponent implements OnInit {
       }
       ];
   }
-
 }

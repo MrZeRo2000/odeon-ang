@@ -43,6 +43,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import { BiographyFormComponent } from './components/biography-form/biography-form.component';
 import {SelectButtonModule} from "primeng/selectbutton";
+import { ArtifactsTableComponent } from './components/artifacts-table/artifacts-table.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import {SelectButtonModule} from "primeng/selectbutton";
     LoadingComponent,
     ConfirmDialogComponent,
     ArtistFormComponent,
-    BiographyFormComponent
+    BiographyFormComponent,
+    ArtifactsTableComponent
   ],
     imports: [
         BrowserModule,
