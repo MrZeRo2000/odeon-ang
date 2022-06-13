@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
-import {Observable} from "rxjs";
+import {Observable, shareReplay} from "rxjs";
 import {AppInfo} from "../model/app-info";
 
 @Injectable({
@@ -13,7 +13,9 @@ export class AppService {
   constructor(private restDataSource: RestDataSourceService) { }
 
   getAppInfo(): Observable<AppInfo> {
-    return this.restDataSource.getResponseData<AppInfo>("app/info");
+    return this.restDataSource.getResponseData<AppInfo>("app/info").pipe(
+      shareReplay(1)
+    );
   }
 
 }
