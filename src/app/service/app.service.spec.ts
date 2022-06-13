@@ -8,7 +8,9 @@ describe('AppService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [DataSourceModule]
+      imports: [
+        DataSourceModule
+      ]
     });
     service = TestBed.inject(AppService);
   });

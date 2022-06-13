@@ -1,12 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ArtistService } from './artist.service';
+import {DataSourceModule} from "../data-source/data-source.module";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('ArtistService', () => {
   let service: ArtistService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [
+        DataSourceModule
+      ]
+    });
     service = TestBed.inject(ArtistService);
   });
 

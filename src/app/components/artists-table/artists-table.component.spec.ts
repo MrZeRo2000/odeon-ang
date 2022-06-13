@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArtistsTableComponent } from './artists-table.component';
+import {ServiceModule} from "../../service/service.module";
+import {DataSourceModule} from "../../data-source/data-source.module";
+import {ConfirmationService, MessageService} from "primeng/api";
 
 describe('ArtistsTableComponent', () => {
   let component: ArtistsTableComponent;
@@ -8,7 +11,9 @@ describe('ArtistsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ArtistsTableComponent ]
+      declarations: [ ArtistsTableComponent ],
+      providers: [ConfirmationService, MessageService],
+      imports: [DataSourceModule, ServiceModule]
     })
     .compileComponents();
   });

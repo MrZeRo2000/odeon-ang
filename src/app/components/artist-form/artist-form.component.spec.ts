@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArtistFormComponent } from './artist-form.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {ConfirmationService, MessageService} from "primeng/api";
+import {ServiceModule} from "../../service/service.module";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {DataSourceModule} from "../../data-source/data-source.module";
 
 describe('ArtistFormComponent', () => {
   let component: ArtistFormComponent;
@@ -8,7 +13,13 @@ describe('ArtistFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ArtistFormComponent ]
+      declarations: [ ArtistFormComponent ],
+      providers: [ConfirmationService, MessageService],
+      imports: [
+        ReactiveFormsModule,
+        DataSourceModule,
+        ServiceModule
+      ]
     })
     .compileComponents();
   });
