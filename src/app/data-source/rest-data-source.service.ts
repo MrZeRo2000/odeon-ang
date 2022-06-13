@@ -14,7 +14,7 @@ export class RestDataSourceService {
   constructor(private http: HttpClient, @Inject(REST_URL) private restUrl: string) { }
 
   getResponseData<T>(resourceName: string, params?: HttpParams): Observable<T> {
-    return this.http.get<T>(`${this.restUrl}${resourceName}`, {params: params});
+    return this.http.get<T>(`${this.restUrl}${resourceName}`, {params});
   }
 
   getResponse<T>(resourceName: string, params?: HttpParams): Observable<HttpResponse<T>> {

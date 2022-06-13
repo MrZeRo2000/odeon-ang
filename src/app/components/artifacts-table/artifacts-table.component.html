@@ -1,1 +1,17 @@
-<p>artifacts-table works!</p>
+<ng-template #loadingOrError>
+  <ng-container *ngIf="!errorObject">
+    <app-loading></app-loading>
+  </ng-container>
+</ng-template>
+
+<div *ngIf="filteredArtifacts$ | async as fa; else loadingOrError">
+
+  <form [formGroup]="filterForm">
+    <div class="flex">
+      <p-selectButton class="mr-1" [options]="ARTIST_TYPES" optionLabel="name" optionValue="code" [multiple]="false" formControlName="artistType"></p-selectButton>
+      <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="true" formControlName="artifactTypes"></p-selectButton>
+    </div>
+  </form>
+
+
+</div>
