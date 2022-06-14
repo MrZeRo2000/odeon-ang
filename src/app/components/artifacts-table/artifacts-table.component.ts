@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {ArtifactService} from "../../service/artifact.service";
 import {FormBuilder, Validators} from "@angular/forms";
 import {ARTIST_TYPES} from "../../model/artists";
-import {ARTIFACT_TYPES} from "../../model/artifacts";
+import {ARTIFACT_TYPES, ArtifactTableItem} from "../../model/artifacts";
 import {catchError, iif, of, startWith, switchMap, takeWhile, tap} from "rxjs";
 import {MessageService} from "primeng/api";
+import {CRUDAction} from "../../model/crud";
 
 @Component({
   selector: 'app-artifacts-table',
@@ -14,6 +15,8 @@ import {MessageService} from "primeng/api";
 export class ArtifactsTableComponent implements OnInit {
   readonly ARTIST_TYPES =  ARTIST_TYPES;
   readonly ARTIFACT_TYPES = ARTIFACT_TYPES;
+
+  CRUDAction = CRUDAction;
 
   errorObject: any = undefined;
 
@@ -47,6 +50,10 @@ export class ArtifactsTableComponent implements OnInit {
     tap(v => console.log(`Returned: ${JSON.stringify(v)}`))
   )
 
+  globalFilterValue = '';
+
+  selectedArtifact: ArtifactTableItem = {} as ArtifactTableItem;
+
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
@@ -54,6 +61,14 @@ export class ArtifactsTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  onFilter(event: any): void {
+    this.globalFilterValue = event.filters?.global?.value || '';
+  }
+
+  crudEvent(event: any): void {
+    console.log(`CRUD event: ${JSON.stringify(event)}`);
   }
 
 }

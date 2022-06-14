@@ -44,6 +44,8 @@ import {AutoCompleteModule} from "primeng/autocomplete";
 import { BiographyFormComponent } from './components/biography-form/biography-form.component';
 import {SelectButtonModule} from "primeng/selectbutton";
 import { ArtifactsTableComponent } from './components/artifacts-table/artifacts-table.component';
+import { FileSizePipe } from './pipes/file-size-pipe.pipe';
+import { CrudPanelComponent } from './components/crud-panel/crud-panel.component';
 
 
 @NgModule({
@@ -62,7 +64,9 @@ import { ArtifactsTableComponent } from './components/artifacts-table/artifacts-
     ConfirmDialogComponent,
     ArtistFormComponent,
     BiographyFormComponent,
-    ArtifactsTableComponent
+    ArtifactsTableComponent,
+    FileSizePipe,
+    CrudPanelComponent
   ],
     imports: [
         BrowserModule,
