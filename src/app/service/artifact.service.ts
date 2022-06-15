@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
-import {ArtifactTableItem} from "../model/artifacts";
+import {map, Observable} from "rxjs";
+import {ArtifactEditItem, ArtifactTableItem} from "../model/artifacts";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {HttpParams} from "@angular/common/http";
 
@@ -17,4 +17,19 @@ export class ArtifactService {
 
     return this.restDataSource.getResponseData<Array<ArtifactTableItem>>("artifact/table", params);
   }
+
+  deleteArtifact(id: number): Observable<void> {
+    return this.restDataSource.deleteResponseData("artifact", id).pipe(
+      map(() => undefined)
+    );
+  }
+
+  createArtifact(data: ArtifactEditItem): Observable<ArtifactEditItem> {
+    return this.restDataSource.postResponseData<ArtifactEditItem>("artifact", data);
+  }
+
+  updateArtifact(data: ArtifactEditItem): Observable<ArtifactEditItem> {
+    return this.restDataSource.putResponseData<ArtifactEditItem>("artifact", data);
+  }
+
 }

@@ -9,8 +9,20 @@ export interface ArtifactTableItem {
   insertDate: Date;
 }
 
+export interface ArtifactEditItem {
+  id?: number;
+  artifactTypeId: number;
+  artistId: number;
+  title: string;
+  year?: number;
+  duration?: number;
+  size?: number
+}
+
+
 export const ARTIFACT_TYPES =
   [
     {name: 'MP3', code: '101'},
     {name: 'LA', code: '102'}
   ];
+
