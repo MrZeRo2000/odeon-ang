@@ -74,7 +74,7 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
               summary: 'Error',
               detail: `Error getting artist details: ${err.error?.message || err.message}`
             });
-            return of({} as ArtistEditItem);
+            return of({id: -1} as ArtistEditItem);
           })
         )
       }

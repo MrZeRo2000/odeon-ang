@@ -90,9 +90,9 @@
 
   </p-table>
 
-  <div *ngIf="artistEdit$ | async as artistEdit">
+  <ng-container *ngIf="artistEdit$ | async as artistEdit">
     <app-artist-form *ngIf="displayForm" [(display)]="displayForm" [artist]="artistEdit" [table]="artistTable" (saveArtistEvent)="saveArtist($event)"></app-artist-form>
-  </div>
+  </ng-container>
 
 </div>
 

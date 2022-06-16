@@ -46,6 +46,7 @@ import {SelectButtonModule} from "primeng/selectbutton";
 import { ArtifactsTableComponent } from './components/artifacts-table/artifacts-table.component';
 import { FileSizePipe } from './pipes/file-size-pipe.pipe';
 import { CrudPanelComponent } from './components/crud-panel/crud-panel.component';
+import { ArtifactFormComponent } from './components/artifact-form/artifact-form.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { CrudPanelComponent } from './components/crud-panel/crud-panel.component
     BiographyFormComponent,
     ArtifactsTableComponent,
     FileSizePipe,
-    CrudPanelComponent
+    CrudPanelComponent,
+    ArtifactFormComponent
   ],
     imports: [
         BrowserModule,

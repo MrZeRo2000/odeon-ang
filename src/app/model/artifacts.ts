@@ -22,7 +22,7 @@ export interface ArtifactEditItem {
 
 export const ARTIFACT_TYPES =
   [
-    {name: 'MP3', code: '101'},
-    {name: 'LA', code: '102'}
+    {name: 'MP3', code: 101},
+    {name: 'LA', code: 102}
   ];
 

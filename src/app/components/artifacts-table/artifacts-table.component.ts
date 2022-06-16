@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtifactService} from "../../service/artifact.service";
 import {FormBuilder} from "@angular/forms";
-import {ARTIST_TYPES} from "../../model/artists";
+import {ARTIST_TYPES, ArtistEditItem} from "../../model/artists";
 import {ARTIFACT_TYPES, ArtifactEditItem, ArtifactTableItem} from "../../model/artifacts";
 import {catchError, finalize, iif, map, Observable, of, startWith, Subject, switchMap, tap} from "rxjs";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -77,6 +77,30 @@ export class ArtifactsTableComponent implements OnInit {
     })
   );
 
+  displayForm = false;
+
+  private editSubject: Subject<ArtifactTableItem> = new Subject();
+
+  editAction$ = this.editSubject.asObservable().pipe(
+    switchMap(v =>
+      iif(
+        () => Object.keys(v).length === 0,
+        of({} as ArtifactEditItem),
+        this.artifactService.getArtifact(v.id).pipe(
+          catchError(err => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: `Error getting artifact details: ${err.error?.message || err.message}`
+            });
+            return of({id: -1} as ArtifactEditItem);
+          })
+        )
+      )
+    ),
+    tap(v => {console.log(`Obtained artifactEdit: ${JSON.stringify(v)}`); this.displayForm = v.id !== -1;})
+  )
+
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
@@ -103,14 +127,22 @@ export class ArtifactsTableComponent implements OnInit {
           this.crudOperationSubject.next({action: CRUDAction.EA_DELETE, data: event.data})
         }
       });
+    } else if (event.action === CRUDAction.EA_CREATE) {
+      this.editSubject.next({} as ArtifactTableItem)
+    } else if (event.action === CRUDAction.EA_UPDATE) {
+      this.editSubject.next(event.data)
     }
   }
 
   deleteArtifact(id: number): Observable<CRUDResult<void>> {
     return this.artifactService.deleteArtifact(id).pipe(
-      map(v => {return {success: true} as CRUDResult<void>}),
+      map(_ => {return {success: true} as CRUDResult<void>}),
       catchError(err => of({success: false, data: err.error?.message || err.message}))
     )
+  }
+
+  savedArtifact(event: any): void {
+    this.filterForm.setValue(this.filterForm.value);
   }
 
 }
