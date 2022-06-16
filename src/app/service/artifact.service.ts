@@ -18,9 +18,9 @@ export class ArtifactService {
     return this.restDataSource.getResponseData<Array<ArtifactTableItem>>("artifact/table", params);
   }
 
-  deleteArtifact(id: number): Observable<void> {
+  deleteArtifact(id: number): Observable<true> {
     return this.restDataSource.deleteResponseData("artifact", id).pipe(
-      map(() => undefined)
+      map(() => true)
     );
   }
 

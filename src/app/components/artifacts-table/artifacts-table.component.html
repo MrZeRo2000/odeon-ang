@@ -1,3 +1,5 @@
+<app-confirm-dialog></app-confirm-dialog>
+
 <ng-template #loadingOrError>
   <ng-container *ngIf="!errorObject">
     <app-loading></app-loading>
@@ -62,5 +64,7 @@
     </ng-template>
 
   </p-table>
+
+  <ng-container *ngIf="crudOperationAction$ | async"></ng-container>
 
 </div>
