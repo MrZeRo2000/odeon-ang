@@ -51,7 +51,7 @@
         <td>{{item.title}}</td>
         <td>{{item.year}}</td>
         <td>
-          <div style="text-align: right">{{item.duration * 1000 | date:'mm:ss'}}</div>
+          <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
         </td>
         <td>
           <div style="text-align: right; white-space: nowrap">{{item.size | fileSize}}</div>
@@ -68,7 +68,7 @@
   <ng-container *ngIf="crudOperationAction$ | async"></ng-container>
 
   <ng-container *ngIf="editAction$ | async as artifactEdit">
-    <app-artifact-form *ngIf="displayForm" [(display)]="displayForm" [artifact]="artifactEdit" (savedArtifactEvent)="savedArtifact($event)"></app-artifact-form>
+    <app-artifact-form *ngIf="displayForm" [(display)]="displayForm" [artists]="artifactEdit[0]" [artifact]="artifactEdit[1]" (savedArtifactEvent)="savedArtifact($event)"></app-artifact-form>
   </ng-container>
 
 </div>

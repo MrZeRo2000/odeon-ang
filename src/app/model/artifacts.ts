@@ -13,6 +13,7 @@ export interface ArtifactEditItem {
   id?: number;
   artifactTypeId: number;
   artistId: number;
+  artistName: string;
   title: string;
   year?: number;
   duration?: number;

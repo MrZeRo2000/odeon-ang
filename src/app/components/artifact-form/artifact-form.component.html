@@ -3,16 +3,65 @@
     <form [formGroup]="editForm">
       <div class="field">
         <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="false" formControlName="artifactTypeId"></p-selectButton>
+      </div>
+
+      <div class="field">
+        <label for="artistId">Artist</label>
+        <p-autoComplete
+          [suggestions]="filteredArtists"
+          (completeMethod)="searchArtists($event)"
+          id="artistId"
+          formControlName="artistId"
+          dataKey="id"
+          field="name"
+          [multiple]="false"
+          [dropdown]="true"
+          [forceSelection]="true"
+          [autofocus]="true"
+        >
+        </p-autoComplete>
+      </div>
+
+      <div class="field">
         <label for="title">Title</label>
-        <input type="text" pInputText id="title" formControlName="title" required autofocus
+        <input type="text" pInputText id="title" formControlName="title" required
                [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
         />
       </div>
+
+      <div class="field">
+        <label for="year">Year</label>
+        <input type="number" pInputText id="year" formControlName="year"
+               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['year'].errors}"
+        />
+      </div>
+
+      <div class="field">
+        <label for="duration">Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})</label>
+        <input type="number" pInputText id="duration" formControlName="duration"
+               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
+        />
+      </div>
+
+      <div class="field">
+        <label for="size">Size ({{this.editForm.value.size | fileSize}})</label>
+        <input type="number" pInputText id="size" formControlName="size"
+               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['size'].errors}"
+        />
+      </div>
+
+      <div>
+        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors ? 'visible' : 'hidden'}" >Title is required.</small>
+        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['artistId'].errors ? 'visible' : 'hidden'}" >Artist is required.</small>
+      </div>
+
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveArtist()"></button>
   </ng-template>
+
+  <ng-container *ngIf="saveAction$ | async as saver"></ng-container>
 
 </p-dialog>

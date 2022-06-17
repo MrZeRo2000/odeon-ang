@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtifactService} from "../../service/artifact.service";
 import {FormBuilder} from "@angular/forms";
-import {ARTIST_TYPES, ArtistEditItem} from "../../model/artists";
+import {ARTIST_TYPES, ArtistEditItem, ArtistIdName} from "../../model/artists";
 import {ARTIFACT_TYPES, ArtifactEditItem, ArtifactTableItem} from "../../model/artifacts";
-import {catchError, finalize, iif, map, Observable, of, startWith, Subject, switchMap, tap} from "rxjs";
+import {catchError, finalize, forkJoin, iif, map, Observable, of, startWith, Subject, switchMap, tap} from "rxjs";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
+import {ArtistService} from "../../service/artist.service";
 
 @Component({
   selector: 'app-artifacts-table',
@@ -83,28 +84,19 @@ export class ArtifactsTableComponent implements OnInit {
 
   editAction$ = this.editSubject.asObservable().pipe(
     switchMap(v =>
-      iif(
-        () => Object.keys(v).length === 0,
-        of({} as ArtifactEditItem),
-        this.artifactService.getArtifact(v.id).pipe(
-          catchError(err => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: `Error getting artifact details: ${err.error?.message || err.message}`
-            });
-            return of({id: -1} as ArtifactEditItem);
-          })
-        )
-      )
+      forkJoin([
+        this.getArtists(),
+        iif(() => Object.keys(v).length === 0, of({} as ArtifactEditItem), this.getArtifact(v.id))
+      ])
     ),
-    tap(v => {console.log(`Obtained artifactEdit: ${JSON.stringify(v)}`); this.displayForm = v.id !== -1;})
+    tap(v => {this.displayForm = v[1].id !== -1 && v[0].length > 0;})
   )
 
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private artistService: ArtistService,
     private artifactService: ArtifactService
   ) { }
 
@@ -143,6 +135,33 @@ export class ArtifactsTableComponent implements OnInit {
 
   savedArtifact(event: any): void {
     this.filterForm.setValue(this.filterForm.value);
+    this.displayForm = false;
+  }
+
+  getArtifact(id: number): Observable<ArtifactEditItem> {
+    return this.artifactService.getArtifact(id).pipe(
+      catchError(err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error getting artifact details: ${err.error?.message || err.message}`
+        });
+        return of({id: -1} as ArtifactEditItem);
+      })
+    )
+  }
+
+  getArtists(): Observable<Array<ArtistIdName>> {
+    return this.artistService.getArtistsIdName().pipe(
+      catchError(err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error getting artists: ${err.error?.message || err.message}`
+        });
+        return of([]);
+      })
+    )
   }
 
 }

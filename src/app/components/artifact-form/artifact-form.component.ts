@@ -1,6 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ArtifactEditItem, ARTIFACT_TYPES} from "../../model/artifacts";
 import {FormBuilder, Validators} from "@angular/forms";
+import {ArtistIdName} from "../../model/artists";
+import {catchError, of, Subject, switchMap, tap} from "rxjs";
+import {ArtifactService} from "../../service/artifact.service";
+import {ConfirmationService, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-artifact-form',
@@ -23,6 +27,11 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
   @Input()
   artifact: ArtifactEditItem = {} as ArtifactEditItem;
 
+  @Input()
+  artists: Array<ArtistIdName> = [];
+
+  filteredArtists: Array<ArtistIdName> = [];
+
   @Output()
   savedArtifactEvent: EventEmitter<ArtifactEditItem> = new EventEmitter();
 
@@ -37,8 +46,35 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
     size: ['']
   })
 
+  private saveSubject: Subject<ArtifactEditItem> = new Subject<ArtifactEditItem>();
+
+  saveAction$ = this.saveSubject.asObservable().pipe(
+    switchMap(data => {
+      const action$ = data.id ? this.artifactService.updateArtifact(data) : this.artifactService.createArtifact(data);
+      const actionName = data.id ? 'updating' : 'creating';
+      return action$.pipe(
+        catchError(err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Error ${actionName} artifact: ${err.error?.message || err.message}`
+          });
+          return of(undefined);
+        })
+      );
+    }),
+    tap(v => {
+      if (!!v) {
+        this.savedArtifactEvent.emit(v);
+      }
+    })
+  );
+
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private artifactService: ArtifactService
   ) { }
 
   ngOnInit(): void {
@@ -47,15 +83,15 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName of Object.keys(changes)) {
       if (propName == 'artifact') {
-        const changedProp = changes[propName];
-        console.log(`changed artifact ${JSON.stringify(changedProp.currentValue)}`);
+        const artifactProp = changes[propName];
+        console.log(`changed artifact ${JSON.stringify(artifactProp.currentValue)}`);
         this.editForm.setValue({
-          "artifactTypeId": changedProp.currentValue.artifactTypeId?? ARTIFACT_TYPES[0].code,
-          "artistId": changedProp.currentValue.artistId?? '',
-          "title": changedProp.currentValue.title?? '',
-          "year": changedProp.currentValue.year?? '',
-          "duration": changedProp.currentValue.duration?? '',
-          "size": changedProp.currentValue.size?? '',
+          "artifactTypeId": artifactProp.currentValue.artifactTypeId?? ARTIFACT_TYPES[0].code,
+          "artistId": artifactProp.currentValue.artistId? {id: artifactProp.currentValue.artistId, name: artifactProp.currentValue.artistName} : '',
+          "title": artifactProp.currentValue.title?? '',
+          "year": artifactProp.currentValue.year?? '',
+          "duration": artifactProp.currentValue.duration?? '',
+          "size": artifactProp.currentValue.size?? '',
         })
       }
     }
@@ -68,6 +104,26 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
 
   saveArtist(): void {
     this.submitted = true;
+    console.log(`Form data: ${JSON.stringify(this.editForm.value)}`)
+
+    if (this.editForm.valid) {
+      const artifactEditItem: ArtifactEditItem = {
+        id: this.artifact?.id,
+        artifactTypeId: this.editForm.value.artifactTypeId,
+        artistId: this.editForm.value.artistId.id,
+        artistName: this.editForm.value.artistId.name,
+        title: this.editForm.value.title,
+        year: this.editForm.value.year,
+        duration: this.editForm.value.duration,
+        size: this.editForm.value.size
+      } as ArtifactEditItem;
+
+      this.saveSubject.next(artifactEditItem);
+    }
   }
 
+  searchArtists(event: any): void {
+    const query = event.query.toLowerCase();
+    this.filteredArtists = this.artists.filter(v => v.name.toLowerCase().indexOf(query) == 0);
+  }
 }
