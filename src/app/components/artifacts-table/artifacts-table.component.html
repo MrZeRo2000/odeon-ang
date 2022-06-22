@@ -10,7 +10,8 @@
 
 
   <p-table #dt [value]="artifactsTable" [rows]="10" [paginator]="true" dataKey="id" stateStorage="session" stateKey="artifacts-table-session"
-           [globalFilterFields]="['artistName', 'title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedArtifact">
+           [globalFilterFields]="['artistName', 'title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedArtifact"
+  >
 
     <ng-template pTemplate="caption">
       <div class="flex">
@@ -24,10 +25,17 @@
           </div>
         </form>
 
+        <button pButton type="button" label="Compositions" icon="pi pi-list" iconPos="left"
+                class="ml-1 p-button-outlined p-button-secondary"
+                *ngIf="selectedArtifact"
+                (click)="onCompositionsButton($event)"
+        >
+        </button>
+
         <div class="flex justify-content-end flex-grow-1">
           <span class="p-input-icon-left flex align-items-center">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+            <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedArtifact=undefined;" placeholder="Search keyword" />
           </span>
         </div>
       </div>

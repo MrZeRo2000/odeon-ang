@@ -7,6 +7,7 @@ import {catchError, finalize, forkJoin, iif, map, Observable, of, startWith, Sub
 import {ConfirmationService, MessageService} from "primeng/api";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {ArtistService} from "../../service/artist.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-artifacts-table',
@@ -48,12 +49,12 @@ export class ArtifactsTableComponent implements OnInit {
         this.artifactTable$(v)
       )
     ),
-    tap(v => console.log(`Returned: ${JSON.stringify(v)}`))
+    tap(v => this.selectedArtifact = undefined)
   )
 
   globalFilterValue = '';
 
-  selectedArtifact: ArtifactTableItem = {} as ArtifactTableItem;
+  selectedArtifact: ArtifactTableItem | undefined;
 
   private crudOperationSubject: Subject<CRUDOperation<ArtifactEditItem | ArtifactTableItem>> = new Subject<CRUDOperation<ArtifactEditItem | ArtifactTableItem>>();
 
@@ -93,6 +94,7 @@ export class ArtifactsTableComponent implements OnInit {
   )
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -107,12 +109,16 @@ export class ArtifactsTableComponent implements OnInit {
     this.globalFilterValue = event.filters?.global?.value || '';
   }
 
+  onCompositionsButton(event: any): void {
+    this.router.navigate([`/compositions/${this.selectedArtifact?.id}`]);
+  }
+
   crudEvent(event: any): void {
     console.log(`CRUD event: ${JSON.stringify(event)}`);
     if (event.action === CRUDAction.EA_DELETE) {
 
       this.confirmationService.confirm({
-        message: `Are you sure that you want to delete <strong> ${event.title}</strong>?`,
+        message: `Are you sure that you want to delete <strong> ${event.data.artistName} - ${event.data.title}(${event.data.year})</strong>?`,
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
