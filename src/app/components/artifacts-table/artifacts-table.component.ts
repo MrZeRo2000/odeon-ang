@@ -145,7 +145,7 @@ export class ArtifactsTableComponent implements OnInit {
   }
 
   getArtifact(id: number): Observable<ArtifactEditItem> {
-    return this.artifactService.getArtifact(id).pipe(
+    return this.artifactService.get(id).pipe(
       catchError(err => {
         this.messageService.add({
           severity: 'error',

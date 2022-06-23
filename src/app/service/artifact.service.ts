@@ -32,7 +32,7 @@ export class ArtifactService {
     return this.restDataSource.putResponseData<ArtifactEditItem>("artifact", data);
   }
 
-  getArtifact(id: number): Observable<ArtifactEditItem> {
+  get(id: number): Observable<ArtifactEditItem> {
     return this.restDataSource.getResponseData<ArtifactEditItem>(`artifact/${id}`)
   }
 

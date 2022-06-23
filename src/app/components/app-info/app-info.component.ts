@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import packageJson from '../../../../package.json';
 import {AppService} from "../../service/app.service";
-import {catchError, Observable, of, switchMap} from "rxjs";
+import {catchError, Observable, of, share, switchMap} from "rxjs";
 import {Message, MessageService} from "primeng/api";
 
 @Component({
@@ -14,6 +14,7 @@ export class AppInfoComponent implements OnInit {
 
   appInfo$ = this.appService.appInfo$.pipe(
     switchMap(value => {return of(value)}),
+    share({resetOnComplete: true, resetOnError: true, resetOnRefCountZero: true}),
     catchError(e => {
       this.messageService.add({severity:'error', summary:'Error', detail:`Error getting version information`});
       return of(undefined);
