@@ -8,19 +8,18 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {ArtistService} from "../../service/artist.service";
 import {Router} from "@angular/router";
+import {BaseTableComponent} from "../base/base-table.component";
 
 @Component({
   selector: 'app-artifacts-table',
   templateUrl: './artifacts-table.component.html',
   styleUrls: ['./artifacts-table.component.scss']
 })
-export class ArtifactsTableComponent implements OnInit {
+export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableItem> implements OnInit {
   readonly ARTIST_TYPES =  ARTIST_TYPES;
   readonly ARTIFACT_TYPES = ARTIFACT_TYPES;
 
   CRUDAction = CRUDAction;
-
-  errorObject: any = undefined;
 
   filterForm = this.fb.group({
     artistType: [ARTIST_TYPES[0].code],
@@ -49,21 +48,12 @@ export class ArtifactsTableComponent implements OnInit {
         this.artifactTable$(v)
       )
     ),
-    tap(v => this.selectedArtifact = undefined)
+    tap(v => this.selectedItem = undefined)
   )
 
-  globalFilterValue = '';
-
-  selectedArtifact: ArtifactTableItem | undefined;
-
-  private crudOperationSubject: Subject<CRUDOperation<ArtifactEditItem | ArtifactTableItem>> = new Subject<CRUDOperation<ArtifactEditItem | ArtifactTableItem>>();
-
-  crudOperationAction$ = this.crudOperationSubject.asObservable().pipe(
+  deleteAction$ = this.deleteSubject.asObservable().pipe(
     switchMap(v =>
-      iif(() => v.action === CRUDAction.EA_DELETE, this.deleteArtifact(v.data.id as number),
-        //iif(() => v.action === CRUDAction.EA_CREATE, this.artifactService.createArtifact(v.data as ArtifactEditItem),
-          //iif(() => v.action === CRUDAction.EA_UPDATE, this.artifactService.updateArtifact(v.data as ArtifactEditItem),
-            of(undefined))
+      this.deleteArtifact(v.data.id as number)
     ),
     tap(v => console.log(`Got some result: ${JSON.stringify(v)}`)),
     tap(v => {
@@ -78,10 +68,6 @@ export class ArtifactsTableComponent implements OnInit {
       }
     })
   );
-
-  displayForm = false;
-
-  private editSubject: Subject<ArtifactTableItem> = new Subject();
 
   editAction$ = this.editSubject.asObservable().pipe(
     switchMap(v =>
@@ -100,7 +86,9 @@ export class ArtifactsTableComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private artistService: ArtistService,
     private artifactService: ArtifactService
-  ) { }
+  ) {
+    super()
+  }
 
   ngOnInit(): void {
   }
@@ -110,7 +98,7 @@ export class ArtifactsTableComponent implements OnInit {
   }
 
   onCompositionsButton(event: any): void {
-    this.router.navigate([`/compositions/${this.selectedArtifact?.id}`]);
+    this.router.navigate([`/compositions/${this.selectedItem?.id}`]);
   }
 
   crudEvent(event: any): void {
@@ -121,7 +109,7 @@ export class ArtifactsTableComponent implements OnInit {
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-          this.crudOperationSubject.next({action: CRUDAction.EA_DELETE, data: event.data})
+          this.deleteSubject.next({action: CRUDAction.EA_DELETE, data: event.data})
         }
       });
     } else if (event.action === CRUDAction.EA_CREATE) {
@@ -138,9 +126,9 @@ export class ArtifactsTableComponent implements OnInit {
     )
   }
 
-  savedArtifact(event: any): void {
+  override savedEditData(event: any): void {
+    super.savedEditData(event);
     this.filterForm.setValue(this.filterForm.value);
-    this.displayForm = false;
   }
 
   getArtifact(id: number): Observable<ArtifactEditItem> {

@@ -8,29 +8,23 @@ import {ArtifactEditItem, ArtifactTableItem} from "../../model/artifacts";
 import {ArtifactService} from "../../service/artifact.service";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {DecimalPipe} from "@angular/common";
+import {BaseTableComponent} from "../base/base-table.component";
 
 @Component({
   selector: 'app-compositions-table',
   templateUrl: './compositions-table.component.html',
   styleUrls: ['./compositions-table.component.scss']
 })
-export class CompositionsTableComponent implements OnInit {
+export class CompositionsTableComponent extends BaseTableComponent<CompositionTableItem> implements OnInit {
   private artifactId?: number;
 
   CRUDAction = CRUDAction;
 
   data$: Observable<[CompositionTableItem[], ArtifactEditItem]> | undefined;
 
-  errorObject: any = undefined;
-
-  private crudOperationSubject: Subject<CRUDOperation<CompositionEditItem | CompositionTableItem>> = new Subject<CRUDOperation<CompositionEditItem | CompositionTableItem>>();
-
-  crudOperationAction$ = this.crudOperationSubject.asObservable().pipe(
+  deleteAction = this.deleteSubject.asObservable().pipe(
     switchMap(v =>
-      iif(() => v.action === CRUDAction.EA_DELETE, this.delete(v.data.id as number),
-        //iif(() => v.action === CRUDAction.EA_CREATE, this.artifactService.createArtifact(v.data as ArtifactEditItem),
-        //iif(() => v.action === CRUDAction.EA_UPDATE, this.artifactService.updateArtifact(v.data as ArtifactEditItem),
-        of(undefined))
+      this.delete(v.data.id as number)
     ),
     tap(v => {
       if (v?.success) {
@@ -45,6 +39,22 @@ export class CompositionsTableComponent implements OnInit {
     })
   );
 
+  editAction$ = this.editSubject.asObservable().pipe(
+    switchMap(v => iif(() => !!v.id, this.get(v.id), of({success: true, data: {} as CompositionEditItem} as CRUDResult<CompositionEditItem>)) ),
+    tap(v => {
+      if (v.success) {
+        this.displayForm = v.success
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error getting composition details: ${v.data}`
+        });
+      }
+    }),
+    map(v => v.data as CompositionEditItem)
+  );
+
   constructor(
     private route: ActivatedRoute,
     private decimalPipe: DecimalPipe,
@@ -52,7 +62,7 @@ export class CompositionsTableComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private compositionService: CompositionService,
     private artifactService: ArtifactService
-  ) { }
+  ) { super() }
 
   ngOnInit(): void {
     this.artifactId = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
@@ -105,6 +115,15 @@ export class CompositionsTableComponent implements OnInit {
     )
   }
 
+  private get(id: number): Observable<CRUDResult<CompositionEditItem>> {
+    return this.compositionService.get(id).pipe(
+      map(v => {return {success: true, data: v}}),
+      catchError(err => {
+        return of({success: false, data: err.error?.message || err.message});
+      })
+    )
+  }
+
   crudEvent(event: any): void {
     if (event.action === CRUDAction.EA_DELETE) {
       this.confirmationService.confirm({
@@ -112,9 +131,13 @@ export class CompositionsTableComponent implements OnInit {
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-          this.crudOperationSubject.next({action: CRUDAction.EA_DELETE, data: event.data})
+          this.deleteSubject.next({action: event.action, data: event.data})
         }
       });
+    } else if (event.action === CRUDAction.EA_CREATE) {
+      this.editSubject.next({} as CompositionTableItem)
+    } else if (event.action === CRUDAction.EA_UPDATE) {
+      this.editSubject.next(event.data)
     }
   }
 }

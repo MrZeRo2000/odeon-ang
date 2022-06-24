@@ -10,7 +10,7 @@
 
 
   <p-table #dt [value]="artifactsTable" [rows]="10" [paginator]="true" dataKey="id" stateStorage="session" stateKey="artifacts-table-session"
-           [globalFilterFields]="['artistName', 'title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedArtifact"
+           [globalFilterFields]="['artistName', 'title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedItem"
   >
 
     <ng-template pTemplate="caption">
@@ -27,7 +27,7 @@
 
         <button pButton type="button" label="Compositions" icon="pi pi-list" iconPos="left"
                 class="ml-1 p-button-outlined p-button-secondary"
-                *ngIf="selectedArtifact"
+                *ngIf="selectedItem"
                 (click)="onCompositionsButton($event)"
         >
         </button>
@@ -35,7 +35,7 @@
         <div class="flex justify-content-end flex-grow-1">
           <span class="p-input-icon-left flex align-items-center">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedArtifact=undefined;" placeholder="Search keyword" />
+            <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;" placeholder="Search keyword" />
           </span>
         </div>
       </div>
@@ -73,10 +73,10 @@
 
   </p-table>
 
-  <ng-container *ngIf="crudOperationAction$ | async"></ng-container>
+  <ng-container *ngIf="deleteAction$ | async"></ng-container>
 
   <ng-container *ngIf="editAction$ | async as artifactEdit">
-    <app-artifact-form *ngIf="displayForm" [(display)]="displayForm" [artists]="artifactEdit[0]" [artifact]="artifactEdit[1]" (savedArtifactEvent)="savedArtifact($event)"></app-artifact-form>
+    <app-artifact-form *ngIf="displayForm" [(display)]="displayForm" [artists]="artifactEdit[0]" [artifact]="artifactEdit[1]" (savedArtifactEvent)="savedEditData($event)"></app-artifact-form>
   </ng-container>
 
 </div>

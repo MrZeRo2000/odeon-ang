@@ -49,6 +49,8 @@ import { CrudPanelComponent } from './components/crud-panel/crud-panel.component
 import { ArtifactFormComponent } from './components/artifact-form/artifact-form.component';
 import { CompositionsTableComponent } from './components/compositions-table/compositions-table.component';
 import {DecimalPipe} from "@angular/common";
+import { CompositionFormComponent } from './components/composition-form/composition-form.component';
+import { BaseTableComponent } from './components/base/base-table.component';
 
 
 @NgModule({
@@ -71,7 +73,8 @@ import {DecimalPipe} from "@angular/common";
     FileSizePipe,
     CrudPanelComponent,
     ArtifactFormComponent,
-    CompositionsTableComponent
+    CompositionsTableComponent,
+    CompositionFormComponent
   ],
     imports: [
         BrowserModule,
