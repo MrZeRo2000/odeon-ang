@@ -12,7 +12,7 @@
     <ng-template pTemplate="caption">
       <div class="flex">
         <div class="flex align-items-center justify-content-between text-xl mr-2">{{data[1].artistName}} - {{data[1].title}} ({{data[1].year}}) Compositions</div>
-        <div class="flex align-self-end"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
+        <div class="flex align-self-end app-crud-panel-small"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
       </div>
     </ng-template>
 
@@ -32,18 +32,22 @@
     <ng-template pTemplate="body" let-item>
       <tr>
         <td>{{item.diskNum}}</td>
-        <td>{{item.num}}</td>
+        <td>{{item.num | number : '2.0-0'}}</td>
         <td>{{item.title}}</td>
         <td>{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</td>
         <td style="text-align: right; white-space: nowrap">{{item.size | fileSize}}</td>
         <td style="text-align: right">{{item.bitrate}}</td>
         <td>{{item.fileName}}</td>
         <td>
-          <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+          <div class="app-crud-panel-small">
+            <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+          </div>
         </td>
       </tr>
     </ng-template>
 
   </p-table>
+
+  <ng-container *ngIf="crudOperationAction$ | async"></ng-container>
 
 </div>

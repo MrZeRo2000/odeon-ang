@@ -116,7 +116,6 @@ export class ArtifactsTableComponent implements OnInit {
   crudEvent(event: any): void {
     console.log(`CRUD event: ${JSON.stringify(event)}`);
     if (event.action === CRUDAction.EA_DELETE) {
-
       this.confirmationService.confirm({
         message: `Are you sure that you want to delete <strong> ${event.data.artistName} - ${event.data.title}(${event.data.year})</strong>?`,
         header: 'Confirmation',

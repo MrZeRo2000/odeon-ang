@@ -48,6 +48,7 @@ import { FileSizePipe } from './pipes/file-size-pipe.pipe';
 import { CrudPanelComponent } from './components/crud-panel/crud-panel.component';
 import { ArtifactFormComponent } from './components/artifact-form/artifact-form.component';
 import { CompositionsTableComponent } from './components/compositions-table/compositions-table.component';
+import {DecimalPipe} from "@angular/common";
 
 
 @NgModule({
@@ -101,7 +102,7 @@ import { CompositionsTableComponent } from './components/compositions-table/comp
         ConfirmPopupModule,
         SelectButtonModule
     ],
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
