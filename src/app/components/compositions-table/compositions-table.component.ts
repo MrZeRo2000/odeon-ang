@@ -68,7 +68,9 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     private confirmationService: ConfirmationService,
     private compositionService: CompositionService,
     private artifactService: ArtifactService
-  ) { super() }
+  ) {
+    super()
+  }
 
   ngOnInit(): void {
     this.artifactId = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);

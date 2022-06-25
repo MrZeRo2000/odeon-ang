@@ -52,6 +52,7 @@ import {DecimalPipe} from "@angular/common";
 import { CompositionFormComponent } from './components/composition-form/composition-form.component';
 import { BaseTableComponent } from './components/base/base-table.component';
 import {InputNumberModule} from "primeng/inputnumber";
+import {BaseFormComponent} from "./components/base/base-form.component";
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import {InputNumberModule} from "primeng/inputnumber";
     CrudPanelComponent,
     ArtifactFormComponent,
     CompositionsTableComponent,
-    CompositionFormComponent
+    CompositionFormComponent,
+    BaseFormComponent
   ],
     imports: [
         BrowserModule,

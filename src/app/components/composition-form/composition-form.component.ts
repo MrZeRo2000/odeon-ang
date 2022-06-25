@@ -1,35 +1,17 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {CompositionEditItem} from "../../model/composition";
-import {FormBuilder, ValidationErrors, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {catchError, of, Subject, switchMap, tap} from "rxjs";
-import {ArtifactEditItem} from "../../model/artifacts";
+import {catchError, of, switchMap, tap} from "rxjs";
 import {CompositionService} from "../../service/composition.service";
+import {BaseFormComponent} from "../base/base-form.component";
 
 @Component({
   selector: 'app-composition-form',
   templateUrl: './composition-form.component.html',
   styleUrls: ['./composition-form.component.scss']
 })
-export class CompositionFormComponent implements OnInit, OnChanges {
-
-  @Input()
-  display: boolean = false;
-  @Output()
-  displayChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  public get displayProp() { return this.display; }
-  public set displayProp(newValue) {
-    this.displayChange.emit(newValue);
-  }
-
-  @Input()
-  composition?: CompositionEditItem;
-
-  @Output()
-  onSavedComposition: EventEmitter<CompositionEditItem> = new EventEmitter();
-
-  submitted = false;
+export class CompositionFormComponent extends BaseFormComponent<CompositionEditItem> implements OnChanges {
 
   editForm = this.fb.group({
     diskNum: ['1', Validators.required],
@@ -42,8 +24,6 @@ export class CompositionFormComponent implements OnInit, OnChanges {
     mediaBitrate: [''],
     mediaDuration: [''],
   })
-
-  private saveSubject: Subject<CompositionEditItem> = new Subject<CompositionEditItem>();
 
   saveAction$ = this.saveSubject.asObservable().pipe(
     switchMap(data => {
@@ -62,7 +42,7 @@ export class CompositionFormComponent implements OnInit, OnChanges {
     }),
     tap(v => {
       if (!!v) {
-        this.onSavedComposition.emit(v);
+        this.onSavedItem.emit(v);
       }
     })
   );
@@ -72,16 +52,15 @@ export class CompositionFormComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private compositionService: CompositionService
-  ) { }
-
-  ngOnInit(): void {
+  ) {
+    super()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName of Object.keys(changes)) {
-      if (propName == 'composition') {
+      if (propName == 'editItem') {
         const compositionProp = changes[propName];
-        console.log(`changed artifact ${JSON.stringify(compositionProp.currentValue)}`);
+        console.log(`changed composition ${JSON.stringify(compositionProp.currentValue)}`);
         this.editForm.setValue({
           "diskNum": compositionProp.currentValue.diskNum?? '1',
           "num": compositionProp.currentValue.num?? '1',
@@ -97,15 +76,7 @@ export class CompositionFormComponent implements OnInit, OnChanges {
     }
   }
 
-  hideDialog(): void {
-    this.submitted = false;
-    this.displayProp = false;
-  }
-
-  save(): void {
-    this.submitted = true;
-    console.log(`Form data: ${JSON.stringify(this.editForm.value)}`)
-
+  override validate(): boolean {
     const mediaFields = ['mediaFormat', 'mediaSize', 'mediaBitrate', 'mediaDuration']
 
     if (this.editForm.value.mediaName) {
@@ -118,22 +89,22 @@ export class CompositionFormComponent implements OnInit, OnChanges {
       })
     }
 
-    if (this.editForm.valid) {
-      const compositionEditItem: CompositionEditItem = {
-        id: this.composition?.id,
-        artifactId: this.composition?.artifactId,
-        diskNum: this.editForm.value.diskNum,
-        num: this.editForm.value.num,
-        title: this.editForm.value.title,
-        duration: this.editForm.value.duration,
-        mediaName: this.editForm.value.mediaName || undefined,
-        mediaFormat: this.editForm.value.mediaFormat || undefined,
-        mediaSize: this.editForm.value.mediaSize || undefined,
-        mediaBitrate: this.editForm.value.mediaBitrate || undefined,
-        mediaDuration: this.editForm.value.mediaDuration || undefined
-      } as CompositionEditItem;
+    return this.editForm.valid;
+  }
 
-      this.saveSubject.next(compositionEditItem);
-    }
+  override createSavedItem(): CompositionEditItem {
+    return {
+      id: this.editItem?.id,
+      artifactId: this.editItem?.artifactId,
+      diskNum: this.editForm.value.diskNum,
+      num: this.editForm.value.num,
+      title: this.editForm.value.title,
+      duration: this.editForm.value.duration,
+      mediaName: this.editForm.value.mediaName || undefined,
+      mediaFormat: this.editForm.value.mediaFormat || undefined,
+      mediaSize: this.editForm.value.mediaSize || undefined,
+      mediaBitrate: this.editForm.value.mediaBitrate || undefined,
+      mediaDuration: this.editForm.value.mediaDuration || undefined
+    } as CompositionEditItem
   }
 }
