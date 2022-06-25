@@ -51,6 +51,7 @@ import { CompositionsTableComponent } from './components/compositions-table/comp
 import {DecimalPipe} from "@angular/common";
 import { CompositionFormComponent } from './components/composition-form/composition-form.component';
 import { BaseTableComponent } from './components/base/base-table.component';
+import {InputNumberModule} from "primeng/inputnumber";
 
 
 @NgModule({
@@ -103,7 +104,8 @@ import { BaseTableComponent } from './components/base/base-table.component';
         InputTextareaModule,
         AutoCompleteModule,
         ConfirmPopupModule,
-        SelectButtonModule
+        SelectButtonModule,
+        InputNumberModule
     ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]

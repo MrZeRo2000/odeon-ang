@@ -35,7 +35,7 @@
         <td>{{item.num | number : '2.0-0'}}</td>
         <td>{{item.title}}</td>
         <td>{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</td>
-        <td style="text-align: right; white-space: nowrap">{{item.size | fileSize}}</td>
+        <td style="text-align: right; white-space: nowrap"><div *ngIf="item.size">{{item.size | fileSize}}</div></td>
         <td style="text-align: right">{{item.bitrate}}</td>
         <td>{{item.fileName}}</td>
         <td>

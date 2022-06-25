@@ -20,6 +20,8 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
 
   CRUDAction = CRUDAction;
 
+  dataSize = 0;
+
   data$: Observable<[CompositionTableItem[], ArtifactEditItem]> | undefined;
 
   deleteAction = this.deleteSubject.asObservable().pipe(
@@ -40,7 +42,11 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
   );
 
   editAction$ = this.editSubject.asObservable().pipe(
-    switchMap(v => iif(() => !!v.id, this.get(v.id), of({success: true, data: {} as CompositionEditItem} as CRUDResult<CompositionEditItem>)) ),
+    switchMap(v =>
+      iif(() => !!v.id,
+        this.get(v.id),
+        of({success: true, data: {artifactId: this.artifactId, num: this.dataSize + 1} as CompositionEditItem} as CRUDResult<CompositionEditItem>))
+    ),
     tap(v => {
       if (v.success) {
         this.displayForm = v.success
@@ -82,6 +88,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
 
   private getTable(id: number): Observable<Array<CompositionTableItem>> {
     return this.compositionService.getTable(id).pipe(
+      tap(v => this.dataSize = v.length),
       catchError(err => {
         this.errorObject = err;
         this.messageService.add({
@@ -139,5 +146,10 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     } else if (event.action === CRUDAction.EA_UPDATE) {
       this.editSubject.next(event.data)
     }
+  }
+
+  override savedEditData(event: any) {
+    super.savedEditData(event);
+    this.data$ = this.getData(this.artifactId as number);
   }
 }
