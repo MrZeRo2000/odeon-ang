@@ -26,9 +26,16 @@
         </form>
 
         <button pButton type="button" label="Compositions" icon="pi pi-list" iconPos="left"
-                class="ml-1 p-button-outlined p-button-secondary"
+                class="ml-4 p-button-outlined p-button-secondary"
                 *ngIf="selectedItem"
                 (click)="onCompositionsButton($event)"
+        >
+        </button>
+
+        <button pButton type="button" label="Media files" icon="pi pi-file" iconPos="left"
+                class="ml-1 p-button-outlined p-button-secondary"
+                *ngIf="selectedItem"
+                (click)="onMediaFilesButton($event)"
         >
         </button>
 

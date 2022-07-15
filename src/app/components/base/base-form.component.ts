@@ -1,10 +1,12 @@
-import {Subject} from "rxjs";
+import {catchError, of, Subject, switchMap, tap} from "rxjs";
 import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {CRUDService} from "../../service/crud.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   template: ``
 })
-export class BaseFormComponent<T> {
+export class BaseFormComponent<T extends { id?: number}> {
 
   submitted = false;
 
@@ -26,7 +28,32 @@ export class BaseFormComponent<T> {
   @Output()
   public onSavedItem: EventEmitter<T> = new EventEmitter();
 
-  constructor() { }
+  saveAction$ = this.saveSubject.asObservable().pipe(
+    switchMap(data => {
+      const action$ = data.id ? this.crudService.update(data) : this.crudService.create(data);
+      const actionName = data.id ? 'updating' : 'creating';
+      return action$.pipe(
+        catchError(err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Error ${actionName}: ${err.error?.message || err.message}`
+          });
+          return of(undefined);
+        })
+      );
+    }),
+    tap(v => {
+      if (!!v) {
+        this.onSavedItem.emit(v);
+      }
+    })
+  );
+
+  constructor(
+    protected messageService: MessageService,
+    protected crudService: CRUDService<T>,
+  ) { }
 
   hideDialog(): void {
     this.submitted = false;

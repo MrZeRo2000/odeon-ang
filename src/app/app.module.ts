@@ -53,6 +53,8 @@ import { CompositionFormComponent } from './components/composition-form/composit
 import { BaseTableComponent } from './components/base/base-table.component';
 import {InputNumberModule} from "primeng/inputnumber";
 import {BaseFormComponent} from "./components/base/base-form.component";
+import { MediaFilesTableComponent } from './components/media-files-table/media-files-table.component';
+import { MediaFileFormComponent } from './components/media-file-form/media-file-form.component';
 
 
 @NgModule({
@@ -77,7 +79,9 @@ import {BaseFormComponent} from "./components/base/base-form.component";
     ArtifactFormComponent,
     CompositionsTableComponent,
     CompositionFormComponent,
-    BaseFormComponent
+    BaseFormComponent,
+    MediaFilesTableComponent,
+    MediaFileFormComponent
   ],
     imports: [
         BrowserModule,

@@ -101,6 +101,10 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
     this.router.navigate([`/compositions/${this.selectedItem?.id}`]);
   }
 
+  onMediaFilesButton(event: any): void {
+    this.router.navigate([`/media-files/${this.selectedItem?.id}`]);
+  }
+
   crudEvent(event: any): void {
     console.log(`CRUD event: ${JSON.stringify(event)}`);
     if (event.action === CRUDAction.EA_DELETE) {

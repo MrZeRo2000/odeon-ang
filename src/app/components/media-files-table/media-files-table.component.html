@@ -1,0 +1,58 @@
+<app-confirm-dialog></app-confirm-dialog>
+
+<ng-template #loadingOrError>
+  <ng-container *ngIf="!errorObject">
+    <app-loading></app-loading>
+  </ng-container>
+</ng-template>
+
+<div *ngIf="data$ | async as data; else loadingOrError">
+
+  <div class="grid">
+    <div class="col-12 md:col-10 lg:col-8">
+      <p-table styleClass="p-datatable-sm" responsiveLayout="scroll" [value]="data[0]" dataKey="id">
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <div class="flex align-items-center justify-content-between text-xl mr-2">{{data[1].artistName}} - {{data[1].title}} ({{data[1].year}}) Media files</div>
+            <div class="flex align-self-end app-crud-panel-small"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:100%">File name</th>
+            <th style="width:0">Format</th>
+            <th style="width:0">Duration</th>
+            <th style="width:0">Size</th>
+            <th style="width:0">Bitrate</th>
+            <th style="width:0"></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.format}}</td>
+            <td>{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</td>
+            <td style="text-align: right; white-space: nowrap"><div *ngIf="item.size">{{item.size | fileSize}}</div></td>
+            <td style="text-align: right">{{item.bitrate}}</td>
+            <td>
+              <div class="app-crud-panel-small">
+                <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+
+      <ng-container *ngIf="deleteAction$ | async"></ng-container>
+
+      <ng-container *ngIf="editAction$ | async as editItem">
+        <app-media-file-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editItem" (onSavedItem)="savedEditData($event)"></app-media-file-form>
+      </ng-container>
+
+    </div>
+  </div>
+
+</div>

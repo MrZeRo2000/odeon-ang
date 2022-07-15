@@ -25,35 +25,13 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
     mediaDuration: [''],
   })
 
-  saveAction$ = this.saveSubject.asObservable().pipe(
-    switchMap(data => {
-      const action$ = data.id ? this.compositionService.update(data) : this.compositionService.create(data);
-      const actionName = data.id ? 'updating' : 'creating';
-      return action$.pipe(
-        catchError(err => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: `Error ${actionName} composition: ${err.error?.message || err.message}`
-          });
-          return of(undefined);
-        })
-      );
-    }),
-    tap(v => {
-      if (!!v) {
-        this.onSavedItem.emit(v);
-      }
-    })
-  );
-
   constructor(
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
+    override messageService: MessageService,
     private compositionService: CompositionService
   ) {
-    super()
+    super(messageService, compositionService)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
