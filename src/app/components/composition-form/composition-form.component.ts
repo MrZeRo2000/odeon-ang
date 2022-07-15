@@ -1,8 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {CompositionEditItem} from "../../model/composition";
 import {FormBuilder, Validators} from "@angular/forms";
-import {ConfirmationService, MessageService} from "primeng/api";
-import {catchError, of, switchMap, tap} from "rxjs";
+import {MessageService} from "primeng/api";
 import {CompositionService} from "../../service/composition.service";
 import {BaseFormComponent} from "../base/base-form.component";
 
@@ -27,7 +26,6 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
 
   constructor(
     private fb: FormBuilder,
-    private confirmationService: ConfirmationService,
     override messageService: MessageService,
     private compositionService: CompositionService
   ) {
