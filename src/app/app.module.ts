@@ -55,6 +55,7 @@ import {InputNumberModule} from "primeng/inputnumber";
 import {BaseFormComponent} from "./components/base/base-form.component";
 import { MediaFilesTableComponent } from './components/media-files-table/media-files-table.component';
 import { MediaFileFormComponent } from './components/media-file-form/media-file-form.component';
+import {MultiSelectModule} from "primeng/multiselect";
 
 
 @NgModule({
@@ -111,7 +112,8 @@ import { MediaFileFormComponent } from './components/media-file-form/media-file-
         AutoCompleteModule,
         ConfirmPopupModule,
         SelectButtonModule,
-        InputNumberModule
+        InputNumberModule,
+        MultiSelectModule
     ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {CRUDService} from "./crud.service";
-import {MediaFileEditItem, MediaFileTableItem} from "../model/media-file";
+import {IdName, MediaFileEditItem, MediaFileTableItem} from "../model/media-file";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {Observable} from "rxjs";
 
@@ -16,4 +16,9 @@ export class MediaFileService extends CRUDService<MediaFileEditItem>{
   getTable(artifactId: number): Observable<Array<MediaFileTableItem>> {
     return this.restDataSource.getResponseData<Array<MediaFileTableItem>>(`media-file/table/${artifactId}`)
   }
+
+  getIdNameTable(artifactId: number): Observable<Array<IdName>> {
+    return this.restDataSource.getResponseData<Array<IdName>>(`media-file/table-id-name/${artifactId}`)
+  }
+
 }

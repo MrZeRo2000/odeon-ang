@@ -4,6 +4,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {CompositionService} from "../../service/composition.service";
 import {BaseFormComponent} from "../base/base-form.component";
+import {IdName} from "../../model/media-file";
 
 @Component({
   selector: 'app-composition-form',
@@ -11,6 +12,9 @@ import {BaseFormComponent} from "../base/base-form.component";
   styleUrls: ['./composition-form.component.scss']
 })
 export class CompositionFormComponent extends BaseFormComponent<CompositionEditItem> implements OnChanges {
+
+  @Input()
+  mediaFileTable: IdName[] = [];
 
   editForm = this.fb.group({
     diskNum: ['1', Validators.required],

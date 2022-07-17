@@ -9,6 +9,8 @@ import {ArtifactService} from "../../service/artifact.service";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {DecimalPipe} from "@angular/common";
 import {BaseTableComponent} from "../base/base-table.component";
+import {IdName} from "../../model/media-file";
+import {MediaFileService} from "../../service/media-file.service";
 
 @Component({
   selector: 'app-compositions-table',
@@ -45,7 +47,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     switchMap(v =>
       iif(() => !!v.id,
         this.get(v.id),
-        of({success: true, data: {artifactId: this.artifactId, num: this.dataSize + 1} as CompositionEditItem} as CRUDResult<CompositionEditItem>))
+        this.getNew(v.id))
     ),
     tap(v => {
       if (v.success) {
@@ -58,7 +60,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
         });
       }
     }),
-    map(v => v.data as CompositionEditItem)
+    map(v => v.data as [CompositionEditItem, IdName[]])
   );
 
   constructor(
@@ -67,7 +69,8 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private compositionService: CompositionService,
-    private artifactService: ArtifactService
+    private artifactService: ArtifactService,
+    private mediaFileService: MediaFileService
   ) {
     super()
   }
@@ -83,7 +86,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
   private getData(id: number): Observable<[CompositionTableItem[], ArtifactEditItem]> {
     return forkJoin([
       this.getTable(id),
-      this.getArtifact(id)
+      this.getArtifact(id),
       ]
     )
   }
@@ -124,8 +127,29 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     )
   }
 
-  private get(id: number): Observable<CRUDResult<CompositionEditItem>> {
-    return this.compositionService.get(id).pipe(
+  private get(id: number): Observable<CRUDResult<[CompositionEditItem, IdName[]]>> {
+    return forkJoin([
+      this.compositionService.get(id),
+      this.mediaFileService.getIdNameTable(this.artifactId as number)
+    ]).pipe(
+      map(v => {return {success: true, data: v as [CompositionEditItem, IdName[]]}}),
+      catchError(err => {
+        return of({success: false, data: err.error?.message || err.message});
+      })
+    )
+  }
+
+  private getNew(id: number): Observable<CRUDResult<[CompositionEditItem, IdName[]]>> {
+    return this.mediaFileService.getIdNameTable(this.artifactId as number).pipe(
+      map(v => {return {success: true, data:[{artifactId: this.artifactId, num: this.dataSize + 1}, v] as [CompositionEditItem, IdName[]]}}),
+      catchError(err => {
+        return of({success: false, data: err.error?.message || err.message});
+      })
+    )
+  }
+
+  private getMediaFileIdNameTable(id: number): Observable<CRUDResult<Array<IdName>>> {
+    return this.mediaFileService.getIdNameTable(id).pipe(
       map(v => {return {success: true, data: v}}),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});
