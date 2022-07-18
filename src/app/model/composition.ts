@@ -15,10 +15,5 @@ export interface CompositionEditItem {
   diskNum: number;
   num: number;
   title: string;
-  duration?: number;
-  mediaName?: string;
-  mediaFormat?: string;
-  mediaSize?: number;
-  mediaBitrate: number;
-  mediaDuration: number;
+  mediaFileIds: number[];
 }

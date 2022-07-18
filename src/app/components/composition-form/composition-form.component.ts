@@ -21,11 +21,7 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
     num: ['1', Validators.required],
     title: ['', Validators.required],
     duration: ['', Validators.required],
-    mediaName: [''],
-    mediaFormat: [''],
-    mediaSize: [''],
-    mediaBitrate: [''],
-    mediaDuration: [''],
+    mediaFileIds: [[]]
   })
 
   constructor(
@@ -46,29 +42,13 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
           "num": compositionProp.currentValue.num?? '1',
           "title": compositionProp.currentValue.title?? '',
           "duration": compositionProp.currentValue.duration?? '',
-          "mediaName": compositionProp.currentValue.mediaName?? '',
-          "mediaFormat": compositionProp.currentValue.mediaFormat?? '',
-          "mediaSize": compositionProp.currentValue.mediaSize?? '',
-          "mediaBitrate": compositionProp.currentValue.mediaBitrate?? '',
-          "mediaDuration": compositionProp.currentValue.mediaDuration?? '',
+          "mediaFileIds": compositionProp.currentValue.mediaFileIds?? []
         })
       }
     }
   }
 
   override validate(): boolean {
-    const mediaFields = ['mediaFormat', 'mediaSize', 'mediaBitrate', 'mediaDuration']
-
-    if (this.editForm.value.mediaName) {
-      mediaFields.forEach(v => {
-        if (!this.editForm.value[v]) {
-          this.editForm.controls[v].setErrors({notNull: true})
-        } else {
-          this.editForm.controls[v].setErrors(null)
-        }
-      })
-    }
-
     return this.editForm.valid;
   }
 
@@ -80,11 +60,7 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
       num: this.editForm.value.num,
       title: this.editForm.value.title,
       duration: this.editForm.value.duration,
-      mediaName: this.editForm.value.mediaName || undefined,
-      mediaFormat: this.editForm.value.mediaFormat || undefined,
-      mediaSize: this.editForm.value.mediaSize || undefined,
-      mediaBitrate: this.editForm.value.mediaBitrate || undefined,
-      mediaDuration: this.editForm.value.mediaDuration || undefined
+      mediaFileIds: this.editForm.value.mediaFileIds,
     } as CompositionEditItem
   }
 }

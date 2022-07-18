@@ -1,47 +1,44 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Composition Edit">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
-      <div class="grid p-fluid">
-        <div class="field">
-          <div class="grid p-fluid">
+      <div class="field">
+        <div class="grid p-fluid">
 
-            <div class="field col-12 mt-2">
-              <label for="mediaFiles">Media files</label>
-              <p-multiSelect [options]="mediaFileTable" optionLabel="name" optionValue="id" id="mediaFiles" formControlName="mediaFiles"></p-multiSelect>
-            </div>
-
-            <div class="field col-12 md:col-6">
-              <label for="diskNum">Disk #</label>
-              <p-inputNumber mode="decimal" [showButtons]="true" inputId="diskNum" [min]="1" [max]="19" id="diskNum" formControlName="diskNum"
-                             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['diskNum'].errors}"
-              >
-              </p-inputNumber>
-            </div>
-
-            <div class="field col-12 md:col-6">
-              <label for="num">Track #</label>
-              <p-inputNumber mode="decimal" [showButtons]="true" inputId="num" [min]="1" [max]="99" id="num" formControlName="num"
-                             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['num'].errors}">
-              </p-inputNumber>
-            </div>
+          <div class="field col-12 mt-2">
+            <label for="mediaFileIds">Media files</label>
+            <p-multiSelect [options]="mediaFileTable" optionLabel="name" optionValue="id" id="mediaFileIds" formControlName="mediaFileIds"></p-multiSelect>
           </div>
 
-          <div class="field">
-            <label for="title">Title</label>
-            <input type="text" pInputText id="title" formControlName="title" required autofocus
-                   [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
-            />
+          <div class="field col-12 md:col-6">
+            <label for="diskNum">Disk #</label>
+            <p-inputNumber mode="decimal" [showButtons]="true" inputId="diskNum" [min]="1" [max]="19" id="diskNum" formControlName="diskNum"
+                           [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['diskNum'].errors}"
+            >
+            </p-inputNumber>
           </div>
 
-          <div class="field">
-            <label for="duration">Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})</label>
-            <input type="number" pInputText id="duration" formControlName="duration"
-                   [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
-            />
+          <div class="field col-12 md:col-6">
+            <label for="num">Track #</label>
+            <p-inputNumber mode="decimal" [showButtons]="true" inputId="num" [min]="1" [max]="99" id="num" formControlName="num"
+                           [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['num'].errors}">
+            </p-inputNumber>
           </div>
         </div>
-      </div>
 
+        <div class="field">
+          <label for="title">Title</label>
+          <input type="text" pInputText id="title" formControlName="title" required autofocus
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
+          />
+        </div>
+
+        <div class="field">
+          <label for="duration">Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})</label>
+          <input type="number" pInputText id="duration" formControlName="duration"
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
+          />
+        </div>
+      </div>
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
