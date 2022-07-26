@@ -56,6 +56,7 @@ import {BaseFormComponent} from "./components/base/base-form.component";
 import { MediaFilesTableComponent } from './components/media-files-table/media-files-table.component';
 import { MediaFileFormComponent } from './components/media-file-form/media-file-form.component';
 import {MultiSelectModule} from "primeng/multiselect";
+import { ArtistLyricsTableComponent } from './components/artist-lyrics-table/artist-lyrics-table.component';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import {MultiSelectModule} from "primeng/multiselect";
     CompositionFormComponent,
     BaseFormComponent,
     MediaFilesTableComponent,
-    MediaFileFormComponent
+    MediaFileFormComponent,
+    ArtistLyricsTableComponent
   ],
     imports: [
         BrowserModule,

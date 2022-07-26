@@ -20,6 +20,10 @@ export class HeaderComponent implements OnInit {
         routerLink: ['/artists']
       },
       {
+        label: "Lyrics",
+        routerLink: ['/lyrics']
+      },
+      {
         label: "Music",
         routerLink: ['/artifacts']
       },

@@ -14,11 +14,11 @@ export class MediaFileService extends CRUDService<MediaFileEditItem>{
   }
 
   getTable(artifactId: number): Observable<Array<MediaFileTableItem>> {
-    return this.restDataSource.getResponseData<Array<MediaFileTableItem>>(`media-file/table/${artifactId}`)
+    return this.restDataSource.getResponseData<Array<MediaFileTableItem>>(`${this.resourceName}/table/${artifactId}`)
   }
 
   getIdNameTable(artifactId: number): Observable<Array<IdName>> {
-    return this.restDataSource.getResponseData<Array<IdName>>(`media-file/table-id-name/${artifactId}`)
+    return this.restDataSource.getResponseData<Array<IdName>>(`${this.resourceName}/table-id-name/${artifactId}`)
   }
 
 }
