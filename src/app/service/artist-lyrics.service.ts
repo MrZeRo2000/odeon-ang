@@ -16,4 +16,8 @@ export class ArtistLyricsService extends CRUDService<ArtistLyricsEditItem> {
   getTable(): Observable<Array<ArtistLyricsTableItem>> {
     return this.restDataSource.getResponseData<Array<ArtistLyricsTableItem>>(`${this.resourceName}/table`);
   }
+
+  getTableByArtistId(artistId: number): Observable<Array<ArtistLyricsTableItem>> {
+    return this.restDataSource.getResponseData<Array<ArtistLyricsTableItem>>(`${this.resourceName}/table/${artistId}`);
+  }
 }

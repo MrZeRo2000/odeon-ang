@@ -6,6 +6,7 @@ import {ArtistLyricsService} from "../../service/artist-lyrics.service";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {catchError, map, Observable, of, tap} from "rxjs";
 import {MediaFileTableItem} from "../../model/media-file";
+import {ActivatedRoute} from "@angular/router";
 
 export interface NameInterface {
   name: string
@@ -17,11 +18,14 @@ export interface NameInterface {
   styleUrls: ['./artist-lyrics-table.component.scss']
 })
 export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsTableItem> implements OnInit {
+  private artistId?: number;
+
   CRUDAction = CRUDAction;
 
   data$?: Observable<[Array<ArtistLyricsTableItem>, NameInterface[]]>;
 
   constructor(
+    private route: ActivatedRoute,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private artistLyricsService: ArtistLyricsService,
@@ -30,11 +34,17 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
   }
 
   ngOnInit(): void {
+    this.artistId = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
+    console.log(`Routes artistId: ${this.artistId} ${!!this.artistId}`)
     this.data$ = this.getData();
   }
 
   private getData(): Observable<[Array<ArtistLyricsTableItem>, NameInterface[]]> {
-    return this.artistLyricsService.getTable().pipe(
+    const table$: Observable<Array<ArtistLyricsTableItem>> = !!this.artistId ?
+      this.artistLyricsService.getTableByArtistId(this.artistId) :
+      this.artistLyricsService.getTable();
+
+    return table$.pipe(
       map(v => {
         return [
           v,

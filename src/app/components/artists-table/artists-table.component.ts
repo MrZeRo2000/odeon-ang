@@ -6,6 +6,7 @@ import {Biography} from "../../model/biography";
 import {BaseComponent} from "../base/base.component";
 import {ArtistEditItem, ArtistTableItem} from "../../model/artists";
 import {CRUDAction, CRUDOperation} from "../../model/crud";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-artists-table',
@@ -85,6 +86,7 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
   globalFilterValue = '';
 
   constructor(
+    private router: Router,
     private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig,
     private messageService: MessageService,
@@ -103,6 +105,10 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
   displayArtistDetail(item: ArtistTableItem) : void {
     this.displayArtistName = item.artistName;
     this.showArtistDetailAction.next(item.detailId as number);
+  }
+
+  displayLyrics(item: ArtistTableItem) : void {
+    this.router.navigate([`lyrics/${item.id}`]).then();
   }
 
   deleteArtist(item: ArtistTableItem) : void {

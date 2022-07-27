@@ -13,6 +13,7 @@ const routes: Routes = [
   {path: 'processing', component: ProcessingComponent, pathMatch: 'full'},
   {path: 'artists', component: ArtistsTableComponent, pathMatch: 'full'},
   {path: 'lyrics', component: ArtistLyricsTableComponent, pathMatch: 'full'},
+  {path: 'lyrics/:id', component: ArtistLyricsTableComponent, pathMatch: 'full'},
   {path: 'artifacts', component: ArtifactsTableComponent, pathMatch: 'full'},
   {path: 'compositions/:id', component: CompositionsTableComponent, pathMatch: 'prefix'},
   {path: 'media-files/:id', component: MediaFilesTableComponent, pathMatch: 'prefix'},
