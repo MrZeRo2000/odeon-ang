@@ -4,8 +4,12 @@ import {ArtistLyricsTableItem} from "../../model/artist-lyrics";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistLyricsService} from "../../service/artist-lyrics.service";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
-import {catchError, map, Observable, of} from "rxjs";
+import {catchError, map, Observable, of, tap} from "rxjs";
 import {MediaFileTableItem} from "../../model/media-file";
+
+export interface NameInterface {
+  name: string
+}
 
 @Component({
   selector: 'app-artist-lyrics-table',
@@ -15,7 +19,7 @@ import {MediaFileTableItem} from "../../model/media-file";
 export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsTableItem> implements OnInit {
   CRUDAction = CRUDAction;
 
-  data$?: Observable<Array<ArtistLyricsTableItem>>;
+  data$?: Observable<[Array<ArtistLyricsTableItem>, NameInterface[]]>;
 
   constructor(
     private messageService: MessageService,
@@ -29,9 +33,13 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
     this.data$ = this.getData();
   }
 
-  private getData(): Observable<Array<ArtistLyricsTableItem>> {
+  private getData(): Observable<[Array<ArtistLyricsTableItem>, NameInterface[]]> {
     return this.artistLyricsService.getTable().pipe(
-      map(v => {return v;}),
+      map(v => {
+        return [
+          v,
+          [... new Set(v.map(v => v.artistName))].map(v => <NameInterface>{name: v})] as [Array<ArtistLyricsTableItem>, NameInterface[]];
+      }),
       catchError(err => {
         this.errorObject = err;
         this.messageService.add({
@@ -39,7 +47,7 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
           summary: 'Error',
           detail: `Error reading lyrics`
         });
-        return of([]);
+        return of([[], []] as [Array<ArtistLyricsTableItem>, NameInterface[]]);
       })
     );
   }

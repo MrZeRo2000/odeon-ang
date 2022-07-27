@@ -38,7 +38,7 @@ import {RippleModule} from "primeng/ripple";
 import {DialogModule} from "primeng/dialog";
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { ArtistFormComponent } from './components/artist-form/artist-form.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import { BiographyFormComponent } from './components/biography-form/biography-form.component';
@@ -115,7 +115,8 @@ import { ArtistLyricsTableComponent } from './components/artist-lyrics-table/art
         ConfirmPopupModule,
         SelectButtonModule,
         InputNumberModule,
-        MultiSelectModule
+        MultiSelectModule,
+        FormsModule
     ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]

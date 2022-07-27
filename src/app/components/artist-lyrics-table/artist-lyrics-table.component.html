@@ -10,7 +10,7 @@
 
   <div class="grid">
     <div class="col-12 md:col-10 lg:col-8">
-      <p-table #dt styleClass="p-datatable-sm" responsiveLayout="scroll" [value]="data"
+      <p-table #dt styleClass="p-datatable-sm" responsiveLayout="scroll" [value]="data[0]"
                [rows]="10" [paginator]="true"
                dataKey="id"
                stateStorage="session" stateKey="artist-lyrics-table-session" [globalFilterFields]="['artistName', 'title']"
@@ -36,7 +36,21 @@
           </tr>
           <tr>
             <th>
+              <!--
               <p-columnFilter type="text" field="artistName"></p-columnFilter>
+              -->
+              <p-columnFilter field="artistName" matchMode="in" [showMenu]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [ngModel]="value" [options]="data[1]" optionLabel="name" optionValue="name" placeholder="All" (onChange)="filter($event.value)" display="chip">
+                    <ng-template let-option pTemplate="item">
+                      <div class="p-multiselect-option">
+                        <span class="ml-1">{{option.name}}</span>
+                      </div>
+                    </ng-template>
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+
             </th>
             <th>
               <p-columnFilter type="text" field="title"></p-columnFilter>
