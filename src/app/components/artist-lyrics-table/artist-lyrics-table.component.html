@@ -8,6 +8,14 @@
 
 <div *ngIf="data$ | async as data; else loadingOrError">
 
+  <div *ngIf="artistLyricsText$ | async as artistLyricsText">
+    <app-lyrics-text-form
+      *ngIf="!!artistLyricsText.text"
+      [(display)]="displayArtistLyricsText"
+      [lyrics]="artistLyricsText"
+    ></app-lyrics-text-form>
+  </div>
+
   <div class="grid">
     <div class="col-12 md:col-10 lg:col-8">
       <p-table #dt styleClass="p-datatable-sm" responsiveLayout="scroll" [value]="data[0]"
@@ -64,7 +72,7 @@
         <ng-template pTemplate="body" let-item>
           <tr>
             <td>{{item.artistName}}</td>
-            <td>{{item.title}}</td>
+            <td><a href="#" (click)="displayLyrics($event, item)"> {{item.title}}</a></td>
             <td>
               <div class="app-crud-panel-small">
                 <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>

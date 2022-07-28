@@ -1,0 +1,7 @@
+<p-dialog [header]="lyrics.title" [(visible)]="displayProp" [modal]="false" position="right" [style]="{width: '50vw'}"
+          [draggable]="false" [resizable]="false">
+  <pre>{{lyrics.text}}</pre>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayProp=false" label="Ok" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>

@@ -11,5 +11,10 @@ export interface ArtistLyricsEditItem {
   text:	string
 }
 
+export interface ArtistLyricsText {
+  artistName:	string,
+  title:	string,
+  text:	string
+}
 
 

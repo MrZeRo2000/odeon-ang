@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {BaseTableComponent} from "../base/base-table.component";
-import {ArtistLyricsTableItem} from "../../model/artist-lyrics";
+import {ArtistLyricsTableItem, ArtistLyricsText} from "../../model/artist-lyrics";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistLyricsService} from "../../service/artist-lyrics.service";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
-import {catchError, map, Observable, of, tap} from "rxjs";
+import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {MediaFileTableItem} from "../../model/media-file";
 import {ActivatedRoute} from "@angular/router";
+import {Biography} from "../../model/biography";
 
 export interface NameInterface {
   name: string
@@ -22,7 +23,35 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
 
   CRUDAction = CRUDAction;
 
+  displayArtistLyricsText = false;
+
   data$?: Observable<[Array<ArtistLyricsTableItem>, NameInterface[]]>;
+
+  private showArtistLyricsTextAction: Subject<ArtistLyricsTableItem> = new Subject();
+
+  artistLyricsText$ = this.showArtistLyricsTextAction.pipe(
+    switchMap(v => {
+      return this.artistLyricsService.getLyricsText(v.id).pipe(
+        map(t => {
+          t.artistName = v.artistName;
+          t.title = v.title;
+          return t;
+        }),
+        catchError(err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Error getting artist lyrics by id ${v.id}: ${err.error?.message || err.message}`
+          })
+          return of({} as ArtistLyricsText);
+        }),
+        tap(v => {
+          this.displayArtistLyricsText = !!v.text;
+          console.log(`Got lyrics info: ${JSON.stringify(v)}`)
+        })
+      )
+    })
+  );
 
   constructor(
     private route: ActivatedRoute,
@@ -81,6 +110,12 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
 
   onFilter(event: any): void {
     this.globalFilterValue = event.filters?.global?.value || '';
+  }
+
+  displayLyrics(event: any, item: ArtistLyricsTableItem): void {
+    event.preventDefault();
+    console.log(`Display lyrics for ${JSON.stringify(item)}`);
+    this.showArtistLyricsTextAction.next(item);
   }
 
 }
