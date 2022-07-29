@@ -7,6 +7,7 @@ export interface ArtistLyricsTableItem {
 export interface ArtistLyricsEditItem {
   id?:	number,
   artistId: number,
+  artistName?: string,
   title:	string,
   text:	string
 }

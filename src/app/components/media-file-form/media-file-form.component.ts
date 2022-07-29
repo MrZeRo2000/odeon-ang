@@ -4,8 +4,6 @@ import {MediaFileEditItem} from "../../model/media-file";
 import {FormBuilder, Validators} from "@angular/forms";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {MediaFileService} from "../../service/media-file.service";
-import {catchError, of, switchMap, tap} from "rxjs";
-import {CompositionEditItem} from "../../model/composition";
 
 @Component({
   selector: 'app-media-file-form',

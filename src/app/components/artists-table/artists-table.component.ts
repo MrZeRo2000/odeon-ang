@@ -140,7 +140,7 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
     return of(operation).pipe(
       switchMap(v => {
         if ((v.action == CRUDAction.EA_DELETE) && !!v.data.id) {
-          return this.artistService.deleteArtist(v.data.id).pipe(
+          return this.artistService.delete(v.data.id).pipe(
             catchError(err => {
                 this.errorObject = err;
                 this.messageService.add({
@@ -152,7 +152,7 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
             })
           );
         } else if (v.action === CRUDAction.EA_CREATE) {
-          return this.artistService.createArtist(v.data as ArtistEditItem).pipe(
+          return this.artistService.create(v.data as ArtistEditItem).pipe(
             catchError(err => {
               this.errorObject = err;
               this.messageService.add({

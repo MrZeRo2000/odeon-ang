@@ -4,7 +4,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {CompositionService} from "../../service/composition.service";
 import {BaseFormComponent} from "../base/base-form.component";
-import {IdName} from "../../model/media-file";
+import {IdName} from "../../model/common";
 
 @Component({
   selector: 'app-composition-form',

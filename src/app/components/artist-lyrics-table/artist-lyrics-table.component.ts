@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {BaseTableComponent} from "../base/base-table.component";
-import {ArtistLyricsTableItem, ArtistLyricsText} from "../../model/artist-lyrics";
+import {ArtistLyricsEditItem, ArtistLyricsTableItem, ArtistLyricsText} from "../../model/artist-lyrics";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistLyricsService} from "../../service/artist-lyrics.service";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
-import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
-import {MediaFileTableItem} from "../../model/media-file";
+import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, tap} from "rxjs";
+import {MediaFileEditItem, MediaFileTableItem} from "../../model/media-file";
 import {ActivatedRoute} from "@angular/router";
 import {Biography} from "../../model/biography";
+import {CompositionEditItem} from "../../model/composition";
+import {IdName} from "../../model/common";
+import {ArtistService} from "../../service/artist.service";
 
 export interface NameInterface {
   name: string
@@ -26,6 +29,43 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
   displayArtistLyricsText = false;
 
   data$?: Observable<[Array<ArtistLyricsTableItem>, NameInterface[]]>;
+
+  deleteAction$ = this.deleteSubject.asObservable().pipe(
+    switchMap(v =>
+      this.delete(v.data.id as number)
+    ),
+    tap(v => {
+      if (v?.success) {
+        this.data$ = this.getData();
+      } else if (!!v) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error deleting artist lyrics: ${v.data}`
+        });
+      }
+    })
+  );
+
+  editAction$ = this.editSubject.asObservable().pipe(
+    switchMap(v =>
+      iif(() => !!v.id,
+        this.getWithArtists(v),
+        this.getNew(v))
+    ),
+    tap(v => {
+      if (v.success) {
+        this.displayForm = v.success
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error getting lyrics details: ${v.data}`
+        });
+      }
+    }),
+    map(v => v.data as [ArtistLyricsEditItem, IdName[]])
+  );
 
   private showArtistLyricsTextAction: Subject<ArtistLyricsTableItem> = new Subject();
 
@@ -57,9 +97,10 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
     private route: ActivatedRoute,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private artistService: ArtistService,
     private artistLyricsService: ArtistLyricsService,
   ) {
-    super()
+    super(artistLyricsService)
   }
 
   ngOnInit(): void {
@@ -118,4 +159,32 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
     this.showArtistLyricsTextAction.next(item);
   }
 
+  private getWithArtists(item: ArtistLyricsTableItem): Observable<CRUDResult<[ArtistLyricsEditItem, IdName[]]>> {
+    return forkJoin([
+      this.artistLyricsService.get(item.id),
+      this.artistService.getIdNameTable()
+    ]).pipe(
+      map(v => {
+        v[0].artistName = item.artistName;
+        return {success: true, data: v as [ArtistLyricsEditItem, IdName[]]}
+      }),
+      catchError(err => {
+        return of({success: false, data: err.error?.message || err.message});
+      })
+    )
+  }
+
+  private getNew(item: ArtistLyricsTableItem): Observable<CRUDResult<[ArtistLyricsEditItem, IdName[]]>> {
+    return this.artistService.getIdNameTable().pipe(
+      map(v => {return {success: true, data:[{}, v] as [ArtistLyricsEditItem, IdName[]]}}),
+      catchError(err => {
+        return of({success: false, data: err.error?.message || err.message});
+      })
+    )
+  }
+
+  override savedEditData(event: any) {
+    super.savedEditData(event);
+    this.data$ = this.getData();
+  }
 }

@@ -9,8 +9,8 @@ import {ArtifactService} from "../../service/artifact.service";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {DecimalPipe} from "@angular/common";
 import {BaseTableComponent} from "../base/base-table.component";
-import {IdName} from "../../model/media-file";
 import {MediaFileService} from "../../service/media-file.service";
+import {IdName} from "../../model/common";
 
 @Component({
   selector: 'app-compositions-table',
@@ -46,7 +46,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
   editAction$ = this.editSubject.asObservable().pipe(
     switchMap(v =>
       iif(() => !!v.id,
-        this.get(v.id),
+        this.getWithMediaFiles(v.id),
         this.getNew(v.id))
     ),
     tap(v => {
@@ -72,7 +72,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     private artifactService: ArtifactService,
     private mediaFileService: MediaFileService
   ) {
-    super()
+    super(mediaFileService);
   }
 
   ngOnInit(): void {
@@ -120,14 +120,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     )
   }
 
-  private delete(id: number): Observable<CRUDResult<void>> {
-    return this.compositionService.delete(id).pipe(
-      map(_ => {return {success: true} as CRUDResult<void>}),
-      catchError(err => of({success: false, data: err.error?.message || err.message}))
-    )
-  }
-
-  private get(id: number): Observable<CRUDResult<[CompositionEditItem, IdName[]]>> {
+  private getWithMediaFiles(id: number): Observable<CRUDResult<[CompositionEditItem, IdName[]]>> {
     return forkJoin([
       this.compositionService.get(id),
       this.mediaFileService.getIdNameTable(this.artifactId as number)

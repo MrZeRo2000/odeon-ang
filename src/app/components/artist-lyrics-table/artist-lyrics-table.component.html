@@ -83,13 +83,11 @@
 
       </p-table>
 
-      <!--
       <ng-container *ngIf="deleteAction$ | async"></ng-container>
 
       <ng-container *ngIf="editAction$ | async as editItem">
-        <app-media-file-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editItem" (onSavedItem)="savedEditData($event)"></app-media-file-form>
+        <app-artist-lyrics-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editItem[0]" [artistTable]="editItem[1]"  (onSavedItem)="savedEditData($event)"></app-artist-lyrics-form>
       </ng-container>
-      -->
 
     </div>
   </div>

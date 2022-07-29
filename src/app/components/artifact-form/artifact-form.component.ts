@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ArtifactEditItem, ARTIFACT_TYPES} from "../../model/artifacts";
 import {FormBuilder, Validators} from "@angular/forms";
-import {ArtistIdName} from "../../model/artists";
 import {catchError, of, Subject, switchMap, tap} from "rxjs";
 import {ArtifactService} from "../../service/artifact.service";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {IdName} from "../../model/common";
 
 @Component({
   selector: 'app-artifact-form',
@@ -28,9 +28,9 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
   artifact: ArtifactEditItem = {} as ArtifactEditItem;
 
   @Input()
-  artists: Array<ArtistIdName> = [];
+  artists: Array<IdName> = [];
 
-  filteredArtists: Array<ArtistIdName> = [];
+  filteredArtists: Array<IdName> = [];
 
   @Output()
   savedArtifactEvent: EventEmitter<ArtifactEditItem> = new EventEmitter();
@@ -50,7 +50,7 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
 
   saveAction$ = this.saveSubject.asObservable().pipe(
     switchMap(data => {
-      const action$ = data.id ? this.artifactService.updateArtifact(data) : this.artifactService.createArtifact(data);
+      const action$ = data.id ? this.artifactService.update(data) : this.artifactService.create(data);
       const actionName = data.id ? 'updating' : 'creating';
       return action$.pipe(
         catchError(err => {

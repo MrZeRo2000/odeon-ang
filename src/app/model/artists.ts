@@ -18,11 +18,6 @@ export interface ArtistEditItem {
   styles?: Array<String>;
 }
 
-export interface ArtistIdName {
-  id: number,
-  name: string
-}
-
 export const ARTIST_TYPES =
   [
     {name: 'Artist', code: 'A'},

@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {BaseTableComponent} from "../base/base-table.component";
 import {MediaFileEditItem, MediaFileTableItem} from "../../model/media-file";
-import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
+import {CRUDAction, CRUDResult} from "../../model/crud";
 import {ActivatedRoute} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {catchError, forkJoin, iif, map, Observable, of, switchMap, tap} from "rxjs";
 import {MediaFileService} from "../../service/media-file.service";
 import {ArtifactEditItem} from "../../model/artifacts";
 import {ArtifactService} from "../../service/artifact.service";
-import {CompositionEditItem, CompositionTableItem} from "../../model/composition";
 
 @Component({
   selector: 'app-media-files-table',
@@ -28,7 +27,7 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
     ),
     tap(v => {
       if (v?.success) {
-        this.data$ = this.getData(this.artifactId as number);
+        this.data$ = this.getData();
       } else if (!!v) {
         this.messageService.add({
           severity: 'error',
@@ -66,21 +65,21 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
     private artifactService: ArtifactService,
     private mediaFileService: MediaFileService,
   ) {
-    super()
+    super(mediaFileService)
   }
 
   ngOnInit(): void {
     this.artifactId = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
     console.log(`Routed with id=${this.artifactId}`)
     if (this.artifactId) {
-      this.data$ = this.getData(this.artifactId);
+      this.data$ = this.getData();
     }
   }
 
-  private getData(id: number): Observable<[MediaFileTableItem[], ArtifactEditItem]> {
+  private getData(): Observable<[MediaFileTableItem[], ArtifactEditItem]> {
     return forkJoin([
-        this.getTable(id),
-        this.getArtifact(id)
+        this.getTable(this.artifactId as number),
+        this.getArtifact(this.artifactId as number)
       ]
     )
   }
@@ -113,22 +112,6 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
     )
   }
 
-  private delete(id: number): Observable<CRUDResult<void>> {
-    return this.mediaFileService.delete(id).pipe(
-      map(_ => {return {success: true} as CRUDResult<void>}),
-      catchError(err => of({success: false, data: err.error?.message || err.message}))
-    )
-  }
-
-  private get(id: number): Observable<CRUDResult<MediaFileEditItem>> {
-    return this.mediaFileService.get(id).pipe(
-      map(v => {return {success: true, data: v}}),
-      catchError(err => {
-        return of({success: false, data: err.error?.message || err.message});
-      })
-    )
-  }
-
   crudEvent(event: any): void {
     if (event.action === CRUDAction.EA_DELETE) {
       this.confirmationService.confirm({
@@ -148,7 +131,7 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
 
   override savedEditData(event: any) {
     super.savedEditData(event);
-    this.data$ = this.getData(this.artifactId as number);
+    this.data$ = this.getData();
   }
 
 }

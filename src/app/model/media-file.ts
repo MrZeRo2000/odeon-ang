@@ -16,8 +16,3 @@ export interface MediaFileEditItem {
   bitrate: number,
   duration: number
 }
-
-export interface IdName {
-  id: number,
-  name: string
-}

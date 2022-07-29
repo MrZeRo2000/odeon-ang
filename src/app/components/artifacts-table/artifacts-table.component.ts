@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtifactService} from "../../service/artifact.service";
 import {FormBuilder} from "@angular/forms";
-import {ARTIST_TYPES, ArtistEditItem, ArtistIdName} from "../../model/artists";
+import {ARTIST_TYPES, ArtistEditItem} from "../../model/artists";
 import {ARTIFACT_TYPES, ArtifactEditItem, ArtifactTableItem} from "../../model/artifacts";
 import {catchError, finalize, forkJoin, iif, map, Observable, of, startWith, Subject, switchMap, tap} from "rxjs";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -9,6 +9,7 @@ import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {ArtistService} from "../../service/artist.service";
 import {Router} from "@angular/router";
 import {BaseTableComponent} from "../base/base-table.component";
+import {IdName} from "../../model/common";
 
 @Component({
   selector: 'app-artifacts-table',
@@ -26,7 +27,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
     artifactTypes: [[ARTIFACT_TYPES[0].code, ARTIFACT_TYPES[1].code]]
   })
 
-  artifactTable$ = (v: any) => this.artifactService.getArtifactTable(v.artistType, v.artifactTypes).pipe(
+  artifactTable$ = (v: any) => this.artifactService.getTable(v.artistType, v.artifactTypes).pipe(
     catchError(err => {
       this.errorObject = err;
       this.messageService.add({
@@ -87,7 +88,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
     private artistService: ArtistService,
     private artifactService: ArtifactService
   ) {
-    super()
+    super(artifactService)
   }
 
   ngOnInit(): void {
@@ -124,7 +125,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
   }
 
   deleteArtifact(id: number): Observable<CRUDResult<void>> {
-    return this.artifactService.deleteArtifact(id).pipe(
+    return this.artifactService.delete(id).pipe(
       map(_ => {return {success: true} as CRUDResult<void>}),
       catchError(err => of({success: false, data: err.error?.message || err.message}))
     )
@@ -148,8 +149,8 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
     )
   }
 
-  getArtists(): Observable<Array<ArtistIdName>> {
-    return this.artistService.getArtistsIdName().pipe(
+  getArtists(): Observable<Array<IdName>> {
+    return this.artistService.getIdNameTable().pipe(
       catchError(err => {
         this.messageService.add({
           severity: 'error',

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {CRUDService} from "./crud.service";
-import {IdName, MediaFileEditItem, MediaFileTableItem} from "../model/media-file";
+import {MediaFileEditItem, MediaFileTableItem} from "../model/media-file";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {Observable} from "rxjs";
+import {IdName} from "../model/common";
 
 @Injectable({
   providedIn: 'root'

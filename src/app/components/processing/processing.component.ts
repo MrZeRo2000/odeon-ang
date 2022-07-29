@@ -113,7 +113,7 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
           artistName: v.value,
           artistType: ARTIST_TYPES[0].code
         }
-        return this.artistService.createArtist(artistData).pipe(
+        return this.artistService.create(artistData).pipe(
           catchError(err => {
             this.messageService.add({
               severity: 'error',
