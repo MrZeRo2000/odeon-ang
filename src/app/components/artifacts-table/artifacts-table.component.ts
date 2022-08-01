@@ -16,7 +16,7 @@ import {IdName} from "../../model/common";
   templateUrl: './artifacts-table.component.html',
   styleUrls: ['./artifacts-table.component.scss']
 })
-export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableItem> implements OnInit {
+export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableItem, [IdName[], ArtifactEditItem]> implements OnInit {
   readonly ARTIST_TYPES =  ARTIST_TYPES;
   readonly ARTIFACT_TYPES = ARTIFACT_TYPES;
 
@@ -52,24 +52,6 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
     tap(v => this.selectedItem = undefined)
   )
 
-  deleteAction$ = this.deleteSubject.asObservable().pipe(
-    switchMap(v =>
-      this.deleteArtifact(v.data.id as number)
-    ),
-    tap(v => console.log(`Got some result: ${JSON.stringify(v)}`)),
-    tap(v => {
-      if (v?.success) {
-        this.filterForm.setValue(this.filterForm.value);
-      } else if (!!v) {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `Error: ${v.data}`
-        });
-      }
-    })
-  );
-
   editAction$ = this.editSubject.asObservable().pipe(
     switchMap(v =>
       forkJoin([
@@ -83,12 +65,37 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
+    messageService: MessageService,
+    confirmationService: ConfirmationService,
     private artistService: ArtistService,
     private artifactService: ArtifactService
   ) {
-    super(artifactService)
+    super(
+      messageService,
+      confirmationService,
+      artifactService,
+      {
+        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.artistName} - ${event.data.title}(${event.data.year})</strong>?`",
+        deleteErrorMessage: "`Error deleting artifact: ${v.data}`",
+        editErrorMessage: "`Error getting artifact details: ${err.error?.message || err.message}`"
+      }
+    )
+  }
+
+  protected loadData(): void {
+    this.filterForm.setValue(this.filterForm.value);
+  }
+
+  protected getEditData(item: ArtifactTableItem): Observable<CRUDResult<[IdName[], ArtifactEditItem]>> {
+    return forkJoin([
+      this.getArtists(),
+      iif(() => Object.keys(item).length === 0, of({} as ArtifactEditItem), this.getArtifact(item.id))
+    ]).pipe(
+      map(v => {return {success: true, data: v as [IdName[], ArtifactEditItem]}}),
+      catchError(err => {
+        return of({success: false, data: err.error?.message || err.message});
+      })
+    )
   }
 
   ngOnInit(): void {
@@ -104,24 +111,6 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
 
   onMediaFilesButton(event: any): void {
     this.router.navigate([`/media-files/${this.selectedItem?.id}`]);
-  }
-
-  crudEvent(event: any): void {
-    console.log(`CRUD event: ${JSON.stringify(event)}`);
-    if (event.action === CRUDAction.EA_DELETE) {
-      this.confirmationService.confirm({
-        message: `Are you sure that you want to delete <strong> ${event.data.artistName} - ${event.data.title}(${event.data.year})</strong>?`,
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          this.deleteSubject.next({action: CRUDAction.EA_DELETE, data: event.data})
-        }
-      });
-    } else if (event.action === CRUDAction.EA_CREATE) {
-      this.editSubject.next({} as ArtifactTableItem)
-    } else if (event.action === CRUDAction.EA_UPDATE) {
-      this.editSubject.next(event.data)
-    }
   }
 
   deleteArtifact(id: number): Observable<CRUDResult<void>> {

@@ -14,29 +14,12 @@ import {ArtifactService} from "../../service/artifact.service";
   templateUrl: './media-files-table.component.html',
   styleUrls: ['./media-files-table.component.scss']
 })
-export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableItem> implements OnInit {
+export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableItem, MediaFileEditItem> implements OnInit {
   private artifactId?: number;
 
   CRUDAction = CRUDAction;
 
   data$?: Observable<[MediaFileTableItem[], ArtifactEditItem]>;
-
-  deleteAction$ = this.deleteSubject.asObservable().pipe(
-    switchMap(v =>
-      this.delete(v.data.id as number)
-    ),
-    tap(v => {
-      if (v?.success) {
-        this.data$ = this.getData();
-      } else if (!!v) {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `Error deleting media file: ${v.data}`
-        });
-      }
-    })
-  );
 
   editAction$ = this.editSubject.asObservable().pipe(
     switchMap(v =>
@@ -60,20 +43,39 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
 
   constructor(
     private route: ActivatedRoute,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
+    messageService: MessageService,
+    confirmationService: ConfirmationService,
     private artifactService: ArtifactService,
     private mediaFileService: MediaFileService,
   ) {
-    super(mediaFileService)
+    super(
+      messageService,
+      confirmationService,
+      mediaFileService,
+      {
+        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.name}</strong>?`",
+        deleteErrorMessage: "`Error deleting media file: ${v.data}`",
+        editErrorMessage: "`Error getting composition details: ${v.data}`"
+      }
+    )
+  }
+
+  protected loadData(): void {
+    if (this.artifactId) {
+      this.data$ = this.getData();
+    }
+  }
+
+  protected getEditData(item: MediaFileTableItem): Observable<CRUDResult<MediaFileEditItem>> {
+    return iif(() => !!item.id,
+      this.get(item.id),
+      of({success: true, data: {artifactId: this.artifactId} as MediaFileEditItem} as CRUDResult<MediaFileEditItem>))
+
   }
 
   ngOnInit(): void {
     this.artifactId = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
     console.log(`Routed with id=${this.artifactId}`)
-    if (this.artifactId) {
-      this.data$ = this.getData();
-    }
   }
 
   private getData(): Observable<[MediaFileTableItem[], ArtifactEditItem]> {
@@ -110,23 +112,6 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
         return of({} as ArtifactEditItem);
       })
     )
-  }
-
-  crudEvent(event: any): void {
-    if (event.action === CRUDAction.EA_DELETE) {
-      this.confirmationService.confirm({
-        message: `Are you sure that you want to delete <strong> ${event.data.name}</strong>?`,
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          this.deleteSubject.next({action: event.action, data: event.data})
-        }
-      });
-    } else if (event.action === CRUDAction.EA_CREATE) {
-      this.editSubject.next({} as MediaFileTableItem)
-    } else if (event.action === CRUDAction.EA_UPDATE) {
-      this.editSubject.next(event.data)
-    }
   }
 
   override savedEditData(event: any) {

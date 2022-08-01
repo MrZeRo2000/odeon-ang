@@ -17,7 +17,7 @@ import {IdName} from "../../model/common";
   templateUrl: './compositions-table.component.html',
   styleUrls: ['./compositions-table.component.scss']
 })
-export class CompositionsTableComponent extends BaseTableComponent<CompositionTableItem> implements OnInit {
+export class CompositionsTableComponent extends BaseTableComponent<CompositionTableItem, [CompositionEditItem, IdName[]]> implements OnInit {
   private artifactId?: number;
 
   CRUDAction = CRUDAction;
@@ -66,21 +66,42 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
   constructor(
     private route: ActivatedRoute,
     private decimalPipe: DecimalPipe,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
+    messageService: MessageService,
+    confirmationService: ConfirmationService,
     private compositionService: CompositionService,
     private artifactService: ArtifactService,
     private mediaFileService: MediaFileService
   ) {
-    super(mediaFileService);
+    super(
+      messageService,
+      confirmationService,
+      mediaFileService,
+      {
+        deleteConfirmation: "`Are you sure that you want to delete <strong> ${this.decimalPipe.transform(event.data.num, '2.0-0')} ${event.data.title}</strong>?`",
+        deleteErrorMessage: "`Error deleting composition: ${v.data}`",
+        editErrorMessage: "`Error getting composition details: ${v.data}`"
+      }
+
+    );
   }
+
+  protected loadData(): void {
+    if (this.artifactId) {
+      this.data$ = this.getData(this.artifactId);
+    }
+  }
+
+  protected getEditData(item: CompositionTableItem): Observable<CRUDResult<[CompositionEditItem, IdName[]]>> {
+    return iif(() => !!item.id,
+      this.getWithMediaFiles(item.id),
+      this.getNew(item.id))
+      ;
+  }
+
 
   ngOnInit(): void {
     this.artifactId = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
     console.log(`Routed with id=${this.artifactId}`)
-    if (this.artifactId) {
-      this.data$ = this.getData(this.artifactId);
-    }
   }
 
   private getData(id: number): Observable<[CompositionTableItem[], ArtifactEditItem]> {
@@ -148,23 +169,6 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
         return of({success: false, data: err.error?.message || err.message});
       })
     )
-  }
-
-  crudEvent(event: any): void {
-    if (event.action === CRUDAction.EA_DELETE) {
-      this.confirmationService.confirm({
-        message: `Are you sure that you want to delete <strong> ${this.decimalPipe.transform(event.data.num, '2.0-0')} ${event.data.title}</strong>?`,
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          this.deleteSubject.next({action: event.action, data: event.data})
-        }
-      });
-    } else if (event.action === CRUDAction.EA_CREATE) {
-      this.editSubject.next({} as CompositionTableItem)
-    } else if (event.action === CRUDAction.EA_UPDATE) {
-      this.editSubject.next(event.data)
-    }
   }
 
   override savedEditData(event: any) {
