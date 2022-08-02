@@ -27,7 +27,6 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
   artistTable$ = this.getArtistTable({action: CRUDAction.EA_READ} as CRUDOperation<ArtistTableItem | ArtistEditItem>)
 
   private showArtistDetailAction: Subject<number> = new Subject();
-  private artistEditAction: Subject<ArtistTableItem> = new Subject();
 
   artistDetail$ = this.showArtistDetailAction.pipe(
     tap(v => {console.log(`Show artist action: ${v}`)}),
@@ -45,6 +44,8 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
       )
     })
   )
+
+  private artistEditAction: Subject<ArtistTableItem> = new Subject();
 
   artistEdit$ = this.artistEditAction.pipe(
     switchMap( v => {

@@ -12,7 +12,7 @@ import {CRUDService} from "./crud.service";
 })
 export class ArtistService extends CRUDService<ArtistEditItem>{
 
-  artistTable$ = this.getArtistTable();
+  artistTable$ = this.getTable();
 
   artistIdNameTable$ = this.getIdNameTable();
 
@@ -20,7 +20,7 @@ export class ArtistService extends CRUDService<ArtistEditItem>{
     super(restDataSource, "artist-category-details")
   }
 
-  getArtistTable(): Observable<Array<ArtistTableItem>> {
+  getTable(): Observable<Array<ArtistTableItem>> {
     return this.restDataSource.getResponseData<Array<ArtistTableItem>>("artist-category/all-with-artists");
   }
 
