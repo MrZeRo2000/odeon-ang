@@ -27,24 +27,6 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
 
   data$?: Observable<[Array<ArtistLyricsTableItem>, NameInterface[]]>;
 
-  editAction$ = this.editSubject.asObservable().pipe(
-    switchMap(v =>
-      this.getEditData(v)
-    ),
-    tap(v => {
-      if (v.success) {
-        this.displayForm = v.success
-      } else {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: eval(this.config.editErrorMessage)
-        });
-      }
-    }),
-    map(v => v.data as [ArtistLyricsEditItem, IdName[]])
-  );
-
   private showArtistLyricsTextAction: Subject<ArtistLyricsTableItem> = new Subject();
 
   artistLyricsText$ = this.showArtistLyricsTextAction.pipe(
@@ -122,8 +104,6 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
       })
     );
   }
-
-
 
   onFilter(event: any): void {
     this.globalFilterValue = event.filters?.global?.value || '';

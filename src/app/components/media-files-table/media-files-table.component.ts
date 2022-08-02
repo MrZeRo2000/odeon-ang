@@ -21,26 +21,6 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
 
   data$?: Observable<[MediaFileTableItem[], ArtifactEditItem]>;
 
-  editAction$ = this.editSubject.asObservable().pipe(
-    switchMap(v =>
-      iif(() => !!v.id,
-        this.get(v.id),
-        of({success: true, data: {artifactId: this.artifactId} as MediaFileEditItem} as CRUDResult<MediaFileEditItem>))
-    ),
-    tap(v => {
-      if (v.success) {
-        this.displayForm = v.success
-      } else {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `Error getting composition details: ${v.data}`
-        });
-      }
-    }),
-    map(v => v.data as MediaFileEditItem)
-  );
-
   constructor(
     private route: ActivatedRoute,
     messageService: MessageService,

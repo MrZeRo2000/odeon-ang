@@ -43,26 +43,6 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     })
   );
 
-  editAction$ = this.editSubject.asObservable().pipe(
-    switchMap(v =>
-      iif(() => !!v.id,
-        this.getWithMediaFiles(v.id),
-        this.getNew(v.id))
-    ),
-    tap(v => {
-      if (v.success) {
-        this.displayForm = v.success
-      } else {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `Error getting composition details: ${v.data}`
-        });
-      }
-    }),
-    map(v => v.data as [CompositionEditItem, IdName[]])
-  );
-
   constructor(
     private route: ActivatedRoute,
     private decimalPipe: DecimalPipe,

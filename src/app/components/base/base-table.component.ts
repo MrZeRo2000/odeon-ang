@@ -2,7 +2,8 @@ import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {CRUDService} from "../../service/crud.service";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {ArtistLyricsTableItem} from "../../model/artist-lyrics";
+import {ArtistLyricsEditItem, ArtistLyricsTableItem} from "../../model/artist-lyrics";
+import {IdName} from "../../model/common";
 
 export interface BaseTableConfig {
   deleteConfirmation: string,
@@ -40,6 +41,24 @@ export abstract class BaseTableComponent<T extends {id?: number}, E> {
   );
 
   protected editSubject: Subject<T> = new Subject();
+
+  editAction$ = this.editSubject.asObservable().pipe(
+    switchMap(v =>
+      this.getEditData(v)
+    ),
+    tap(v => {
+      if (v.success) {
+        this.displayForm = v.success
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: eval(this.config.editErrorMessage)
+        });
+      }
+    }),
+    map(v => v.data as E)
+  );
 
   protected constructor(
     protected messageService: MessageService,

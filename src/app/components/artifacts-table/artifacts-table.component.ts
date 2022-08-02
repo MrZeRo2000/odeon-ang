@@ -52,16 +52,6 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
     tap(v => this.selectedItem = undefined)
   )
 
-  editAction$ = this.editSubject.asObservable().pipe(
-    switchMap(v =>
-      forkJoin([
-        this.getArtists(),
-        iif(() => Object.keys(v).length === 0, of({} as ArtifactEditItem), this.getArtifact(v.id))
-      ])
-    ),
-    tap(v => {this.displayForm = v[1].id !== -1 && v[0].length > 0;})
-  )
-
   constructor(
     private router: Router,
     private fb: FormBuilder,
