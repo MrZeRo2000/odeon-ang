@@ -21,8 +21,6 @@ export interface NameInterface {
 export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsTableItem, [ArtistLyricsEditItem, IdName[]]> implements OnInit {
   private artistId?: number;
 
-  CRUDAction = CRUDAction;
-
   displayArtistLyricsText = false;
 
   data$?: Observable<[Array<ArtistLyricsTableItem>, NameInterface[]]>;

@@ -20,8 +20,6 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
   readonly ARTIST_TYPES =  ARTIST_TYPES;
   readonly ARTIFACT_TYPES = ARTIFACT_TYPES;
 
-  CRUDAction = CRUDAction;
-
   filterForm = this.fb.group({
     artistType: [ARTIST_TYPES[0].code],
     artifactTypes: [[ARTIFACT_TYPES[0].code, ARTIFACT_TYPES[1].code]]

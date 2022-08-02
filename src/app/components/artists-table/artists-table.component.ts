@@ -1,30 +1,25 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ArtistService} from "../../service/artist.service";
-import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
+import {catchError, iif, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {Biography} from "../../model/biography";
 import {BaseComponent} from "../base/base.component";
 import {ArtistEditItem, ArtistTableItem} from "../../model/artists";
-import {CRUDAction, CRUDOperation} from "../../model/crud";
+import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {Router} from "@angular/router";
+import {BaseTableComponent} from "../base/base-table.component";
 
 @Component({
   selector: 'app-artists-table',
   templateUrl: './artists-table.component.html',
   styleUrls: ['./artists-table.component.scss']
 })
-export class ArtistsTableComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, ArtistEditItem> implements OnInit, AfterViewInit {
 
   displayArtistInfo = false;
   displayArtistName: string = "";
 
-  displayForm = false;
-
-  errorObject: any = undefined;
-
-  private crudOperationAction: Subject<CRUDOperation<ArtistTableItem>> = new Subject();
-
-  artistTable$ = this.getArtistTable({action: CRUDAction.EA_READ} as CRUDOperation<ArtistTableItem | ArtistEditItem>)
+  data$? : Observable<ArtistTableItem[]>;
 
   private showArtistDetailAction: Subject<number> = new Subject();
 
@@ -45,62 +40,85 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
     })
   )
 
-  private artistEditAction: Subject<ArtistTableItem> = new Subject();
-
-  artistEdit$ = this.artistEditAction.pipe(
-    switchMap( v => {
-      if (Object.keys(v).length === 0) {
-        return of({} as ArtistEditItem);
-      } else if (!v.detailId) {
-        return of ({
-          id: v.id,
-          artistName: v.artistName,
-          artistType: v.artistType,
-          artistBiography: '',
-          genre: v.genre,
-          styles: v.styles
-        } as ArtistEditItem);
-      } else {
-        return this.artistService.getArtistDetail(v.detailId as number).pipe(
-          map(d => {return {
-            id: v.id,
-            artistName: v.artistName,
-            artistType: v.artistType,
-            artistBiography: d.biography,
-            genre: v.genre,
-            styles: v.styles
-          } as ArtistEditItem}),
-          catchError(err => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: `Error getting artist details: ${err.error?.message || err.message}`
-            });
-            return of({id: -1} as ArtistEditItem);
-          })
-        )
-      }
-    }),
-    tap(v => {console.log(`Obtained artistEdit: ${JSON.stringify(v)}`); this.displayForm = v.id !== -1;})
-  )
-
-  globalFilterValue = '';
-
   constructor(
     private router: Router,
-    private confirmationService: ConfirmationService,
+    confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig,
-    private messageService: MessageService,
+    messageService: MessageService,
     private artistService: ArtistService
   ) {
-    super();
+    super(
+      messageService,
+      confirmationService,
+      artistService,
+      {
+        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.artistName}</strong>?`",
+        deleteErrorMessage: "`Error deleting artist: ${err.error?.message || err.message}`",
+        editErrorMessage: "`Error getting artist details: ${v.data}`"
+      }
+      );
   }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {
-    this.crudOperationAction.next({action: CRUDAction.EA_READ} as CRUDOperation<ArtistTableItem>);
+    this.loadData();
+  }
+
+  protected loadData(): void {
+    this.data$ = this.getData();
+  }
+
+  private getData(): Observable<ArtistTableItem[]> {
+    return this.artistService.artistTable$.pipe(
+      catchError(err => {
+        this.errorObject = err;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error getting artists: ${err.error?.message || err.message}`
+        });
+        return [];
+      }),
+      map( v => v.map(v => {
+        v.isGenre = !!v.genre;
+        v.isDetail = !!v.detailId;
+        return v;
+      }))
+    );
+  }
+
+  protected getEditData(item: ArtistTableItem): Observable<CRUDResult<ArtistEditItem>> {
+    if (!item.id) {
+      return of({success: true, data: {} as ArtistEditItem});
+    } else if (!item.detailId) {
+      return of ({success: true, data: {
+        id: item.id,
+        artistName: item.artistName,
+        artistType: item.artistType,
+        artistBiography: '',
+        genre: item.genre,
+        styles: item.styles
+      } as ArtistEditItem});
+    } else {
+      return this.artistService.getArtistDetail(item.detailId as number).pipe(
+        map(d => {
+            return {success: true, data: {
+              id: item.id,
+              artistName: item.artistName,
+              artistType: item.artistType,
+              artistBiography: d.biography,
+              genre: item.genre,
+              styles: item.styles
+            } as ArtistEditItem}
+          }
+        ),
+        catchError(err => {
+          return of({success: false, data: err.error?.message || err.message});
+        })
+      )
+    }
   }
 
   displayArtistDetail(item: ArtistTableItem) : void {
@@ -110,86 +128,6 @@ export class ArtistsTableComponent extends BaseComponent implements OnInit, Afte
 
   displayLyrics(item: ArtistTableItem) : void {
     this.router.navigate([`lyrics/${item.id}`]).then();
-  }
-
-  deleteArtist(item: ArtistTableItem) : void {
-    this.confirmationService.confirm({
-      message: `Are you sure that you want to delete <strong> ${item.artistName}</strong>?`,
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.artistTable$ = this.getArtistTable({action: CRUDAction.EA_DELETE, data: item});
-      }
-    });
-  }
-
-  editArtist(item: ArtistTableItem) : void {
-    this.artistEditAction.next(item);
-  }
-
-  newArtist(): void {
-    this.artistEditAction.next({} as ArtistTableItem);
-  }
-
-  saveArtist(item: ArtistEditItem): void {
-    console.log(`Saving ${JSON.stringify(item)}`);
-    //const action = item.id ? CRUDAction.EA_UPDATE: CRUDAction.EA_CREATE;
-    this.artistTable$ = this.getArtistTable({action: CRUDAction.EA_READ, data: item});
-  }
-
-  getArtistTable(operation: CRUDOperation<ArtistTableItem | ArtistEditItem>): Observable<ArtistTableItem[]> {
-    return of(operation).pipe(
-      switchMap(v => {
-        if ((v.action == CRUDAction.EA_DELETE) && !!v.data.id) {
-          return this.artistService.delete(v.data.id).pipe(
-            catchError(err => {
-                this.errorObject = err;
-                this.messageService.add({
-                  severity: 'error',
-                  summary: 'Error',
-                  detail: `Error deleting artist: ${err.error?.message || err.message}`
-                });
-              return of(undefined);
-            })
-          );
-        } else if (v.action === CRUDAction.EA_CREATE) {
-          return this.artistService.create(v.data as ArtistEditItem).pipe(
-            catchError(err => {
-              this.errorObject = err;
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: `Error creating artist: ${err.error?.message || err.message}`
-              });
-              return of(undefined);
-            })
-          );
-        } else {
-          return of(CRUDAction.EA_READ);
-        }
-      }),
-      switchMap(v => {
-          console.log(`Requesting with ${v}`);
-          return this.artistService.artistTable$.pipe(
-            catchError(err => {
-              this.errorObject = err;
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: `Error getting artists: ${err.error?.message || err.message}`
-              });
-              return [];
-            }),
-            map( v => v.map(v => {
-              v.isGenre = !!v.genre;
-              v.isDetail = !!v.detailId;
-              return v;
-            }))
-          )
-        }
-      ),
-      tap(v => console.log(`Returned ${JSON.stringify(v)}`))
-    )
   }
 
   onFilter(event: any): void {

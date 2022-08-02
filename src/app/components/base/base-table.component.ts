@@ -12,6 +12,7 @@ export interface BaseTableConfig {
 }
 
 export abstract class BaseTableComponent<T extends {id?: number}, E> {
+  CRUDAction = CRUDAction;
 
   errorObject: any = undefined;
 

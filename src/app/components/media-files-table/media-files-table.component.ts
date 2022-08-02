@@ -17,8 +17,6 @@ import {ArtifactService} from "../../service/artifact.service";
 export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableItem, MediaFileEditItem> implements OnInit {
   private artifactId?: number;
 
-  CRUDAction = CRUDAction;
-
   data$?: Observable<[MediaFileTableItem[], ArtifactEditItem]>;
 
   constructor(

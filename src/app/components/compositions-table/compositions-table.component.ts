@@ -20,8 +20,6 @@ import {IdName} from "../../model/common";
 export class CompositionsTableComponent extends BaseTableComponent<CompositionTableItem, [CompositionEditItem, IdName[]]> implements OnInit {
   private artifactId?: number;
 
-  CRUDAction = CRUDAction;
-
   dataSize = 0;
 
   data$: Observable<[CompositionTableItem[], ArtifactEditItem]> | undefined;
