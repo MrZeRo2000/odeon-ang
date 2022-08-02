@@ -86,7 +86,7 @@
       <ng-container *ngIf="deleteAction$ | async"></ng-container>
 
       <ng-container *ngIf="editAction$ | async as editItem">
-        <app-artist-lyrics-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editItem[0]" [artistTable]="editItem[1]"  (onSavedItem)="savedEditData($event)"></app-artist-lyrics-form>
+        <app-artist-lyrics-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editItem[0]" [artistTable]="editItem[1]" (onSavedItem)="savedEditData($event)"></app-artist-lyrics-form>
       </ng-container>
 
     </div>

@@ -83,7 +83,6 @@ import { ArtistLyricsFormComponent } from './components/artist-lyrics-form/artis
     ArtifactFormComponent,
     CompositionsTableComponent,
     CompositionFormComponent,
-    BaseFormComponent,
     MediaFilesTableComponent,
     MediaFileFormComponent,
     ArtistLyricsTableComponent,

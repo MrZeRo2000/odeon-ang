@@ -6,11 +6,9 @@ import {MessageService} from "primeng/api";
 @Component({
   template: ``
 })
-export class BaseFormComponent<T extends { id?: number}> {
+export abstract class BaseFormComponent<T extends { id?: number}> {
 
   submitted = false;
-
-  protected saveSubject: Subject<T> = new Subject<T>();
 
   @Input()
   public display: boolean = false;
@@ -27,6 +25,8 @@ export class BaseFormComponent<T extends { id?: number}> {
 
   @Output()
   public onSavedItem: EventEmitter<T> = new EventEmitter();
+
+  protected saveSubject: Subject<T> = new Subject<T>();
 
   saveAction$ = this.saveSubject.asObservable().pipe(
     switchMap(data => {
@@ -50,7 +50,7 @@ export class BaseFormComponent<T extends { id?: number}> {
     })
   );
 
-  constructor(
+  protected constructor(
     protected messageService: MessageService,
     protected crudService: CRUDService<T>,
   ) { }
@@ -64,9 +64,7 @@ export class BaseFormComponent<T extends { id?: number}> {
     return true;
   }
 
-  createSavedItem(): T {
-    return {} as T
-  }
+  abstract createSavedItem(): T;
 
   save() : void {
     this.submitted = true;

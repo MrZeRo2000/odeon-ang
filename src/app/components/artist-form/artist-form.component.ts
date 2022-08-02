@@ -1,57 +1,31 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ArtistEditItem, ArtistTableItem, ARTIST_TYPES} from "../../model/artists";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {BaseComponent} from "../base/base.component";
-import {catchError, map, of, Subject, switchMap, takeUntil, tap} from "rxjs";
+import {FormBuilder, Validators} from "@angular/forms";
 import {ENTER} from "@angular/cdk/keycodes";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistService} from "../../service/artist.service";
+import {BaseFormComponent} from "../base/base-form.component";
 
 @Component({
   selector: 'app-artist-form',
   templateUrl: './artist-form.component.html',
   styleUrls: ['./artist-form.component.scss']
 })
-export class ArtistFormComponent extends BaseComponent implements OnInit, OnChanges {
+export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> implements OnChanges {
   artistTypes =  ARTIST_TYPES;
-
-  @Input()
-  display: boolean = false;
-  @Output()
-  displayChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  public get displayProp() { return this.display; }
-  public set displayProp(newValue) {
-    this.displayChange.emit(newValue);
-  }
 
   editForm = this.fb.group({
     artistName: ['', Validators.required],
     artistType: [ARTIST_TYPES[0].code],
     biography: [''],
-    genre: [''],
+    genre: ['', Validators.required],
     styles: [[]]
   })
-
-  editFormChanges$ = this.editForm.valueChanges.pipe(
-    tap(v => {
-      console.log(`From tap: ${JSON.stringify(v)}`);
-      this.submitted = false;
-    })
-  );
-
-  submitted = false;
 
   displayBiography = false;
 
   @Input()
-  artist: ArtistEditItem = {} as ArtistEditItem;
-
-  @Input()
-  table: Array<ArtistTableItem> = [];
-
-  @Output()
-  saveArtistEvent: EventEmitter<ArtistEditItem> = new EventEmitter();
+  artistTable: Array<ArtistTableItem> = [];
 
   genres: Array<String> = [];
   filteredGenres: Array<String> = [];
@@ -59,45 +33,18 @@ export class ArtistFormComponent extends BaseComponent implements OnInit, OnChan
   styles: Array<String> = [];
   filteredStyles: Array<String> = [];
 
-  private saveAction: Subject<ArtistEditItem> = new Subject<ArtistEditItem>();
-
-  saver$ = this.saveAction.pipe(
-    switchMap(data => {
-      const action$ = data.id ? this.artistService.update(data) : this.artistService.create(data);
-      const actionName = data.id ? 'updating' : 'creating';
-      return action$.pipe(
-        catchError(err => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: `Error ${actionName} artist: ${err.error?.message || err.message}`
-          });
-          return of(undefined);
-        })
-      );
-    }),
-    tap(v => {
-      if (!!v) {
-        this.saveArtistEvent.emit(v);
-      }
-    })
-  )
-
   constructor(
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private artistService: ArtistService
+    messageService: MessageService,
+    artistService: ArtistService
   ) {
-    super();
-  }
-
-  ngOnInit(): void {
+    super(messageService, artistService);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName of Object.keys(changes)) {
-      if (propName == 'artist') {
+      if (propName == 'editItem') {
         const changedProp = changes[propName];
         console.log(`changed artist ${JSON.stringify(changedProp.currentValue)}`);
         this.editForm.setValue({
@@ -111,24 +58,18 @@ export class ArtistFormComponent extends BaseComponent implements OnInit, OnChan
     }
   }
 
-  hideDialog(): void {
-    this.submitted = false;
-    this.displayProp = false;
+  override validate(): boolean {
+    return this.editForm.valid;
   }
 
-  saveArtist(): void {
-    this.submitted = true;
-
-    if (this.editForm.valid) {
-      const artistEditItem: ArtistEditItem = {
-        id: this.artist?.id,
-        artistName: this.editForm.value.artistName,
-        artistType: this.editForm.value.artistType,
-        artistBiography: this.editForm.value.biography || undefined,
-        genre: this.editForm.value.genre,
-        styles: this.editForm.value.styles
-      };
-      this.saveAction.next(artistEditItem);
+  override createSavedItem(): ArtistEditItem {
+    return {
+      id: this.editItem?.id,
+      artistName: this.editForm.value.artistName,
+      artistType: this.editForm.value.artistType,
+      artistBiography: this.editForm.value.biography || undefined,
+      genre: this.editForm.value.genre,
+      styles: this.editForm.value.styles
     }
   }
 
@@ -141,7 +82,7 @@ export class ArtistFormComponent extends BaseComponent implements OnInit, OnChan
   searchGenres(event: any): void {
     const query = event.query.toLowerCase();
     if (this.genres.length == 0) {
-      this.genres = [... new Set(this.table.map(v => v.genre || "").filter(v => !!v))].sort();
+      this.genres = [... new Set(this.artistTable.map(v => v.genre || "").filter(v => !!v))].sort();
     }
 
     this.filteredGenres = this.genres.filter(v => v.toLowerCase().indexOf(query) == 0);
@@ -150,7 +91,7 @@ export class ArtistFormComponent extends BaseComponent implements OnInit, OnChan
   searchStyles(event: any): void {
     const query = event.query.toLowerCase();
     if (this.styles.length == 0) {
-      this.styles = [... new Set(this.table.flatMap(v => v.styles || []).filter(v => !!v))].sort();
+      this.styles = [... new Set(this.artistTable.flatMap(v => v.styles || []).filter(v => !!v))].sort();
     }
 
     this.filteredStyles = this.styles.filter(v => v.toLowerCase().indexOf(query) == 0);
@@ -177,7 +118,6 @@ export class ArtistFormComponent extends BaseComponent implements OnInit, OnChan
           event.target.focus();
         }
       });
-
     }
   }
 }
