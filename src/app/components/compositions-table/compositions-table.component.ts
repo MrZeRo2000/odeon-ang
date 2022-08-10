@@ -79,7 +79,8 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
 
   ngOnInit(): void {
     this.artifactId = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
-    console.log(`Routed with id=${this.artifactId}`)
+    console.log(`Routed with id=${this.artifactId}`);
+    this.loadData();
   }
 
   private getData(id: number): Observable<[CompositionTableItem[], ArtifactEditItem]> {

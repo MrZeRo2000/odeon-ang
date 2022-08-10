@@ -20,6 +20,8 @@ export abstract class BaseTableComponent<T extends {id?: number}, E> {
 
   globalFilterValue = '';
 
+  first: number = 0;
+
   selectedItem?: T;
 
   protected deleteSubject: Subject<CRUDOperation<T>> = new Subject<CRUDOperation<T>>();
@@ -80,7 +82,10 @@ export abstract class BaseTableComponent<T extends {id?: number}, E> {
   protected delete(id: number): Observable<CRUDResult<void>> {
     return this.dataService.delete(id).pipe(
       map(_ => {return {success: true} as CRUDResult<void>}),
-      catchError(err => of({success: false, data: err.error?.message || err.message}))
+      catchError(err => {
+        console.log(`Error:${JSON.stringify(err)}`)
+        return of({success: false, data: err.error?.message || err.message})
+      })
     )
   }
 

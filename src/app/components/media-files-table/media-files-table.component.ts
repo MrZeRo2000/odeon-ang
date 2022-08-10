@@ -54,6 +54,7 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
   ngOnInit(): void {
     this.artifactId = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
     console.log(`Routed with id=${this.artifactId}`)
+    this.loadData();
   }
 
   private getData(): Observable<[MediaFileTableItem[], ArtifactEditItem]> {

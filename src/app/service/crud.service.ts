@@ -6,9 +6,7 @@ export class CRUDService<E> {
   constructor(protected restDataSource: RestDataSourceService, protected resourceName: string) { }
 
   delete(id: number): Observable<true> {
-    return this.restDataSource.deleteResponseData(this.resourceName, id).pipe(
-      map(() => true)
-    );
+    return this.restDataSource.deleteResponseData(this.resourceName, id);
   }
 
   create(data: E): Observable<E> {

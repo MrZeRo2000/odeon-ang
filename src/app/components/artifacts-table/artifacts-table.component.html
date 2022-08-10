@@ -9,7 +9,7 @@
 <div *ngIf="filteredArtifacts$ | async as artifactsTable; else loadingOrError">
 
 
-  <p-table #dt [value]="artifactsTable" [rows]="10" [paginator]="true" dataKey="id" stateStorage="session" stateKey="artifacts-table-session"
+  <p-table #dt [value]="artifactsTable" [rows]="10" [paginator]="true" [(first)]="first" dataKey="id" stateStorage="session" stateKey="artifacts-table-session"
            [globalFilterFields]="['artistName', 'title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedItem"
   >
 
@@ -69,7 +69,7 @@
           <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
         </td>
         <td>
-          <div style="text-align: right; white-space: nowrap">{{item.size | fileSize}}</div>
+          <div style="text-align: right; white-space: nowrap"><span *ngIf="item.size">{{item.size | fileSize}}</span></div>
         </td>
         <td>{{item.artifactTypeName}}</td>
         <td>

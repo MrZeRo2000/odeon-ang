@@ -53,7 +53,7 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
       artistService,
       {
         deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.artistName}</strong>?`",
-        deleteErrorMessage: "`Error deleting artist: ${err.error?.message || err.message}`",
+        deleteErrorMessage: "`Error deleting artist: ${v.data}`",
         editErrorMessage: "`Error getting artist details: ${v.data}`"
       }
       );

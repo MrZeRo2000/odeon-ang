@@ -46,6 +46,11 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
           label: "Artists",
           data: ProcessorType.ARTISTS_IMPORTER,
           leaf: true
+        },
+        {
+          label: "Classics",
+          data: ProcessorType.CLASSICS_IMPORTER,
+          leaf: true
         }
       ]
     },

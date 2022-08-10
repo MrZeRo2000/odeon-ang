@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtifactService} from "../../service/artifact.service";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {ARTIST_TYPES, ArtistEditItem} from "../../model/artists";
 import {ARTIFACT_TYPES, ArtifactEditItem, ArtifactTableItem} from "../../model/artifacts";
 import {catchError, finalize, forkJoin, iif, map, Observable, of, startWith, Subject, switchMap, tap} from "rxjs";
@@ -17,15 +17,18 @@ import {IdName} from "../../model/common";
   styleUrls: ['./artifacts-table.component.scss']
 })
 export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableItem, [IdName[], ArtifactEditItem]> implements OnInit {
+  private static readonly SESSION_KEY = "artifacts-table-filter-form";
+
   readonly ARTIST_TYPES =  ARTIST_TYPES;
   readonly ARTIFACT_TYPES = ARTIFACT_TYPES;
 
   filterForm = this.fb.group({
-    artistType: [ARTIST_TYPES[0].code],
-    artifactTypes: [[ARTIFACT_TYPES[0].code, ARTIFACT_TYPES[1].code]]
+    artistType: [ArtifactsTableComponent.getArtistType()],
+    artifactTypes: [ArtifactsTableComponent.getArtifactTypes()]
   })
 
   artifactTable$ = (v: any) => this.artifactService.getTable(v.artistType, v.artifactTypes).pipe(
+    tap(v => `getting table with ${v}`),
     catchError(err => {
       this.errorObject = err;
       this.messageService.add({
@@ -39,15 +42,23 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
 
   filteredArtifacts$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
+    tap(v => {
+      console.log(`Writing to ${ArtifactsTableComponent.SESSION_KEY}: ${JSON.stringify(v)}`);
+      sessionStorage.setItem(ArtifactsTableComponent.SESSION_KEY, JSON.stringify(v))
+    }),
+    map(v => {return v;}),
     tap(v => console.log(`Reading filtered artifacts, artist type: ${JSON.stringify(v.artistType)}, artifact types: ${JSON.stringify(v.artifactTypes)}`)),
     switchMap(
       v => iif(
-        () =>  v.artifactTypes.length ===0,
+        () =>  !v.artifactTypes,
         of([]),
         this.artifactTable$(v)
       )
     ),
-    tap(v => this.selectedItem = undefined)
+    tap(v => {
+      this.selectedItem = undefined;
+      this.first = 0;
+    })
   )
 
   constructor(
@@ -71,6 +82,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
   }
 
   protected loadData(): void {
+    console.log(`Load data filter value: ${JSON.stringify(this.filterForm.value)}`)
     this.filterForm.setValue(this.filterForm.value);
   }
 
@@ -84,6 +96,43 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
         return of({success: false, data: err.error?.message || err.message});
       })
     )
+  }
+
+  private static getControlsConfig(): {
+    artistType: [string],
+    artifactTypes: [number[]]
+  } {
+    try {
+      const savedState = sessionStorage.getItem(ArtifactsTableComponent.SESSION_KEY);
+      const savedObject = JSON.parse(savedState as string);
+      return {
+        artistType: [savedObject.artistType as string],
+        artifactTypes: [savedObject.artifactTypes as number[]]
+      }
+    } catch (e)  {
+      return {
+        artistType: [ARTIST_TYPES[0].code],
+        artifactTypes: [[ARTIFACT_TYPES[0].code, ARTIFACT_TYPES[1].code]]
+      }
+    }
+  }
+
+  private static getArtistType(): string {
+    const savedState = sessionStorage.getItem(ArtifactsTableComponent.SESSION_KEY);
+    if (savedState) {
+      return JSON.parse(savedState).artistType
+    } else {
+      return ARTIST_TYPES[0].code;
+    }
+  }
+
+  private static getArtifactTypes(): number[] {
+    const savedState = sessionStorage.getItem(ArtifactsTableComponent.SESSION_KEY);
+    if (savedState) {
+      return JSON.parse(savedState).artifactTypes
+    } else {
+      return [ARTIFACT_TYPES[0].code, ARTIFACT_TYPES[1].code];
+    }
   }
 
   ngOnInit(): void {
