@@ -22,10 +22,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
   readonly ARTIST_TYPES =  ARTIST_TYPES;
   readonly ARTIFACT_TYPES = ARTIFACT_TYPES;
 
-  filterForm = this.fb.group({
-    artistType: [ArtifactsTableComponent.getArtistType()],
-    artifactTypes: [ArtifactsTableComponent.getArtifactTypes()]
-  })
+  filterForm = this.fb.group(ArtifactsTableComponent.getControlsConfig())
 
   artifactTable$ = (v: any) => this.artifactService.getTable(v.artistType, v.artifactTypes).pipe(
     tap(v => `getting table with ${v}`),
@@ -56,8 +53,9 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
       )
     ),
     tap(v => {
+      console.log('Setting first to 0')
       this.selectedItem = undefined;
-      this.first = 0;
+      setTimeout(() => {this.first = 0;}, 0)
     })
   )
 
@@ -79,6 +77,10 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
         editErrorMessage: "`Error getting artifact details: ${err.error?.message || err.message}`"
       }
     )
+  }
+
+  getArtistType(): string {
+    return this.filterForm.value.artistType;
   }
 
   protected loadData(): void {
@@ -114,24 +116,6 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
         artistType: [ARTIST_TYPES[0].code],
         artifactTypes: [[ARTIFACT_TYPES[0].code, ARTIFACT_TYPES[1].code]]
       }
-    }
-  }
-
-  private static getArtistType(): string {
-    const savedState = sessionStorage.getItem(ArtifactsTableComponent.SESSION_KEY);
-    if (savedState) {
-      return JSON.parse(savedState).artistType
-    } else {
-      return ARTIST_TYPES[0].code;
-    }
-  }
-
-  private static getArtifactTypes(): number[] {
-    const savedState = sessionStorage.getItem(ArtifactsTableComponent.SESSION_KEY);
-    if (savedState) {
-      return JSON.parse(savedState).artifactTypes
-    } else {
-      return [ARTIFACT_TYPES[0].code, ARTIFACT_TYPES[1].code];
     }
   }
 

@@ -16,7 +16,7 @@
     <ng-template pTemplate="caption">
       <div class="flex">
         <div class="flex align-items-center justify-content-between text-xl mr-2">Artifacts</div>
-        <app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+        <app-crud-panel class="flex align-items-center" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
 
         <form [formGroup]="filterForm">
           <div class="flex ml-2">
@@ -50,8 +50,9 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th>Artist Name</th>
+        <th style="width:20%">Artist Name</th>
         <th>Title</th>
+        <th style="width:20%" *ngIf="getArtistType() == 'C'">Performer Artist Name</th>
         <th style="width:0">Year</th>
         <th style="width:0; text-align: center">Duration</th>
         <th style="width:0; text-align: center">Size</th>
@@ -64,6 +65,7 @@
       <tr [pSelectableRow]="item">
         <td>{{item.artistName}}</td>
         <td>{{item.title}}</td>
+        <td *ngIf="getArtistType() == 'C'">{{item.performerArtistName}}</td>
         <td>{{item.year}}</td>
         <td>
           <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>

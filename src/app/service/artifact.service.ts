@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {map, Observable} from "rxjs";
+import {map, Observable, of} from "rxjs";
 import {ArtifactEditItem, ArtifactTableItem} from "../model/artifacts";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {HttpParams} from "@angular/common/http";
@@ -15,9 +15,13 @@ export class ArtifactService extends CRUDService<ArtifactEditItem>{
   }
 
   getTable(artistTypeCode: string, artifactTypeCodes: Array<string>): Observable<Array<ArtifactTableItem>> {
-    let params: HttpParams = new HttpParams().append("artistTypeCode", artistTypeCode);
-    artifactTypeCodes.forEach(s => params = params.append("artifactTypeCodes", s));
+    if (artifactTypeCodes.length > 0) {
+      let params: HttpParams = new HttpParams().append("artistTypeCode", artistTypeCode);
+      artifactTypeCodes.forEach(s => params = params.append("artifactTypeCodes", s));
 
-    return this.restDataSource.getResponseData<Array<ArtifactTableItem>>(`${this.resourceName}/table`, params);
+      return this.restDataSource.getResponseData<Array<ArtifactTableItem>>(`${this.resourceName}/table`, params);
+    } else {
+      return of([])
+    }
   }
 }
