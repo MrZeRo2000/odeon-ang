@@ -8,6 +8,7 @@ import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, tap}
 import {ActivatedRoute} from "@angular/router";
 import {IdName} from "../../model/common";
 import {ArtistService} from "../../service/artist.service";
+import {ARTIST_TYPES} from "../../model/artists";
 
 export interface NameInterface {
   name: string
@@ -116,7 +117,7 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
   private getWithArtists(item: ArtistLyricsTableItem): Observable<CRUDResult<[ArtistLyricsEditItem, IdName[]]>> {
     return forkJoin([
       this.artistLyricsService.get(item.id),
-      this.artistService.getIdNameTable()
+      this.artistService.getIdNameTable('A')
     ]).pipe(
       map(v => {
         v[0].artistName = item.artistName;
@@ -129,7 +130,7 @@ export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsT
   }
 
   private getNew(item: ArtistLyricsTableItem): Observable<CRUDResult<[ArtistLyricsEditItem, IdName[]]>> {
-    return this.artistService.getIdNameTable().pipe(
+    return this.artistService.getIdNameTable('A').pipe(
       map(v => {return {success: true, data:[{}, v] as [ArtistLyricsEditItem, IdName[]]}}),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});

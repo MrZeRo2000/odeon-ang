@@ -182,7 +182,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
   }
 
   getArtists(): Observable<Array<IdName>> {
-    return this.artistService.getIdNameTable().pipe(
+    return this.artistService.getIdNameTable(this.filterForm.value.artistType).pipe(
       catchError(err => {
         this.messageService.add({
           severity: 'error',

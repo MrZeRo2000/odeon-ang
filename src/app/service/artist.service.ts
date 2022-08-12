@@ -14,7 +14,9 @@ export class ArtistService extends CRUDService<ArtistEditItem>{
 
   artistTable$ = this.getTable();
 
-  artistIdNameTable$ = this.getIdNameTable();
+  private artistIdNameTable$: {
+    [index: string]: Observable<IdName[]>
+  } = {};
 
   constructor(restDataSource: RestDataSourceService) {
     super(restDataSource, "artist-category-details")
@@ -24,14 +26,16 @@ export class ArtistService extends CRUDService<ArtistEditItem>{
     return this.restDataSource.getResponseData<Array<ArtistTableItem>>("artist-category/all-with-artists");
   }
 
-  getIdNameTable(): Observable<Array<IdName>> {
-    if (!this.artistIdNameTable$) {
-      return this.restDataSource.getResponseData<Array<IdName>>("artist/artists/table-id-name").pipe(
-        shareReplay(1)
-      );
-    } else {
-      return this.artistIdNameTable$;
+  getIdNameTable(artistTypeCode: string): Observable<Array<IdName>> {
+    if (!this.artistIdNameTable$[artistTypeCode]) {
+      let params: HttpParams = new HttpParams().append("artistTypeCode", artistTypeCode);
+      this.artistIdNameTable$[artistTypeCode] = this.restDataSource
+        .getResponseData<Array<IdName>>("artist/artists/table-id-name", params)
+        .pipe(
+          shareReplay(1)
+        );
     }
+    return this.artistIdNameTable$[artistTypeCode];
   }
 
   getArtistDetail(id: number): Observable<Biography> {
