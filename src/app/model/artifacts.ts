@@ -1,5 +1,6 @@
 export interface ArtifactTableItem {
   id: number;
+  artistTypeCode: string;
   artifactTypeName: string;
   artistName: string;
   title: string;
@@ -12,6 +13,7 @@ export interface ArtifactTableItem {
 export interface ArtifactEditItem {
   id?: number;
   artifactTypeId: number;
+  artistTypeCode: string;
   artistId: number;
   artistName: string;
   title: string;
@@ -19,7 +21,6 @@ export interface ArtifactEditItem {
   duration?: number;
   size?: number
 }
-
 
 export const ARTIFACT_TYPES =
   [

@@ -3,13 +3,32 @@ import {ArtifactService} from "../../service/artifact.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ARTIST_TYPES, ArtistEditItem} from "../../model/artists";
 import {ARTIFACT_TYPES, ArtifactEditItem, ArtifactTableItem} from "../../model/artifacts";
-import {catchError, finalize, forkJoin, iif, map, Observable, of, startWith, Subject, switchMap, tap} from "rxjs";
+import {
+  catchError,
+  finalize,
+  forkJoin,
+  iif,
+  map,
+  Observable,
+  of,
+  pairwise,
+  startWith,
+  Subject,
+  switchMap,
+  tap
+} from "rxjs";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {ArtistService} from "../../service/artist.service";
 import {Router} from "@angular/router";
 import {BaseTableComponent} from "../base/base-table.component";
 import {IdName} from "../../model/common";
+
+interface FilterControlsConfig
+{
+  artistType: [string],
+  artifactTypes: [number[]]
+}
 
 @Component({
   selector: 'app-artifacts-table',
@@ -39,11 +58,18 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
 
   filteredArtifacts$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
+    startWith(this.filterForm.value),
     tap(v => {
       console.log(`Writing to ${ArtifactsTableComponent.SESSION_KEY}: ${JSON.stringify(v)}`);
       sessionStorage.setItem(ArtifactsTableComponent.SESSION_KEY, JSON.stringify(v))
     }),
-    map(v => {return v;}),
+    pairwise(),
+    map(([o, v]) => {
+      if (o.artistType != v.artistType) {
+        this.first = 0;
+      }
+      return v;
+    }),
     tap(v => console.log(`Reading filtered artifacts, artist type: ${JSON.stringify(v.artistType)}, artifact types: ${JSON.stringify(v.artifactTypes)}`)),
     switchMap(
       v => iif(
@@ -53,9 +79,8 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
       )
     ),
     tap(v => {
-      console.log('Setting first to 0')
+      console.log('End of filteredArtifacts')
       this.selectedItem = undefined;
-      setTimeout(() => {this.first = 0;}, 0)
     })
   )
 
@@ -100,10 +125,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
     )
   }
 
-  private static getControlsConfig(): {
-    artistType: [string],
-    artifactTypes: [number[]]
-  } {
+  private static getControlsConfig(): FilterControlsConfig {
     try {
       const savedState = sessionStorage.getItem(ArtifactsTableComponent.SESSION_KEY);
       const savedObject = JSON.parse(savedState as string);
