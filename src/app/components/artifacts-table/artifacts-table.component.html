@@ -10,7 +10,7 @@
 
 
   <p-table #dt [value]="artifactsTable" [rows]="10" [paginator]="true" [(first)]="first" dataKey="id" stateStorage="session" stateKey="artifacts-table-session"
-           [globalFilterFields]="['artistName', 'performerArtistName', '  title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedItem"
+           [globalFilterFields]="['artistName', 'performerArtistName', 'title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedItem"
   >
 
     <ng-template pTemplate="caption">
