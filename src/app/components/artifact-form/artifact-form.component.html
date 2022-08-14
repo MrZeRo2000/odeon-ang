@@ -23,6 +23,23 @@
       </div>
 
       <div class="field">
+        <label for="performerArtistId">Performer Artist</label>
+        <p-autoComplete
+          [suggestions]="filteredPerformerArtists"
+          (completeMethod)="searchPerformerArtists($event)"
+          id="performerArtistId"
+          formControlName="performerArtistId"
+          dataKey="id"
+          field="name"
+          [multiple]="false"
+          [dropdown]="true"
+          [forceSelection]="true"
+          [autofocus]="true"
+        >
+        </p-autoComplete>
+      </div>
+
+      <div class="field">
         <label for="title">Title</label>
         <input type="text" pInputText id="title" formControlName="title" required
                [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"

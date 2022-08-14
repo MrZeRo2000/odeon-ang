@@ -31,6 +31,7 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
   artists: Array<IdName> = [];
 
   filteredArtists: Array<IdName> = [];
+  filteredPerformerArtists: Array<IdName> = [];
 
   @Output()
   savedArtifactEvent: EventEmitter<ArtifactEditItem> = new EventEmitter();
@@ -40,6 +41,7 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
   editForm = this.fb.group({
     artifactTypeId: ['', Validators.required],
     artistId: ['', Validators.required],
+    performerArtistId: [''],
     title: ['', Validators.required],
     year: [''],
     duration: [''],
@@ -88,6 +90,7 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
         this.editForm.setValue({
           "artifactTypeId": artifactProp.currentValue.artifactTypeId?? ARTIFACT_TYPES[0].code,
           "artistId": artifactProp.currentValue.artistId? {id: artifactProp.currentValue.artistId, name: artifactProp.currentValue.artistName} : '',
+          "performerArtistId": artifactProp.currentValue.performerArtistId? {id: artifactProp.currentValue.performerArtistId, name: artifactProp.currentValue.performerArtistName} : '',
           "title": artifactProp.currentValue.title?? '',
           "year": artifactProp.currentValue.year?? '',
           "duration": artifactProp.currentValue.duration?? '',
@@ -112,6 +115,8 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
         artifactTypeId: this.editForm.value.artifactTypeId,
         artistId: this.editForm.value.artistId.id,
         artistName: this.editForm.value.artistId.name,
+        performerArtistId: this.editForm.value.performerArtistId?.id,
+        performerArtistName: this.editForm.value.performerArtistId?.name,
         title: this.editForm.value.title,
         year: this.editForm.value.year,
         duration: this.editForm.value.duration,
@@ -124,6 +129,12 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
 
   searchArtists(event: any): void {
     const query = event.query.toLowerCase();
-    this.filteredArtists = this.artists.filter(v => v.name.toLowerCase().indexOf(query) == 0);
+    this.filteredArtists = [...this.artists.filter(v => v.name.toLowerCase().indexOf(query) == 0)];
   }
+
+  searchPerformerArtists(event: any): void {
+    const query = event.query.toLowerCase();
+    this.filteredPerformerArtists = [...this.artists.filter(v => v.name.toLowerCase().indexOf(query) == 0)];
+  }
+
 }

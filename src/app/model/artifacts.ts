@@ -16,6 +16,8 @@ export interface ArtifactEditItem {
   artistTypeCode: string;
   artistId: number;
   artistName: string;
+  performerArtistId: number;
+  performerArtistName: string;
   title: string;
   year?: number;
   duration?: number;
