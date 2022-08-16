@@ -55,7 +55,7 @@
   <ng-container *ngIf="deleteAction | async"></ng-container>
 
   <ng-container *ngIf="editAction$ | async as editData">
-    <app-composition-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editData[0]" [mediaFileTable]="editData[1]" (onSavedItem)="savedEditData($event)"></app-composition-form>
+    <app-composition-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editData[0]" [mediaFileTable]="editData[1]" [artistsTable]="editData[2]" [artistTypeCode]="artistTypeCode" (onSavedItem)="savedEditData($event)"></app-composition-form>
   </ng-container>
 
 </div>

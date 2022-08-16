@@ -2,6 +2,10 @@ export interface CompositionTableItem {
   id: number;
   diskNum: number;
   num: number;
+  artistId?: number;
+  artistName?: string;
+  performerArtistId?: number;
+  performerArtistName?: string;
   title: string;
   duration?: number;
   size?: number;
@@ -14,6 +18,10 @@ export interface CompositionEditItem {
   artifactId: number;
   diskNum: number;
   num: number;
+  artistId?: number;
+  artistName?: string;
+  performerArtistId?: number;
+  performerArtistName?: string;
   title: string;
   mediaFileIds: number[];
 }

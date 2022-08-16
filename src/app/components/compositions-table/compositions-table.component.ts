@@ -11,18 +11,21 @@ import {DecimalPipe} from "@angular/common";
 import {BaseTableComponent} from "../base/base-table.component";
 import {MediaFileService} from "../../service/media-file.service";
 import {IdName} from "../../model/common";
+import {ArtistService} from "../../service/artist.service";
 
 @Component({
   selector: 'app-compositions-table',
   templateUrl: './compositions-table.component.html',
   styleUrls: ['./compositions-table.component.scss']
 })
-export class CompositionsTableComponent extends BaseTableComponent<CompositionTableItem, [CompositionEditItem, IdName[]]> implements OnInit {
+export class CompositionsTableComponent extends BaseTableComponent<CompositionTableItem, [CompositionEditItem, IdName[], IdName[]]> implements OnInit {
   private artifactId?: number;
+
+  artistTypeCode: string = 'A';
 
   dataSize = 0;
 
-  data$: Observable<[CompositionTableItem[], ArtifactEditItem]> | undefined;
+  data$?: Observable<[CompositionTableItem[], ArtifactEditItem]>;
 
   deleteAction = this.deleteSubject.asObservable().pipe(
     switchMap(v =>
@@ -48,7 +51,8 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     confirmationService: ConfirmationService,
     private compositionService: CompositionService,
     private artifactService: ArtifactService,
-    private mediaFileService: MediaFileService
+    private mediaFileService: MediaFileService,
+    private artistService: ArtistService,
   ) {
     super(
       messageService,
@@ -69,11 +73,20 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     }
   }
 
-  protected getEditData(item: CompositionTableItem): Observable<CRUDResult<[CompositionEditItem, IdName[]]>> {
-    return iif(() => !!item.id,
-      this.getWithMediaFiles(item.id),
-      this.getNew(item.id))
-      ;
+  protected getEditData(item: CompositionTableItem): Observable<CRUDResult<[CompositionEditItem, IdName[], IdName[]]>> {
+    return forkJoin([
+      iif(() => !!item.id,
+        this.compositionService.get(item.id),
+        of({artifactId: this.artifactId, num: this.dataSize + 1})
+      ),
+      this.mediaFileService.getIdNameTable(this.artifactId as number),
+      this.artistService.getIdNameTable(this.artistTypeCode as string)
+    ]).pipe(
+      map(v => {return {success: true, data: v as [CompositionEditItem, IdName[], IdName[]]}}),
+      catchError(err => {
+        return of({success: false, data: err.error?.message || err.message});
+      })
+    )
   }
 
 
@@ -116,6 +129,10 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
           detail: `Error reading artifact`
         });
         return of({} as ArtifactEditItem);
+      }),
+      tap(v => {
+        console.log(`Got artistTypeCode: ${v.artistTypeCode}`);
+        this.artistTypeCode = v.artistTypeCode;
       })
     )
   }
@@ -135,15 +152,6 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
   private getNew(id: number): Observable<CRUDResult<[CompositionEditItem, IdName[]]>> {
     return this.mediaFileService.getIdNameTable(this.artifactId as number).pipe(
       map(v => {return {success: true, data:[{artifactId: this.artifactId, num: this.dataSize + 1}, v] as [CompositionEditItem, IdName[]]}}),
-      catchError(err => {
-        return of({success: false, data: err.error?.message || err.message});
-      })
-    )
-  }
-
-  private getMediaFileIdNameTable(id: number): Observable<CRUDResult<Array<IdName>>> {
-    return this.mediaFileService.getIdNameTable(id).pipe(
-      map(v => {return {success: true, data: v}}),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});
       })

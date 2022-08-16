@@ -25,6 +25,40 @@
           </div>
         </div>
 
+        <div class="field" *ngIf="artistTypeCode === 'C'">
+          <label for="artistId">Artist</label>
+          <p-autoComplete
+            [suggestions]="filteredArtists"
+            (completeMethod)="searchArtists($event)"
+            id="artistId"
+            formControlName="artistId"
+            dataKey="id"
+            field="name"
+            [multiple]="false"
+            [dropdown]="true"
+            [forceSelection]="true"
+            [autofocus]="true"
+          >
+          </p-autoComplete>
+        </div>
+
+        <div class="field" *ngIf="artistTypeCode === 'C'">
+          <label for="performerArtistId">Performer Artist</label>
+          <p-autoComplete
+            [suggestions]="filteredPerformerArtists"
+            (completeMethod)="searchPerformerArtists($event)"
+            id="performerArtistId"
+            formControlName="performerArtistId"
+            dataKey="id"
+            field="name"
+            [multiple]="false"
+            [dropdown]="true"
+            [forceSelection]="true"
+            [autofocus]="true"
+          >
+          </p-autoComplete>
+        </div>
+
         <div class="field">
           <label for="title">Title</label>
           <input type="text" pInputText id="title" formControlName="title" required autofocus
