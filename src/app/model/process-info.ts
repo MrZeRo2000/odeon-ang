@@ -4,7 +4,8 @@ export enum ProcessorType {
   LA_LOADER,
   LA_VALIDATOR,
   ARTISTS_IMPORTER,
-  CLASSICS_IMPORTER
+  CLASSICS_IMPORTER,
+  CLASSICS_VALIDATOR
 }
 
 export const PROCESSOR_TYPE_NAMES : {[processorType: number] : string} = {
@@ -13,7 +14,8 @@ export const PROCESSOR_TYPE_NAMES : {[processorType: number] : string} = {
   [ProcessorType.LA_LOADER]: "LA Load",
   [ProcessorType.LA_VALIDATOR]: "LA Validate",
   [ProcessorType.ARTISTS_IMPORTER]: "Artists Import",
-  [ProcessorType.CLASSICS_IMPORTER]: "Classics importer"
+  [ProcessorType.CLASSICS_IMPORTER]: "Classics importer",
+  [ProcessorType.CLASSICS_VALIDATOR]: "Classics validator",
 }
 
 export enum ProcessingStatus {

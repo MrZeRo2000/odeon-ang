@@ -7,7 +7,23 @@
     </p-tree>
   </div>
   <div class="lg:col-9 md:col-12 col-12" *ngIf="pi.processingStatus">
-    <p-panel header="{{pi.processorType | processorTypeName}}" >
+    <p-panel>
+      <ng-template pTemplate="header">
+          <div class="flex justify-content-start p-panel-title" style="order:0">{{pi.processorType | processorTypeName}}</div>
+          <div class="flex justify-content-end flex-grow-1" *ngIf="pi.processingStatus !== PROGRESS_STATUS">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-refresh"
+              class="p-button-rounded p-button-secondary p-button-outlined"
+              (click)="onRefreshButton($event, pi)"
+              >
+            </button>
+          </div>
+      </ng-template>
+    <!--
+    <p-panel header="{{pi.processorType | processorTypeName}}"  p-panel-title >
+    -->
       <p-table [value]="pi.progressDetails || []" styleClass="p-datatable-sm" responsiveLayout="scroll">
         <ng-template pTemplate="header">
           <tr>

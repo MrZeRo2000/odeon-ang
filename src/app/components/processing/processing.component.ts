@@ -66,6 +66,11 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
           label: "LA",
           data: ProcessorType.LA_VALIDATOR,
           leaf: true
+        },
+        {
+          label: "Classics",
+          data: ProcessorType.CLASSICS_VALIDATOR,
+          leaf: true
         }
       ]
     },
@@ -212,6 +217,11 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
         this.action.next(processingAction);
       }
     });
+  }
+
+  onRefreshButton(event: any, pi: ProcessInfo) : void {
+    event.preventDefault();
+    this.action.next(ProcessorType[pi.processorType as keyof typeof ProcessorType]);
   }
 
 }
