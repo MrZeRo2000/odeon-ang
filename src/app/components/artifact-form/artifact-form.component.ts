@@ -5,6 +5,7 @@ import {catchError, of, Subject, switchMap, tap} from "rxjs";
 import {ArtifactService} from "../../service/artifact.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {IdName} from "../../model/common";
+import {ENTER} from "@angular/cdk/keycodes";
 
 @Component({
   selector: 'app-artifact-form',
@@ -30,6 +31,9 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
   @Input()
   artists: Array<IdName> = [];
 
+  @Input()
+  artistTypeCode: string = 'A';
+
   filteredArtists: Array<IdName> = [];
   filteredPerformerArtists: Array<IdName> = [];
 
@@ -37,6 +41,8 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
   savedArtifactEvent: EventEmitter<ArtifactEditItem> = new EventEmitter();
 
   submitted = false;
+
+  artistInput?: string;
 
   editForm = this.fb.group({
     artifactTypeId: ['', Validators.required],
@@ -136,5 +142,20 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
     const query = event.query.toLowerCase();
     this.filteredPerformerArtists = [...this.artists.filter(v => v.name.toLowerCase().indexOf(query) == 0)];
   }
+
+  /*
+  onArtistKeyUp(event: any): void {
+    if (
+      (event.keyCode == ENTER) &&
+      !this.editForm.value.artistId &&
+      !!this.artistInput &&
+      this.artists.filter(v => v.name.toLowerCase() === this.artistInput?.toLowerCase()).length === 0
+    ) {
+      console.log(`Entered new to add: ${this.artistInput}`)
+    } else {
+      this.artistInput = event.target.value;
+    }
+  }
+   */
 
 }

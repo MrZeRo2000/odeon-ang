@@ -22,7 +22,7 @@
         </p-autoComplete>
       </div>
 
-      <div class="field">
+      <div class="field" *ngIf="artistTypeCode === 'C'">
         <label for="performerArtistId">Performer Artist</label>
         <p-autoComplete
           [suggestions]="filteredPerformerArtists"
