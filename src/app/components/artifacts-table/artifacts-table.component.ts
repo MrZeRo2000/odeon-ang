@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtifactService} from "../../service/artifact.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {UntypedFormBuilder, FormGroup} from "@angular/forms";
 import {ARTIST_TYPES, ArtistEditItem} from "../../model/artists";
 import {ARTIFACT_TYPES, ArtifactEditItem, ArtifactTableItem} from "../../model/artifacts";
 import {
@@ -86,7 +86,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
 
   constructor(
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     messageService: MessageService,
     confirmationService: ConfirmationService,
     private artistService: ArtistService,

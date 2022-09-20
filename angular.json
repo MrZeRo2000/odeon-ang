@@ -111,5 +111,7 @@
       }
     }
   },
-  "defaultProject": "odeon-ang"
+  "cli": {
+    "analytics": false
+  }
 }

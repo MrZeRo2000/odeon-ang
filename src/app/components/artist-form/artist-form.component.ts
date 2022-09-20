@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ArtistEditItem, ArtistTableItem, ARTIST_TYPES} from "../../model/artists";
-import {FormBuilder, Validators} from "@angular/forms";
+import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {ENTER} from "@angular/cdk/keycodes";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistService} from "../../service/artist.service";
@@ -34,7 +34,7 @@ export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> imple
   filteredStyles: Array<String> = [];
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private confirmationService: ConfirmationService,
     messageService: MessageService,
     artistService: ArtistService

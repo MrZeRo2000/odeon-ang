@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ArtifactEditItem, ARTIFACT_TYPES} from "../../model/artifacts";
-import {FormBuilder, Validators} from "@angular/forms";
+import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {catchError, of, Subject, switchMap, tap} from "rxjs";
 import {ArtifactService} from "../../service/artifact.service";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -79,7 +79,7 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
   );
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private artifactService: ArtifactService

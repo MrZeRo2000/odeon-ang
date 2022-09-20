@@ -1,7 +1,7 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {BaseFormComponent} from "../base/base-form.component";
 import {MediaFileEditItem} from "../../model/media-file";
-import {FormBuilder, Validators} from "@angular/forms";
+import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {MediaFileService} from "../../service/media-file.service";
 
@@ -21,7 +21,7 @@ export class MediaFileFormComponent extends BaseFormComponent<MediaFileEditItem>
   })
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private confirmationService: ConfirmationService,
     override messageService: MessageService,
     protected mediaFileService: MediaFileService,
