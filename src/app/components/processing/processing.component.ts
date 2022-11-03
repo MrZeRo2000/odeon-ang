@@ -51,6 +51,11 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
           label: "Classics",
           data: ProcessorType.CLASSICS_IMPORTER,
           leaf: true
+        },
+        {
+          label: "Video music",
+          data: ProcessorType.DV_MUSIC_IMPORTER,
+          leaf: true
         }
       ]
     },
@@ -71,6 +76,11 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
           label: "Classics",
           data: ProcessorType.CLASSICS_VALIDATOR,
           leaf: true
+        },
+        {
+          label: "Video music",
+          data: ProcessorType.DV_MUSIC_VALIDATOR,
+          leaf: true
         }
       ]
     },
@@ -85,6 +95,11 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
         {
           label: "LA",
           data: ProcessorType.LA_LOADER,
+          leaf: true
+        },
+        {
+          label: "Video music media",
+          data: ProcessorType.DV_MUSIC_MEDIA_LOADER,
           leaf: true
         }
       ]

@@ -5,7 +5,10 @@ export enum ProcessorType {
   LA_VALIDATOR,
   ARTISTS_IMPORTER,
   CLASSICS_IMPORTER,
-  CLASSICS_VALIDATOR
+  CLASSICS_VALIDATOR,
+  DV_MUSIC_IMPORTER,
+  DV_MUSIC_MEDIA_LOADER,
+  DV_MUSIC_VALIDATOR,
 }
 
 export const PROCESSOR_TYPE_NAMES : {[processorType: number] : string} = {
@@ -16,6 +19,9 @@ export const PROCESSOR_TYPE_NAMES : {[processorType: number] : string} = {
   [ProcessorType.ARTISTS_IMPORTER]: "Artists Import",
   [ProcessorType.CLASSICS_IMPORTER]: "Classics importer",
   [ProcessorType.CLASSICS_VALIDATOR]: "Classics validator",
+  [ProcessorType.DV_MUSIC_IMPORTER]: "Video music importer",
+  [ProcessorType.DV_MUSIC_MEDIA_LOADER]: "Video music media loader",
+  [ProcessorType.DV_MUSIC_VALIDATOR]: "Video music validator",
 }
 
 export enum ProcessingStatus {
