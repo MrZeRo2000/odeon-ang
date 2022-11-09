@@ -30,3 +30,10 @@ export const ARTIFACT_TYPES =
     {name: 'LA', code: 102}
   ];
 
+export const ARTIFACT_VIDEO_TYPES =
+  [
+    {name: 'Music', code: 201},
+    {name: 'Movies', code: 202},
+    {name: 'Animation', code: 203},
+  ];
+

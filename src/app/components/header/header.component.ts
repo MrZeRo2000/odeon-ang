@@ -28,6 +28,10 @@ export class HeaderComponent implements OnInit {
         routerLink: ['/artifacts']
       },
       {
+        label: "Video",
+        routerLink: ['/artifacts-video']
+      },
+      {
         label: "Processing",
         icon: PrimeIcons.DATABASE,
         routerLink: ['/processing']

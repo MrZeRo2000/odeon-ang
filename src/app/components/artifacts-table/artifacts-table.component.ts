@@ -13,12 +13,11 @@ import {
   of,
   pairwise,
   startWith,
-  Subject,
   switchMap,
   tap
 } from "rxjs";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
+import {CRUDResult} from "../../model/crud";
 import {ArtistService} from "../../service/artist.service";
 import {Router} from "@angular/router";
 import {BaseTableComponent} from "../base/base-table.component";
