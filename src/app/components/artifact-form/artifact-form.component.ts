@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {ArtifactEditItem, ARTIFACT_TYPES} from "../../model/artifacts";
+import {ArtifactEditItem, ARTIFACT_MUSIC_TYPES, ARTIFACT_TYPE_MUSIC, ARTIFACT_TYPE_VIDEO} from "../../model/artifacts";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {catchError, of, Subject, switchMap, tap} from "rxjs";
 import {ArtifactService} from "../../service/artifact.service";
@@ -13,7 +13,11 @@ import {ENTER} from "@angular/cdk/keycodes";
   styleUrls: ['./artifact-form.component.scss']
 })
 export class ArtifactFormComponent implements OnInit, OnChanges {
-  readonly ARTIFACT_TYPES = ARTIFACT_TYPES;
+  readonly ARTIFACT_TYPE_MUSIC = ARTIFACT_TYPE_MUSIC;
+
+  readonly ARTIFACT_TYPE_VIDEO = ARTIFACT_TYPE_VIDEO;
+
+  readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES;
 
   @Input()
   display: boolean = false;
@@ -94,7 +98,7 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
         const artifactProp = changes[propName];
         console.log(`changed artifact ${JSON.stringify(artifactProp.currentValue)}`);
         this.editForm.setValue({
-          "artifactTypeId": artifactProp.currentValue.artifactTypeId?? ARTIFACT_TYPES[0].code,
+          "artifactTypeId": artifactProp.currentValue.artifactTypeId?? ARTIFACT_MUSIC_TYPES[0].code,
           "artistId": artifactProp.currentValue.artistId? {id: artifactProp.currentValue.artistId, name: artifactProp.currentValue.artistName} : '',
           "performerArtistId": artifactProp.currentValue.performerArtistId? {id: artifactProp.currentValue.performerArtistId, name: artifactProp.currentValue.performerArtistName} : '',
           "title": artifactProp.currentValue.title?? '',

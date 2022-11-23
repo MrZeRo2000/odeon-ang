@@ -24,15 +24,26 @@ export interface ArtifactEditItem {
   size?: number
 }
 
-export const ARTIFACT_TYPES =
+export const ARTIFACT_TYPE_MUSIC = 100;
+
+export const ARTIFACT_TYPE_VIDEO = 200;
+
+
+export const ARTIFACT_MUSIC_TYPE_MP3 = 101;
+
+export const ARTIFACT_MUSIC_TYPE_LA = 102;
+
+export const ARTIFACT_MUSIC_TYPES =
   [
-    {name: 'MP3', code: 101},
-    {name: 'LA', code: 102}
+    {name: 'MP3', code: ARTIFACT_MUSIC_TYPE_MP3},
+    {name: 'LA', code: ARTIFACT_MUSIC_TYPE_LA}
   ];
+
+export const ARTIFACT_VIDEO_TYPE_MUSIC = 201;
 
 export const ARTIFACT_VIDEO_TYPES =
   [
-    {name: 'Music', code: 201},
+    {name: 'Music', code: ARTIFACT_VIDEO_TYPE_MUSIC},
     {name: 'Movies', code: 202},
     {name: 'Animation', code: 203},
   ];

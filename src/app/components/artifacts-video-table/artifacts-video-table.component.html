@@ -79,4 +79,8 @@
 
   <ng-container *ngIf="deleteAction$ | async"></ng-container>
 
+  <ng-container *ngIf="editAction$ | async as artifactEdit">
+    <app-artifact-form *ngIf="displayForm" [(display)]="displayForm" [artists]="artifactEdit[0]" [artifact]="artifactEdit[1]" [artistTypeCode]="ARTIST_TYPE_CODE_ARTIST" (savedArtifactEvent)="savedEditData($event)"></app-artifact-form>
+  </ng-container>
+
 </div>

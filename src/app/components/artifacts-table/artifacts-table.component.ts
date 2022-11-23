@@ -2,7 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {ArtifactService} from "../../service/artifact.service";
 import {UntypedFormBuilder, FormGroup} from "@angular/forms";
 import {ARTIST_TYPES, ArtistEditItem} from "../../model/artists";
-import {ARTIFACT_TYPES, ArtifactEditItem, ArtifactTableItem} from "../../model/artifacts";
+import {
+  ARTIFACT_MUSIC_TYPE_MP3,
+  ARTIFACT_MUSIC_TYPES,
+  ArtifactEditItem,
+  ArtifactTableItem
+} from "../../model/artifacts";
 import {
   catchError,
   finalize,
@@ -38,7 +43,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
   private static readonly SESSION_KEY = "artifacts-table-filter-form";
 
   readonly ARTIST_TYPES =  ARTIST_TYPES;
-  readonly ARTIFACT_TYPES = ARTIFACT_TYPES;
+  readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES;
 
   filterForm = this.fb.group(ArtifactsTableComponent.getControlsConfig())
 
@@ -115,7 +120,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
   protected getEditData(item: ArtifactTableItem): Observable<CRUDResult<[IdName[], ArtifactEditItem]>> {
     return forkJoin([
       this.getArtists(),
-      iif(() => Object.keys(item).length === 0, of({} as ArtifactEditItem), this.getArtifact(item.id))
+      iif(() => Object.keys(item).length === 0, of({artifactTypeId: ARTIFACT_MUSIC_TYPE_MP3} as ArtifactEditItem), this.getArtifact(item.id))
     ]).pipe(
       map(v => {return {success: true, data: v as [IdName[], ArtifactEditItem]}}),
       catchError(err => {
@@ -135,7 +140,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
     } catch (e)  {
       return {
         artistType: [ARTIST_TYPES[0].code],
-        artifactTypes: [[ARTIFACT_TYPES[0].code, ARTIFACT_TYPES[1].code]]
+        artifactTypes: [[ARTIFACT_MUSIC_TYPES[0].code, ARTIFACT_MUSIC_TYPES[1].code]]
       }
     }
   }

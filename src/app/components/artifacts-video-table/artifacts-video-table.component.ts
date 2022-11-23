@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {BaseTableComponent} from "../base/base-table.component";
-import {ARTIFACT_VIDEO_TYPES, ArtifactEditItem, ArtifactTableItem} from "../../model/artifacts";
+import {
+  ARTIFACT_MUSIC_TYPE_MP3,
+  ARTIFACT_TYPE_VIDEO, ARTIFACT_VIDEO_TYPE_MUSIC,
+  ARTIFACT_VIDEO_TYPES,
+  ArtifactEditItem,
+  ArtifactTableItem
+} from "../../model/artifacts";
 import {IdName} from "../../model/common";
 import {Router} from "@angular/router";
 import {FormBuilder} from "@angular/forms";
@@ -24,7 +30,11 @@ interface FilterControlsConfig
 export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTableItem, [IdName[], ArtifactEditItem]> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-video-table-filter-form";
 
+  readonly ARTIFACT_TYPE_VIDEO = ARTIFACT_TYPE_VIDEO;
+
   readonly ARTIFACT_VIDEO_TYPES = ARTIFACT_VIDEO_TYPES;
+
+  readonly ARTIST_TYPE_CODE_ARTIST = ARTIST_TYPE_CODE_ARTIST;
 
   filterForm = this.fb.group(ArtifactsVideoTableComponent.getControlsConfig());
 
@@ -109,7 +119,7 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTab
   protected getEditData(item: ArtifactTableItem): Observable<CRUDResult<[IdName[], ArtifactEditItem]>> {
     return forkJoin([
       this.getArtists(),
-      iif(() => Object.keys(item).length === 0, of({} as ArtifactEditItem), this.getArtifact(item.id))
+      iif(() => Object.keys(item).length === 0, of({artifactTypeId: ARTIFACT_VIDEO_TYPE_MUSIC} as ArtifactEditItem), this.getArtifact(item.id))
     ]).pipe(
       map(v => {return {success: true, data: v as [IdName[], ArtifactEditItem]}}),
       catchError(err => {
