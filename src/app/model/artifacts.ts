@@ -39,6 +39,10 @@ export const ARTIFACT_MUSIC_TYPES =
     {name: 'LA', code: ARTIFACT_MUSIC_TYPE_LA}
   ];
 
+export function isArtifactTypeMusic(artifactTypeId: number) : boolean {
+  return ARTIFACT_MUSIC_TYPES.map(v => v['code']).indexOf(artifactTypeId) !== -1;
+}
+
 export const ARTIFACT_VIDEO_TYPE_MUSIC = 201;
 
 export const ARTIFACT_VIDEO_TYPES =
@@ -48,3 +52,6 @@ export const ARTIFACT_VIDEO_TYPES =
     {name: 'Animation', code: 203},
   ];
 
+export function isArtifactTypeVideo(artifactTypeId: number) : boolean {
+  return ARTIFACT_VIDEO_TYPES.map(v => v['code']).indexOf(artifactTypeId) !== -1;
+}

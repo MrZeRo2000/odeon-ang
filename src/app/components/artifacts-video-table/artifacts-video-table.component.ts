@@ -19,7 +19,7 @@ import {ARTIST_TYPE_CODE_ARTIST, ARTIST_TYPES} from "../../model/artists";
 
 interface FilterControlsConfig
 {
-  artifactType: [number]
+  artifactType: number
 }
 
 @Component({
@@ -75,11 +75,11 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTab
       const savedState = sessionStorage.getItem(ArtifactsVideoTableComponent.SESSION_KEY);
       const savedObject = JSON.parse(savedState as string);
       return {
-        artifactType: [savedObject.artifactType as number]
+        artifactType: savedObject.artifactType as number
       }
     } catch (e)  {
       return {
-        artifactType: [ARTIFACT_VIDEO_TYPES[0].code]
+        artifactType: ARTIFACT_VIDEO_TYPES[0].code
       }
     }
   }
@@ -97,7 +97,7 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTab
       confirmationService,
       artifactService,
       {
-        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.artistName} - ${event.data.title}(${event.data.year})</strong>?`",
+        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.artistName} - ${event.data.title}</strong>?`",
         deleteErrorMessage: "`Error deleting artifact: ${v.data}`",
         editErrorMessage: "`Error getting artifact details: ${err.error?.message || err.message}`"
       }
@@ -111,9 +111,17 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTab
     this.globalFilterValue = event.filters?.global?.value || '';
   }
 
+  onCompositionsButton(event: any): void {
+    this.router.navigate([`/compositions/${this.selectedItem?.id}`]);
+  }
+
+  onMediaFilesButton(event: any): void {
+    this.router.navigate([`/media-files/${this.selectedItem?.id}`]);
+  }
+
   protected loadData(): void {
     console.log(`Load data filter value: ${JSON.stringify(this.filterForm.value)}`)
-    //this.filterForm.setValue(this.filterForm.value);
+    this.filterForm.setValue(this.filterForm.value as FilterControlsConfig);
   }
 
   protected getEditData(item: ArtifactTableItem): Observable<CRUDResult<[IdName[], ArtifactEditItem]>> {

@@ -1,7 +1,7 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Artifact Edit">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
-      <div class="field">
+      <div class="field" *ngIf="isSelectableArtifactTypeId(editForm.value['artifactTypeId'])">
         <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="false" formControlName="artifactTypeId"></p-selectButton>
       </div>
 

@@ -4,7 +4,7 @@ import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, tap}
 import {CompositionEditItem, CompositionTableItem} from "../../model/composition";
 import {CompositionService} from "../../service/composition.service";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {ArtifactEditItem} from "../../model/artifacts";
+import {ArtifactEditItem, isArtifactTypeMusic} from "../../model/artifacts";
 import {ArtifactService} from "../../service/artifact.service";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {DecimalPipe} from "@angular/common";
@@ -22,6 +22,8 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
   private artifactId?: number;
 
   artistTypeCode: string = 'A';
+  artifactTypeId?: number;
+  isArtifactTypeMusic = true;
 
   dataSize = 0;
 
@@ -57,7 +59,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     super(
       messageService,
       confirmationService,
-      mediaFileService,
+      compositionService,
       {
         deleteConfirmation: "`Are you sure that you want to delete <strong> ${this.decimalPipe.transform(event.data.num, '2.0-0')} ${event.data.title}</strong>?`",
         deleteErrorMessage: "`Error deleting composition: ${v.data}`",
@@ -131,8 +133,10 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
         return of({} as ArtifactEditItem);
       }),
       tap(v => {
-        console.log(`Got artistTypeCode: ${v.artistTypeCode}`);
+        console.log(`Got artistTypeCode: ${v.artistTypeCode}, artifactTypeId: ${v.artifactTypeId}`);
         this.artistTypeCode = v.artistTypeCode;
+        this.artifactTypeId = v.artifactTypeId;
+        this.isArtifactTypeMusic = isArtifactTypeMusic(this.artifactTypeId);
       })
     )
   }

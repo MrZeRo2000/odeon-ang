@@ -23,5 +23,6 @@ export interface CompositionEditItem {
   performerArtistId?: number;
   performerArtistName?: string;
   title: string;
+  duration?: number;
   mediaFileIds: number[];
 }

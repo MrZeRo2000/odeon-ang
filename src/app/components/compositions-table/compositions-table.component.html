@@ -18,7 +18,7 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th style="width:0">Disk #</th>
+        <th style="width:0" *ngIf="isArtifactTypeMusic">Disk #</th>
         <th style="width:0">Track #</th>
         <th *ngIf="data[1].artistTypeCode === 'C'">Artist</th>
         <th>Title</th>
@@ -33,7 +33,7 @@
 
     <ng-template pTemplate="body" let-item>
       <tr>
-        <td>{{item.diskNum}}</td>
+        <td *ngIf="isArtifactTypeMusic">{{item.diskNum}}</td>
         <td>{{item.num | number : '2.0-0'}}</td>
         <td *ngIf="data[1].artistTypeCode === 'C'">{{item.artistName}}</td>
         <td>{{item.title}}</td>
@@ -55,7 +55,7 @@
   <ng-container *ngIf="deleteAction | async"></ng-container>
 
   <ng-container *ngIf="editAction$ | async as editData">
-    <app-composition-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editData[0]" [mediaFileTable]="editData[1]" [artistsTable]="editData[2]" [artistTypeCode]="artistTypeCode" (onSavedItem)="savedEditData($event)"></app-composition-form>
+    <app-composition-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editData[0]" [mediaFileTable]="editData[1]" [artistsTable]="editData[2]" [artistTypeCode]="artistTypeCode" [artifactTypeId]="artifactTypeId" (onSavedItem)="savedEditData($event)"></app-composition-form>
   </ng-container>
 
 </div>

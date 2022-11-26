@@ -82,6 +82,10 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
     })
   );
 
+  isSelectableArtifactTypeId(artifactTypeId: number) : boolean {
+    return this.ARTIFACT_TYPES.map(v => v['code']).indexOf(artifactTypeId) !== -1;
+  }
+
   constructor(
     private fb: UntypedFormBuilder,
     private confirmationService: ConfirmationService,
@@ -98,7 +102,7 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
         const artifactProp = changes[propName];
         console.log(`changed artifact ${JSON.stringify(artifactProp.currentValue)}`);
         this.editForm.setValue({
-          "artifactTypeId": artifactProp.currentValue.artifactTypeId?? ARTIFACT_MUSIC_TYPES[0].code,
+          "artifactTypeId": artifactProp.currentValue.artifactTypeId,
           "artistId": artifactProp.currentValue.artistId? {id: artifactProp.currentValue.artistId, name: artifactProp.currentValue.artistName} : '',
           "performerArtistId": artifactProp.currentValue.performerArtistId? {id: artifactProp.currentValue.performerArtistId, name: artifactProp.currentValue.performerArtistName} : '',
           "title": artifactProp.currentValue.title?? '',
