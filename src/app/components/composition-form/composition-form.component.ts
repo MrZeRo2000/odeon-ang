@@ -127,15 +127,15 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
     return {
       id: this.editItem?.id,
       artifactId: this.editItem?.artifactId,
-      diskNum: this.isArtifactTypeMusic ? this.editForm.value['diskNum'] : null,
-      num: this.editForm.value['num'],
-      artistId: this.editForm.value['artistId']?.id,
-      artistName: this.editForm.value['artistId']?.name,
-      performerArtistId: this.editForm.value['performerArtistId']?.id,
-      performerArtistName: this.editForm.value['performerArtistId']?.name,
-      title: this.editForm.value['title'],
-      duration: this.editForm.value['duration'],
-      mediaFileIds: this.editForm.value['mediaFileIds'],
+      diskNum: this.isArtifactTypeMusic ? this.editForm.value.diskNum : null,
+      num: this.editForm.value.num,
+      artistId: this.editForm.value.artistId?.id,
+      artistName: this.editForm.value.artistId?.name,
+      performerArtistId: this.editForm.value.performerArtistId?.id,
+      performerArtistName: this.editForm.value.performerArtistId?.name,
+      title: this.editForm.value.title,
+      duration: this.editForm.value.duration,
+      mediaFileIds: this.editForm.value.mediaFileIds,
     } as CompositionEditItem
   }
 
