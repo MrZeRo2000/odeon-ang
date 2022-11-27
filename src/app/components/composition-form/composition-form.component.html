@@ -72,6 +72,13 @@
                  [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
           />
         </div>
+
+        <div class="field">
+          <label for="dvType">Video Type</label>
+          <p-dropdown id="dvType" [options]="DV_TYPES" optionLabel="name" optionValue="id" formControlName="dvTypeId">
+          </p-dropdown>
+        </div>
+
       </div>
     </form>
   </ng-template>

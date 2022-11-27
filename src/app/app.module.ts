@@ -60,6 +60,7 @@ import { ArtistLyricsTableComponent } from './components/artist-lyrics-table/art
 import { LyricsTextFormComponent } from './components/lyrics-text-form/lyrics-text-form.component';
 import { ArtistLyricsFormComponent } from './components/artist-lyrics-form/artist-lyrics-form.component';
 import { ArtifactsVideoTableComponent } from './components/artifacts-video-table/artifacts-video-table.component';
+import {DropdownModule} from "primeng/dropdown";
 
 
 @NgModule({
@@ -121,7 +122,8 @@ import { ArtifactsVideoTableComponent } from './components/artifacts-video-table
         SelectButtonModule,
         InputNumberModule,
         MultiSelectModule,
-        FormsModule
+        FormsModule,
+        DropdownModule
     ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]

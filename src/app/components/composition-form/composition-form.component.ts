@@ -7,6 +7,7 @@ import {BaseFormComponent} from "../base/base-form.component";
 import {IdName} from "../../model/common";
 import {ARTIST_TYPES} from "../../model/artists";
 import {isArtifactTypeMusic, isArtifactTypeVideo} from "../../model/artifacts";
+import {DV_TYPES} from "../../model/dvtype";
 
 @Component({
   selector: 'app-composition-form',
@@ -14,6 +15,7 @@ import {isArtifactTypeMusic, isArtifactTypeVideo} from "../../model/artifacts";
   styleUrls: ['./composition-form.component.scss']
 })
 export class CompositionFormComponent extends BaseFormComponent<CompositionEditItem> implements OnChanges, OnInit {
+  DV_TYPES = DV_TYPES;
 
   @Input()
   mediaFileTable: IdName[] = [];
@@ -71,7 +73,7 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
       this.editForm = this.fb.group({
         num: ['1', Validators.required],
         artistId: [''],
-        performerArtistId: [''],
+        dvTypeId: ['', Validators.required],
         title: ['', Validators.required],
         duration: [''],
         mediaFileIds: [[]]
@@ -80,16 +82,13 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
       this.editForm.setValue({
         "num": this.editItem?.num?? '1',
         "artistId": this.editItem?.artistId? {id: this.editItem.artistId, name: this.editItem.artistName} : '',
-        "performerArtistId": this.editItem?.performerArtistId? {id: this.editItem.performerArtistId, name: this.editItem.performerArtistName} : '',
+        "dvTypeId": this.editItem?.dvTypeId?? 8,
         "title": this.editItem?.title?? '',
         "duration": this.editItem?.duration?? '',
         "mediaFileIds": this.editItem?.mediaFileIds?? []
       });
 
     }
-
-
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -133,6 +132,7 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
       artistName: this.editForm.value.artistId?.name,
       performerArtistId: this.editForm.value.performerArtistId?.id,
       performerArtistName: this.editForm.value.performerArtistId?.name,
+      dvTypeId: this.isArtifactTypeVideo ? this.editForm.value.dvTypeId : null,
       title: this.editForm.value.title,
       duration: this.editForm.value.duration,
       mediaFileIds: this.editForm.value.mediaFileIds,
