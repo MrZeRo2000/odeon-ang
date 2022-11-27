@@ -6,6 +6,8 @@ export interface CompositionTableItem {
   artistName?: string;
   performerArtistId?: number;
   performerArtistName?: string;
+  dvTypeId?: number;
+  dvTypeName?: string;
   title: string;
   duration?: number;
   size?: number;

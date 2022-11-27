@@ -4,7 +4,7 @@ import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, tap}
 import {CompositionEditItem, CompositionTableItem} from "../../model/composition";
 import {CompositionService} from "../../service/composition.service";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {ArtifactEditItem, isArtifactTypeMusic} from "../../model/artifacts";
+import {ArtifactEditItem, isArtifactTypeMusic, isArtifactTypeVideo} from "../../model/artifacts";
 import {ArtifactService} from "../../service/artifact.service";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {DecimalPipe} from "@angular/common";
@@ -24,6 +24,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
   artistTypeCode: string = 'A';
   artifactTypeId?: number;
   isArtifactTypeMusic = true;
+  isArtifactTypeVideo = false;
 
   dataSize = 0;
 
@@ -137,6 +138,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
         this.artistTypeCode = v.artistTypeCode;
         this.artifactTypeId = v.artifactTypeId;
         this.isArtifactTypeMusic = isArtifactTypeMusic(this.artifactTypeId);
+        this.isArtifactTypeVideo = isArtifactTypeVideo(this.artifactTypeId);
       })
     )
   }
