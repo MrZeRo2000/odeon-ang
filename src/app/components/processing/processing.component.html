@@ -3,7 +3,7 @@
 <div class="grid" *ngIf="processInfo$ | async as pi">
   <div [ngClass]="pi.processingStatus ? 'lg:col-3 md:col-12 col-12' : 'col-12'">
     <p-tree [value]="treeValues" selectionMode="single"
-            (onNodeSelect)="nodeSelect($event)">
+            (onNodeSelect)="nodeSelect($event, pi.processingStatus)">
     </p-tree>
   </div>
   <div class="lg:col-9 md:col-12 col-12" *ngIf="pi.processingStatus">

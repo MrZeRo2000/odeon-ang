@@ -21,7 +21,6 @@ import {
   Subject,
   switchMap,
   takeUntil,
-  takeWhile,
   tap,
   throwError
 } from "rxjs";
@@ -203,9 +202,15 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
   ngAfterViewInit(): void {
   }
 
-  nodeSelect(event: any) : void {
+  nodeSelect(event: any, processingStatus?: string) : void {
     if (event.node.data == undefined) {
       event.node.expanded = !event.node.expanded;
+    } else if (processingStatus === this.PROGRESS_STATUS) {
+      this.messageService.add({
+        severity: "warn",
+        summary: "Warninig",
+        detail: "Another process is already running"
+      })
     } else {
       console.log('Note select:' + event.node.data);
       const processorAction: ProcessorType = event.node.data;
