@@ -47,17 +47,21 @@ export interface ProcessingAction {
   value: string
 }
 
-export interface ProgressDetail {
+export interface ProcessDetail {
   time: string,
-  info: string,
+  info: ProcessDetailInfo,
   status: string,
   processingAction: ProcessingAction
+}
+
+export interface ProcessDetailInfo {
+  message: string,
+  items: Array<string>
 }
 
 export interface ProcessInfo {
   processorType?: string,
   processingStatus?: string,
   lastUpdated?: string,
-  progressDetails?: Array<ProgressDetail>,
-  lastProgressDetail?: ProgressDetail
+  processDetails?: Array<ProcessDetail>
 }

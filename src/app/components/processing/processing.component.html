@@ -24,7 +24,7 @@
     <!--
     <p-panel header="{{pi.processorType | processorTypeName}}"  p-panel-title >
     -->
-      <p-table [value]="pi.progressDetails || []" styleClass="p-datatable-sm" responsiveLayout="scroll">
+      <p-table [value]="pi.processDetails || []" styleClass="p-datatable-sm" responsiveLayout="scroll">
         <ng-template pTemplate="header">
           <tr>
             <th style="width:auto">Time</th>
@@ -32,20 +32,23 @@
             <th style="width:auto">Status</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-progressDetail>
+        <ng-template pTemplate="body" let-processDetail>
           <tr>
-            <td style="white-space: nowrap">{{progressDetail.time | date:'dd.MM.YYYY HH:mm:ss'}}</td>
+            <td style="white-space: nowrap">{{processDetail.time | date:'dd.MM.YYYY HH:mm:ss'}}</td>
             <td>
               <div class="flex align-content-center">
                 <div class="flex align-items-center">
-                  {{progressDetail.info}}
-                  <span *ngIf="progressDetail.processingAction?.actionType === 'ADD_ARTIST'">
-                    <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined ml-2" (click)="resolveActionAddArtist(progressDetail.processingAction)"></button>
+                  {{processDetail.info.message}}
+                  <ul class="list-none text-sm" *ngIf="processDetail?.info?.items?.length > 0">
+                    <li *ngFor="let item of processDetail.info.items">{{item}}</li>
+                  </ul>
+                  <span *ngIf="processDetail.processingAction?.actionType === 'ADD_ARTIST'">
+                    <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined ml-2" (click)="resolveActionAddArtist(processDetail.processingAction)"></button>
                   </span>
                 </div>
               </div>
             </td>
-            <td><app-processing-status-indicator processingStatus="{{progressDetail.status}}"></app-processing-status-indicator></td>
+            <td><app-processing-status-indicator processingStatus="{{processDetail.status}}"></app-processing-status-indicator></td>
           </tr>
         </ng-template>
         <ng-template pTemplate="footer">

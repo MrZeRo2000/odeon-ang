@@ -28,7 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Set Node Env var
 
-$Env:PATH += ";D:\WinApp\node-v16.15.0-win-x64\"
+$env:Path += ";$env:LOCALAPPDATA\Programs\node"
 
 ## Red cross without cursor
 
