@@ -29,6 +29,7 @@
           <tr>
             <th style="width:auto">Time</th>
             <th style="width:100%">Info</th>
+            <th style="width:auto">Rows</th>
             <th style="width:auto">Status</th>
           </tr>
         </ng-template>
@@ -48,6 +49,7 @@
                 </div>
               </div>
             </td>
+            <td>{{processDetail.rows}}</td>
             <td><app-processing-status-indicator processingStatus="{{processDetail.status}}"></app-processing-status-indicator></td>
           </tr>
         </ng-template>

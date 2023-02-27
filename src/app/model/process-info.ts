@@ -50,6 +50,7 @@ export interface ProcessingAction {
 export interface ProcessDetail {
   time: string,
   info: ProcessDetailInfo,
+  rows: number,
   status: string,
   processingAction: ProcessingAction
 }
