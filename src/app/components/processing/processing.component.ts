@@ -52,8 +52,13 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
           leaf: true
         },
         {
-          label: "Video music",
+          label: "Video Music",
           data: ProcessorType.DV_MUSIC_IMPORTER,
+          leaf: true
+        },
+        {
+          label: "Movies",
+          data: ProcessorType.DV_MOVIES_IMPORTER,
           leaf: true
         }
       ]
@@ -80,6 +85,11 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
           label: "Video music",
           data: ProcessorType.DV_MUSIC_VALIDATOR,
           leaf: true
+        },
+        {
+          label: "Movies",
+          data: ProcessorType.DV_MOVIES_VALIDATOR,
+          leaf: true
         }
       ]
     },
@@ -97,16 +107,23 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
           leaf: true
         },
         {
-          label: "Video music media",
+          label: "Video Music Media",
           data: ProcessorType.DV_MUSIC_MEDIA_LOADER,
+          leaf: true
+        },
+        {
+          label: "Movies",
+          data: ProcessorType.DV_MOVIES_LOADER,
+          leaf: true
+        },
+        {
+          label: "Movies Media",
+          data: ProcessorType.DV_MOVIES_MEDIA_LOADER,
           leaf: true
         }
       ]
     }
   ];
-
-  //private processorTypeAction = new Subject<ProcessorType | undefined>();
-  //private addArtistAction = new Subject<string>();
 
   private action = new Subject<ProcessorType | ProcessingAction | undefined>();
 
