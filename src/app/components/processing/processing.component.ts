@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {
   ProcessInfo,
-  PROCESSING_STATUS_NAMES,
   ProcessingAction,
   ProcessingStatus,
   PROCESSOR_TYPE_NAMES,
@@ -10,24 +9,15 @@ import {
 import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {ProcessService} from "../../service/process.service";
 import {BaseComponent} from "../base/base.component";
-import {ProcessorRequest} from "../../model/processor-request";
 import {
-  catchError, combineLatest, combineLatestWith,
-  concat,
-  map,
-  of,
-  race,
+  catchError, of,
   startWith,
   Subject,
   switchMap,
-  takeUntil,
-  tap,
-  throwError
+  tap
 } from "rxjs";
-import {CRUDAction} from "../../model/crud";
 import {ArtistService} from "../../service/artist.service";
 import {ARTIST_TYPES, ArtistEditItem} from "../../model/artists";
-import {A} from "@angular/cdk/keycodes";
 
 @Component({
   selector: 'app-processing',
