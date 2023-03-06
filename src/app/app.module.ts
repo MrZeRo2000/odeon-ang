@@ -47,9 +47,9 @@ import { ArtifactsTableComponent } from './components/artifacts-table/artifacts-
 import { FileSizePipe } from './pipes/file-size-pipe.pipe';
 import { CrudPanelComponent } from './components/crud-panel/crud-panel.component';
 import { ArtifactFormComponent } from './components/artifact-form/artifact-form.component';
-import { CompositionsTableComponent } from './components/compositions-table/compositions-table.component';
+import { TracksTableComponent } from './components/tracks-table/tracks-table.component';
 import {DecimalPipe} from "@angular/common";
-import { CompositionFormComponent } from './components/composition-form/composition-form.component';
+import { TrackFormComponent } from './components/track-form/track-form.component';
 import { BaseTableComponent } from './components/base/base-table.component';
 import {InputNumberModule} from "primeng/inputnumber";
 import {BaseFormComponent} from "./components/base/base-form.component";
@@ -83,8 +83,8 @@ import {DropdownModule} from "primeng/dropdown";
     FileSizePipe,
     CrudPanelComponent,
     ArtifactFormComponent,
-    CompositionsTableComponent,
-    CompositionFormComponent,
+    TracksTableComponent,
+    TrackFormComponent,
     MediaFilesTableComponent,
     MediaFileFormComponent,
     ArtistLyricsTableComponent,

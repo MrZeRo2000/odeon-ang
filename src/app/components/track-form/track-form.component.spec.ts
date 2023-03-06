@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CompositionFormComponent } from './composition-form.component';
+import { TrackFormComponent } from './track-form.component';
 
-describe('CompositionFormComponent', () => {
-  let component: CompositionFormComponent;
-  let fixture: ComponentFixture<CompositionFormComponent>;
+describe('TrackFormComponent', () => {
+  let component: TrackFormComponent;
+  let fixture: ComponentFixture<TrackFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CompositionFormComponent ]
+      declarations: [ TrackFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CompositionFormComponent);
+    fixture = TestBed.createComponent(TrackFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

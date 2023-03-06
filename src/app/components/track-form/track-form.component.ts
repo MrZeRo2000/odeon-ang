@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {CompositionEditItem} from "../../model/composition";
+import {TrackEditItem} from "../../model/track";
 import {FormBuilder, FormGroup, UntypedFormBuilder, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
-import {CompositionService} from "../../service/composition.service";
+import {TrackService} from "../../service/track.service";
 import {BaseFormComponent} from "../base/base-form.component";
 import {IdName} from "../../model/common";
 import {ARTIST_TYPES} from "../../model/artists";
@@ -10,11 +10,11 @@ import {isArtifactTypeMusic, isArtifactTypeVideo} from "../../model/artifacts";
 import {DV_TYPES} from "../../model/dvtype";
 
 @Component({
-  selector: 'app-composition-form',
-  templateUrl: './composition-form.component.html',
-  styleUrls: ['./composition-form.component.scss']
+  selector: 'app-track-form',
+  templateUrl: './track-form.component.html',
+  styleUrls: ['./track-form.component.scss']
 })
-export class CompositionFormComponent extends BaseFormComponent<CompositionEditItem> implements OnChanges, OnInit {
+export class TrackFormComponent extends BaseFormComponent<TrackEditItem> implements OnChanges, OnInit {
   DV_TYPES = DV_TYPES;
 
   @Input()
@@ -40,9 +40,9 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
   constructor(
     private fb: FormBuilder,
     override messageService: MessageService,
-    private compositionService: CompositionService
+    private trackService: TrackService
   ) {
-    super(messageService, compositionService)
+    super(messageService, trackService)
   }
 
   ngOnInit(): void {
@@ -94,17 +94,17 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName of Object.keys(changes)) {
       if (propName == 'editItem') {
-        const compositionProp = changes[propName];
-        console.log(`changed composition ${JSON.stringify(compositionProp.currentValue)}`);
+        const trackProp = changes[propName];
+        console.log(`changed track ${JSON.stringify(trackProp.currentValue)}`);
 /*
         this.editForm.setValue({
-          "diskNum": compositionProp.currentValue.diskNum?? '1',
-          "num": compositionProp.currentValue.num?? '1',
-          "artistId": compositionProp.currentValue.artistId? {id: compositionProp.currentValue.artistId, name: compositionProp.currentValue.artistName} : '',
-          "performerArtistId": compositionProp.currentValue.performerArtistId? {id: compositionProp.currentValue.performerArtistId, name: compositionProp.currentValue.performerArtistName} : '',
-          "title": compositionProp.currentValue.title?? '',
-          "duration": compositionProp.currentValue.duration?? '',
-          "mediaFileIds": compositionProp.currentValue.mediaFileIds?? []
+          "diskNum": trackProp.currentValue.diskNum?? '1',
+          "num": trackProp.currentValue.num?? '1',
+          "artistId": trackProp.currentValue.artistId? {id: trackProp.currentValue.artistId, name: trackProp.currentValue.artistName} : '',
+          "performerArtistId": trackProp.currentValue.performerArtistId? {id: trackProp.currentValue.performerArtistId, name: trackProp.currentValue.performerArtistName} : '',
+          "title": trackProp.currentValue.title?? '',
+          "duration": trackProp.currentValue.duration?? '',
+          "mediaFileIds": trackProp.currentValue.mediaFileIds?? []
         })
 
  */
@@ -122,7 +122,7 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
     return this.editForm.valid;
   }
 
-  override createSavedItem(): CompositionEditItem {
+  override createSavedItem(): TrackEditItem {
     return {
       id: this.editItem?.id,
       artifactId: this.editItem?.artifactId,
@@ -136,7 +136,7 @@ export class CompositionFormComponent extends BaseFormComponent<CompositionEditI
       title: this.editForm.value.title,
       duration: this.editForm.value.duration,
       mediaFileIds: this.editForm.value.mediaFileIds,
-    } as CompositionEditItem
+    } as TrackEditItem
   }
 
   searchArtists(event: any): void {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, tap} from "rxjs";
-import {CompositionEditItem, CompositionTableItem} from "../../model/composition";
-import {CompositionService} from "../../service/composition.service";
+import {TrackEditItem, TrackTableItem} from "../../model/track";
+import {TrackService} from "../../service/track.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtifactEditItem, isArtifactTypeMusic, isArtifactTypeVideo} from "../../model/artifacts";
 import {ArtifactService} from "../../service/artifact.service";
@@ -14,11 +14,11 @@ import {IdName} from "../../model/common";
 import {ArtistService} from "../../service/artist.service";
 
 @Component({
-  selector: 'app-compositions-table',
-  templateUrl: './compositions-table.component.html',
-  styleUrls: ['./compositions-table.component.scss']
+  selector: 'app-tracks-table',
+  templateUrl: './tracks-table.component.html',
+  styleUrls: ['./tracks-table.component.scss']
 })
-export class CompositionsTableComponent extends BaseTableComponent<CompositionTableItem, [CompositionEditItem, IdName[], IdName[]]> implements OnInit {
+export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [TrackEditItem, IdName[], IdName[]]> implements OnInit {
   private artifactId?: number;
 
   artistTypeCode: string = 'A';
@@ -28,7 +28,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
 
   dataSize = 0;
 
-  data$?: Observable<[CompositionTableItem[], ArtifactEditItem]>;
+  data$?: Observable<[TrackTableItem[], ArtifactEditItem]>;
 
   deleteAction = this.deleteSubject.asObservable().pipe(
     switchMap(v =>
@@ -52,7 +52,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     private decimalPipe: DecimalPipe,
     messageService: MessageService,
     confirmationService: ConfirmationService,
-    private compositionService: CompositionService,
+    private trackService: TrackService,
     private artifactService: ArtifactService,
     private mediaFileService: MediaFileService,
     private artistService: ArtistService,
@@ -60,11 +60,11 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     super(
       messageService,
       confirmationService,
-      compositionService,
+      trackService,
       {
         deleteConfirmation: "`Are you sure that you want to delete <strong> ${this.decimalPipe.transform(event.data.num, '2.0-0')} ${event.data.title}</strong>?`",
-        deleteErrorMessage: "`Error deleting composition: ${v.data}`",
-        editErrorMessage: "`Error getting composition details: ${v.data}`"
+        deleteErrorMessage: "`Error deleting track: ${v.data}`",
+        editErrorMessage: "`Error getting track details: ${v.data}`"
       }
 
     );
@@ -76,16 +76,16 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     }
   }
 
-  protected getEditData(item: CompositionTableItem): Observable<CRUDResult<[CompositionEditItem, IdName[], IdName[]]>> {
+  protected getEditData(item: TrackTableItem): Observable<CRUDResult<[TrackEditItem, IdName[], IdName[]]>> {
     return forkJoin([
       iif(() => !!item.id,
-        this.compositionService.get(item.id),
+        this.trackService.get(item.id),
         of({artifactId: this.artifactId, num: this.dataSize + 1})
       ),
       this.mediaFileService.getIdNameTable(this.artifactId as number),
       this.artistService.getIdNameTable(this.artistTypeCode as string)
     ]).pipe(
-      map(v => {return {success: true, data: v as [CompositionEditItem, IdName[], IdName[]]}}),
+      map(v => {return {success: true, data: v as [TrackEditItem, IdName[], IdName[]]}}),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});
       })
@@ -99,7 +99,7 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     this.loadData();
   }
 
-  private getData(id: number): Observable<[CompositionTableItem[], ArtifactEditItem]> {
+  private getData(id: number): Observable<[TrackTableItem[], ArtifactEditItem]> {
     return forkJoin([
       this.getTable(id),
       this.getArtifact(id),
@@ -107,15 +107,15 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     )
   }
 
-  private getTable(id: number): Observable<Array<CompositionTableItem>> {
-    return this.compositionService.getTable(id).pipe(
+  private getTable(id: number): Observable<Array<TrackTableItem>> {
+    return this.trackService.getTable(id).pipe(
       tap(v => this.dataSize = v.length),
       catchError(err => {
         this.errorObject = err;
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: `Error reading compositions`
+          detail: `Error reading tracks`
         });
         return of([]);
       })
@@ -143,21 +143,21 @@ export class CompositionsTableComponent extends BaseTableComponent<CompositionTa
     )
   }
 
-  private getWithMediaFiles(id: number): Observable<CRUDResult<[CompositionEditItem, IdName[]]>> {
+  private getWithMediaFiles(id: number): Observable<CRUDResult<[TrackEditItem, IdName[]]>> {
     return forkJoin([
-      this.compositionService.get(id),
+      this.trackService.get(id),
       this.mediaFileService.getIdNameTable(this.artifactId as number)
     ]).pipe(
-      map(v => {return {success: true, data: v as [CompositionEditItem, IdName[]]}}),
+      map(v => {return {success: true, data: v as [TrackEditItem, IdName[]]}}),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});
       })
     )
   }
 
-  private getNew(id: number): Observable<CRUDResult<[CompositionEditItem, IdName[]]>> {
+  private getNew(id: number): Observable<CRUDResult<[TrackEditItem, IdName[]]>> {
     return this.mediaFileService.getIdNameTable(this.artifactId as number).pipe(
-      map(v => {return {success: true, data:[{artifactId: this.artifactId, num: this.dataSize + 1}, v] as [CompositionEditItem, IdName[]]}}),
+      map(v => {return {success: true, data:[{artifactId: this.artifactId, num: this.dataSize + 1}, v] as [TrackEditItem, IdName[]]}}),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});
       })

@@ -1,4 +1,4 @@
-export interface CompositionTableItem {
+export interface TrackTableItem {
   id: number;
   diskNum: number;
   num: number;
@@ -15,7 +15,7 @@ export interface CompositionTableItem {
   fileName?: string
 }
 
-export interface CompositionEditItem {
+export interface TrackEditItem {
   id?: number;
   artifactId: number;
   diskNum: number;

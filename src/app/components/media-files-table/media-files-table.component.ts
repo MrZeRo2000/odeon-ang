@@ -33,7 +33,7 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
       {
         deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.name}</strong>?`",
         deleteErrorMessage: "`Error deleting media file: ${v.data}`",
-        editErrorMessage: "`Error getting composition details: ${v.data}`"
+        editErrorMessage: "`Error getting track details: ${v.data}`"
       }
     )
   }

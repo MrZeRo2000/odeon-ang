@@ -152,8 +152,8 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
     this.globalFilterValue = event.filters?.global?.value || '';
   }
 
-  onCompositionsButton(event: any): void {
-    this.router.navigate([`/compositions/${this.selectedItem?.id}`]);
+  onTracksButton(event: any): void {
+    this.router.navigate([`/tracks/${this.selectedItem?.id}`]);
   }
 
   onMediaFilesButton(event: any): void {
