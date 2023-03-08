@@ -29,6 +29,7 @@ interface FilterControlsConfig
 })
 export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTableItem, [IdName[], ArtifactEditItem]> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-video-table-filter-form";
+  ARTIFACT_VIDEO_TYPE_MUSIC = ARTIFACT_VIDEO_TYPE_MUSIC;
 
   readonly ARTIFACT_TYPE_VIDEO = ARTIFACT_TYPE_VIDEO;
 
@@ -37,6 +38,12 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTab
   readonly ARTIST_TYPE_CODE_ARTIST = ARTIST_TYPE_CODE_ARTIST;
 
   filterForm = this.fb.group(ArtifactsVideoTableComponent.getControlsConfig());
+
+  filterData$ = this.filterForm.valueChanges.pipe(
+    startWith(this.filterForm.value),
+    tap(v => console.log(`filter data got value: ${JSON.stringify(v)}`)),
+    tap(v => {this.first = 0})
+  );
 
   artifactTable$ = (v: any) => this.artifactService.getTable(ARTIST_TYPE_CODE_ARTIST, [v.artifactType]).pipe(
     tap(v => `getting table with ${v}`),

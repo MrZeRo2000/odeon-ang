@@ -6,79 +6,81 @@
   </ng-container>
 </ng-template>
 
-<div *ngIf="filteredArtifacts$ | async as artifactsVideoTable; else loadingOrError">
+<ng-container *ngIf="filterData$ | async as filterData">
+  <div *ngIf="filteredArtifacts$ | async as artifactsVideoTable; else loadingOrError">
 
-  <p-table #dt [value]="artifactsVideoTable" [rows]="9" [paginator]="true" [(first)]="first" dataKey="id" stateStorage="session" stateKey="artifacts-table-session"
-           [globalFilterFields]="['artistName', 'title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedItem"
-  >
+    <p-table #dt [value]="artifactsVideoTable" [rows]="9" [paginator]="true" [(first)]="first" dataKey="id" stateStorage="session" stateKey="artifacts-table-session"
+             [globalFilterFields]="['artistName', 'title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedItem"
+    >
 
-    <ng-template pTemplate="caption">
-      <div class="flex">
-        <div class="flex align-items-center justify-content-between text-xl mr-2">Video</div>
-        <app-crud-panel class="flex align-items-center" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+      <ng-template pTemplate="caption">
+        <div class="flex">
+          <div class="flex align-items-center justify-content-between text-xl mr-2">Video</div>
+          <app-crud-panel class="flex align-items-center" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
 
-        <form [formGroup]="filterForm">
-          <div class="flex ml-2">
-            <p-selectButton [options]="ARTIFACT_VIDEO_TYPES" optionLabel="name" optionValue="code" [multiple]="false" formControlName="artifactType"></p-selectButton>
+          <form [formGroup]="filterForm">
+            <div class="flex ml-2">
+              <p-selectButton [options]="ARTIFACT_VIDEO_TYPES" optionLabel="name" optionValue="code" [multiple]="false" formControlName="artifactType"></p-selectButton>
+            </div>
+          </form>
+
+          <button pButton type="button" label="Tracks" icon="pi pi-list" iconPos="left"
+                  class="ml-4 p-button-outlined p-button-secondary"
+                  *ngIf="selectedItem"
+                  (click)="onTracksButton($event)"
+          >
+          </button>
+
+          <button pButton type="button" label="Media files" icon="pi pi-file" iconPos="left"
+                  class="ml-1 p-button-outlined p-button-secondary"
+                  *ngIf="selectedItem"
+                  (click)="onMediaFilesButton($event)"
+          >
+          </button>
+
+          <div class="flex justify-content-end flex-grow-1">
+            <span class="p-input-icon-left flex align-items-center">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;" placeholder="Search keyword" />
+            </span>
           </div>
-        </form>
-
-        <button pButton type="button" label="Tracks" icon="pi pi-list" iconPos="left"
-                class="ml-4 p-button-outlined p-button-secondary"
-                *ngIf="selectedItem"
-                (click)="onTracksButton($event)"
-        >
-        </button>
-
-        <button pButton type="button" label="Media files" icon="pi pi-file" iconPos="left"
-                class="ml-1 p-button-outlined p-button-secondary"
-                *ngIf="selectedItem"
-                (click)="onMediaFilesButton($event)"
-        >
-        </button>
-
-        <div class="flex justify-content-end flex-grow-1">
-          <span class="p-input-icon-left flex align-items-center">
-            <i class="pi pi-search"></i>
-            <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;" placeholder="Search keyword" />
-          </span>
         </div>
-      </div>
-    </ng-template>
+      </ng-template>
 
-    <ng-template pTemplate="header">
-      <tr>
-        <th style="width:20%">Artist Name</th>
-        <th>Title</th>
-        <th style="width:0">Year</th>
-        <th style="width:0; text-align: center">Duration</th>
-        <th style="width:0; text-align: center">Size</th>
-        <th style="width:0"></th>
-      </tr>
-    </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width:20%" *ngIf="filterData.artifactType == ARTIFACT_VIDEO_TYPE_MUSIC">Artist Name</th>
+          <th>Title</th>
+          <th style="width:0" *ngIf="filterData.artifactType == ARTIFACT_VIDEO_TYPE_MUSIC">Year</th>
+          <th style="width:0; text-align: center">Duration</th>
+          <th style="width:0; text-align: center">Size</th>
+          <th style="width:0"></th>
+        </tr>
+      </ng-template>
 
-    <ng-template pTemplate="body" let-item>
-      <tr [pSelectableRow]="item">
-        <td>{{item.artistName}}</td>
-        <td>{{item.title}}</td>
-        <td>{{item.year}}</td>
-        <td>
-          <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
-        </td>
-        <td>
-          <div style="text-align: right; white-space: nowrap"><span *ngIf="item.size">{{item.size | fileSize}}</span></div>
-        </td>
-        <td>
-          <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+      <ng-template pTemplate="body" let-item>
+        <tr [pSelectableRow]="item">
+          <td *ngIf="filterData.artifactType == ARTIFACT_VIDEO_TYPE_MUSIC">{{item.artistName}}</td>
+          <td>{{item.title}}</td>
+          <td *ngIf="filterData.artifactType == ARTIFACT_VIDEO_TYPE_MUSIC">{{item.year}}</td>
+          <td>
+            <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
+          </td>
+          <td>
+            <div style="text-align: right; white-space: nowrap"><span *ngIf="item.size">{{item.size | fileSize}}</span></div>
+          </td>
+          <td>
+            <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
 
-  <ng-container *ngIf="deleteAction$ | async"></ng-container>
+    <ng-container *ngIf="deleteAction$ | async"></ng-container>
 
-  <ng-container *ngIf="editAction$ | async as artifactEdit">
-    <app-artifact-form *ngIf="displayForm" [(display)]="displayForm" [artists]="artifactEdit[0]" [artifact]="artifactEdit[1]" [artistTypeCode]="ARTIST_TYPE_CODE_ARTIST" (savedArtifactEvent)="savedEditData($event)"></app-artifact-form>
-  </ng-container>
+    <ng-container *ngIf="editAction$ | async as artifactEdit">
+      <app-artifact-form *ngIf="displayForm" [(display)]="displayForm" [artists]="artifactEdit[0]" [artifact]="artifactEdit[1]" [artistTypeCode]="ARTIST_TYPE_CODE_ARTIST" (savedArtifactEvent)="savedEditData($event)"></app-artifact-form>
+    </ng-container>
 
-</div>
+  </div>
+</ng-container>

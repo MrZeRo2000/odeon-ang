@@ -61,6 +61,7 @@ import { LyricsTextFormComponent } from './components/lyrics-text-form/lyrics-te
 import { ArtistLyricsFormComponent } from './components/artist-lyrics-form/artist-lyrics-form.component';
 import { ArtifactsVideoTableComponent } from './components/artifacts-video-table/artifacts-video-table.component';
 import {DropdownModule} from "primeng/dropdown";
+import { ArtifactCaptionPipe } from './pipes/artifact-caption.pipe';
 
 
 @NgModule({
@@ -90,7 +91,8 @@ import {DropdownModule} from "primeng/dropdown";
     ArtistLyricsTableComponent,
     LyricsTextFormComponent,
     ArtistLyricsFormComponent,
-    ArtifactsVideoTableComponent
+    ArtifactsVideoTableComponent,
+    ArtifactCaptionPipe
   ],
     imports: [
         BrowserModule,
