@@ -97,6 +97,11 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
           leaf: true
         },
         {
+          label: "Video Music",
+          data: ProcessorType.DV_MUSIC_LOADER,
+          leaf: true
+        },
+        {
           label: "Video Music Media",
           data: ProcessorType.DV_MUSIC_MEDIA_LOADER,
           leaf: true
