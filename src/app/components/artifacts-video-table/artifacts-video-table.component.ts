@@ -5,7 +5,7 @@ import {
   ARTIFACT_TYPE_VIDEO, ARTIFACT_VIDEO_TYPE_MUSIC,
   ARTIFACT_VIDEO_TYPES,
   ArtifactEditItem,
-  ArtifactTableItem
+  ArtifactTableItem, isArtifactTypeVideoMusic
 } from "../../model/artifacts";
 import {IdName} from "../../model/common";
 import {Router} from "@angular/router";
@@ -134,7 +134,11 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTab
   protected getEditData(item: ArtifactTableItem): Observable<CRUDResult<[IdName[], ArtifactEditItem]>> {
     return forkJoin([
       this.getArtists(),
-      iif(() => Object.keys(item).length === 0, of({artifactTypeId: ARTIFACT_VIDEO_TYPE_MUSIC} as ArtifactEditItem), this.getArtifact(item.id))
+      iif(() =>
+        Object.keys(item).length === 0,
+        of({artifactTypeId: this.filterForm.value.artifactType} as ArtifactEditItem),
+        this.getArtifact(item.id)
+      )
     ]).pipe(
       map(v => {return {success: true, data: v as [IdName[], ArtifactEditItem]}}),
       catchError(err => {
@@ -157,16 +161,20 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTab
   }
 
   getArtists(): Observable<Array<IdName>> {
-    return this.artistService.getIdNameTable(ARTIST_TYPE_CODE_ARTIST).pipe(
-      catchError(err => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `Error getting artists: ${err.error?.message || err.message}`
-        });
-        return of([]);
-      })
-    )
+    if (isArtifactTypeVideoMusic(this.filterForm.value.artifactType as number)) {
+      return this.artistService.getIdNameTable(ARTIST_TYPE_CODE_ARTIST).pipe(
+        catchError(err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Error getting artists: ${err.error?.message || err.message}`
+          });
+          return of([]);
+        })
+      )
+    } else {
+      return of([]);
+    }
   }
 
 }

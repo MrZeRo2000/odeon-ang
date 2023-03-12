@@ -1,5 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {ArtifactEditItem, ARTIFACT_MUSIC_TYPES, ARTIFACT_TYPE_MUSIC, ARTIFACT_TYPE_VIDEO} from "../../model/artifacts";
+import {
+  ArtifactEditItem,
+  ARTIFACT_MUSIC_TYPES,
+  ARTIFACT_TYPE_MUSIC,
+  ARTIFACT_TYPE_VIDEO,
+  isArtifactTypeVideoMusic
+} from "../../model/artifacts";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {catchError, of, Subject, switchMap, tap} from "rxjs";
 import {ArtifactService} from "../../service/artifact.service";
@@ -86,6 +92,8 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
     return this.ARTIFACT_TYPES.map(v => v['code']).indexOf(artifactTypeId) !== -1;
   }
 
+  isArtifactTypeVideoMusic = false;
+
   constructor(
     private fb: UntypedFormBuilder,
     private confirmationService: ConfirmationService,
@@ -109,7 +117,8 @@ export class ArtifactFormComponent implements OnInit, OnChanges {
           "year": artifactProp.currentValue.year?? '',
           "duration": artifactProp.currentValue.duration?? '',
           "size": artifactProp.currentValue.size?? '',
-        })
+        });
+        this.isArtifactTypeVideoMusic = isArtifactTypeVideoMusic(artifactProp.currentValue.artifactTypeId);
       }
     }
   }
