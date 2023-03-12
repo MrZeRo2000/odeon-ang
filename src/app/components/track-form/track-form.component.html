@@ -25,7 +25,7 @@
           </div>
         </div>
 
-        <div class="field" *ngIf="artistTypeCode === 'C' || !isArtifactTypeMusic">
+        <div class="field" *ngIf="artistTypeCode === 'C' || isArtifactTypeMusic">
           <label for="artistId">Artist</label>
           <p-autoComplete
             [suggestions]="filteredArtists"
