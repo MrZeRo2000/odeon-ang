@@ -18,6 +18,7 @@
 
     <ng-template pTemplate="header">
       <tr>
+        <th style="width:0">Id</th>
         <th style="width:0" *ngIf="isArtifactTypeMusic">Disk #</th>
         <th style="width:0;">Track</th>
         <th *ngIf="data[1].artistTypeCode === 'C'">Artist</th>
@@ -34,6 +35,7 @@
 
     <ng-template pTemplate="body" let-item>
       <tr>
+        <td>{{item.id}}</td>
         <td *ngIf="isArtifactTypeMusic">{{item.diskNum}}</td>
         <td>{{item.num | number : '2.0-0'}}</td>
         <td *ngIf="data[1].artistTypeCode === 'C'">{{item.artistName}}</td>
