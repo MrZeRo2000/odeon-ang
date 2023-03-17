@@ -50,6 +50,7 @@ export const ARTIFACT_VIDEO_TYPES =
     {name: 'Music', code: ARTIFACT_VIDEO_TYPE_MUSIC},
     {name: 'Movies', code: 202},
     {name: 'Animation', code: 203},
+    {name: 'Other', code: 204},
   ];
 
 export function isArtifactTypeVideo(artifactTypeId: number) : boolean {
