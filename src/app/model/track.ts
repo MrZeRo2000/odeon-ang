@@ -29,4 +29,6 @@ export interface TrackEditItem {
   title: string;
   duration?: number;
   mediaFileIds: number[];
+  dvProductId?: number;
+  dvProductTitle?: string;
 }

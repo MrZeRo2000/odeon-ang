@@ -1,24 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, tap} from "rxjs";
+import {catchError, forkJoin, iif, map, Observable, of, switchMap, tap} from "rxjs";
 import {TrackEditItem, TrackTableItem} from "../../model/track";
 import {TrackService} from "../../service/track.service";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {ArtifactEditItem, isArtifactTypeMusic, isArtifactTypeVideo} from "../../model/artifacts";
+import {
+  ArtifactEditItem,
+  isArtifactTypeMusic,
+  isArtifactTypeVideo,
+  isArtifactTypeVideoWithProducts
+} from "../../model/artifacts";
 import {ArtifactService} from "../../service/artifact.service";
-import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
+import {CRUDResult} from "../../model/crud";
 import {DecimalPipe} from "@angular/common";
 import {BaseTableComponent} from "../base/base-table.component";
 import {MediaFileService} from "../../service/media-file.service";
-import {IdName} from "../../model/common";
+import {IdName, IdTitle} from "../../model/common";
 import {ArtistService} from "../../service/artist.service";
+import {DVProductService} from "../../service/dvproduct.service";
 
 @Component({
   selector: 'app-tracks-table',
   templateUrl: './tracks-table.component.html',
   styleUrls: ['./tracks-table.component.scss']
 })
-export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [TrackEditItem, IdName[], IdName[]]> implements OnInit {
+export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [TrackEditItem, IdName[], IdName[], IdTitle[]]> implements OnInit {
   private artifactId?: number;
 
   artistTypeCode: string = 'A';
@@ -56,6 +62,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
     private artifactService: ArtifactService,
     private mediaFileService: MediaFileService,
     private artistService: ArtistService,
+    private dvProductService: DVProductService,
   ) {
     super(
       messageService,
@@ -76,16 +83,20 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
     }
   }
 
-  protected getEditData(item: TrackTableItem): Observable<CRUDResult<[TrackEditItem, IdName[], IdName[]]>> {
+  protected getEditData(item: TrackTableItem): Observable<CRUDResult<[TrackEditItem, IdName[], IdName[], IdTitle[]]>> {
     return forkJoin([
       iif(() => !!item.id,
         this.trackService.get(item.id),
         of({artifactId: this.artifactId, num: this.dataSize + 1})
       ),
       this.mediaFileService.getIdNameTable(this.artifactId as number),
-      this.artistService.getIdNameTable(this.artistTypeCode as string)
+      this.artistService.getIdNameTable(this.artistTypeCode as string),
+      iif (() => isArtifactTypeVideoWithProducts(this.artifactTypeId as number),
+        this.dvProductService.getIdTitleTable(this.artifactTypeId as number),
+        of([])
+        ),
     ]).pipe(
-      map(v => {return {success: true, data: v as [TrackEditItem, IdName[], IdName[]]}}),
+      map(v => {return {success: true, data: v as [TrackEditItem, IdName[], IdName[], IdTitle[]]}}),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});
       })

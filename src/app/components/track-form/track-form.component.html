@@ -75,8 +75,31 @@
 
         <div class="field">
           <label for="dvType">Video Type</label>
-          <p-dropdown id="dvType" [options]="DV_TYPES" optionLabel="name" optionValue="id" formControlName="dvTypeId">
+          <p-dropdown id="dvType" [options]="DV_TYPES" optionLabel="name" optionValue="id" formControlName="dvTypeId" appendTo="body">
           </p-dropdown>
+        </div>
+
+        <div class="field">
+          <label for="dvProductId">Product</label>
+          <!--
+          <p-dropdown id="dvProductId" [options]="dvProductsTable" optionLabel="title" optionValue="id" formControlName="dvProductId"
+                      appendTo="body" [showClear]="true" placeholder="Select a Product">
+          </p-dropdown>
+          -->
+          <p-autoComplete
+            [suggestions]="filteredDvProducts"
+            (completeMethod)="searchDvProducts($event)"
+            id="dvProductId"
+            formControlName="dvProductId"
+            dataKey="id"
+            field="title"
+            [multiple]="false"
+            [dropdown]="true"
+            [forceSelection]="true"
+            [showClear]="true"
+            appendTo="body"
+          >
+          </p-autoComplete>
         </div>
 
       </div>

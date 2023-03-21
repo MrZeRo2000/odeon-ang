@@ -60,3 +60,10 @@ export function isArtifactTypeVideo(artifactTypeId: number) : boolean {
 export function isArtifactTypeVideoMusic(artifactTypeId: number) : boolean {
   return artifactTypeId === ARTIFACT_VIDEO_TYPE_MUSIC;
 }
+
+export function isArtifactTypeVideoWithProducts(artifactTypeId: number): boolean {
+  return ARTIFACT_VIDEO_TYPES
+    .map(v => v['code'])
+    .filter(v => v !== ARTIFACT_VIDEO_TYPE_MUSIC)
+    .indexOf(artifactTypeId) !== -1;
+}

@@ -28,7 +28,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Set Node Env var
 
-$env:Path += ";$env:LOCALAPPDATA\Programs\node"
+`$env:Path += ";$env:LOCALAPPDATA\Programs\node"`
+or
+`./env.ps1`
 
 ## Red cross without cursor
 

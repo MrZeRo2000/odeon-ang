@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, UntypedFormBuilder, Validators} from "@angular/f
 import {MessageService} from "primeng/api";
 import {TrackService} from "../../service/track.service";
 import {BaseFormComponent} from "../base/base-form.component";
-import {IdName} from "../../model/common";
+import {IdName, IdTitle} from "../../model/common";
 import {ARTIST_TYPES} from "../../model/artists";
 import {isArtifactTypeMusic, isArtifactTypeVideo} from "../../model/artifacts";
 import {DV_TYPES} from "../../model/dvtype";
@@ -24,6 +24,9 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
   artistsTable: IdName[] = [];
 
   @Input()
+  dvProductsTable: IdTitle[] = []
+
+  @Input()
   artistTypeCode: string = 'A';
 
   @Input()
@@ -34,6 +37,7 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
 
   filteredArtists: Array<IdName> = [];
   filteredPerformerArtists: Array<IdName> = [];
+  filteredDvProducts: Array<IdTitle> = [];
 
   editForm: FormGroup = this.fb.group({});
 
@@ -66,7 +70,7 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
         "performerArtistId": this.editItem?.performerArtistId? {id: this.editItem.performerArtistId, name: this.editItem.performerArtistName} : '',
         "title": this.editItem?.title?? '',
         "duration": this.editItem?.duration?? '',
-        "mediaFileIds": this.editItem?.mediaFileIds?? []
+        "mediaFileIds": this.editItem?.mediaFileIds?? [],
       });
 
     } else if (this.isArtifactTypeVideo) {
@@ -76,7 +80,8 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
         dvTypeId: ['', Validators.required],
         title: ['', Validators.required],
         duration: [''],
-        mediaFileIds: [[]]
+        mediaFileIds: [[]],
+        dvProductId: ['']
       });
 
       this.editForm.setValue({
@@ -85,9 +90,9 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
         "dvTypeId": this.editItem?.dvTypeId?? 8,
         "title": this.editItem?.title?? '',
         "duration": this.editItem?.duration?? '',
-        "mediaFileIds": this.editItem?.mediaFileIds?? []
+        "mediaFileIds": this.editItem?.mediaFileIds?? [],
+        "dvProductId": this.editItem?.dvProductId? {id: this.editItem.dvProductId, title: this.editItem.dvProductTitle} : '',
       });
-
     }
   }
 
@@ -136,6 +141,7 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
       title: this.editForm.value.title,
       duration: this.editForm.value.duration,
       mediaFileIds: this.editForm.value.mediaFileIds,
+      dvProductId: this.editForm.value.dvProductId
     } as TrackEditItem
   }
 
@@ -148,4 +154,10 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
     const query = event.query.toLowerCase();
     this.filteredPerformerArtists = [...this.artistsTable.filter(v => v.name.toLowerCase().indexOf(query) == 0)];
   }
+
+  searchDvProducts(event: any): void {
+    const query = event.query.toLowerCase();
+    this.filteredDvProducts = [...this.dvProductsTable.filter(v => v.title.toLowerCase().indexOf(query) == 0)];
+  }
+
 }

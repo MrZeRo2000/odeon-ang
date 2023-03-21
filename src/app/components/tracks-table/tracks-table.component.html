@@ -59,7 +59,7 @@
   <ng-container *ngIf="deleteAction | async"></ng-container>
 
   <ng-container *ngIf="editAction$ | async as editData">
-    <app-track-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editData[0]" [mediaFileTable]="editData[1]" [artistsTable]="editData[2]" [artistTypeCode]="artistTypeCode" [artifactTypeId]="artifactTypeId" (onSavedItem)="savedEditData($event)"></app-track-form>
+    <app-track-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editData[0]" [mediaFileTable]="editData[1]" [artistsTable]="editData[2]" [dvProductsTable]="editData[3]" [artistTypeCode]="artistTypeCode" [artifactTypeId]="artifactTypeId" (onSavedItem)="savedEditData($event)"></app-track-form>
   </ng-container>
 
 </div>
