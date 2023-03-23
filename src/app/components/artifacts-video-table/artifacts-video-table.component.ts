@@ -104,7 +104,7 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTab
       confirmationService,
       artifactService,
       {
-        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.artistName} - ${event.data.title}</strong>?`",
+        deleteConfirmation: "`Are you sure that you want to delete <strong>${event.data.title}</strong>?`",
         deleteErrorMessage: "`Error deleting artifact: ${v.data}`",
         editErrorMessage: "`Error getting artifact details: ${err.error?.message || err.message}`"
       }
