@@ -5,7 +5,7 @@
         <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="false" formControlName="artifactTypeId"></p-selectButton>
       </div>
 
-      <div class="field" *ngIf="isArtifactTypeVideoMusic">
+      <div class="field" *ngIf="artifactTypeConfig?.hasArtist">
         <label for="artistId">Artist</label>
         <p-autoComplete
           [suggestions]="filteredArtists"

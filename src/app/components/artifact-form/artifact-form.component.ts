@@ -97,6 +97,10 @@ export class ArtifactFormComponent extends BaseFormComponent<ArtifactEditItem> i
     }
   }
 
+  override validate(): boolean {
+    return this.editForm.valid;
+  }
+
   createSavedItem(): ArtifactEditItem {
     return {
       id: this.editItem?.id,
