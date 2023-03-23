@@ -97,6 +97,7 @@
             [dropdown]="true"
             [forceSelection]="true"
             [showClear]="true"
+            (onClear)="editForm.patchValue({dvProductId: null})"
             appendTo="body"
           >
           </p-autoComplete>

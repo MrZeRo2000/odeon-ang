@@ -1,11 +1,10 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {TrackEditItem} from "../../model/track";
-import {FormBuilder, FormGroup, UntypedFormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {TrackService} from "../../service/track.service";
 import {BaseFormComponent} from "../base/base-form.component";
 import {IdName, IdTitle} from "../../model/common";
-import {ARTIST_TYPES} from "../../model/artists";
 import {isArtifactTypeMusic, isArtifactTypeVideo} from "../../model/artifacts";
 import {DV_TYPES} from "../../model/dvtype";
 
@@ -53,6 +52,7 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
     console.log('onInit');
 
     if (this.isArtifactTypeMusic) {
+      console.log('isArtifactTypeMusic');
       this.editForm = this.fb.group({
         diskNum: ['', Validators.required],
         num: ['1', Validators.required],
@@ -74,6 +74,7 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
       });
 
     } else if (this.isArtifactTypeVideo) {
+      console.log('isArtifactTypeVideo');
       this.editForm = this.fb.group({
         num: ['1', Validators.required],
         artistId: [''],
@@ -128,6 +129,7 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
   }
 
   override createSavedItem(): TrackEditItem {
+    console.log(`createSavedItem: dvProductId: ${JSON.stringify(this.editForm.value.dvProductId)}`)
     return {
       id: this.editItem?.id,
       artifactId: this.editItem?.artifactId,
@@ -141,7 +143,7 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
       title: this.editForm.value.title,
       duration: this.editForm.value.duration,
       mediaFileIds: this.editForm.value.mediaFileIds,
-      dvProductId: this.editForm.value.dvProductId
+      dvProductId: this.editForm.value.dvProductId?.id
     } as TrackEditItem
   }
 
