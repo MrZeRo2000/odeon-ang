@@ -45,7 +45,7 @@
         <td style="text-align: right; white-space: nowrap"><div *ngIf="item.size">{{item.size | fileSize}}</div></td>
         <td style="text-align: right">{{item.bitrate}}</td>
         <td>{{item.fileName}}</td>
-        <td style="text-align: center; white-space: nowrap">{{item.dvTypeName}}</td>
+        <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactTypeVideo">{{item.dvTypeName}}</td>
         <td>
           <div class="app-crud-panel-small">
             <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>

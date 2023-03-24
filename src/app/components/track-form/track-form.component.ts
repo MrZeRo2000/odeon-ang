@@ -5,7 +5,12 @@ import {MessageService} from "primeng/api";
 import {TrackService} from "../../service/track.service";
 import {BaseFormComponent} from "../base/base-form.component";
 import {IdName, IdTitle} from "../../model/common";
-import {isArtifactTypeMusic, isArtifactTypeVideo} from "../../model/artifacts";
+import {
+  TrackConfigItem,
+  getTrackConfig,
+  isArtifactTypeMusic,
+  isArtifactTypeVideo
+} from "../../model/artifacts";
 import {DV_TYPES} from "../../model/dvtype";
 
 @Component({
@@ -33,6 +38,7 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
 
   isArtifactTypeMusic = true;
   isArtifactTypeVideo = false;
+  artifactTypeConfig?: TrackConfigItem;
 
   filteredArtists: Array<IdName> = [];
   filteredPerformerArtists: Array<IdName> = [];
@@ -49,7 +55,44 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
   }
 
   ngOnInit(): void {
-    console.log('onInit');
+    this.artifactTypeConfig = getTrackConfig(this.artifactTypeId as number, this.artistTypeCode)
+    console.log(`TrackFormComponent: onInit: config: ${JSON.stringify(this.artifactTypeConfig)}`);
+
+    this.editForm = this.fb.group({
+      artistId: this.editItem?.artistId? {id: this.editItem.artistId, name: this.editItem.artistName} : '',
+      performerArtistId: this.editItem?.performerArtistId? {id: this.editItem.performerArtistId, name: this.editItem.performerArtistName} : '',
+      dvTypeId: ['', this.artifactTypeConfig.hasDvType? Validators.required : null],
+      title: ['', Validators.required],
+      duration: [''],
+      diskNum: ['', this.artifactTypeConfig.hasDiskNum? Validators.required : null],
+      num: ['1', Validators.required],
+      mediaFileIds: [[]],
+      dvProductId: [''],
+    });
+
+    // common values without defaults
+    this.editForm.setValue({
+      "artistId": this.editItem?.artistId? {id: this.editItem.artistId, name: this.editItem.artistName} : '',
+      "performerArtistId": this.editItem?.performerArtistId? {id: this.editItem.performerArtistId, name: this.editItem.performerArtistName} : '',
+      "dvTypeId": '',
+      "title": this.editItem?.title?? '',
+      "duration": this.editItem?.duration?? '',
+      "diskNum": '',
+      "num": this.editItem?.num?? '1',
+      "mediaFileIds": this.editItem?.mediaFileIds?? [],
+      "dvProductId": this.editItem?.dvProductId? {id: this.editItem.dvProductId, title: this.editItem.dvProductTitle} : '',
+    });
+
+    // default values
+    if (this.artifactTypeConfig.hasDiskNum) {
+      this.editForm.patchValue({"diskNum": this.editItem?.diskNum?? '1'});
+    }
+
+    if (this.artifactTypeConfig.hasDvType) {
+      this.editForm.patchValue({"dvTypeId": this.editItem?.dvTypeId?? 8});
+    }
+
+    /*
 
     if (this.isArtifactTypeMusic) {
       console.log('isArtifactTypeMusic');
@@ -95,6 +138,8 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
         "dvProductId": this.editItem?.dvProductId? {id: this.editItem.dvProductId, title: this.editItem.dvProductTitle} : '',
       });
     }
+
+     */
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -133,13 +178,13 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
     return {
       id: this.editItem?.id,
       artifactId: this.editItem?.artifactId,
-      diskNum: this.isArtifactTypeMusic ? this.editForm.value.diskNum : null,
+      diskNum: this.editForm.value.diskNum,
       num: this.editForm.value.num,
       artistId: this.editForm.value.artistId?.id,
       artistName: this.editForm.value.artistId?.name,
       performerArtistId: this.editForm.value.performerArtistId?.id,
       performerArtistName: this.editForm.value.performerArtistId?.name,
-      dvTypeId: this.isArtifactTypeVideo ? this.editForm.value.dvTypeId : null,
+      dvTypeId: this.editForm.value.dvTypeId,
       title: this.editForm.value.title,
       duration: this.editForm.value.duration,
       mediaFileIds: this.editForm.value.mediaFileIds,

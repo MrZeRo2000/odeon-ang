@@ -68,27 +68,31 @@ export function isArtifactTypeVideoWithProducts(artifactTypeId: number): boolean
     .indexOf(artifactTypeId) !== -1;
 }
 
-export interface ArtifactTypeConfigItem {
+export interface TrackConfigItem {
   code: number,
   name: string,
   artistType: "A" | "C",
   isMusic: boolean,
   isVideo: boolean,
-  hasProducts: boolean,
   hasArtist: boolean,
   hasPerformerArtist: boolean,
+  hasDvType: boolean,
+  hasDiskNum: boolean,
+  hasProducts: boolean,
 }
 
-export const ARTIFACT_TYPE_CONFIG: Array<ArtifactTypeConfigItem> = [
+export const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
   {
     code: 101,
     name: 'MP3',
     artistType: "A",
     isMusic: true,
     isVideo: false,
-    hasArtist: true,
+    hasArtist: false,
     hasPerformerArtist: false,
-    hasProducts: false
+    hasDvType: false,
+    hasDiskNum: true,
+    hasProducts: false,
   },
   {
     code: 102,
@@ -96,9 +100,11 @@ export const ARTIFACT_TYPE_CONFIG: Array<ArtifactTypeConfigItem> = [
     artistType: "A",
     isMusic: true,
     isVideo: false,
-    hasArtist: true,
+    hasArtist: false,
     hasPerformerArtist: false,
-    hasProducts: false
+    hasDvType: false,
+    hasDiskNum: true,
+    hasProducts: false,
   },
   {
     code: 101,
@@ -107,8 +113,10 @@ export const ARTIFACT_TYPE_CONFIG: Array<ArtifactTypeConfigItem> = [
     isMusic: true,
     isVideo: false,
     hasArtist: true,
-    hasPerformerArtist: false,
-    hasProducts: false
+    hasPerformerArtist: true,
+    hasDvType: false,
+    hasDiskNum: true,
+    hasProducts: false,
   },
   {
     code: 102,
@@ -117,18 +125,22 @@ export const ARTIFACT_TYPE_CONFIG: Array<ArtifactTypeConfigItem> = [
     isMusic: true,
     isVideo: false,
     hasArtist: true,
-    hasPerformerArtist: false,
-    hasProducts: false
+    hasPerformerArtist: true,
+    hasDvType: false,
+    hasDiskNum: true,
+    hasProducts: false,
   },
   {
     code: 201,
     name: 'Music',
-    artistType: "C",
+    artistType: "A",
     isMusic: true,
     isVideo: true,
     hasArtist: true,
     hasPerformerArtist: false,
-    hasProducts: false
+    hasDvType: true,
+    hasDiskNum: true,
+    hasProducts: false,
   },
   {
     code: 202,
@@ -138,7 +150,9 @@ export const ARTIFACT_TYPE_CONFIG: Array<ArtifactTypeConfigItem> = [
     isVideo: true,
     hasArtist: false,
     hasPerformerArtist: false,
-    hasProducts: true
+    hasDvType: true,
+    hasDiskNum: false,
+    hasProducts: true,
   },
   {
     code: 203,
@@ -148,7 +162,9 @@ export const ARTIFACT_TYPE_CONFIG: Array<ArtifactTypeConfigItem> = [
     isVideo: true,
     hasArtist: false,
     hasPerformerArtist: false,
-    hasProducts: true
+    hasDvType: true,
+    hasDiskNum: false,
+    hasProducts: true,
   },
   {
     code: 204,
@@ -158,10 +174,12 @@ export const ARTIFACT_TYPE_CONFIG: Array<ArtifactTypeConfigItem> = [
     isVideo: true,
     hasArtist: false,
     hasPerformerArtist: false,
-    hasProducts: false
+    hasDvType: true,
+    hasDiskNum: false,
+    hasProducts: false,
   },
 ]
 
-export function getArtifactTypeConfigByCode(code: number): ArtifactTypeConfigItem {
-  return ARTIFACT_TYPE_CONFIG.filter(v => v.code === code)[0]
+export function getTrackConfig(code: number, artistType: string = ""): TrackConfigItem {
+  return TRACK_EDIT_CONFIG.filter(v => v.code === code && (!artistType || v.artistType === artistType))[0]
 }

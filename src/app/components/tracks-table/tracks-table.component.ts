@@ -103,7 +103,6 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
     )
   }
 
-
   ngOnInit(): void {
     this.artifactId = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
     console.log(`Routed with id=${this.artifactId}`);

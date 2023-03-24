@@ -4,7 +4,7 @@ import {
   ARTIFACT_MUSIC_TYPES,
   ARTIFACT_TYPE_MUSIC,
   ARTIFACT_TYPE_VIDEO,
-  isArtifactTypeVideoMusic, ArtifactTypeConfigItem, getArtifactTypeConfigByCode
+  isArtifactTypeVideoMusic, TrackConfigItem, getTrackConfig
 } from "../../model/artifacts";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ArtifactService} from "../../service/artifact.service";
@@ -38,7 +38,7 @@ export class ArtifactFormComponent extends BaseFormComponent<ArtifactEditItem> i
   }
 
   isArtifactTypeVideoMusic = false;
-  artifactTypeConfig?: ArtifactTypeConfigItem;
+  artifactTypeConfig?: TrackConfigItem;
 
   editForm: FormGroup = this.fb.group({});
 
@@ -91,7 +91,7 @@ export class ArtifactFormComponent extends BaseFormComponent<ArtifactEditItem> i
         });
          */
         this.isArtifactTypeVideoMusic = isArtifactTypeVideoMusic(artifactProp.currentValue.artifactTypeId);
-        this.artifactTypeConfig = getArtifactTypeConfigByCode(artifactProp.currentValue.artifactTypeId);
+        this.artifactTypeConfig = getTrackConfig(artifactProp.currentValue.artifactTypeId);
         console.log(`artifactTypeConfig: ${JSON.stringify(this.artifactTypeConfig)}`)
       }
     }
