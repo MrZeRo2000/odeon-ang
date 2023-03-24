@@ -4,8 +4,9 @@ import { ArtistFormComponent } from './artist-form.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ServiceModule} from "../../service/service.module";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {DataSourceModule} from "../../data-source/data-source.module";
+import {DialogModule} from "primeng/dialog";
+import {ConfirmPopupModule} from "primeng/confirmpopup";
 
 describe('ArtistFormComponent', () => {
   let component: ArtistFormComponent;
@@ -16,7 +17,12 @@ describe('ArtistFormComponent', () => {
       declarations: [ ArtistFormComponent ],
       providers: [ConfirmationService, MessageService],
       imports: [
+        //standard
         ReactiveFormsModule,
+        //library
+        DialogModule,
+        ConfirmPopupModule,
+        //custom
         DataSourceModule,
         ServiceModule
       ]

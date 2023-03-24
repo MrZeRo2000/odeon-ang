@@ -6,6 +6,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {MessageService} from "primeng/api";
 import {DataSourceModule} from "../../data-source/data-source.module";
 import {ToastModule} from "primeng/toast";
+import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
 
 describe('ProcessingComponent', () => {
   let component: ProcessingComponent;
@@ -13,7 +14,10 @@ describe('ProcessingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProcessingComponent ],
+      declarations: [
+        ConfirmDialogComponent,
+        ProcessingComponent
+      ],
       imports: [
         TreeModule,
         ConfirmDialogModule,

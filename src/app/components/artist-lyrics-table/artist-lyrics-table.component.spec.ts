@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArtistLyricsTableComponent } from './artist-lyrics-table.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {RouterTestingModule} from "@angular/router/testing";
+import {DataSourceModule} from "../../data-source/data-source.module";
+import {ConfirmationService, MessageService} from "primeng/api";
+import {LoadingComponent} from "../loading/loading.component";
 
 describe('ArtistLyricsTableComponent', () => {
   let component: ArtistLyricsTableComponent;
@@ -8,7 +13,22 @@ describe('ArtistLyricsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ArtistLyricsTableComponent ]
+      imports: [
+        //standard
+        HttpClientTestingModule,
+        RouterTestingModule,
+        //custom
+        DataSourceModule,
+      ],
+      providers: [
+        //library
+        ConfirmationService,
+        MessageService,
+      ],
+      declarations: [
+        LoadingComponent,
+        ArtistLyricsTableComponent
+      ]
     })
     .compileComponents();
   });

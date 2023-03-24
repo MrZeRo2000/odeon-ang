@@ -4,6 +4,8 @@ import { ArtistsTableComponent } from './artists-table.component';
 import {ServiceModule} from "../../service/service.module";
 import {DataSourceModule} from "../../data-source/data-source.module";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {LoadingComponent} from "../loading/loading.component";
+import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
 
 describe('ArtistsTableComponent', () => {
   let component: ArtistsTableComponent;
@@ -11,7 +13,11 @@ describe('ArtistsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ArtistsTableComponent ],
+      declarations: [
+        LoadingComponent,
+        ConfirmDialogComponent,
+        ArtistsTableComponent
+      ],
       providers: [ConfirmationService, MessageService],
       imports: [DataSourceModule, ServiceModule]
     })

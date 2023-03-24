@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmDialogComponent } from './confirm-dialog.component';
+import {ConfirmationService} from "primeng/api";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {DialogModule} from "primeng/dialog";
 
 describe('ConfirmDialogComponent', () => {
   let component: ConfirmDialogComponent;
@@ -8,6 +11,13 @@ describe('ConfirmDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        ConfirmDialogModule,
+        DialogModule,
+      ],
+      providers: [
+        ConfirmationService
+      ],
       declarations: [ ConfirmDialogComponent ]
     })
     .compileComponents();

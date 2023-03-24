@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BiographyFormComponent } from './biography-form.component';
+import {DialogModule} from "primeng/dialog";
 
 describe('BiographyFormComponent', () => {
   let component: BiographyFormComponent;
@@ -8,6 +9,9 @@ describe('BiographyFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        DialogModule
+      ],
       declarations: [ BiographyFormComponent ]
     })
     .compileComponents();

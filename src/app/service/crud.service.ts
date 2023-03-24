@@ -1,9 +1,9 @@
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
-import {map, Observable} from "rxjs";
+import {Observable} from "rxjs";
 
-export class CRUDService<E> {
+export abstract class CRUDService<E> {
 
-  constructor(protected restDataSource: RestDataSourceService, protected resourceName: string) { }
+  protected constructor(protected restDataSource: RestDataSourceService, protected resourceName: string) { }
 
   delete(id: number): Observable<true> {
     return this.restDataSource.deleteResponseData(this.resourceName, id);

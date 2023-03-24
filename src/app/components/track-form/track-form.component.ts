@@ -16,7 +16,7 @@ import {DV_TYPES} from "../../model/dvtype";
 @Component({
   selector: 'app-track-form',
   templateUrl: './track-form.component.html',
-  styleUrls: ['./track-form.component.scss']
+  styleUrls: ['./track-form.component.scss'],
 })
 export class TrackFormComponent extends BaseFormComponent<TrackEditItem> implements OnChanges, OnInit {
   DV_TYPES = DV_TYPES;
@@ -61,10 +61,10 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
     this.editForm = this.fb.group({
       artistId: this.editItem?.artistId? {id: this.editItem.artistId, name: this.editItem.artistName} : '',
       performerArtistId: this.editItem?.performerArtistId? {id: this.editItem.performerArtistId, name: this.editItem.performerArtistName} : '',
-      dvTypeId: ['', this.artifactTypeConfig.hasDvType? Validators.required : null],
+      dvTypeId: ['', this.artifactTypeConfig?.hasDvType? Validators.required : null],
       title: ['', Validators.required],
       duration: [''],
-      diskNum: ['', this.artifactTypeConfig.hasDiskNum? Validators.required : null],
+      diskNum: ['', this.artifactTypeConfig?.hasDiskNum? Validators.required : null],
       num: ['1', Validators.required],
       mediaFileIds: [[]],
       dvProductId: [''],
@@ -84,11 +84,11 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
     });
 
     // default values
-    if (this.artifactTypeConfig.hasDiskNum) {
+    if (this.artifactTypeConfig?.hasDiskNum) {
       this.editForm.patchValue({"diskNum": this.editItem?.diskNum?? '1'});
     }
 
-    if (this.artifactTypeConfig.hasDvType) {
+    if (this.artifactTypeConfig?.hasDvType) {
       this.editForm.patchValue({"dvTypeId": this.editItem?.dvTypeId?? 8});
     }
 
