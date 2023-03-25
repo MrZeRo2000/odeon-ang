@@ -1,10 +1,8 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {
   ArtifactEditItem,
   ARTIFACT_MUSIC_TYPES,
-  ARTIFACT_TYPE_MUSIC,
-  ARTIFACT_TYPE_VIDEO,
-  isArtifactTypeVideoMusic, TrackConfigItem, getTrackConfig
+  ArtifactConfigItem, getArtifactConfig
 } from "../../model/artifacts";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ArtifactService} from "../../service/artifact.service";
@@ -17,11 +15,7 @@ import {BaseFormComponent} from "../base/base-form.component";
   templateUrl: './artifact-form.component.html',
   styleUrls: ['./artifact-form.component.scss']
 })
-export class ArtifactFormComponent extends BaseFormComponent<ArtifactEditItem> implements OnChanges, OnInit {
-  readonly ARTIFACT_TYPE_MUSIC = ARTIFACT_TYPE_MUSIC;
-
-  readonly ARTIFACT_TYPE_VIDEO = ARTIFACT_TYPE_VIDEO;
-
+export class ArtifactFormComponent extends BaseFormComponent<ArtifactEditItem> implements OnInit {
   readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES;
 
   @Input()
@@ -37,8 +31,7 @@ export class ArtifactFormComponent extends BaseFormComponent<ArtifactEditItem> i
     return this.ARTIFACT_TYPES.map(v => v['code']).indexOf(artifactTypeId) !== -1;
   }
 
-  isArtifactTypeVideoMusic = false;
-  artifactTypeConfig?: TrackConfigItem;
+  artifactTypeConfig?: ArtifactConfigItem;
 
   editForm: FormGroup = this.fb.group({});
 
@@ -50,13 +43,14 @@ export class ArtifactFormComponent extends BaseFormComponent<ArtifactEditItem> i
   ) { super(messageService, artifactService) }
 
   ngOnInit(): void {
-    console.log('ArtifactForm onInit');
+    this.artifactTypeConfig = getArtifactConfig(this.editItem?.artifactTypeId as number, this.artistTypeCode);
+    console.log(`ArtifactForm: onInit: config: ${JSON.stringify(this.artifactTypeConfig)}`);
     this.editForm = this.fb.group({
       artifactTypeId: ['', Validators.required],
-      artistId: ['', this.artifactTypeConfig?.hasArtist ? Validators.required : null],
-      performerArtistId: [''],
+      artistId: ['', this.artifactTypeConfig?.requiresArtist ? Validators.required : null],
+      performerArtistId: ['', this.artifactTypeConfig?.requiresPerformerArtist? Validators.required : null],
       title: ['', Validators.required],
-      year: [''],
+      year: ['', this.artifactTypeConfig?.requiresYear? Validators.required : null],
       duration: [''],
       size: ['']
     });
@@ -73,30 +67,6 @@ export class ArtifactFormComponent extends BaseFormComponent<ArtifactEditItem> i
 
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('ArtifactForm ngOnChanges');
-    for (const propName of Object.keys(changes)) {
-      if (propName == 'editItem') {
-        const artifactProp = changes[propName];
-        console.log(`changed editItem ${JSON.stringify(artifactProp.currentValue)}`);
-        /*
-        this.editForm.setValue({
-          "artifactTypeId": artifactProp.currentValue.artifactTypeId,
-          "artistId": artifactProp.currentValue.artistId? {id: artifactProp.currentValue.artistId, name: artifactProp.currentValue.artistName} : '',
-          "performerArtistId": artifactProp.currentValue.performerArtistId? {id: artifactProp.currentValue.performerArtistId, name: artifactProp.currentValue.performerArtistName} : '',
-          "title": artifactProp.currentValue.title?? '',
-          "year": artifactProp.currentValue.year?? '',
-          "duration": artifactProp.currentValue.duration?? '',
-          "size": artifactProp.currentValue.size?? '',
-        });
-         */
-        this.isArtifactTypeVideoMusic = isArtifactTypeVideoMusic(artifactProp.currentValue.artifactTypeId);
-        this.artifactTypeConfig = getTrackConfig(artifactProp.currentValue.artifactTypeId);
-        console.log(`artifactTypeConfig: ${JSON.stringify(this.artifactTypeConfig)}`)
-      }
-    }
-  }
-
   override validate(): boolean {
     return this.editForm.valid;
   }
@@ -105,8 +75,8 @@ export class ArtifactFormComponent extends BaseFormComponent<ArtifactEditItem> i
     return {
       id: this.editItem?.id,
       artifactTypeId: this.editForm.value.artifactTypeId,
-      artistId: this.editForm.value.artistId.id,
-      artistName: this.editForm.value.artistId.name,
+      artistId: this.editForm.value.artistId?.id,
+      artistName: this.editForm.value.artistId?.name,
       performerArtistId: this.editForm.value.performerArtistId?.id,
       performerArtistName: this.editForm.value.performerArtistId?.name,
       title: this.editForm.value.title,

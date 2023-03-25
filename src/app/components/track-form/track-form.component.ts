@@ -1,13 +1,11 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {TrackEditItem} from "../../model/track";
+import {getTrackConfig, TrackConfigItem, TrackEditItem} from "../../model/track";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {TrackService} from "../../service/track.service";
 import {BaseFormComponent} from "../base/base-form.component";
 import {IdName, IdTitle} from "../../model/common";
 import {
-  TrackConfigItem,
-  getTrackConfig,
   isArtifactTypeMusic,
   isArtifactTypeVideo
 } from "../../model/artifacts";

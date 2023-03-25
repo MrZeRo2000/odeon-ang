@@ -1,4 +1,4 @@
-import {getTrackConfig} from "./artifacts";
+import {getTrackConfig} from "./track";
 
 describe('getTrackConfig', () => {
   it('should get by code', () => {

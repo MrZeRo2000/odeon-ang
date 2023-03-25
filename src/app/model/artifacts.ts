@@ -1,3 +1,5 @@
+import {EditConfigItem, getConfigItem} from "./edit-config";
+
 export interface ArtifactTableItem {
   id: number;
   artistTypeCode: string;
@@ -68,31 +70,28 @@ export function isArtifactTypeVideoWithProducts(artifactTypeId: number): boolean
     .indexOf(artifactTypeId) !== -1;
 }
 
-export interface TrackConfigItem {
-  code: number,
-  name: string,
-  artistType: "A" | "C",
-  isMusic: boolean,
-  isVideo: boolean,
+export interface ArtifactConfigItem extends EditConfigItem {
   hasArtist: boolean,
+  requiresArtist: boolean,
   hasPerformerArtist: boolean,
-  hasDvType: boolean,
-  hasDiskNum: boolean,
-  hasProducts: boolean,
+  requiresPerformerArtist: boolean,
+  hasYear: boolean,
+  requiresYear: boolean
 }
 
-export const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
+const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
   {
     code: 101,
     name: 'MP3',
     artistType: "A",
     isMusic: true,
     isVideo: false,
-    hasArtist: false,
+    hasArtist: true,
+    requiresArtist: true,
     hasPerformerArtist: false,
-    hasDvType: false,
-    hasDiskNum: true,
-    hasProducts: false,
+    requiresPerformerArtist: false,
+    hasYear: true,
+    requiresYear: true,
   },
   {
     code: 102,
@@ -100,11 +99,12 @@ export const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
     artistType: "A",
     isMusic: true,
     isVideo: false,
-    hasArtist: false,
+    hasArtist: true,
+    requiresArtist: true,
     hasPerformerArtist: false,
-    hasDvType: false,
-    hasDiskNum: true,
-    hasProducts: false,
+    requiresPerformerArtist: false,
+    hasYear: true,
+    requiresYear: true,
   },
   {
     code: 101,
@@ -113,22 +113,24 @@ export const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
     isMusic: true,
     isVideo: false,
     hasArtist: true,
+    requiresArtist: true,
     hasPerformerArtist: true,
-    hasDvType: false,
-    hasDiskNum: true,
-    hasProducts: false,
+    requiresPerformerArtist: false,
+    hasYear: true,
+    requiresYear: true,
   },
   {
     code: 102,
     name: 'LA',
-    artistType: "A",
+    artistType: "C",
     isMusic: true,
     isVideo: false,
     hasArtist: true,
+    requiresArtist: true,
     hasPerformerArtist: true,
-    hasDvType: false,
-    hasDiskNum: true,
-    hasProducts: false,
+    requiresPerformerArtist: false,
+    hasYear: true,
+    requiresYear: true,
   },
   {
     code: 201,
@@ -137,10 +139,11 @@ export const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
     isMusic: true,
     isVideo: true,
     hasArtist: true,
+    requiresArtist: true,
     hasPerformerArtist: false,
-    hasDvType: true,
-    hasDiskNum: true,
-    hasProducts: false,
+    requiresPerformerArtist: false,
+    hasYear: true,
+    requiresYear: false,
   },
   {
     code: 202,
@@ -149,10 +152,11 @@ export const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
     isMusic: false,
     isVideo: true,
     hasArtist: false,
+    requiresArtist: false,
     hasPerformerArtist: false,
-    hasDvType: true,
-    hasDiskNum: false,
-    hasProducts: true,
+    requiresPerformerArtist: false,
+    hasYear: false,
+    requiresYear: false,
   },
   {
     code: 203,
@@ -161,10 +165,11 @@ export const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
     isMusic: false,
     isVideo: true,
     hasArtist: false,
+    requiresArtist: false,
     hasPerformerArtist: false,
-    hasDvType: true,
-    hasDiskNum: false,
-    hasProducts: true,
+    requiresPerformerArtist: false,
+    hasYear: false,
+    requiresYear: false,
   },
   {
     code: 204,
@@ -173,13 +178,14 @@ export const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
     isMusic: false,
     isVideo: true,
     hasArtist: false,
+    requiresArtist: false,
     hasPerformerArtist: false,
-    hasDvType: true,
-    hasDiskNum: false,
-    hasProducts: false,
+    requiresPerformerArtist: false,
+    hasYear: false,
+    requiresYear: false,
   },
-]
+];
 
-export function getTrackConfig(code: number, artistType: string = ""): TrackConfigItem {
-  return TRACK_EDIT_CONFIG.filter(v => v.code === code && (!artistType || v.artistType === artistType))[0]
+export function getArtifactConfig(code: number, artistType: string = ""): ArtifactConfigItem {
+  return getConfigItem(ARTIFACT_EDIT_CONFIG, code, artistType)
 }
