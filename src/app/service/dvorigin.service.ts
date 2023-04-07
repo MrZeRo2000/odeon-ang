@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {CRUDService} from "./crud.service";
 import {DVOrigin} from "../model/dv-product";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
-import {BehaviorSubject, Observable, share, switchMap, tap} from "rxjs";
+import {BehaviorSubject, Observable, shareReplay, switchMap, tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +15,10 @@ export class DVOriginService extends CRUDService<DVOrigin>{
     this.refreshTable$.next(undefined);
   }
 
-  public dvOriginTable$: Observable<Array<DVOrigin>> = this.refreshTable$.pipe(
+  public table$: Observable<Array<DVOrigin>> = this.refreshTable$.pipe(
     tap(() => {console.log('Loading dvOrigin table')}),
     switchMap(() => this.getTable()),
-    share({resetOnComplete: true, resetOnError: true, resetOnRefCountZero: true})
+    shareReplay(1)
   );
 
   constructor(restDataSource: RestDataSourceService) {
