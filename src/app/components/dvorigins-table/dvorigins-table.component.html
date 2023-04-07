@@ -1,0 +1,44 @@
+<app-confirm-dialog></app-confirm-dialog>
+
+<ng-template #loadingOrError>
+  <ng-container *ngIf="!errorObject">
+    <app-loading></app-loading>
+  </ng-container>
+</ng-template>
+
+<div *ngIf="table$ | async as table; else loadingOrError">
+
+  <p-table #dt [value]="table" dataKey="id">
+
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <div class="flex align-items-center justify-content-between text-xl mr-2">Origins</div>
+        <app-crud-panel class="flex align-items-center" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:0">Id</th>
+        <th>Name</th>
+        <th style="width:0"></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr [pSelectableRow]="item">
+        <td>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>
+          <app-crud-panel
+            [data]="item"
+            [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]"
+            (crudEvent)="crudEvent($event)">
+          </app-crud-panel>
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+
+</div>

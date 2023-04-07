@@ -50,9 +50,7 @@ import { ArtifactFormComponent } from './components/artifact-form/artifact-form.
 import { TracksTableComponent } from './components/tracks-table/tracks-table.component';
 import {DecimalPipe} from "@angular/common";
 import { TrackFormComponent } from './components/track-form/track-form.component';
-import { BaseTableComponent } from './components/base/base-table.component';
 import {InputNumberModule} from "primeng/inputnumber";
-import {BaseFormComponent} from "./components/base/base-form.component";
 import { MediaFilesTableComponent } from './components/media-files-table/media-files-table.component';
 import { MediaFileFormComponent } from './components/media-file-form/media-file-form.component';
 import {MultiSelectModule} from "primeng/multiselect";
@@ -62,6 +60,7 @@ import { ArtistLyricsFormComponent } from './components/artist-lyrics-form/artis
 import { ArtifactsVideoTableComponent } from './components/artifacts-video-table/artifacts-video-table.component';
 import {DropdownModule} from "primeng/dropdown";
 import { ArtifactCaptionPipe } from './pipes/artifact-caption.pipe';
+import { DVOriginsTableComponent } from './components/dvorigins-table/dvorigins-table.component';
 
 
 @NgModule({
@@ -92,7 +91,8 @@ import { ArtifactCaptionPipe } from './pipes/artifact-caption.pipe';
     LyricsTextFormComponent,
     ArtistLyricsFormComponent,
     ArtifactsVideoTableComponent,
-    ArtifactCaptionPipe
+    ArtifactCaptionPipe,
+    DVOriginsTableComponent
   ],
     imports: [
         BrowserModule,

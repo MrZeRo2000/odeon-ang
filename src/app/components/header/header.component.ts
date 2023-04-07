@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {MenubarModule} from 'primeng/menubar';
 import {MenuItem, PrimeIcons} from "primeng/api";
 
 @Component({
@@ -30,6 +29,15 @@ export class HeaderComponent implements OnInit {
       {
         label: "Video",
         routerLink: ['/artifacts-video']
+      },
+      {
+        label: "Products",
+        items: [
+          {
+            label: "Origins",
+            routerLink: ['/dvorigins']
+          }
+        ]
       },
       {
         label: "Processing",
