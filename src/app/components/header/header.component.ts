@@ -36,6 +36,10 @@ export class HeaderComponent implements OnInit {
           {
             label: "Origins",
             routerLink: ['/dvorigins']
+          },
+          {
+            label: "Categories",
+            routerLink: ['/dvcategories']
           }
         ]
       },
