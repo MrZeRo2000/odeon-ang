@@ -41,4 +41,10 @@
 
   </p-table>
 
+  <ng-container *ngIf="deleteAction$ | async"></ng-container>
+
+  <ng-container *ngIf="editAction$ | async as dvOrigin">
+    <app-dvorigin-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="dvOrigin" (onSavedItem)="savedEditData($event)"></app-dvorigin-form>
+  </ng-container>
+
 </div>

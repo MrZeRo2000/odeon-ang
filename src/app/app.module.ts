@@ -61,6 +61,7 @@ import { ArtifactsVideoTableComponent } from './components/artifacts-video-table
 import {DropdownModule} from "primeng/dropdown";
 import { ArtifactCaptionPipe } from './pipes/artifact-caption.pipe';
 import { DVOriginsTableComponent } from './components/dvorigins-table/dvorigins-table.component';
+import { DVOriginFormComponent } from './components/dvorigin-form/dvorigin-form.component';
 
 
 @NgModule({
@@ -92,7 +93,8 @@ import { DVOriginsTableComponent } from './components/dvorigins-table/dvorigins-
     ArtistLyricsFormComponent,
     ArtifactsVideoTableComponent,
     ArtifactCaptionPipe,
-    DVOriginsTableComponent
+    DVOriginsTableComponent,
+    DVOriginFormComponent
   ],
     imports: [
         BrowserModule,

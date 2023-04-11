@@ -36,6 +36,6 @@ export class DVOriginsTableComponent extends BaseTableComponent<DVOrigin, DVOrig
 
   protected loadData(): void {
     this.table$ = this.dvOriginService.table$;
+    this.dvOriginService.refreshTable();
   }
-
 }
