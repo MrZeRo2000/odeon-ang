@@ -8,7 +8,7 @@
 
 <div *ngIf="table$ | async as table; else loadingOrError">
 
-  <p-table #dt [value]="table" dataKey="id">
+  <p-table [value]="table" dataKey="id">
 
     <ng-template pTemplate="caption">
       <div class="flex">
@@ -26,7 +26,7 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-item>
-      <tr [pSelectableRow]="item">
+      <tr>
         <td>{{item.id}}</td>
         <td>{{item.name}}</td>
         <td>
