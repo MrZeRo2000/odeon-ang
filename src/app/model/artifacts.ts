@@ -76,10 +76,16 @@ export interface ArtifactConfigItem extends EditConfigItem {
   hasPerformerArtist: boolean,
   requiresPerformerArtist: boolean,
   hasYear: boolean,
-  requiresYear: boolean
+  requiresYear: boolean,
+  hasProduct: boolean,
 }
 
-const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
+export interface CodeName {
+  code: number;
+  name: string
+}
+
+export const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
   {
     code: 101,
     name: 'MP3',
@@ -92,6 +98,7 @@ const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
     requiresPerformerArtist: false,
     hasYear: true,
     requiresYear: true,
+    hasProduct: false,
   },
   {
     code: 102,
@@ -105,6 +112,7 @@ const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
     requiresPerformerArtist: false,
     hasYear: true,
     requiresYear: true,
+    hasProduct: false,
   },
   {
     code: 101,
@@ -118,6 +126,7 @@ const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
     requiresPerformerArtist: false,
     hasYear: true,
     requiresYear: true,
+    hasProduct: false,
   },
   {
     code: 102,
@@ -131,6 +140,7 @@ const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
     requiresPerformerArtist: false,
     hasYear: true,
     requiresYear: true,
+    hasProduct: false,
   },
   {
     code: 201,
@@ -144,6 +154,7 @@ const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
     requiresPerformerArtist: false,
     hasYear: true,
     requiresYear: false,
+    hasProduct: false,
   },
   {
     code: 202,
@@ -157,6 +168,7 @@ const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
     requiresPerformerArtist: false,
     hasYear: false,
     requiresYear: false,
+    hasProduct: true,
   },
   {
     code: 203,
@@ -170,6 +182,7 @@ const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
     requiresPerformerArtist: false,
     hasYear: false,
     requiresYear: false,
+    hasProduct: true,
   },
   {
     code: 204,
@@ -183,6 +196,7 @@ const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
     requiresPerformerArtist: false,
     hasYear: false,
     requiresYear: false,
+    hasProduct: false,
   },
 ];
 

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtifactService} from "../../service/artifact.service";
-import {UntypedFormBuilder, FormGroup} from "@angular/forms";
-import {ARTIST_TYPES, ArtistEditItem} from "../../model/artists";
+import {UntypedFormBuilder} from "@angular/forms";
+import {ARTIST_TYPES} from "../../model/artists";
 import {
   ARTIFACT_MUSIC_TYPE_MP3,
   ARTIFACT_MUSIC_TYPES,
@@ -10,7 +10,6 @@ import {
 } from "../../model/artifacts";
 import {
   catchError,
-  finalize,
   forkJoin,
   iif,
   map,

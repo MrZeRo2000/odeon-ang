@@ -4,11 +4,12 @@ import {IdTitle} from "../model/common";
 import {HttpParams} from "@angular/common/http";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {DVProduct} from "../model/dv-product";
+import {CRUDService} from "./crud.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class DVProductService {
+export class DVProductService extends CRUDService<DVProduct> {
 
   private dvProductIdNameTable$: {
     [index: number]: Observable<Array<IdTitle>>
@@ -24,7 +25,9 @@ export class DVProductService {
     this.refreshTable$.next(undefined);
   }
 
-  constructor(private restDataSource: RestDataSourceService) { }
+  constructor(restDataSource: RestDataSourceService) {
+    super(restDataSource, "dvproduct")
+  }
 
   getIdTitleTable(artifactType: number): Observable<Array<IdTitle>> {
     if (!artifactType) {
@@ -47,10 +50,12 @@ export class DVProductService {
     } else if (!this.dvProductTable$[artifactType]) {
       const params: HttpParams = new HttpParams().append("artifactTypeId", artifactType);
       this.dvProductTable$[artifactType] = this.refreshTable$.pipe(
-        tap(() => {console.log('Loading dvProduct table')}),
+        //tap(() => {console.log('Loading dvProduct table')}),
         switchMap(() => this.restDataSource.getResponseData<Array<DVProduct>>("dvproduct/dvproducts/table", params)),
         shareReplay(1)
       )
+    } else {
+      //console.log('dvProduct table found, no need to load')
     }
 
     return this.dvProductTable$[artifactType];
