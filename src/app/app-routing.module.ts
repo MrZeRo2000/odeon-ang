@@ -10,6 +10,7 @@ import {ArtistLyricsTableComponent} from "./components/artist-lyrics-table/artis
 import {ArtifactsVideoTableComponent} from "./components/artifacts-video-table/artifacts-video-table.component";
 import {DVOriginsTableComponent} from "./components/dvorigins-table/dvorigins-table.component";
 import {DVCategoriesTableComponent} from "./components/dvcategories-table/dvcategories-table.component";
+import {DVProductsTableComponent} from "./components/dvproducts-table/dvproducts-table.component";
 
 const routes: Routes = [
   {path: '', component: LandingComponent, pathMatch: 'full'},
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'media-files/:id', component: MediaFilesTableComponent, pathMatch: 'prefix'},
   {path: 'dvorigins', component: DVOriginsTableComponent, pathMatch: 'full'},
   {path: 'dvcategories', component: DVCategoriesTableComponent, pathMatch: 'full'},
+  {path: 'dvproducts', component: DVProductsTableComponent, pathMatch: 'full'},
   { path: '**', component: LandingComponent }
 ];
 

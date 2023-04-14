@@ -40,7 +40,11 @@ export class HeaderComponent implements OnInit {
           {
             label: "Categories",
             routerLink: ['/dvcategories']
-          }
+          },
+          {
+            label: "Products",
+            routerLink: ['/dvproducts']
+          },
         ]
       },
       {
