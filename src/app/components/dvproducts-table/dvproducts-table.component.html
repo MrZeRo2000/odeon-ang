@@ -6,14 +6,19 @@
   </ng-container>
 </ng-template>
 
-<div *ngIf="filteredTable$ | async as table; else loadingOrError">
+<div #dtc *ngIf="filteredTable$ | async as table; else loadingOrError">
 
-  <p-table #dt [value]="table" dataKey="id"
-           [globalFilterFields]="['title']" selectionMode="single" [(selection)]="selectedItem"
+  <p-table #dt
+           [value]="table"
+           dataKey="id"
+           [scrollable]="true"
+           [scrollHeight]="scrollHeight"
+           [globalFilterFields]="['title']"
+           selectionMode="single" [(selection)]="selectedItem"
   >
 
     <ng-template pTemplate="caption">
-      <div class="flex">
+      <div #caption class="flex">
         <div class="flex align-items-center justify-content-between text-xl mr-2">Music</div>
         <app-crud-panel class="flex align-items-center" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import {BaseTableComponent} from "../base/base-table.component";
 import {DVCategory, DVOrigin, DVProduct} from "../../model/dv-product";
 import {CRUDResult} from "../../model/crud";
@@ -24,6 +24,14 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
   filterForm = this.fb.group({
     artifactTypeId: [this.ARTIFACT_TYPES[0].code, Validators.required]
   });
+
+  @ViewChild('dtc', { static: false})
+  private tableContainerElement?: ElementRef;
+
+  @ViewChild('caption', { static: false})
+  private tableCaptionElement?: ElementRef;
+
+  scrollHeight = "0px";
 
   constructor(
     private fb: FormBuilder,
@@ -54,6 +62,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
         })
       )
     }),
+    tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
     //tap(v => {console.log(`Returned table: ${JSON.stringify(v).substring(0, 20)}`)})
   )
 
@@ -73,6 +82,22 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
   protected loadData(): void {
     console.log(`Load data filter value: ${JSON.stringify(this.filterForm.value)}`)
     this.filterForm.setValue({artifactTypeId: this.filterForm.value.artifactTypeId as number});
+  }
+
+  private updateScrollHeight(): void {
+    const windowHeight = window.innerHeight;
+    const tableContainerTop = this.tableContainerElement?.nativeElement.offsetTop;
+    const tableCaptionOffset = this.tableCaptionElement?.nativeElement.parentElement.offsetHeight;
+    const containerHeight = windowHeight
+      - tableContainerTop
+      - tableCaptionOffset
+      - parseFloat(getComputedStyle(document.documentElement).fontSize) / 2;
+    this.scrollHeight = `${containerHeight}px`
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateScrollHeight();
   }
 
 }
