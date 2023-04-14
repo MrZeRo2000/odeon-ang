@@ -6,14 +6,24 @@
   </ng-container>
 </ng-template>
 
-<div *ngIf="table$ | async as table; else loadingOrError">
 
-  <p-table [value]="table" dataKey="id">
+<div #dtc *ngIf="table$ | async as table; else loadingOrError">
+
+  <p-table #dt styleClass="p-datatable-sm" [value]="table" dataKey="id" [scrollable]="true" [scrollHeight]="scrollHeight"
+           [globalFilterFields]="['name']">
 
     <ng-template pTemplate="caption">
-      <div class="flex">
-        <div class="flex align-items-center justify-content-between text-xl mr-2">Categories</div>
-        <app-crud-panel class="flex align-items-center" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+      <div #caption class="flex">
+        <div class="flex">
+          <div class="flex align-items-center justify-content-between text-xl mr-2">Categories</div>
+          <app-crud-panel class="flex align-items-center app-crud-panel-small" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+        </div>
+        <div class="flex justify-content-end flex-grow-1">
+            <span class="p-input-icon-left flex align-items-center">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;" placeholder="Search keyword" />
+            </span>
+        </div>
       </div>
     </ng-template>
 
@@ -31,6 +41,7 @@
         <td>{{item.name}}</td>
         <td>
           <app-crud-panel
+            class="app-crud-panel-small"
             [data]="item"
             [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]"
             (crudEvent)="crudEvent($event)">
@@ -48,3 +59,4 @@
   </ng-container>
 
 </div>
+
