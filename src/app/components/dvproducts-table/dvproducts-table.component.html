@@ -9,18 +9,19 @@
 <div #dtc *ngIf="filteredTable$ | async as table; else loadingOrError">
 
   <p-table #dt
+           styleClass="p-datatable-sm"
            [value]="table"
            dataKey="id"
            [scrollable]="true"
            [scrollHeight]="scrollHeight"
-           [globalFilterFields]="['title']"
+           [globalFilterFields]="['title', 'frontInfo']"
            selectionMode="single" [(selection)]="selectedItem"
   >
 
     <ng-template pTemplate="caption">
       <div #caption class="flex">
-        <div class="flex align-items-center justify-content-between text-xl mr-2">Music</div>
-        <app-crud-panel class="flex align-items-center" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+        <div class="flex align-items-center justify-content-between text-xl mr-2">Products</div>
+        <app-crud-panel class="flex align-items-center app-crud-panel-small" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
 
         <form [formGroup]="filterForm">
           <div class="flex white-space-nowrap ml-2">
@@ -40,7 +41,12 @@
     <ng-template pTemplate="header">
       <tr>
         <th style="width:0">Id</th>
+        <th style="width:0">Origin</th>
         <th>Title</th>
+        <th>Original Title</th>
+        <th>Front Info</th>
+        <th>Category</th>
+        <th style="width:0">Year</th>
         <th style="width:0"></th>
       </tr>
     </ng-template>
@@ -48,9 +54,20 @@
     <ng-template pTemplate="body" let-item>
       <tr [pSelectableRow]="item">
         <td>{{item.id}}</td>
+        <td>{{item.dvOrigin.name}}</td>
         <td>{{item.title}}</td>
+        <td>{{item.originalTitle}}</td>
+        <td>{{item.frontInfo}}</td>
         <td>
-          <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+          <div class="flex flex-wrap gap-1" *ngIf="item.dvCategories">
+            <div *ngFor="let category of item.dvCategories">
+              <p-chip label="{{category.name}}" styleClass="flex align-items-center text-xs" *ngIf="category"></p-chip>
+            </div>
+          </div>
+        </td>
+        <td>{{item.year}}</td>
+        <td>
+          <app-crud-panel class="app-crud-panel-small" [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
         </td>
       </tr>
     </ng-template>
