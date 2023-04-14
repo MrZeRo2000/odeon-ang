@@ -55,7 +55,7 @@
   <ng-container *ngIf="deleteAction$ | async"></ng-container>
 
   <ng-container *ngIf="editAction$ | async as dvCategory">
-    <app-dvorigin-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="dvCategory" (onSavedItem)="savedEditData($event)"></app-dvorigin-form>
+    <app-dvcategory-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="dvCategory" (onSavedItem)="savedEditData($event)"></app-dvcategory-form>
   </ng-container>
 
 </div>

@@ -63,6 +63,7 @@ import { ArtifactCaptionPipe } from './pipes/artifact-caption.pipe';
 import { DVOriginsTableComponent } from './components/dvorigins-table/dvorigins-table.component';
 import { DVOriginFormComponent } from './components/dvorigin-form/dvorigin-form.component';
 import { DVCategoriesTableComponent } from './components/dvcategories-table/dvcategories-table.component';
+import { DVCategoryFormComponent } from './components/dvcategory-form/dvcategory-form.component';
 
 
 @NgModule({
@@ -96,7 +97,8 @@ import { DVCategoriesTableComponent } from './components/dvcategories-table/dvca
     ArtifactCaptionPipe,
     DVOriginsTableComponent,
     DVOriginFormComponent,
-    DVCategoriesTableComponent
+    DVCategoriesTableComponent,
+    DVCategoryFormComponent
   ],
     imports: [
         BrowserModule,
