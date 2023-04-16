@@ -65,6 +65,7 @@ import { DVOriginFormComponent } from './components/dvorigin-form/dvorigin-form.
 import { DVCategoriesTableComponent } from './components/dvcategories-table/dvcategories-table.component';
 import { DVCategoryFormComponent } from './components/dvcategory-form/dvcategory-form.component';
 import { DVProductsTableComponent } from './components/dvproducts-table/dvproducts-table.component';
+import { DVProductFormComponent } from './components/dvproduct-form/dvproduct-form.component';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { DVProductsTableComponent } from './components/dvproducts-table/dvproduc
     DVOriginFormComponent,
     DVCategoriesTableComponent,
     DVCategoryFormComponent,
-    DVProductsTableComponent
+    DVProductsTableComponent,
+    DVProductFormComponent
   ],
     imports: [
         BrowserModule,

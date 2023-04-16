@@ -46,7 +46,6 @@ export class DVCategoriesTableComponent extends BaseTableComponent<DVCategory, D
     this.table$ = this.dvCategoryService.table$.pipe(
       tap(() => {setTimeout(() => this.updateScrollHeight(), 0);})
     );
-    this.dvCategoryService.refreshTable();
   }
 
   private updateScrollHeight(): void {

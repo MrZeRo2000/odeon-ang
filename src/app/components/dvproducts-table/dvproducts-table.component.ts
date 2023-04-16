@@ -2,7 +2,7 @@ import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import {BaseTableComponent} from "../base/base-table.component";
 import {DVCategory, DVOrigin, DVProduct} from "../../model/dv-product";
 import {CRUDResult} from "../../model/crud";
-import {catchError, concatMap, forkJoin, map, Observable, of, startWith, switchMap, tap} from "rxjs";
+import {catchError, concatMap, forkJoin, from, iif, map, Observable, of, startWith, switchMap, take, tap} from "rxjs";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {DVProductService} from "../../service/dvproduct.service";
 import {DVOriginService} from "../../service/dvorigin.service";
@@ -43,19 +43,17 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
     super(messageService, confirmationService, dvProductService, {
       deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.title}</strong>?`",
       deleteErrorMessage: "`Error deleting product: ${v.data}`",
-      editErrorMessage: "Error getting product details"
+      editErrorMessage: "`Error getting product details`"
     });
   }
 
   filteredTable$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
-    //tap(v => {console.log(`filteredTable: ${JSON.stringify(v)}`)}),
     switchMap(v => {
-      return of(null, v).pipe(
-        //tap(v => {console.log(`inner: ${JSON.stringify(v)}`)}),
+      return from([0, v.artifactTypeId]).pipe(
         concatMap(v => {
           if (v) {
-            return this.dvProductService.getTable(v.artifactTypeId as number)
+            return this.dvProductService.getTable(v as number)
           } else {
             return of(null)
           }
@@ -63,17 +61,23 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
       )
     }),
     tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
-    //tap(v => {console.log(`Returned table: ${JSON.stringify(v).substring(0, 20)}`)})
   )
 
   protected getEditData(item: DVProduct): Observable<CRUDResult<[DVProduct, Array<DVOrigin>, Array<DVCategory>]>> {
     return forkJoin([
-      this.dataService.get(this.filterForm.value.artifactTypeId as number),
-      this.dvOriginService.table$,
-      this.dvCategoryService.table$
+      iif(
+        () => Object.keys(item).length === 0,
+        of({artifactTypeId: this.filterForm.value.artifactTypeId as number} as DVProduct),
+        this.dvProductService.get(item.id as number)
+        ),
+      this.dvOriginService.table$.pipe(take(1)),
+      this.dvCategoryService.table$.pipe(take(1))
     ]).pipe(
-      map(v => {return {success: true, data: v as [DVProduct, Array<DVOrigin>, Array<DVCategory>]}}),
+      map(v => {
+        return {success: true, data: v as [DVProduct, Array<DVOrigin>, Array<DVCategory>]}
+      }),
       catchError(err => {
+        console.error(`Got some error: ${JSON.stringify(err)}`)
         return of({success: false, data: err.error?.message || err.message});
       })
     )
