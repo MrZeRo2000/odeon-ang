@@ -32,6 +32,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
   private tableCaptionElement?: ElementRef;
 
   scrollHeight = "0px";
+  virtualScroll = false;
 
   constructor(
     private fb: FormBuilder,
@@ -63,6 +64,13 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
     tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
   )
 
+  getProductInfos(table: Array<DVProduct>): Array<string> {
+    return [... new Set(table
+      .map(v => v.frontInfo as string)
+      .filter(v => !!v)
+    )].sort();
+  }
+
   protected getEditData(item: DVProduct): Observable<CRUDResult<[DVProduct, Array<DVOrigin>, Array<DVCategory>]>> {
     return forkJoin([
       iif(
@@ -77,7 +85,6 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
         return {success: true, data: v as [DVProduct, Array<DVOrigin>, Array<DVCategory>]}
       }),
       catchError(err => {
-        console.error(`Got some error: ${JSON.stringify(err)}`)
         return of({success: false, data: err.error?.message || err.message});
       })
     )
@@ -85,6 +92,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
 
   protected loadData(): void {
     console.log(`Load data filter value: ${JSON.stringify(this.filterForm.value)}`)
+    this.dvProductService.refreshTable();
     this.filterForm.setValue({artifactTypeId: this.filterForm.value.artifactTypeId as number});
   }
 
@@ -97,6 +105,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
       - tableCaptionOffset
       - parseFloat(getComputedStyle(document.documentElement).fontSize) / 2;
     this.scrollHeight = `${containerHeight}px`
+    this.virtualScroll = true
   }
 
   @HostListener('window:resize', ['$event'])

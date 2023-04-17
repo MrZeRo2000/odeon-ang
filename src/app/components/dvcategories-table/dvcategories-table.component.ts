@@ -60,7 +60,7 @@ export class DVCategoriesTableComponent extends BaseTableComponent<DVCategory, D
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  onResize() {
     this.updateScrollHeight();
   }
 }

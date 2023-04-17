@@ -81,6 +81,9 @@
       *ngIf="displayForm"
       [(display)]="displayForm"
       [editItem]="editItem[0]"
+      [dvOrigins]="editItem[1]"
+      [dvCategories]="editItem[2]"
+      [productInfos]="getProductInfos(table)"
       (onSavedItem)="savedEditData($event)">
     </app-dvproduct-form>
   </ng-container>

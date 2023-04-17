@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {BaseFormComponent} from "../base/base-form.component";
-import {DVProduct} from "../../model/dv-product";
+import {DVCategory, DVOrigin, DVProduct} from "../../model/dv-product";
 import {MessageService} from "primeng/api";
 import {DVProductService} from "../../service/dvproduct.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -10,13 +10,22 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   templateUrl: './dvproduct-form.component.html',
   styleUrls: ['./dvproduct-form.component.scss']
 })
-export class DVProductFormComponent extends BaseFormComponent<DVProduct>{
+export class DVProductFormComponent extends BaseFormComponent<DVProduct> implements OnInit {
+
+  @Input()
+  dvOrigins: Array<DVOrigin> = [];
+
+  @Input()
+  dvCategories: Array<DVCategory> = [];
+
+  @Input()
+  productInfos: Array<string> = [];
 
   editForm: FormGroup = this.fb.group({
-    dvOrigin: ['', Validators.required],
+    dvOrigin: [{}, Validators.required],
     title: ['', Validators.required],
     originalTitle: [''],
-    year: ['', Validators.pattern("(1|2)[0-9]{3}")],
+    year: [null, Validators.pattern("(1|2)[0-9]{3}")],
     frontInfo: [''],
     description: [''],
     notes: [''],
@@ -30,7 +39,26 @@ export class DVProductFormComponent extends BaseFormComponent<DVProduct>{
     super(messageService, crudService);
   }
 
+  ngOnInit(): void {
+    console.log(`editForm origin value: ${JSON.stringify(this.editItem?.dvOrigin || {})}`)
+    this.editForm.setValue({
+      dvOrigin: this.editItem?.dvOrigin || this.dvOrigins[0],
+      title: this.editItem?.title || '',
+      originalTitle: this.editItem?.originalTitle || '',
+      year: this.editItem?.year || null,
+      frontInfo: this.editItem?.frontInfo || '',
+      description: this.editItem?.description || '',
+      notes: this.editItem?.notes || '',
+      dvCategories: this.editItem?.dvCategories || [],
+    })
+  }
+
+  override validate(): boolean {
+    return this.editForm.valid;
+  }
+
   createSavedItem(): DVProduct {
+    console.log(`savedItem origin value: ${JSON.stringify(this.editForm.value.dvOrigin)}`)
     return {
       id: this.editItem?.id,
       artifactTypeId: this.editItem?.artifactTypeId,
