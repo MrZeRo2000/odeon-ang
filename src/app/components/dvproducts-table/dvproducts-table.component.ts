@@ -64,7 +64,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
     tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
   )
 
-  getProductInfos(table: Array<DVProduct>): Array<string> {
+  getFrontInfos(table: Array<DVProduct>): Array<string> {
     return [... new Set(table
       .map(v => v.frontInfo as string)
       .filter(v => !!v)

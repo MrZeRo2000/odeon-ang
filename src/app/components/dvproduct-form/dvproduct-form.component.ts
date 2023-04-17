@@ -4,6 +4,7 @@ import {DVCategory, DVOrigin, DVProduct} from "../../model/dv-product";
 import {MessageService} from "primeng/api";
 import {DVProductService} from "../../service/dvproduct.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {filterString} from "../../utils/search-utils";
 
 @Component({
   selector: 'app-dvproduct-form',
@@ -19,7 +20,7 @@ export class DVProductFormComponent extends BaseFormComponent<DVProduct> impleme
   dvCategories: Array<DVCategory> = [];
 
   @Input()
-  productInfos: Array<string> = [];
+  frontInfos: Array<string> = [];
 
   editForm: FormGroup = this.fb.group({
     dvOrigin: [{}, Validators.required],
@@ -31,6 +32,8 @@ export class DVProductFormComponent extends BaseFormComponent<DVProduct> impleme
     notes: [''],
     dvCategories: [[]]
   });
+
+  filteredFrontInfos: Array<string> = [];
 
   constructor(
     private fb: FormBuilder,
@@ -71,6 +74,10 @@ export class DVProductFormComponent extends BaseFormComponent<DVProduct> impleme
       notes: this.editForm.value.notes,
       dvCategories: this.editForm.value.dvCategories,
     } as DVProduct
+  }
+
+  searchFrontInfos(event: any): void {
+    this.filteredFrontInfos = filterString(this.frontInfos, event.query);
   }
 
 }
