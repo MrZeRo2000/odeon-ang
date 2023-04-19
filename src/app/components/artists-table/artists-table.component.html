@@ -9,12 +9,12 @@
 <div *ngIf="data$ | async as artistTable; else loadingOrError">
 
   <div *ngIf="artistDetail$ | async as artistDetail">
-    <app-biography-form
+    <app-text-view-dialog
       *ngIf="!!artistDetail.biography"
       [(display)]="displayArtistInfo"
       [header]="displayArtistName"
-      [biography]="artistDetail.biography">
-    </app-biography-form>
+      [htmlText]="artistDetail.biography">
+    </app-text-view-dialog>
   </div>
 
   <p-table #dt [value]="artistTable" [rows]="10" [paginator]="true" dataKey="id" stateStorage="session" stateKey="artist-table-session"

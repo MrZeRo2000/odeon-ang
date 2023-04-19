@@ -41,7 +41,6 @@ import { ArtistFormComponent } from './components/artist-form/artist-form.compon
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {AutoCompleteModule} from "primeng/autocomplete";
-import { BiographyFormComponent } from './components/biography-form/biography-form.component';
 import {SelectButtonModule} from "primeng/selectbutton";
 import { ArtifactsTableComponent } from './components/artifacts-table/artifacts-table.component';
 import { FileSizePipe } from './pipes/file-size-pipe.pipe';
@@ -66,6 +65,7 @@ import { DVCategoriesTableComponent } from './components/dvcategories-table/dvca
 import { DVCategoryFormComponent } from './components/dvcategory-form/dvcategory-form.component';
 import { DVProductsTableComponent } from './components/dvproducts-table/dvproducts-table.component';
 import { DVProductFormComponent } from './components/dvproduct-form/dvproduct-form.component';
+import { TextViewDialogComponent } from './components/text-view-dialog/text-view-dialog.component';
 
 
 @NgModule({
@@ -83,7 +83,6 @@ import { DVProductFormComponent } from './components/dvproduct-form/dvproduct-fo
     LoadingComponent,
     ConfirmDialogComponent,
     ArtistFormComponent,
-    BiographyFormComponent,
     ArtifactsTableComponent,
     FileSizePipe,
     CrudPanelComponent,
@@ -102,7 +101,8 @@ import { DVProductFormComponent } from './components/dvproduct-form/dvproduct-fo
     DVCategoriesTableComponent,
     DVCategoryFormComponent,
     DVProductsTableComponent,
-    DVProductFormComponent
+    DVProductFormComponent,
+    TextViewDialogComponent
   ],
     imports: [
         BrowserModule,
