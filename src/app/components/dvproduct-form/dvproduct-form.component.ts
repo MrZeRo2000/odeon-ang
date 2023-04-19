@@ -35,6 +35,8 @@ export class DVProductFormComponent extends BaseFormComponent<DVProduct> impleme
 
   filteredFrontInfos: Array<string> = [];
 
+  displayDescription = false;
+
   constructor(
     private fb: FormBuilder,
     messageService: MessageService,
@@ -78,6 +80,12 @@ export class DVProductFormComponent extends BaseFormComponent<DVProduct> impleme
 
   searchFrontInfos(event: any): void {
     this.filteredFrontInfos = filterString(this.frontInfos, event.query);
+  }
+
+  previewDescription(): void {
+    if (!!this.editForm.value.description) {
+      this.displayDescription = true;
+    }
   }
 
 }
