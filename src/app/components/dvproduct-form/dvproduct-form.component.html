@@ -39,9 +39,10 @@
             >
             </p-autoComplete>
           </div>
+
           <div class="field mb-0">
             <label for="notes">Notes</label>
-            <textarea id="notes" [rows]="2" pInputTextarea formControlName="notes"></textarea>
+            <textarea id="notes" [rows]="2" pInputTextarea formControlName="notes" style="resize: none"></textarea>
           </div>
 
         </div>
@@ -63,6 +64,19 @@
           </div>
         </div>
       </div>
+
+      <div class="field">
+        <label for="categories">Categories</label>
+        <p-multiSelect
+          id="categories"
+          [options]="dvCategories"
+          formControlName="dvCategories"
+          optionLabel="name"
+          display="chip"
+        >
+        </p-multiSelect>
+      </div>
+
       <div>
         <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors ? 'visible' : 'hidden'}" >Name is required.</small>
       </div>
