@@ -1,10 +1,11 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {BaseFormComponent} from "../base/base-form.component";
 import {ArtistLyricsEditItem} from "../../model/artist-lyrics";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {MessageService} from "primeng/api";
 import {ArtistLyricsService} from "../../service/artist-lyrics.service";
 import {IdName} from "../../model/common";
+import {filterIdName} from "../../utils/search-utils";
 
 @Component({
   selector: 'app-artist-lyrics-form',
@@ -26,7 +27,6 @@ export class ArtistLyricsFormComponent extends BaseFormComponent<ArtistLyricsEdi
 
   constructor(
     private fb: UntypedFormBuilder,
-    private confirmationService: ConfirmationService,
     override messageService: MessageService,
     protected artistLyricsService: ArtistLyricsService
   ) {
@@ -61,7 +61,6 @@ export class ArtistLyricsFormComponent extends BaseFormComponent<ArtistLyricsEdi
   }
 
   searchArtists(event: any): void {
-    const query = event.query.toLowerCase();
-    this.filteredArtists = this.artistTable.filter(v => v.name.toLowerCase().indexOf(query) == 0);
+    this.filteredArtists = filterIdName(this.artistTable, event.query)
   }
 }

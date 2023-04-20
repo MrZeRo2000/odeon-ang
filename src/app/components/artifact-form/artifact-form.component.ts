@@ -9,6 +9,7 @@ import {ArtifactService} from "../../service/artifact.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {IdName} from "../../model/common";
 import {BaseFormComponent} from "../base/base-form.component";
+import {filterIdName} from "../../utils/search-utils";
 
 @Component({
   selector: 'app-artifact-form',
@@ -88,12 +89,10 @@ export class ArtifactFormComponent extends BaseFormComponent<ArtifactEditItem> i
 
 
   searchArtists(event: any): void {
-    const query = event.query.toLowerCase();
-    this.filteredArtists = [...this.artists.filter(v => v.name.toLowerCase().indexOf(query) == 0)];
+    this.filteredArtists = filterIdName(this.artists, event.query)
   }
 
   searchPerformerArtists(event: any): void {
-    const query = event.query.toLowerCase();
-    this.filteredPerformerArtists = [...this.artists.filter(v => v.name.toLowerCase().indexOf(query) == 0)];
+    this.filteredPerformerArtists = filterIdName(this.artists, event.query)
   }
 }

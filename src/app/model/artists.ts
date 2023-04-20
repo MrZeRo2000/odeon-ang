@@ -4,7 +4,7 @@ export interface ArtistTableItem {
   artistType: string;
   genre?: string;
   isGenre: boolean;
-  styles?: Array<String>;
+  styles?: Array<string>;
   detailId?: number;
   isDetail: boolean;
 }
@@ -15,7 +15,7 @@ export interface ArtistEditItem {
   artistType: string;
   artistBiography?: string;
   genre?: string;
-  styles?: Array<String>;
+  styles?: Array<string>;
 }
 
 export const ARTIST_TYPE_CODE_ARTIST = 'A';

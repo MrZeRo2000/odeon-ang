@@ -1,10 +1,11 @@
-import {Component, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ArtistEditItem, ArtistTableItem, ARTIST_TYPES} from "../../model/artists";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {ENTER} from "@angular/cdk/keycodes";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistService} from "../../service/artist.service";
 import {BaseFormComponent} from "../base/base-form.component";
+import {filterString} from "../../utils/search-utils";
 
 @Component({
   selector: 'app-artist-form',
@@ -27,11 +28,11 @@ export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> imple
   @Input()
   artistTable: Array<ArtistTableItem> = [];
 
-  genres: Array<String> = [];
-  filteredGenres: Array<String> = [];
+  genres: Array<string> = [];
+  filteredGenres: Array<string> = [];
 
-  styles: Array<String> = [];
-  filteredStyles: Array<String> = [];
+  styles: Array<string> = [];
+  filteredStyles: Array<string> = [];
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -80,21 +81,19 @@ export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> imple
   }
 
   searchGenres(event: any): void {
-    const query = event.query.toLowerCase();
     if (this.genres.length == 0) {
       this.genres = [... new Set(this.artistTable.map(v => v.genre || "").filter(v => !!v))].sort();
     }
 
-    this.filteredGenres = this.genres.filter(v => v.toLowerCase().indexOf(query) == 0);
+    this.filteredGenres = filterString(this.genres, event.query)
   }
 
   searchStyles(event: any): void {
-    const query = event.query.toLowerCase();
     if (this.styles.length == 0) {
       this.styles = [... new Set(this.artistTable.flatMap(v => v.styles || []).filter(v => !!v))].sort();
     }
 
-    this.filteredStyles = this.styles.filter(v => v.toLowerCase().indexOf(query) == 0);
+    this.filteredStyles = filterString(this.styles, event.query);
   }
 
   stylesKeyUp(event: any): void {

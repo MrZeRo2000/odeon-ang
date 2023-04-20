@@ -10,6 +10,7 @@ import {
   isArtifactTypeVideo
 } from "../../model/artifacts";
 import {DV_TYPES} from "../../model/dvtype";
+import {filterIdName, filterIdTitle} from "../../utils/search-utils";
 
 @Component({
   selector: 'app-track-form',
@@ -191,18 +192,14 @@ export class TrackFormComponent extends BaseFormComponent<TrackEditItem> impleme
   }
 
   searchArtists(event: any): void {
-    const query = event.query.toLowerCase();
-    this.filteredArtists = [...this.artistsTable.filter(v => v.name.toLowerCase().indexOf(query) == 0)];
+    this.filteredArtists = filterIdName(this.artistsTable, event.query)
   }
 
   searchPerformerArtists(event: any): void {
-    const query = event.query.toLowerCase();
-    this.filteredPerformerArtists = [...this.artistsTable.filter(v => v.name.toLowerCase().indexOf(query) == 0)];
+    this.filteredPerformerArtists = filterIdName(this.artistsTable, event.query)
   }
 
   searchDvProducts(event: any): void {
-    const query = event.query.toLowerCase();
-    this.filteredDvProducts = [...this.dvProductsTable.filter(v => v.title.toLowerCase().indexOf(query) == 0)];
+    this.filteredDvProducts = filterIdTitle(this.dvProductsTable, event.query)
   }
-
 }
