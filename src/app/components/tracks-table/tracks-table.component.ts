@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {catchError, forkJoin, iif, map, Observable, of, switchMap, tap} from "rxjs";
+import {catchError, forkJoin, iif, map, Observable, of, switchMap, take, tap} from "rxjs";
 import {TrackEditItem, TrackTableItem} from "../../model/track";
 import {TrackService} from "../../service/track.service";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -92,7 +92,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
       this.mediaFileService.getIdNameTable(this.artifactId as number),
       this.artistService.getIdNameTable(this.artistTypeCode as string),
       iif (() => isArtifactTypeVideoWithProducts(this.artifactTypeId as number),
-        this.dvProductService.getIdTitleTable(this.artifactTypeId as number),
+        this.dvProductService.getIdTitleTable(this.artifactTypeId as number).pipe(take(1)),
         of([])
         ),
     ]).pipe(
@@ -152,28 +152,6 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
       })
     )
   }
-
-  private getWithMediaFiles(id: number): Observable<CRUDResult<[TrackEditItem, IdName[]]>> {
-    return forkJoin([
-      this.trackService.get(id),
-      this.mediaFileService.getIdNameTable(this.artifactId as number)
-    ]).pipe(
-      map(v => {return {success: true, data: v as [TrackEditItem, IdName[]]}}),
-      catchError(err => {
-        return of({success: false, data: err.error?.message || err.message});
-      })
-    )
-  }
-
-  private getNew(id: number): Observable<CRUDResult<[TrackEditItem, IdName[]]>> {
-    return this.mediaFileService.getIdNameTable(this.artifactId as number).pipe(
-      map(v => {return {success: true, data:[{artifactId: this.artifactId, num: this.dataSize + 1}, v] as [TrackEditItem, IdName[]]}}),
-      catchError(err => {
-        return of({success: false, data: err.error?.message || err.message});
-      })
-    )
-  }
-
   override savedEditData(event: any) {
     super.savedEditData(event);
     this.data$ = this.getData(this.artifactId as number);
