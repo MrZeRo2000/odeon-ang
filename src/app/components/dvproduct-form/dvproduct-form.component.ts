@@ -48,13 +48,13 @@ export class DVProductFormComponent extends BaseFormComponent<DVProduct> impleme
     console.log(`editForm origin value: ${JSON.stringify(this.editItem?.dvOrigin || {})}`)
     this.editForm.setValue({
       dvOrigin: this.editItem?.dvOrigin || this.dvOrigins[0],
-      title: this.editItem?.title || '',
-      originalTitle: this.editItem?.originalTitle || '',
-      year: this.editItem?.year || null,
-      frontInfo: this.editItem?.frontInfo || '',
-      description: this.editItem?.description || '',
-      notes: this.editItem?.notes || '',
-      dvCategories: this.editItem?.dvCategories || [],
+      title: this.editItem?.title?? '',
+      originalTitle: this.editItem?.originalTitle?? '',
+      year: this.editItem?.year?? null,
+      frontInfo: this.editItem?.frontInfo?? '',
+      description: this.editItem?.description?? '',
+      notes: this.editItem?.notes?? '',
+      dvCategories: this.editItem?.dvCategories?? [],
     })
   }
 

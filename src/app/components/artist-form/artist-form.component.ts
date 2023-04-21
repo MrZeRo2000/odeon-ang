@@ -1,6 +1,6 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ArtistEditItem, ArtistTableItem, ARTIST_TYPES} from "../../model/artists";
-import {UntypedFormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ENTER} from "@angular/cdk/keycodes";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistService} from "../../service/artist.service";
@@ -12,10 +12,10 @@ import {filterString} from "../../utils/search-utils";
   templateUrl: './artist-form.component.html',
   styleUrls: ['./artist-form.component.scss']
 })
-export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> implements OnChanges {
+export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> implements OnInit {
   artistTypes =  ARTIST_TYPES;
 
-  editForm = this.fb.group({
+  editForm: FormGroup = this.fb.group({
     artistName: ['', Validators.required],
     artistType: [ARTIST_TYPES[0].code],
     biography: [''],
@@ -35,7 +35,7 @@ export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> imple
   filteredStyles: Array<string> = [];
 
   constructor(
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private confirmationService: ConfirmationService,
     messageService: MessageService,
     artistService: ArtistService
@@ -43,22 +43,16 @@ export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> imple
     super(messageService, artistService);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    for (const propName of Object.keys(changes)) {
-      if (propName == 'editItem') {
-        const changedProp = changes[propName];
-        console.log(`changed artist ${JSON.stringify(changedProp.currentValue)}`);
-        this.editForm.setValue({
-          "artistName": changedProp.currentValue.artistName?? '',
-          "artistType": ARTIST_TYPES.filter(v => v.code === changedProp.currentValue.artistType)[0]?.code || ARTIST_TYPES[0].code,
-          "biography": changedProp.currentValue.artistBiography?? '',
-          "genre": changedProp.currentValue.genre?? '',
-          "styles": changedProp.currentValue.styles?? [],
-        })
-      }
-    }
-  }
+  ngOnInit(): void {
+    this.editForm.setValue({
+      artistName: this.editItem?.artistName?? '',
+      artistType: ARTIST_TYPES.filter(v => v.code === this.editItem?.artistType)[0]?.code || ARTIST_TYPES[0].code,
+      biography: this.editItem?.artistBiography?? '',
+      genre: this.editItem?.genre?? '',
+      styles: this.editItem?.styles?? []
+    })
 
+  }
   override validate(): boolean {
     return this.editForm.valid;
   }
@@ -71,7 +65,7 @@ export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> imple
       artistBiography: this.editForm.value.biography || undefined,
       genre: this.editForm.value.genre,
       styles: this.editForm.value.styles
-    }
+    } as ArtistEditItem
   }
 
   previewBiography(): void {
@@ -100,7 +94,7 @@ export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> imple
     if (
       (event.keyCode == ENTER) &&
       !!event.target.value &&
-      this.editForm.controls["styles"].value?.indexOf(event.target.value) === -1
+      this.editForm.value.styles.indexOf(event.target.value) === -1
     ) {
       console.log(`Selected ${event.target.value}`);
       const value = event.target.value;
@@ -112,7 +106,7 @@ export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> imple
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           this.filteredStyles.push(value);
-          this.editForm.controls["styles"].value.push(value );
+          this.editForm.value.styles.push(value);
           event.target.value = '';
           event.target.focus();
         }

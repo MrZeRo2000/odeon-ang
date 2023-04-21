@@ -72,10 +72,10 @@
   <ng-container *ngIf="saveAction$ | async as saver"></ng-container>
 
   <app-text-view-dialog
-      *ngIf="!!editForm.value.biography"
+      *ngIf="!!editForm.value['biography']"
     [(display)]="displayBiography"
-    [header]="editForm.value.artistName"
-    [htmlText]="editForm.value.biography">
+    [header]="editForm.value['artistName']?? ''"
+    [htmlText]="editForm.value['biography']">
   </app-text-view-dialog>
 
 </p-dialog>
