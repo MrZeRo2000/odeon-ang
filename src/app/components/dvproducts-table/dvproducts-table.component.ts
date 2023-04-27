@@ -64,9 +64,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
       )
     }),
     tap(v => {
-      //const a = [... new Set(v?.map(v => v.dvOrigin))]
       this.dvOriginNames = [... new Set(v?.map(v => v.dvOrigin.name))].sort()
-      console.log(`In tap dvOriginNames: ${JSON.stringify(this.dvOriginNames)}`)
     }),
     tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
   )
