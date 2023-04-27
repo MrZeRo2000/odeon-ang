@@ -26,6 +26,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
   });
 
   dvOriginNames: Array<string> = [];
+  dvCategoryNames: Array<string> = [];
 
   @ViewChild('dtc', { static: false})
   private tableContainerElement?: ElementRef;
@@ -64,7 +65,8 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
       )
     }),
     tap(v => {
-      this.dvOriginNames = [... new Set(v?.map(v => v.dvOrigin.name))].sort()
+      this.dvOriginNames = [... new Set(v?.map(v => v.dvOrigin.name))].sort();
+      this.dvCategoryNames = [... new Set(v?.map(v => v.dvCategories.map(v => v.name)).flat())].sort()
     }),
     tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
   )

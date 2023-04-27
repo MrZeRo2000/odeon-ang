@@ -61,7 +61,24 @@
         <th>Title</th>
         <th>Original Title</th>
         <th>Front Info</th>
-        <th>Category</th>
+        <th>
+          <div class="flex align-items-center">
+            Category
+            <!--
+            <p-columnFilter field="dvCategories.name" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [ngModel]="value" [options]="dvCategoryNames" placeholder="Any" (onChange)="filter($event.value)">
+                  <ng-template let-option pTemplate="item">
+                    <div class="inline-block vertical-align-middle">
+                      <span class="ml-1 mt-1">{{ option }}</span>
+                    </div>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          -->
+          </div>
+        </th>
         <th style="width:0">Year</th>
         <th style="width:0"></th>
       </tr>
