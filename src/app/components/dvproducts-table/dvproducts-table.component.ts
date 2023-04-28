@@ -3,7 +3,7 @@ import {BaseTableComponent} from "../base/base-table.component";
 import {DVCategory, DVOrigin, DVProduct} from "../../model/dv-product";
 import {CRUDResult} from "../../model/crud";
 import {catchError, concatMap, forkJoin, from, iif, map, Observable, of, startWith, switchMap, take, tap} from "rxjs";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmationService, MessageService, SelectItem} from "primeng/api";
 import {DVProductService} from "../../service/dvproduct.service";
 import {DVOriginService} from "../../service/dvorigin.service";
 import {DVCategoryService} from "../../service/dvcategory.service";
@@ -25,7 +25,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
     artifactTypeId: [this.ARTIFACT_TYPES[0].code, Validators.required]
   });
 
-  dvOriginNames: Array<string> = [];
+  dvOriginNames: Array<SelectItem<string>> = [];
   dvCategoryNames: Array<string> = [];
 
   @ViewChild('dtc', { static: false})
@@ -65,7 +65,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
       )
     }),
     tap(v => {
-      this.dvOriginNames = [... new Set(v?.map(v => v.dvOrigin.name))].sort();
+      this.dvOriginNames = [... new Set(v?.map(v => v.dvOrigin.name))].sort().map(v => {return {label: v, value: v} as SelectItem});
       this.dvCategoryNames = [... new Set(v?.map(v => v.dvCategories.map(v => v.name)).flat())].sort()
     }),
     tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),

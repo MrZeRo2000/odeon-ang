@@ -49,7 +49,7 @@
                 <p-multiSelect [ngModel]="value" [options]="dvOriginNames" placeholder="Any" (onChange)="filter($event.value)">
                   <ng-template let-option pTemplate="item">
                     <div class="inline-block vertical-align-middle">
-                      <span class="ml-1 mt-1">{{ option }}</span>
+                      <span class="ml-1 mt-1">{{ option.label }}</span>
                     </div>
                   </ng-template>
                 </p-multiSelect>
