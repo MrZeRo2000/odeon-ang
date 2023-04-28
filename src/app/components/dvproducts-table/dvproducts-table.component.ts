@@ -1,9 +1,9 @@
-import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {BaseTableComponent} from "../base/base-table.component";
 import {DVCategory, DVOrigin, DVProduct} from "../../model/dv-product";
 import {CRUDResult} from "../../model/crud";
 import {catchError, concatMap, forkJoin, from, iif, map, Observable, of, startWith, switchMap, take, tap} from "rxjs";
-import {ConfirmationService, MessageService, SelectItem} from "primeng/api";
+import {ConfirmationService, FilterService, MessageService, SelectItem} from "primeng/api";
 import {DVProductService} from "../../service/dvproduct.service";
 import {DVOriginService} from "../../service/dvorigin.service";
 import {DVCategoryService} from "../../service/dvcategory.service";
@@ -15,7 +15,9 @@ import {FormBuilder, Validators} from "@angular/forms";
   templateUrl: './dvproducts-table.component.html',
   styleUrls: ['./dvproducts-table.component.scss']
 })
-export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVProduct, Array<DVOrigin>, Array<DVCategory>]>{
+export class DVProductsTableComponent
+  extends BaseTableComponent<DVProduct, [DVProduct, Array<DVOrigin>, Array<DVCategory>]>
+  implements OnInit {
 
   readonly ARTIFACT_TYPES = ARTIFACT_EDIT_CONFIG
     .filter(v => v.hasProduct)
@@ -26,7 +28,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
   });
 
   dvOriginNames: Array<SelectItem<string>> = [];
-  dvCategoryNames: Array<string> = [];
+  dvCategoryNames: Array<SelectItem<string>> = [];
 
   @ViewChild('dtc', { static: false})
   private tableContainerElement?: ElementRef;
@@ -39,6 +41,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
 
   constructor(
     private fb: FormBuilder,
+    private filterService: FilterService,
     messageService: MessageService,
     confirmationService: ConfirmationService,
     private dvProductService: DVProductService,
@@ -49,6 +52,23 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
       deleteErrorMessage: "`Error deleting product: ${v.data}`",
       editErrorMessage: "`Error getting product details`"
     });
+  }
+
+  ngOnInit(): void {
+    this.filterService.register(
+      'filter_categories',
+      (value: any, filter: any): boolean => {
+        if (filter === undefined || filter === null || filter.length === "") {
+          return true;
+        }
+
+        if (value === undefined || value === null) {
+          return false;
+        }
+
+        return (value as any[]).filter(v => filter.indexOf(v.name) !== -1).length == filter.length;
+      }
+    );
   }
 
   filteredTable$ = this.filterForm.valueChanges.pipe(
@@ -66,7 +86,7 @@ export class DVProductsTableComponent extends BaseTableComponent<DVProduct, [DVP
     }),
     tap(v => {
       this.dvOriginNames = [... new Set(v?.map(v => v.dvOrigin.name))].sort().map(v => {return {label: v, value: v} as SelectItem});
-      this.dvCategoryNames = [... new Set(v?.map(v => v.dvCategories.map(v => v.name)).flat())].sort()
+      this.dvCategoryNames = [... new Set(v?.map(v => v.dvCategories.map(v => v.name)).flat())].sort().map(v => {return {label: v, value: v} as SelectItem});
     }),
     tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
   )
