@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, of, shareReplay, switchMap, tap} from "rxjs";
-import {IdTitle} from "../model/common";
+import {IdTitle, TextInterface} from "../model/common";
 import {HttpParams} from "@angular/common/http";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {DVProduct} from "../model/dv-product";
@@ -59,5 +59,21 @@ export class DVProductService extends CRUDService<DVProduct> {
     }
 
     return this.dvProductTable$[artifactType];
+  }
+
+  getDescription(id: number): Observable<TextInterface> {
+    if (!id) {
+      return of({} as TextInterface)
+    } else {
+      return this.restDataSource.getResponseData<TextInterface>(`dvproduct/description/${id}`)
+    }
+  }
+
+  getNotes(id: number): Observable<TextInterface> {
+    if (!id) {
+      return of({} as TextInterface)
+    } else {
+      return this.restDataSource.getResponseData<TextInterface>(`dvproduct/notes/${id}`)
+    }
   }
 }

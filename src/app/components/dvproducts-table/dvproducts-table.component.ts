@@ -2,13 +2,28 @@ import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/c
 import {BaseTableComponent} from "../base/base-table.component";
 import {DVCategory, DVOrigin, DVProduct} from "../../model/dv-product";
 import {CRUDResult} from "../../model/crud";
-import {catchError, concatMap, forkJoin, from, iif, map, Observable, of, startWith, switchMap, take, tap} from "rxjs";
+import {
+  catchError,
+  concatMap,
+  forkJoin,
+  from,
+  iif,
+  map,
+  Observable,
+  of,
+  startWith,
+  Subject,
+  switchMap,
+  take,
+  tap
+} from "rxjs";
 import {ConfirmationService, FilterService, MessageService, SelectItem} from "primeng/api";
 import {DVProductService} from "../../service/dvproduct.service";
 import {DVOriginService} from "../../service/dvorigin.service";
 import {DVCategoryService} from "../../service/dvcategory.service";
 import {ARTIFACT_EDIT_CONFIG, CodeName} from "../../model/artifacts";
 import {FormBuilder, Validators} from "@angular/forms";
+import {TextInterface} from "../../model/common";
 
 @Component({
   selector: 'app-dvproducts-table',
@@ -38,6 +53,50 @@ export class DVProductsTableComponent
 
   scrollHeight = "0px";
   virtualScroll = false;
+
+  displayDescription = false;
+
+  private showDescriptionAction: Subject<number> = new Subject();
+
+  showDescription$ = this.showDescriptionAction.pipe(
+    switchMap(v => {
+      return this.dvProductService.getDescription(v).pipe(
+        catchError(() => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Error getting description by id ${v}`
+          })
+          return of({} as TextInterface);
+        }),
+        tap(v => {
+          this.displayDescription = !!v?.text
+        })
+      )
+    })
+  );
+
+  displayNotes = false;
+
+  private showNotesAction: Subject<number> = new Subject();
+
+  showNotes$ = this.showNotesAction.pipe(
+    switchMap(v => {
+      return this.dvProductService.getNotes(v).pipe(
+        catchError(() => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Error getting notes by id ${v}`
+          })
+          return of({} as TextInterface);
+        }),
+        tap(v => {
+          this.displayNotes = !!v?.text
+        })
+      )
+    })
+  );
 
   constructor(
     private fb: FormBuilder,
@@ -140,4 +199,19 @@ export class DVProductsTableComponent
     this.updateScrollHeight();
   }
 
+  showDescription(event: any, item: DVProduct): void {
+    event.preventDefault();
+    console.log(`Display description for ${JSON.stringify(item)}`);
+    if (item.id != null) {
+      this.showDescriptionAction.next(item.id);
+    }
+  }
+
+  showNotes(event: any, item: DVProduct): void {
+    event.preventDefault();
+    console.log(`Display notes for ${JSON.stringify(item)}`);
+    if (item.id != null) {
+      this.showNotesAction.next(item.id);
+    }
+  }
 }

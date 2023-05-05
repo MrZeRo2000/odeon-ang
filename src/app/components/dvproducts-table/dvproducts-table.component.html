@@ -8,6 +8,28 @@
 
 <div #dtc *ngIf="filteredTable$ | async as table; else loadingOrError">
 
+  <div *ngIf="showDescription$ | async as description">
+    <app-text-view-dialog
+      *ngIf="!!description"
+      [(display)]="displayDescription"
+      dialogPosition="right"
+      header="Description"
+      [htmlText]="description.text"
+    >
+    </app-text-view-dialog>
+  </div>
+
+  <div *ngIf="showNotes$ | async as notes">
+    <app-text-view-dialog
+      *ngIf="!!notes"
+      [(display)]="displayNotes"
+      dialogPosition="right"
+      header="Notes"
+      [htmlText]="notes.text"
+    >
+    </app-text-view-dialog>
+  </div>
+
   <p-table #dt
            styleClass="p-datatable-sm"
            [value]="table"
@@ -78,6 +100,7 @@
           </div>
         </th>
         <th style="width:0">Year</th>
+        <th style="width:0">Notes</th>
         <th style="width:0"></th>
       </tr>
     </ng-template>
@@ -86,7 +109,8 @@
       <tr [pSelectableRow]="item">
         <td>{{item.id}}</td>
         <td>{{item.dvOrigin.name}}</td>
-        <td>{{item.title}}</td>
+        <td *ngIf="item.hasDescription"><a href="#" (click)="showDescription($event, item)">{{item.title}}</a></td>
+        <td *ngIf="!item.hasDescription">{{item.title}}</td>
         <td>{{item.originalTitle}}</td>
         <td>{{item.frontInfo}}</td>
         <td>
@@ -97,6 +121,16 @@
           </div>
         </td>
         <td>{{item.year}}</td>
+        <td>
+          <div *ngIf="item.hasNotes" class="flex app-crud-panel-small">
+            <button
+              pButton pRipple
+              icon="pi pi-comment"
+              class="p-button p-button-secondary p-button-text"
+              (click)="showNotes($event, item)">
+            </button>
+          </div>
+        </td>
         <td>
           <app-crud-panel class="app-crud-panel-small" [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
         </td>
