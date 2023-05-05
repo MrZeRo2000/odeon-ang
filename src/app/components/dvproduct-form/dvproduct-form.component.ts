@@ -63,17 +63,16 @@ export class DVProductFormComponent extends BaseFormComponent<DVProduct> impleme
   }
 
   createSavedItem(): DVProduct {
-    console.log(`savedItem origin value: ${JSON.stringify(this.editForm.value.dvOrigin)}`)
     return {
       id: this.editItem?.id,
       artifactTypeId: this.editItem?.artifactTypeId,
       dvOrigin: this.editForm.value.dvOrigin,
       title: this.editForm.value.title,
-      originalTitle: this.editForm.value.originalTitle,
-      year: this.editForm.value.year,
-      frontInfo: this.editForm.value.frontInfo,
-      description: this.editForm.value.description,
-      notes: this.editForm.value.notes,
+      originalTitle: this.editForm.value.originalTitle || undefined,
+      year: this.editForm.value.year || undefined,
+      frontInfo: this.editForm.value.frontInfo || undefined,
+      description: this.editForm.value.description || undefined,
+      notes: this.editForm.value.notes || undefined,
       dvCategories: this.editForm.value.dvCategories,
     } as DVProduct
   }
