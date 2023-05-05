@@ -9,11 +9,14 @@
 <div *ngIf="data$ | async as data; else loadingOrError">
 
   <div *ngIf="artistLyricsText$ | async as artistLyricsText">
-    <app-lyrics-text-form
+    <app-text-view-dialog
       *ngIf="!!artistLyricsText.text"
       [(display)]="displayArtistLyricsText"
-      [lyrics]="artistLyricsText"
-    ></app-lyrics-text-form>
+      dialogPosition="right"
+      [header]="artistLyricsText.title"
+      [text]="artistLyricsText.text"
+    >
+    </app-text-view-dialog>
   </div>
 
   <div class="grid">

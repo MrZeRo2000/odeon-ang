@@ -23,6 +23,15 @@ export class TextViewDialogComponent {
   @Input()
   htmlText: string = ''
 
+  @Input()
+  text: string = ''
+
+  @Input()
+  dialogPosition: string = 'center'
+
+  @Input()
+  dialogStyle = {width: '50vw'}
+
   constructor() { }
 
 }

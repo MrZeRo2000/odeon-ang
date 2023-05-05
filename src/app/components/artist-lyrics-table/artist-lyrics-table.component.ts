@@ -3,12 +3,11 @@ import {BaseTableComponent} from "../base/base-table.component";
 import {ArtistLyricsEditItem, ArtistLyricsTableItem, ArtistLyricsText} from "../../model/artist-lyrics";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistLyricsService} from "../../service/artist-lyrics.service";
-import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
+import {CRUDResult} from "../../model/crud";
 import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {IdName} from "../../model/common";
 import {ArtistService} from "../../service/artist.service";
-import {ARTIST_TYPES} from "../../model/artists";
 
 export interface NameInterface {
   name: string
