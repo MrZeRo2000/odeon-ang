@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ArtistService} from "../../service/artist.service";
 import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
-import {ConfirmationService, MessageService, PrimeNGConfig, SelectItem} from "primeng/api";
+import {ConfirmationService, FilterService, MessageService, PrimeNGConfig, SelectItem} from "primeng/api";
 import {Biography} from "../../model/biography";
 import {ArtistEditItem, ArtistTableItem} from "../../model/artists";
 import {CRUDResult} from "../../model/crud";
@@ -50,6 +50,7 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
 
   constructor(
     private router: Router,
+    private filterService: FilterService,
     confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig,
     messageService: MessageService,
@@ -68,6 +69,20 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
   }
 
   ngOnInit(): void {
+    this.filterService.register(
+      'filter_styles',
+      (value: any, filter: any): boolean => {
+        if (filter === undefined || filter === null || filter.length === 0) {
+          return true;
+        }
+
+        if (value === undefined || value === null) {
+          return false;
+        }
+
+        return (value as string[]).filter(v => filter.indexOf(v) !== -1).length == filter.length;
+      }
+    )
   }
 
   ngAfterViewInit(): void {
@@ -77,7 +92,7 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
   protected loadData(): void {
     this.data$ = this.getData().pipe(
       tap(v =>{
-        this.filterGenres = [... new Set(v?.map(v => v.genre))].sort().map(v => {return {label: v, value: v} as SelectItem});
+        this.filterGenres = [... new Set(v?.map(v => v.genre).filter(v => !!v))].sort().map(v => {return {label: v, value: v} as SelectItem});
         this.filterStyles = [... new Set(v?.map(v => v.styles).flat())].sort().map(v => {return {label: v, value: v} as SelectItem});
       })
       /*

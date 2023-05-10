@@ -27,7 +27,7 @@
            dataKey="id"
            stateStorage="session"
            stateKey="artist-table-session"
-           [globalFilterFields]="['artistName', 'styles']"
+           [globalFilterFields]="['artistName']"
            (onFilter)="onFilter($event)">
 
     <ng-template pTemplate="caption">
@@ -69,7 +69,20 @@
             </p-columnFilter>
           </div>
         </th>
-        <th style="width:50%">Styles</th>
+        <th style="width:50%">
+          Styles
+          <p-columnFilter field="styles" matchMode="filter_styles" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect [ngModel]="value" [options]="filterStyles" placeholder="Any" (onChange)="filter($event.value)">
+                <ng-template let-option pTemplate="item">
+                  <div class="inline-block vertical-align-middle">
+                    <span class="ml-1 mt-1">{{ option.label }}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
         <th style="width:0">Info</th>
         <th style="width:0">Lyrics</th>
         <th style="width:0"></th>
