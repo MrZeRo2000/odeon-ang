@@ -52,7 +52,6 @@ export class DVProductsTableComponent
   private tableCaptionElement?: ElementRef;
 
   scrollHeight = "0px";
-  virtualScroll = false;
 
   displayDescription = false;
 
@@ -191,7 +190,6 @@ export class DVProductsTableComponent
       - tableCaptionOffset
       - parseFloat(getComputedStyle(document.documentElement).fontSize) / 2;
     this.scrollHeight = `${containerHeight}px`
-    this.virtualScroll = true
   }
 
   @HostListener('window:resize', ['$event'])

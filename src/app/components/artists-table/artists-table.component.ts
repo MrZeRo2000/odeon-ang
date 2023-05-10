@@ -1,11 +1,10 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ArtistService} from "../../service/artist.service";
-import {catchError, iif, map, Observable, of, Subject, switchMap, tap} from "rxjs";
+import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {Biography} from "../../model/biography";
-import {BaseComponent} from "../base/base.component";
 import {ArtistEditItem, ArtistTableItem} from "../../model/artists";
-import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
+import {CRUDResult} from "../../model/crud";
 import {Router} from "@angular/router";
 import {BaseTableComponent} from "../base/base-table.component";
 
@@ -40,6 +39,12 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
     })
   )
 
+  @ViewChild('dtc', { static: false})
+  private tableContainerElement?: ElementRef;
+
+  @ViewChild('dtcp', { static: false})
+  private tableCaptionElement?: ElementRef;
+
   constructor(
     private router: Router,
     confirmationService: ConfirmationService,
@@ -67,7 +72,11 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
   }
 
   protected loadData(): void {
-    this.data$ = this.getData();
+    this.data$ = this.getData().pipe(
+      /*
+      tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
+       */
+    );
   }
 
   private getData(): Observable<ArtistTableItem[]> {
@@ -133,5 +142,27 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
   onFilter(event: any): void {
     this.globalFilterValue = event.filters?.global?.value || '';
   }
+
+  /*
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateScrollHeight();
+  }
+
+  private updateScrollHeight(): void {
+    const windowHeight = window.innerHeight;
+    const tableContainerTop = this.tableContainerElement?.nativeElement.offsetTop;
+    const tableCaptionOffset = this.tableCaptionElement?.nativeElement.parentElement.offsetHeight;
+
+    console.log(`WindowHeight=${windowHeight}, ContainterTop=${tableContainerTop}, CaptionOffset=${tableCaptionOffset}`);
+
+    const containerHeight = windowHeight
+      - tableContainerTop
+      - tableCaptionOffset
+      - parseFloat(getComputedStyle(document.documentElement).fontSize) / 2;
+    this.scrollHeight = `${containerHeight}px`
+  }
+
+   */
 
 }

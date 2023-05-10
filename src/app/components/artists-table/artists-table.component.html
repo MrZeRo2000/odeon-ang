@@ -6,7 +6,7 @@
   </ng-container>
 </ng-template>
 
-<div *ngIf="data$ | async as artistTable; else loadingOrError">
+<div #dtc *ngIf="data$ | async as artistTable; else loadingOrError">
 
   <div *ngIf="artistDetail$ | async as artistDetail">
     <app-text-view-dialog
@@ -17,11 +17,21 @@
     </app-text-view-dialog>
   </div>
 
-  <p-table #dt [value]="artistTable" [rows]="10" [paginator]="true" dataKey="id" stateStorage="session" stateKey="artist-table-session"
-           [globalFilterFields]="['artistName', 'styles']" (onFilter)="onFilter($event)">
+  <p-table #dt
+           styleClass="p-datatable-sm"
+           [value]="artistTable"
+           [rows]="10"
+           [paginator]="true"
+           [showCurrentPageReport]="true"
+           [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
+           dataKey="id"
+           stateStorage="session"
+           stateKey="artist-table-session"
+           [globalFilterFields]="['artistName', 'styles']"
+           (onFilter)="onFilter($event)">
 
     <ng-template pTemplate="caption">
-      <div class="flex">
+      <div #dtcp class="flex">
         <div class="flex align-items-center justify-content-between text-xl mr-2">Artists</div>
         <div class="flex align-self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
         <div class="flex justify-content-end flex-grow-1">
@@ -61,28 +71,28 @@
         <td>{{item.id}}</td>
         <td>{{item.artistName}}</td>
         <td>
-          <p-tag value="N/A" *ngIf="!item.genre" severity="warning"></p-tag>
-          <p-tag value="{{item.genre}}" *ngIf="item.genre" styleClass="mb-1"></p-tag>
+          <p-tag value="N/A" *ngIf="!item.genre" severity="warning" [rounded]="true"></p-tag>
+          <p-tag value="{{item.genre}}" *ngIf="item.genre" styleClass="mb-1" [rounded]="true"></p-tag>
         </td>
         <td>
-          <div class="flex flex-wrap" *ngIf="item.styles">
+          <div class="flex flex-wrap gap-1" *ngIf="item.styles">
             <div *ngFor="let style of item.styles">
-              <p-tag value="{{style}}" styleClass="flex mr-1 mb-1" [rounded]="true" *ngIf="style"></p-tag>
+              <p-chip label="{{style}}" styleClass="flex align-items-center text-xs" *ngIf="style"></p-chip>
             </div>
           </div>
         </td>
         <td>
-          <div class="flex justify-content-center" *ngIf="item.detailId">
+          <div class="flex justify-content-center app-crud-panel-small" *ngIf="item.detailId">
             <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayArtistDetail(item)"></button>
           </div>
         </td>
         <td>
-          <div class="flex justify-content-center">
+          <div class="flex justify-content-center app-crud-panel-small">
             <button pButton pRipple icon="pi pi-book" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayLyrics(item)"></button>
           </div>
         </td>
         <td>
-          <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+          <app-crud-panel class="app-crud-panel-small" [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
         </td>
       </tr>
     </ng-template>

@@ -65,6 +65,7 @@ import { DVCategoryFormComponent } from './components/dvcategory-form/dvcategory
 import { DVProductsTableComponent } from './components/dvproducts-table/dvproducts-table.component';
 import { DVProductFormComponent } from './components/dvproduct-form/dvproduct-form.component';
 import { TextViewDialogComponent } from './components/text-view-dialog/text-view-dialog.component';
+import {SliderModule} from "primeng/slider";
 
 
 @NgModule({
@@ -133,7 +134,8 @@ import { TextViewDialogComponent } from './components/text-view-dialog/text-view
         InputNumberModule,
         MultiSelectModule,
         FormsModule,
-        DropdownModule
+        DropdownModule,
+        SliderModule
     ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]
