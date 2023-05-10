@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ArtistService} from "../../service/artist.service";
 import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
-import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
+import {ConfirmationService, MessageService, PrimeNGConfig, SelectItem} from "primeng/api";
 import {Biography} from "../../model/biography";
 import {ArtistEditItem, ArtistTableItem} from "../../model/artists";
 import {CRUDResult} from "../../model/crud";
@@ -19,6 +19,9 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
   displayArtistName: string = "";
 
   data$? : Observable<ArtistTableItem[]>;
+
+  filterGenres: Array<SelectItem<string>> = [];
+  filterStyles: Array<SelectItem<string>> = [];
 
   private showArtistDetailAction: Subject<number> = new Subject();
 
@@ -73,6 +76,10 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
 
   protected loadData(): void {
     this.data$ = this.getData().pipe(
+      tap(v =>{
+        this.filterGenres = [... new Set(v?.map(v => v.genre))].sort().map(v => {return {label: v, value: v} as SelectItem});
+        this.filterStyles = [... new Set(v?.map(v => v.styles).flat())].sort().map(v => {return {label: v, value: v} as SelectItem});
+      })
       /*
       tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
        */

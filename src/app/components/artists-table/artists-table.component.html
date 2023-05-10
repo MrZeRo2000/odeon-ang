@@ -56,7 +56,17 @@
         <th style="width:0">
           <div class="flex justify-content-center align-items-center">
             Genre
-
+            <p-columnFilter field="genre" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [ngModel]="value" [options]="filterGenres" placeholder="Any" (onChange)="filter($event.value)">
+                  <ng-template let-option pTemplate="item">
+                    <div class="inline-block vertical-align-middle">
+                      <span class="ml-1 mt-1">{{ option.label }}</span>
+                    </div>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </div>
         </th>
         <th style="width:50%">Styles</th>
