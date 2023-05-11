@@ -7,6 +7,7 @@ export interface ArtistTableItem {
   styles?: Array<string>;
   detailId?: number;
   isDetail: boolean;
+  hasLyrics?: boolean;
 }
 
 export interface ArtistEditItem {

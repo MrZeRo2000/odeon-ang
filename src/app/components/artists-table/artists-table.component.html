@@ -110,7 +110,7 @@
           </div>
         </td>
         <td>
-          <div class="flex justify-content-center app-crud-panel-small">
+          <div class="flex justify-content-center app-crud-panel-small" *ngIf="item.hasLyrics">
             <button pButton pRipple icon="pi pi-book" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayLyrics(item)"></button>
           </div>
         </td>
