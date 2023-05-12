@@ -19,6 +19,9 @@ export interface DVProduct {
   year?: number;
   frontInfo?: string;
   description?: string;
+  hasDescription?: boolean;
   notes?: string;
+  hasNotes?: boolean;
   dvCategories: Array<DVCategory>;
+  hasTracks?: boolean
 }

@@ -101,6 +101,14 @@
         </th>
         <th style="width:0">Year</th>
         <th style="width:0">Notes</th>
+        <th style="width:0">
+          <div  class="flex flex-nowrap align-items-center justify-content-center">
+            Tracks
+            <p-columnFilter type="boolean" field="hasTracks" display="menu">
+
+            </p-columnFilter>
+          </div>
+        </th>
         <th style="width:0"></th>
       </tr>
     </ng-template>
@@ -129,6 +137,11 @@
               class="p-button p-button-secondary p-button-text"
               (click)="showNotes($event, item)">
             </button>
+          </div>
+        </td>
+        <td>
+          <div *ngIf="item.hasTracks" class="flex justify-content-center app-crud-panel-small">
+            <button pButton pRipple icon="pi pi-book" class="p-button-rounded p-button-secondary p-button-outlined"></button>
           </div>
         </td>
         <td>
