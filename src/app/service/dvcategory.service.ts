@@ -2,24 +2,18 @@ import { Injectable } from '@angular/core';
 import {CRUDService} from "./crud.service";
 import {DVCategory} from "../model/dv-product";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
-import {BehaviorSubject, Observable, shareReplay, switchMap, tap} from "rxjs";
+import {Observable} from "rxjs";
+import {SharedHandler} from "../utils/rxjs-utils";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DVCategoryService extends CRUDService<DVCategory>{
 
-  private refreshTable$ = new BehaviorSubject<void>(undefined);
+  public tableSharedHandler: SharedHandler<Array<DVCategory>> =
+    new SharedHandler<Array<DVCategory>>(() => this.getTable());
 
-  public refreshTable(): void {
-    this.refreshTable$.next(undefined);
-  }
-
-  public table$: Observable<Array<DVCategory>> = this.refreshTable$.pipe(
-    tap(() => {console.log('Loading dvCategory table')}),
-    switchMap(() => this.getTable()),
-    shareReplay(1)
-  );
+  public table$ = this.tableSharedHandler.getSharedObservable();
 
   constructor(restDataSource: RestDataSourceService) {
     super(restDataSource, "dvcategory")

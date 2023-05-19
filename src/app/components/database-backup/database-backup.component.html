@@ -1,0 +1,12 @@
+<div *ngIf="databaseBackupInfo$ | async as databaseBackupInfo">
+  <p-button
+    icon="pi pi-file-export"
+    styleClass="p-button-secondary p-button-text"
+    [pTooltip]="getBackupTooltipText(databaseBackupInfo)"
+    (onClick)="backupSubject.next(undefined)"
+  >
+
+  </p-button>
+
+  <ng-container *ngIf="backupAction$ | async"></ng-container>
+</div>

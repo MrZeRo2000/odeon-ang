@@ -2,5 +2,10 @@
   <ng-template pTemplate="start">
     <a routerLink=""> <img src="assets/treble-clef%20(64).png" height="40" class="mr-2" alt="logo"></a>
   </ng-template>
-  <app-app-info></app-app-info>
+  <ng-template pTemplate="end">
+    <div class="flex flex-row flex-nowrap align-items-center gap-2">
+      <app-database-backup></app-database-backup>
+      <app-app-info></app-app-info>
+    </div>
+  </ng-template>
 </p-menubar>
