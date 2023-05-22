@@ -1,4 +1,14 @@
 <small>
   <span (click)="onClick()">{{version}}</span>
-  <span *ngIf="appInfo$ | async as appInfo">({{appInfo.version}})</span>
+  <span *ngIf="appInfo$ | async as appInfo">
+    <span *ngIf="comparisonResult === ComparisonResult.CR_EQUAL">
+      ({{appInfo.version}})
+    </span>
+    <span *ngIf="comparisonResult === ComparisonResult.CR_MINOR_DIFFERENCE">
+      <p-tag severity="warning" value={{appInfo.version}}></p-tag>
+    </span>
+    <span *ngIf="comparisonResult === ComparisonResult.CR_MAJOR_DIFFERENCE">
+      <p-tag severity="danger" value={{appInfo.version}}></p-tag>
+    </span>
+  </span>
 </small>
