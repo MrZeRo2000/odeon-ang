@@ -9,8 +9,19 @@
 <div *ngIf="filteredArtifacts$ | async as artifactsTable; else loadingOrError">
 
 
-  <p-table #dt [value]="artifactsTable" [rows]="10" [paginator]="true" [(first)]="first" dataKey="id" stateStorage="session" stateKey="artifacts-table-session"
-           [globalFilterFields]="['artistName', 'performerArtistName', 'title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedItem"
+  <p-table #dt
+           styleClass="p-datatable-sm"
+           [value]="artifactsTable"
+           [rows]="10"
+           [paginator]="true"
+           [showCurrentPageReport]="true"
+           [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
+           [(first)]="first"
+           dataKey="id"
+           stateStorage="session"
+           stateKey="artifacts-table-session"
+           [globalFilterFields]="['artistName', 'performerArtistName', 'title']"
+           (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedItem"
   >
 
     <ng-template pTemplate="caption">
@@ -77,7 +88,7 @@
         </td>
         <td>{{item.artifactTypeName}}</td>
         <td>
-          <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+          <app-crud-panel class="app-crud-panel-small" [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
         </td>
       </tr>
     </ng-template>
