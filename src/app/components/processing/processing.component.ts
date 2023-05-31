@@ -123,6 +123,7 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
   private action = new Subject<ProcessorType | ProcessingAction | undefined>();
 
   readonly PROGRESS_STATUS = ProcessingStatus[ProcessingStatus.IN_PROGRESS];
+  readonly SUCCESS_STATUS = ProcessingStatus[ProcessingStatus.SUCCESS];
 
   processInfo$ = this.action.asObservable().pipe(
     tap(v => {console.log(`value: ${JSON.stringify(v)}`)}),

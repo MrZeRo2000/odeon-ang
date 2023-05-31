@@ -11,7 +11,7 @@
       <ng-template pTemplate="header">
         <div class="flex align-items-center justify-content-start p-panel-title h-3rem" style="order:0">{{pi.processorType | processorTypeName}}</div>
         <div class="flex align-items-center flex-grow-1 m-1">
-          <div *ngIf="pi.processingEvent && pi.processingStatus == PROGRESS_STATUS" class="text-sm font-light text-primary">
+          <div *ngIf="pi.processingEvent && pi.processingStatus !== SUCCESS_STATUS" class="text-sm font-light text-primary">
             <div>
               {{pi.processingEvent?.lastUpdated | date:'dd.MM.YYYY HH:mm:ss'}}
             </div>
