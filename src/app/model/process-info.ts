@@ -59,6 +59,11 @@ export interface ProcessingAction {
   value: string
 }
 
+export interface ProcessingEvent {
+  lastUpdated: string;
+  eventText: string;
+}
+
 export interface ProcessDetail {
   time: string,
   info: ProcessDetailInfo,
@@ -76,5 +81,6 @@ export interface ProcessInfo {
   processorType?: string,
   processingStatus?: string,
   lastUpdated?: string,
-  processDetails?: Array<ProcessDetail>
+  processDetails?: Array<ProcessDetail>,
+  processingEvent?: ProcessingEvent,
 }
