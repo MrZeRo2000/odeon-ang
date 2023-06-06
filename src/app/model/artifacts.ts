@@ -9,7 +9,7 @@ export interface ArtifactTableItem {
   year?: number;
   duration?: number;
   size?: number;
-  insertDate: Date;
+  insertDateTime: Date;
 }
 
 export interface ArtifactEditItem {
