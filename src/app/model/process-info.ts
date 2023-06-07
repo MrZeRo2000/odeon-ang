@@ -14,7 +14,9 @@ export enum ProcessorType {
   LA_VALIDATOR,
   DV_MOVIES_LOADER,
   DV_MOVIES_VALIDATOR,
-  DV_MUSIC_LOADER
+  DV_MUSIC_LOADER,
+  MP3_UPDATE_ATTRIBUTES_IMPORTER,
+  LA_UPDATE_ATTRIBUTES_IMPORTER,
 }
 
 export const PROCESSOR_TYPE_NAMES : {[processorType: number] : string} = {
@@ -34,6 +36,8 @@ export const PROCESSOR_TYPE_NAMES : {[processorType: number] : string} = {
   [ProcessorType.DV_MOVIES_LOADER]: "Movies Load",
   [ProcessorType.DV_MOVIES_VALIDATOR]: "Movies Validate",
   [ProcessorType.DV_MUSIC_LOADER]: "Video Music Load",
+  [ProcessorType.MP3_UPDATE_ATTRIBUTES_IMPORTER]: "MP3 update attributes importer",
+  [ProcessorType.LA_UPDATE_ATTRIBUTES_IMPORTER]: "LA update attributes importer",
 }
 
 export enum ProcessingStatus {

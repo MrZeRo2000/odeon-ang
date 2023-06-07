@@ -50,6 +50,16 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
           label: "Movies",
           data: ProcessorType.DV_MOVIES_IMPORTER,
           leaf: true
+        },
+        {
+          label: "MP3 Update Attributes",
+          data: ProcessorType.MP3_UPDATE_ATTRIBUTES_IMPORTER,
+          leaf: true
+        },
+        {
+          label: "LA Update Attributes",
+          data: ProcessorType.LA_UPDATE_ATTRIBUTES_IMPORTER,
+          leaf: true
         }
       ]
     },
