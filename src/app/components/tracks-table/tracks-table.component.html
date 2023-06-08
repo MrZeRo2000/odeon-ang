@@ -38,14 +38,18 @@
         <td>{{item.id}}</td>
         <td *ngIf="isArtifactTypeMusic">{{item.diskNum}}</td>
         <td>{{item.num | number : '2.0-0'}}</td>
-        <td *ngIf="data[1].artistTypeCode === 'C'">{{item.artistName}}</td>
+        <td *ngIf="data[1].artistTypeCode === 'C'">{{item.artist.artistName}}</td>
         <td>{{item.title}}</td>
-        <td *ngIf="data[1].artistTypeCode === 'C'">{{item.performerArtistName}}</td>
+        <td *ngIf="data[1].artistTypeCode === 'C'">{{item.performerArtist.artistName}}</td>
         <td>{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</td>
         <td style="text-align: right; white-space: nowrap"><div *ngIf="item.size">{{item.size | fileSize}}</div></td>
-        <td style="text-align: right">{{item.bitrate}}</td>
-        <td>{{item.fileName}}</td>
-        <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactTypeVideo">{{item.dvTypeName}}</td>
+        <td style="text-align: right">{{item.bitRate}}</td>
+        <td>
+          <div class="flex flex-column text-sm">
+            <div *ngFor="let fileName of item.fileNames">{{fileName}}</div>
+          </div>
+        </td>
+        <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactTypeVideo">{{item.dvType.name}}</td>
         <td>
           <div class="app-crud-panel-small">
             <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>

@@ -1,20 +1,20 @@
 import {EditConfigItem, getConfigItem} from "./edit-config";
+import {IdName} from "./common";
+import {ArtistTableItem} from "./artists";
 
 export interface TrackTableItem {
   id: number;
   diskNum: number;
   num: number;
-  artistId?: number;
-  artistName?: string;
-  performerArtistId?: number;
+  artist?: ArtistTableItem;
+  performerArtistId?: ArtistTableItem;
   performerArtistName?: string;
-  dvTypeId?: number;
-  dvTypeName?: string;
+  dvType?: IdName;
   title: string;
   duration?: number;
   size?: number;
-  bitrate?: number;
-  fileName?: string
+  bitRate?: number;
+  fileNames?: Array<string>
 }
 
 export interface TrackEditItem {
