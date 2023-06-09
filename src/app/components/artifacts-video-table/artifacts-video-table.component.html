@@ -9,7 +9,7 @@
 <ng-container *ngIf="filterData$ | async as filterData">
   <div *ngIf="filteredArtifacts$ | async as artifactsVideoTable; else loadingOrError">
 
-    <p-table #dt [value]="artifactsVideoTable" [rows]="9" [paginator]="true" [(first)]="first" dataKey="id" stateStorage="session" stateKey="artifacts-table-session"
+    <p-table #dt [value]="artifactsVideoTable" [rows]="9" [paginator]="true" [(first)]="first" dataKey="id" stateStorage="session" stateKey="artifacts-video-table-session"
              [globalFilterFields]="['artistName', 'title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedItem"
     >
 
