@@ -21,7 +21,9 @@
            stateStorage="session"
            stateKey="artifacts-table-session"
            [globalFilterFields]="['artistName', 'performerArtistName', 'title']"
-           (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedItem"
+           (onFilter)="onFilter($event)"
+           selectionMode="single"
+           [(selection)]="selectedItem"
   >
 
     <ng-template pTemplate="caption">

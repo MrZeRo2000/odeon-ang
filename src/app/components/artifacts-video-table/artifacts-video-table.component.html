@@ -9,8 +9,21 @@
 <ng-container *ngIf="filterData$ | async as filterData">
   <div *ngIf="filteredArtifacts$ | async as artifactsVideoTable; else loadingOrError">
 
-    <p-table #dt [value]="artifactsVideoTable" [rows]="9" [paginator]="true" [(first)]="first" dataKey="id" stateStorage="session" stateKey="artifacts-video-table-session"
-             [globalFilterFields]="['artistName', 'title']" (onFilter)="onFilter($event)" selectionMode="single" [(selection)]="selectedItem"
+    <p-table #dt
+             styleClass="p-datatable-sm"
+             [value]="artifactsVideoTable"
+             [rows]="10"
+             [paginator]="true"
+             [showCurrentPageReport]="true"
+             [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
+             [(first)]="first"
+             dataKey="id"
+             stateStorage="session"
+             stateKey="artifacts-video-table-session"
+             [globalFilterFields]="['artistName', 'title']"
+             (onFilter)="onFilter($event)"
+             selectionMode="single"
+             [(selection)]="selectedItem"
     >
 
       <ng-template pTemplate="caption">
@@ -72,7 +85,7 @@
             <div style="text-align: right; white-space: nowrap"><span *ngIf="item.size">{{item.size | fileSize}}</span></div>
           </td>
           <td>
-            <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+            <app-crud-panel class="app-crud-panel-small" [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
           </td>
         </tr>
       </ng-template>
