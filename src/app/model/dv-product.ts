@@ -25,3 +25,17 @@ export interface DVProduct {
   dvCategories: Array<DVCategory>;
   hasTracks?: boolean
 }
+
+export interface DVProductUserImportDetail {
+  title: string;
+  originalTitle?: string;
+  year?: number
+}
+
+export interface DVProductUserImport {
+  artifactTypeId: number;
+  dvOriginId: number;
+  dvProductDetails: Array<DVProductUserImportDetail>;
+  frontInfo?: string;
+  dvCategories: Array<DVCategory>
+}
