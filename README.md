@@ -34,8 +34,11 @@ or
 
 ## Red cross without cursor
 
-<div pButton icon="pi pi-times" class="p-button-danger p-button-text" style="cursor: auto;"></div>
+`<div pButton icon="pi pi-times" class="p-button-danger p-button-text" style="cursor: auto;"></div>`
 
 ## Processing status
       {{pi.processingStatus | processingStatusName}}
       {{pi.lastUpdated | date:'dd.MM.YYYY HH:mm:ss'}}
+
+## Update version  
+  `ng update @angular/core@15 @angular/cli@15 @angular/cdk@15 --allow-dirty --force`

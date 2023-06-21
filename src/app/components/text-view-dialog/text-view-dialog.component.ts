@@ -27,7 +27,7 @@ export class TextViewDialogComponent {
   text: string = ''
 
   @Input()
-  dialogPosition: string = 'center'
+  dialogPosition: 'center' | 'right' = 'center'
 
   @Input()
   dialogStyle = {width: '50vw'}
