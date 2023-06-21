@@ -1,0 +1,9 @@
+<p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" styleClass="p-fluid" header="Product Edit">
+  <ng-template pTemplate="content">
+    <form [formGroup]="editForm">
+      <div class="field mt-2">
+        <p-dropdown formControlName="dvOrigin" [options]="dvOrigins" dataKey="id" optionLabel="name"></p-dropdown>
+      </div>
+    </form>
+  </ng-template>
+</p-dialog>

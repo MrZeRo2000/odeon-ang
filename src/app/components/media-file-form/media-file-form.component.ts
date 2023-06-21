@@ -1,8 +1,8 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {BaseFormComponent} from "../base/base-form.component";
+import {Component, OnChanges, SimpleChanges} from '@angular/core';
+import {BaseCrudFormComponent} from "../base/base-crud-form.component";
 import {MediaFileEditItem} from "../../model/media-file";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {MessageService} from "primeng/api";
 import {MediaFileService} from "../../service/media-file.service";
 
 @Component({
@@ -10,7 +10,7 @@ import {MediaFileService} from "../../service/media-file.service";
   templateUrl: './media-file-form.component.html',
   styleUrls: ['./media-file-form.component.scss']
 })
-export class MediaFileFormComponent extends BaseFormComponent<MediaFileEditItem> implements OnChanges {
+export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFileEditItem> implements OnChanges {
 
   editForm = this.fb.group({
     name: ['', Validators.required],
@@ -22,7 +22,6 @@ export class MediaFileFormComponent extends BaseFormComponent<MediaFileEditItem>
 
   constructor(
     private fb: UntypedFormBuilder,
-    private confirmationService: ConfirmationService,
     override messageService: MessageService,
     protected mediaFileService: MediaFileService,
   ) {

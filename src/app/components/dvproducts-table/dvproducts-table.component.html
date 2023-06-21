@@ -52,6 +52,12 @@
         </form>
 
         <div class="flex justify-content-end flex-grow-1">
+          <p-button
+            icon="pi pi-file-import"
+            styleClass="p-button-secondary p-button-text mr-2"
+            (onClick)="showImportDVProducts($event)"
+          >
+          </p-button>
           <span class="p-input-icon-left flex align-items-center">
             <i class="pi pi-search"></i>
             <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;" placeholder="Search keyword" />
@@ -164,6 +170,18 @@
       [frontInfos]="getFrontInfos(table)"
       (onSavedItem)="savedEditData($event)">
     </app-dvproduct-form>
+  </ng-container>
+
+  <ng-container *ngIf="importProducts$ | async as importProductData">
+    <app-dvproducts-import-form
+      *ngIf="displayImportProducts"
+      [(display)]="displayImportProducts"
+      [artifactTypeId]="importProductData[0]"
+      [dvOrigins]="importProductData[1]"
+      [dvCategories]="importProductData[2]"
+      [frontInfos]="getFrontInfos(table)"
+    >
+    </app-dvproducts-import-form>
   </ng-container>
 
 </div>

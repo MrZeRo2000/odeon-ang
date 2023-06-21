@@ -67,6 +67,7 @@ import { DVProductFormComponent } from './components/dvproduct-form/dvproduct-fo
 import { TextViewDialogComponent } from './components/text-view-dialog/text-view-dialog.component';
 import {SliderModule} from "primeng/slider";
 import { DatabaseBackupComponent } from './components/database-backup/database-backup.component';
+import { DVProductsImportFormComponent } from './components/dvproducts-import-form/dvproducts-import-form.component';
 
 
 @NgModule({
@@ -103,7 +104,8 @@ import { DatabaseBackupComponent } from './components/database-backup/database-b
     DVProductsTableComponent,
     DVProductFormComponent,
     TextViewDialogComponent,
-    DatabaseBackupComponent
+    DatabaseBackupComponent,
+    DVProductsImportFormComponent,
   ],
     imports: [
         BrowserModule,

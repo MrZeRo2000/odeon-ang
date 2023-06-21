@@ -3,7 +3,7 @@ import {getTrackConfig, TrackConfigItem, TrackEditItem} from "../../model/track"
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {TrackService} from "../../service/track.service";
-import {BaseFormComponent} from "../base/base-form.component";
+import {BaseCrudFormComponent} from "../base/base-crud-form.component";
 import {IdName, IdTitle} from "../../model/common";
 import {
   isArtifactTypeMusic,
@@ -17,7 +17,7 @@ import {filterIdName, filterIdTitle} from "../../utils/search-utils";
   templateUrl: './track-form.component.html',
   styleUrls: ['./track-form.component.scss'],
 })
-export class TrackFormComponent extends BaseFormComponent<TrackEditItem> implements OnChanges, OnInit {
+export class TrackFormComponent extends BaseCrudFormComponent<TrackEditItem> implements OnChanges, OnInit {
   DV_TYPES = DV_TYPES;
 
   @Input()

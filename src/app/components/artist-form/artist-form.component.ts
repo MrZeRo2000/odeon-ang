@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ENTER} from "@angular/cdk/keycodes";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistService} from "../../service/artist.service";
-import {BaseFormComponent} from "../base/base-form.component";
+import {BaseCrudFormComponent} from "../base/base-crud-form.component";
 import {filterString} from "../../utils/search-utils";
 
 @Component({
@@ -12,7 +12,7 @@ import {filterString} from "../../utils/search-utils";
   templateUrl: './artist-form.component.html',
   styleUrls: ['./artist-form.component.scss']
 })
-export class ArtistFormComponent extends BaseFormComponent<ArtistEditItem> implements OnInit {
+export class ArtistFormComponent extends BaseCrudFormComponent<ArtistEditItem> implements OnInit {
   artistTypes =  ARTIST_TYPES;
 
   editForm: FormGroup = this.fb.group({

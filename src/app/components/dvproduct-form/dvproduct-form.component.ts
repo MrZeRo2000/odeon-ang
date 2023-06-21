@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BaseFormComponent} from "../base/base-form.component";
+import {BaseCrudFormComponent} from "../base/base-crud-form.component";
 import {DVCategory, DVOrigin, DVProduct} from "../../model/dv-product";
 import {MessageService} from "primeng/api";
 import {DVProductService} from "../../service/dvproduct.service";
@@ -11,7 +11,7 @@ import {filterString} from "../../utils/search-utils";
   templateUrl: './dvproduct-form.component.html',
   styleUrls: ['./dvproduct-form.component.scss']
 })
-export class DVProductFormComponent extends BaseFormComponent<DVProduct> implements OnInit {
+export class DVProductFormComponent extends BaseCrudFormComponent<DVProduct> implements OnInit {
 
   @Input()
   dvOrigins: Array<DVOrigin> = [];

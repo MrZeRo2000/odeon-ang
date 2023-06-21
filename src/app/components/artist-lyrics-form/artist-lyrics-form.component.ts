@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {BaseFormComponent} from "../base/base-form.component";
+import {BaseCrudFormComponent} from "../base/base-crud-form.component";
 import {ArtistLyricsEditItem} from "../../model/artist-lyrics";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
@@ -12,7 +12,7 @@ import {filterIdName} from "../../utils/search-utils";
   templateUrl: './artist-lyrics-form.component.html',
   styleUrls: ['./artist-lyrics-form.component.scss']
 })
-export class ArtistLyricsFormComponent extends BaseFormComponent<ArtistLyricsEditItem> implements OnChanges {
+export class ArtistLyricsFormComponent extends BaseCrudFormComponent<ArtistLyricsEditItem> implements OnChanges {
 
   @Input()
   artistTable: IdName[] = [];

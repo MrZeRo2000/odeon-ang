@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BaseFormComponent} from "../base/base-form.component";
+import {BaseCrudFormComponent} from "../base/base-crud-form.component";
 import {DVOrigin} from "../../model/dv-product";
 import {MessageService} from "primeng/api";
 import {DVOriginService} from "../../service/dvorigin.service";
@@ -10,7 +10,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   templateUrl: './dvorigin-form.component.html',
   styleUrls: ['./dvorigin-form.component.scss']
 })
-export class DVOriginFormComponent extends BaseFormComponent<DVOrigin> implements OnInit {
+export class DVOriginFormComponent extends BaseCrudFormComponent<DVOrigin> implements OnInit {
 
   editForm: FormGroup = this.fb.group({
     name: ['', Validators.required]

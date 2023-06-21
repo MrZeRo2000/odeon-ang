@@ -97,6 +97,23 @@ export class DVProductsTableComponent
     })
   );
 
+  displayImportProducts = false;
+
+  private importProductsSubject: Subject<void> = new Subject();
+
+  importProducts$ = this.importProductsSubject.asObservable().pipe(
+    switchMap(() =>
+      forkJoin([
+        of(this.filterForm.value.artifactTypeId as number),
+        this.dvOriginService.table$.pipe(take(1)),
+        this.dvCategoryService.table$.pipe(take(1))
+      ])
+    ),
+    tap(() => {
+      this.displayImportProducts = true;
+    })
+  )
+
   constructor(
     private fb: FormBuilder,
     private filterService: FilterService,
@@ -211,5 +228,10 @@ export class DVProductsTableComponent
     if (item.id != null) {
       this.showNotesAction.next(item.id);
     }
+  }
+
+  showImportDVProducts(event: any): void {
+    event.preventDefault();
+    this.importProductsSubject.next();
   }
 }

@@ -8,7 +8,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ArtifactService} from "../../service/artifact.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {IdName} from "../../model/common";
-import {BaseFormComponent} from "../base/base-form.component";
+import {BaseCrudFormComponent} from "../base/base-crud-form.component";
 import {filterIdName} from "../../utils/search-utils";
 
 @Component({
@@ -16,7 +16,7 @@ import {filterIdName} from "../../utils/search-utils";
   templateUrl: './artifact-form.component.html',
   styleUrls: ['./artifact-form.component.scss']
 })
-export class ArtifactFormComponent extends BaseFormComponent<ArtifactEditItem> implements OnInit {
+export class ArtifactFormComponent extends BaseCrudFormComponent<ArtifactEditItem> implements OnInit {
   readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES;
 
   @Input()
