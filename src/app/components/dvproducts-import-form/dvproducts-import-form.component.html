@@ -1,9 +1,93 @@
-<p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" styleClass="p-fluid" header="Product Edit">
+<p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" styleClass="p-fluid" header="Import Products">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <div class="field mt-2">
-        <p-dropdown formControlName="dvOrigin" [options]="dvOrigins" dataKey="id" optionLabel="name"></p-dropdown>
+        <label for="dvOrigin">Origin</label>
+        <p-dropdown
+          formControlName="dvOrigin"
+          id="dvOrigin"
+          appendTo="body"
+          [options]="dvOrigins"
+          dataKey="id"
+          optionLabel="name"
+        >
+        </p-dropdown>
       </div>
+
+      <div class="field">
+        <label for="frontInfo">Front Info</label>
+        <p-autoComplete
+          [suggestions]="filteredFrontInfos"
+          (completeMethod)="searchFrontInfos($event)"
+          id="frontInfo"
+          formControlName="frontInfo"
+          appendTo="body"
+          [multiple]="false"
+          [dropdown]="true"
+        >
+        </p-autoComplete>
+      </div>
+
+      <div class="field">
+        <label for="categories">Categories</label>
+        <p-multiSelect
+          id="categories"
+          [options]="dvCategories"
+          formControlName="dvCategories"
+          appendTo="body"
+          optionLabel="name"
+          display="chip"
+        >
+        </p-multiSelect>
+      </div>
+
+      <p-tabView>
+        <p-tabPanel header="Titles">
+      <textarea
+        pInputTextarea
+        id="titles"
+        formControlName="titles"
+        style="resize: none"
+        rows="10"
+      >
+      </textarea>
+        </p-tabPanel>
+        <p-tabPanel header="Original Titles">
+      <textarea
+        pInputTextarea
+        id="originalTitles"
+        formControlName="originalTitles"
+        style="resize: none"
+        rows="10"
+      >
+      </textarea>
+        </p-tabPanel>
+        <p-tabPanel header="Years">
+      <textarea
+        pInputTextarea
+        id="years"
+        formControlName="years"
+        style="resize: none"
+        pKeyFilter="int"
+        rows="10"
+      >
+      </textarea>
+        </p-tabPanel>
+      </p-tabView>
     </form>
   </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Analyze" icon="pi pi-search" class="p-button-text" (click)="this.performAction(ImportAction.ACTION_ANALYZE)"></button>
+    <button pButton pRipple label="Import" icon="pi pi-play" class="p-button-text" (click)="this.performAction(ImportAction.ACTION_EXECUTE)"></button>
+  </ng-template>
 </p-dialog>
+
+<ng-container *ngIf="action$ | async as importStats">
+  <app-dvproducts-import-result-form
+    *ngIf="displayImportResult"
+    [(display)]="displayImportResult"
+    [importStats]="importStats"
+  >
+  </app-dvproducts-import-result-form>
+</ng-container>

@@ -68,6 +68,10 @@ import { TextViewDialogComponent } from './components/text-view-dialog/text-view
 import {SliderModule} from "primeng/slider";
 import { DatabaseBackupComponent } from './components/database-backup/database-backup.component';
 import { DVProductsImportFormComponent } from './components/dvproducts-import-form/dvproducts-import-form.component';
+import {TabViewModule} from "primeng/tabview";
+import {KeyFilterModule} from "primeng/keyfilter";
+import {ListboxModule} from "primeng/listbox";
+import { DVProductsImportResultFormComponent } from './components/dvproducts-import-result-form/dvproducts-import-result-form.component';
 
 
 @NgModule({
@@ -106,41 +110,45 @@ import { DVProductsImportFormComponent } from './components/dvproducts-import-fo
     TextViewDialogComponent,
     DatabaseBackupComponent,
     DVProductsImportFormComponent,
+    DVProductsImportResultFormComponent,
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        MenubarModule,
-        SharedModule,
-        TreeModule,
-        ConfirmDialogModule,
-        ToastModule,
-        MessageModule,
-        DataSourceModule,
-        ServiceModule,
-        MessagesModule,
-        TableModule,
-        PanelModule,
-        BadgeModule,
-        ProgressSpinnerModule,
-        ProgressBarModule,
-        ChipModule,
-        TagModule,
-        InputTextModule,
-        RippleModule,
-        DialogModule,
-        InputTextareaModule,
-        AutoCompleteModule,
-        ConfirmPopupModule,
-        SelectButtonModule,
-        InputNumberModule,
-        MultiSelectModule,
-        FormsModule,
-        DropdownModule,
-        SliderModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    MenubarModule,
+    SharedModule,
+    TreeModule,
+    ConfirmDialogModule,
+    ToastModule,
+    MessageModule,
+    DataSourceModule,
+    ServiceModule,
+    MessagesModule,
+    TableModule,
+    PanelModule,
+    BadgeModule,
+    ProgressSpinnerModule,
+    ProgressBarModule,
+    ChipModule,
+    TagModule,
+    InputTextModule,
+    RippleModule,
+    DialogModule,
+    InputTextareaModule,
+    AutoCompleteModule,
+    ConfirmPopupModule,
+    SelectButtonModule,
+    InputNumberModule,
+    MultiSelectModule,
+    FormsModule,
+    DropdownModule,
+    SliderModule,
+    TabViewModule,
+    KeyFilterModule,
+    ListboxModule
+  ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]
 })

@@ -39,3 +39,8 @@ export interface DVProductUserImport {
   frontInfo?: string;
   dvCategories: Array<DVCategory>
 }
+
+export interface ImportStats {
+  rowsInserted: Array<string>;
+  rowsUpdated: Array<string>;
+}

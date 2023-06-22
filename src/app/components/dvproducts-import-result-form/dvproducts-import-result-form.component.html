@@ -1,0 +1,13 @@
+<p-dialog [(visible)]="displayProp" [style]="{width: '70vw', height: '50vw'}" [modal]="true" styleClass="p-fluid" header="Import Result">
+  <ng-template pTemplate="content">
+    <label for="inserted">Inserted</label>
+    <textarea rows="10" id="inserted" pInputTextarea [ngModel]="importStats.rowsInserted"></textarea>
+
+    <label for="updated">Updated</label>
+    <textarea rows="10" id="updated" pInputTextarea [ngModel]="importStats.rowsUpdated"></textarea>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Close" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+  </ng-template>
+</p-dialog>

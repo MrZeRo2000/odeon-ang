@@ -1,14 +1,30 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {BaseFormComponent} from "../base/base-form.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DVCategory, DVOrigin} from "../../model/dv-product";
+import {
+  DVCategory,
+  DVOrigin,
+  DVProductUserImport,
+  DVProductUserImportDetail,
+  ImportStats
+} from "../../model/dv-product";
+import {filterString} from "../../utils/search-utils";
+import {catchError, Observable, of, Subject, switchMap, tap} from "rxjs";
+import {DVProductImportService} from "../../service/dvproduct-import.service";
+import {MessageService} from "primeng/api";
+
+enum ImportAction {
+  ACTION_ANALYZE,
+  ACTION_EXECUTE
+}
 
 @Component({
   selector: 'app-dvproducts-import-form',
   templateUrl: './dvproducts-import-form.component.html',
   styleUrls: ['./dvproducts-import-form.component.scss']
 })
-export class DVProductsImportFormComponent extends BaseFormComponent {
+export class DVProductsImportFormComponent extends BaseFormComponent implements OnInit {
+  ImportAction = ImportAction
 
   @Input()
   artifactTypeId: number = 0;
@@ -31,7 +47,87 @@ export class DVProductsImportFormComponent extends BaseFormComponent {
     years: [''],
   });
 
-  constructor(private fb: FormBuilder,) {
+  filteredFrontInfos: Array<string> = [];
+
+  displayImportResult = false;
+
+  private actionSubject: Subject<{action: ImportAction, data: DVProductUserImport}> = new Subject();
+
+  action$: Observable<ImportStats | undefined> = this.actionSubject.asObservable().pipe(
+    switchMap(v => {
+      const actionable = v.action == ImportAction.ACTION_ANALYZE ? this.dvProductImportService.analyze : this.dvProductImportService.execute;
+      return actionable(v.data).pipe(
+        catchError(() => {
+          this.messageService.add({severity:'error', summary:'Error', detail:`Error executing action`});
+          return of(undefined);
+        })
+      )
+    }),
+    tap(v => this.displayImportResult = !!v)
+  )
+
+  constructor(
+    private fb: FormBuilder,
+    private messageService: MessageService,
+    private dvProductImportService: DVProductImportService, ) {
     super();
+  }
+
+  ngOnInit(): void {
+    this.editForm.patchValue({
+      dvOrigin: this.dvOrigins[0]
+      }
+    )
+  }
+
+  private getFormData(): DVProductUserImport {
+    const titles = this.editForm.value.titles.split('\n').filter((v: any) => !!v);
+    const originalTitles = this.editForm.value.originalTitles.split('\n').filter((v: any) => !!v);
+    const years = this.editForm.value.years.split('\n').filter((v: any) => !isNaN(Number.parseInt(v, 10)));
+
+
+    if (titles.length === 0) {
+      throw Error("Titles are empty")
+    }
+
+    if ((originalTitles.length > 0) && (originalTitles.length !== titles.length)) {
+      throw Error("Original titles do not match titles")
+    }
+
+    if ((years.length > 0) && (years.length !== titles.length)) {
+      throw Error("Years do not match titles")
+    }
+
+    const dvProductDetails: DVProductUserImportDetail[] = titles.map(
+      (v: string, n: number) => {
+        return {
+          title: v,
+          originalTitle: originalTitles[n] || null,
+          year: Number.parseInt(years[n], 10)
+        } as DVProductUserImportDetail
+      }
+    )
+
+    return {
+      artifactTypeId: this.artifactTypeId,
+      dvOriginId: this.editForm.value.dvOrigin.id,
+      dvCategories: this.editForm.value.dvCategories,
+      frontInfo: this.editForm.value.frontInfo,
+      dvProductDetails: dvProductDetails
+    } as DVProductUserImport
+  }
+
+  searchFrontInfos(event: any): void {
+    this.filteredFrontInfos = filterString(this.frontInfos, event.query);
+  }
+
+  performAction(action: ImportAction): void {
+    try {
+      const data = this.getFormData()
+    } catch (e: any) {
+      this.messageService.add({severity:'error', summary:'Error', detail:`Error validating form data: ${e.message}`})
+    }
+
+    console.log(`Performing action ${action}, form data: ${JSON.stringify(this.getFormData())}`)
   }
 }
