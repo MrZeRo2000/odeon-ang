@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BaseFormComponent} from "../base/base-form.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {
@@ -9,7 +9,7 @@ import {
   ImportStats
 } from "../../model/dv-product";
 import {filterString} from "../../utils/search-utils";
-import {catchError, Observable, of, Subject, switchMap, tap} from "rxjs";
+import {catchError, iif, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {DVProductImportService} from "../../service/dvproduct-import.service";
 import {MessageService} from "primeng/api";
 
@@ -38,6 +38,9 @@ export class DVProductsImportFormComponent extends BaseFormComponent implements 
   @Input()
   frontInfos: Array<string> = [];
 
+  @Output()
+  public onImport: EventEmitter<void> = new EventEmitter();
+
   editForm: FormGroup = this.fb.group({
     dvOrigin: ['', Validators.required],
     frontInfo: [''],
@@ -54,15 +57,22 @@ export class DVProductsImportFormComponent extends BaseFormComponent implements 
   private actionSubject: Subject<{action: ImportAction, data: DVProductUserImport}> = new Subject();
 
   action$: Observable<ImportStats | undefined> = this.actionSubject.asObservable().pipe(
-    switchMap(v => {
-      const actionable = v.action == ImportAction.ACTION_ANALYZE ? this.dvProductImportService.analyze : this.dvProductImportService.execute;
-      return actionable(v.data).pipe(
-        catchError(() => {
-          this.messageService.add({severity:'error', summary:'Error', detail:`Error executing action`});
-          return of(undefined);
-        })
-      )
-    }),
+    switchMap(v =>
+      iif(
+        () => v.action === ImportAction.ACTION_EXECUTE,
+        this.dvProductImportService.execute(v.data).pipe(
+          tap(() => this.onImport.next()),
+          catchError(() => {
+            this.messageService.add({severity:'error', summary:'Error', detail:`Error executing import`});
+            return of(undefined);
+          })),
+        this.dvProductImportService.analyze(v.data).pipe(
+          catchError(() => {
+            this.messageService.add({severity:'error', summary:'Error', detail:`Error executing analysis`});
+            return of(undefined);
+          }))
+        )
+    ),
     tap(v => this.displayImportResult = !!v)
   )
 
@@ -123,7 +133,7 @@ export class DVProductsImportFormComponent extends BaseFormComponent implements 
 
   performAction(action: ImportAction): void {
     try {
-      const data = this.getFormData()
+      this.actionSubject.next({action, data: this.getFormData()})
     } catch (e: any) {
       this.messageService.add({severity:'error', summary:'Error', detail:`Error validating form data: ${e.message}`})
     }

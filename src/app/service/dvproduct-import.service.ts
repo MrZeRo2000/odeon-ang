@@ -11,11 +11,11 @@ export class DVProductImportService {
   constructor(private restDataSource: RestDataSourceService) { }
 
   analyze(data: DVProductUserImport): Observable<ImportStats> {
-    return this.restDataSource.postResponseData<ImportStats>("/analyze", data);
+    return this.restDataSource.postResponseData<ImportStats>("dvproduct-user-import/analyze", data);
   }
 
   execute(data: DVProductUserImport): Observable<ImportStats> {
-    return this.restDataSource.postResponseData<ImportStats>("/execute", data);
+    return this.restDataSource.postResponseData<ImportStats>("dvproduct-user-import/execute", data);
   }
 
 }

@@ -198,6 +198,11 @@ export class DVProductsTableComponent
     this.filterForm.setValue({artifactTypeId: this.filterForm.value.artifactTypeId as number});
   }
 
+  onImport(): void {
+    this.displayImportProducts = false;
+    this.loadData();
+  }
+
   private updateScrollHeight(): void {
     const windowHeight = window.innerHeight;
     const tableContainerTop = this.tableContainerElement?.nativeElement.offsetTop;

@@ -1,10 +1,17 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '70vw', height: '50vw'}" [modal]="true" styleClass="p-fluid" header="Import Result">
   <ng-template pTemplate="content">
-    <label for="inserted">Inserted</label>
-    <textarea rows="10" id="inserted" pInputTextarea [ngModel]="importStats.rowsInserted"></textarea>
 
-    <label for="updated">Updated</label>
-    <textarea rows="10" id="updated" pInputTextarea [ngModel]="importStats.rowsUpdated"></textarea>
+    <p-panel header="Inserted" [toggleable]="true" *ngIf="importStats.rowsInserted && importStats.rowsInserted.length > 0">
+      <ul class="list-none" *ngFor="let item of importStats.rowsInserted">
+        <li>{{item}}</li>
+      </ul>
+    </p-panel>
+
+    <p-panel header="Updated" [toggleable]="true" *ngIf="importStats.rowsUpdated && importStats.rowsUpdated.length > 0">
+      <ul class="list-none" *ngFor="let item of importStats.rowsUpdated">
+        <li>{{item}}</li>
+      </ul>
+    </p-panel>
   </ng-template>
 
   <ng-template pTemplate="footer">
