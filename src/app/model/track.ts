@@ -1,9 +1,12 @@
 import {EditConfigItem, getConfigItem} from "./edit-config";
 import {IdName} from "./common";
 import {ArtistTableItem} from "./artists";
+import {DVProduct} from "./dv-product";
 
 export interface TrackTableItem {
   id: number;
+  artifactId?: number;
+  artifactTitle?: string;
   diskNum: number;
   num: number;
   artist?: ArtistTableItem;
@@ -14,7 +17,8 @@ export interface TrackTableItem {
   duration?: number;
   size?: number;
   bitRate?: number;
-  fileNames?: Array<string>
+  fileNames?: Array<string>;
+  dvProduct: DVProduct;
 }
 
 export interface TrackEditItem {

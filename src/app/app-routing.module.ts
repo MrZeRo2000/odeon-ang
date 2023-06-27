@@ -20,6 +20,7 @@ const routes: Routes = [
   {path: 'lyrics/:id', component: ArtistLyricsTableComponent, pathMatch: 'full'},
   {path: 'artifacts', component: ArtifactsTableComponent, pathMatch: 'full'},
   {path: 'artifacts-video', component: ArtifactsVideoTableComponent, pathMatch: 'full'},
+  {path: 'tracks', component: TracksTableComponent, pathMatch: 'prefix'},
   {path: 'tracks/:id', component: TracksTableComponent, pathMatch: 'prefix'},
   {path: 'media-files/:id', component: MediaFilesTableComponent, pathMatch: 'prefix'},
   {path: 'dvorigins', component: DVOriginsTableComponent, pathMatch: 'full'},

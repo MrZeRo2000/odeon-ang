@@ -11,14 +11,18 @@
   <p-table styleClass="p-datatable-sm" responsiveLayout="scroll" [value]="data[0]" dataKey="id">
     <ng-template pTemplate="caption">
       <div class="flex">
-        <div class="flex align-items-center justify-content-between text-xl mr-2">{{data[1] | artifactCaption}} Tracks</div>
-        <div class="flex align-self-end app-crud-panel-small"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
+        <div class="flex align-items-center justify-content-between text-xl mr-2">
+          <div *ngIf="this.artifactId"><span class="text-primary">{{data[1] | artifactCaption}}</span>&nbsp;Tracks</div>
+          <div *ngIf="this.dvProductId">Product&nbsp;<span class="text-primary">{{data[0][0].dvProduct.title}}</span>&nbsp;Tracks</div>
+        </div>
+        <div class="flex align-self-end app-crud-panel-small" *ngIf="this.artifactId"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
       </div>
     </ng-template>
 
     <ng-template pTemplate="header">
       <tr>
         <th style="width:0">Id</th>
+        <th style="width:0" *ngIf="this.dvProductId">Artifact</th>
         <th style="width:0" *ngIf="isArtifactTypeMusic">Disk #</th>
         <th style="width:0;">Track</th>
         <th *ngIf="data[1].artistTypeCode === 'C'">Artist</th>
@@ -29,13 +33,14 @@
         <th style="width:0">Bitrate</th>
         <th style="width:30%">File name</th>
         <th style="width:0; white-space: nowrap" *ngIf="isArtifactTypeVideo">Video Type</th>
-        <th style="width:0"></th>
+        <th style="width:0" *ngIf="this.artifactId"></th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-item>
       <tr>
         <td>{{item.id}}</td>
+        <td style="white-space: nowrap" *ngIf="this.dvProductId">{{item.artifactTitle}}</td>
         <td *ngIf="isArtifactTypeMusic">{{item.diskNum}}</td>
         <td>{{item.num | number : '2.0-0'}}</td>
         <td *ngIf="data[1].artistTypeCode === 'C'">{{item.artist.artistName}}</td>
@@ -50,7 +55,7 @@
           </div>
         </td>
         <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactTypeVideo">{{item.dvType.name}}</td>
-        <td>
+        <td *ngIf="this.artifactId">
           <div class="app-crud-panel-small">
             <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
           </div>

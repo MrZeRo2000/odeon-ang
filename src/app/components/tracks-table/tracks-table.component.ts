@@ -25,7 +25,8 @@ import {DVProductService} from "../../service/dvproduct.service";
   styleUrls: ['./tracks-table.component.scss']
 })
 export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [TrackEditItem, IdName[], IdName[], IdTitle[]]> implements OnInit {
-  private artifactId?: number;
+  artifactId?: number;
+  dvProductId?: number;
 
   artistTypeCode: string = 'A';
   artifactTypeId?: number;
@@ -42,7 +43,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
     ),
     tap(v => {
       if (v?.success) {
-        this.data$ = this.getData(this.artifactId as number);
+        this.data$ = this.getData();
       } else if (!!v) {
         this.messageService.add({
           severity: 'error',
@@ -78,8 +79,8 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
   }
 
   protected loadData(): void {
-    if (this.artifactId) {
-      this.data$ = this.getData(this.artifactId);
+    if (this.artifactId || this.dvProductId) {
+      this.data$ = this.getData();
     }
   }
 
@@ -105,16 +106,31 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
 
   ngOnInit(): void {
     this.artifactId = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
-    console.log(`Routed with id=${this.artifactId}`);
+    this.dvProductId =  Number.parseInt(this.route.snapshot.queryParams['dvProductId'], 10)
+    console.log(`Routed with id=${this.artifactId}, dvProductId=${this.dvProductId}`);
     this.loadData();
   }
 
-  private getData(id: number): Observable<[TrackTableItem[], ArtifactEditItem]> {
-    return forkJoin([
-      this.getTable(id),
-      this.getArtifact(id),
-      ]
-    )
+  private getData(): Observable<[TrackTableItem[], ArtifactEditItem]> {
+    if (this.artifactId) {
+      return forkJoin([
+          this.getTable(this.artifactId),
+          this.getArtifact(this.artifactId),
+        ]
+      )
+    } else if (this.dvProductId) {
+      return this.getTableByProductId(this.dvProductId).pipe(
+        switchMap(v => {
+          return forkJoin([
+            of(v),
+            this.getArtifact(v[0].artifactId as number)
+            ]
+          )
+        })
+      )
+    } else {
+      return forkJoin([of([]), of({} as ArtifactEditItem)])
+    }
   }
 
   private getTable(id: number): Observable<Array<TrackTableItem>> {
@@ -125,12 +141,28 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: `Error reading tracks`
+          detail: `Error reading tracks by id ${id}`
         });
         return of([]);
       })
     )
   }
+
+  private getTableByProductId(dvProductId: number): Observable<Array<TrackTableItem>> {
+    return this.trackService.getTableByProductId(dvProductId).pipe(
+      tap(v => this.dataSize = v.length),
+      catchError(err => {
+        this.errorObject = err;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error reading tracks by product id ${dvProductId}`
+        });
+        return of([]);
+      })
+    )
+  }
+
 
   private getArtifact(id: number): Observable<ArtifactEditItem> {
     return this.artifactService.get(id).pipe(
@@ -154,6 +186,6 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
   }
   override savedEditData(event: any) {
     super.savedEditData(event);
-    this.data$ = this.getData(this.artifactId as number);
+    this.data$ = this.getData();
   }
 }

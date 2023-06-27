@@ -24,6 +24,7 @@ import {DVCategoryService} from "../../service/dvcategory.service";
 import {ARTIFACT_EDIT_CONFIG, CodeName} from "../../model/artifacts";
 import {FormBuilder, Validators} from "@angular/forms";
 import {TextInterface} from "../../model/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dvproducts-table',
@@ -114,7 +115,8 @@ export class DVProductsTableComponent
     })
   )
 
-  constructor(
+  constructor (
+    private router: Router,
     private fb: FormBuilder,
     private filterService: FilterService,
     messageService: MessageService,
@@ -232,6 +234,15 @@ export class DVProductsTableComponent
     console.log(`Display notes for ${JSON.stringify(item)}`);
     if (item.id != null) {
       this.showNotesAction.next(item.id);
+    }
+  }
+
+  showTracks(event: any, item: DVProduct): void {
+    event.preventDefault();
+    console.log(`Display tracks for ${JSON.stringify(item)}`);
+    if (item.id != null) {
+      this.router.navigate(['/tracks'], {queryParams: {dvProductId: item.id}}).then();
+      //this.showNotesAction.next(item.id);
     }
   }
 
