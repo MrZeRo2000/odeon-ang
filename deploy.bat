@@ -4,7 +4,7 @@
 IF EXIST "D:\prj\apache-tomcat-9.0.24\" (
   SET TOMCAT_FOLDER=D:\prj\apache-tomcat-9.0.24
 ) ELSE (
-  SET TOMCAT_FOLDER=%USERPROFILE%\prj\apache-tomcat-9.0.70
+  SET TOMCAT_FOLDER=%USERPROFILE%\prj\apache-tomcat-10.1.10
 )
 ECHO TOMCAT FOLDER: %TOMCAT_FOLDER%
 
