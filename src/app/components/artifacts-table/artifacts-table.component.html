@@ -24,6 +24,7 @@
            (onFilter)="onFilter($event)"
            selectionMode="single"
            [(selection)]="selectedItem"
+           sortField=""
   >
 
     <ng-template pTemplate="caption">
@@ -63,15 +64,15 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th style="width:0">Id</th>
-        <th style="width:20%">Artist Name</th>
+        <th pSortableColumn="id" style="width:0; white-space: nowrap">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
+        <th pSortableColumn="artistName" style="width:20%; white-space: nowrap">Artist Name&nbsp;<p-sortIcon field="artistName"></p-sortIcon></th>
         <th>Title</th>
         <th style="width:20%" *ngIf="getArtistType() == 'C'">Performer Artist Name</th>
         <th style="width:0">Year</th>
         <th style="width:0; text-align: center">Duration</th>
         <th style="width:0; text-align: center">Size</th>
         <th style="width:0; text-align: center">Type</th>
-        <th style="width:0; text-align: center">Inserted</th>
+        <th pSortableColumn="insertDateTime" style="width:0; text-align: center; white-space: nowrap">Inserted&nbsp;<p-sortIcon field="insertDateTime"></p-sortIcon></th>
         <th style="width:0"></th>
       </tr>
     </ng-template>
