@@ -65,7 +65,23 @@
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="id" style="width:0; white-space: nowrap">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
-        <th pSortableColumn="artistName" style="width:20%; white-space: nowrap">Artist Name&nbsp;<p-sortIcon field="artistName"></p-sortIcon></th>
+        <th pSortableColumn="artistName" style="width:20%; white-space: nowrap">
+          <div class="flex justify-content-between align-items-center">
+            Artist Name&nbsp;
+            <p-sortIcon field="artistName"></p-sortIcon>
+            <p-columnFilter field="artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [ngModel]="value" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)">
+                  <ng-template let-option pTemplate="item">
+                    <div class="inline-block vertical-align-middle">
+                      <span>{{ option.label }}</span>
+                    </div>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
         <th>Title</th>
         <th style="width:20%" *ngIf="getArtistType() == 'C'">Performer Artist Name</th>
         <th style="width:0">Year</th>

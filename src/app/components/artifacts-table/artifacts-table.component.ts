@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ArtifactService} from "../../service/artifact.service";
 import {UntypedFormBuilder} from "@angular/forms";
 import {ARTIST_TYPES} from "../../model/artists";
@@ -26,6 +26,8 @@ import {ArtistService} from "../../service/artist.service";
 import {Router} from "@angular/router";
 import {BaseTableComponent} from "../base/base-table.component";
 import {IdName} from "../../model/common";
+import {Table} from "primeng/table";
+import {SelectItem} from "primeng/api/selectitem";
 
 interface FilterControlsConfig
 {
@@ -82,10 +84,13 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
       )
     ),
     tap(v => {
+      this.filterArtists = [... new Set(v.map(v => {return v["artistName"] as string}))].sort().map(v => {return {label: v, value: v} as SelectItem});
       console.log('End of filteredArtifacts')
       this.selectedItem = undefined;
     })
   )
+
+  filterArtists: SelectItem[] = [];
 
   constructor(
     private router: Router,
