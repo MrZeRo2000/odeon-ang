@@ -43,9 +43,9 @@
         <td style="white-space: nowrap" *ngIf="this.dvProductId">{{item.artifactTitle}}</td>
         <td *ngIf="isArtifactTypeMusic">{{item.diskNum}}</td>
         <td>{{item.num | number : '2.0-0'}}</td>
-        <td *ngIf="data[1].artistTypeCode === 'C'">{{item.artist.artistName}}</td>
+        <td *ngIf="data[1].artistTypeCode === 'C'">{{item.artist?.artistName}}</td>
         <td>{{item.title}}</td>
-        <td *ngIf="data[1].artistTypeCode === 'C'">{{item.performerArtist.artistName}}</td>
+        <td *ngIf="data[1].artistTypeCode === 'C'">{{item.performerArtist?.artistName}}</td>
         <td>{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</td>
         <td style="text-align: right; white-space: nowrap"><div *ngIf="item.size">{{item.size | fileSize}}</div></td>
         <td style="text-align: right">{{item.bitRate}}</td>
