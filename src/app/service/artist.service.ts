@@ -19,7 +19,7 @@ export class ArtistService extends CRUDService<ArtistEditItem>{
   } = {};
 
   constructor(restDataSource: RestDataSourceService) {
-    super(restDataSource, "artist-category-details")
+    super(restDataSource, "artist")
   }
 
   getTable(): Observable<Array<ArtistTableItem>> {
