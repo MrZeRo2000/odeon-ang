@@ -17,7 +17,7 @@ import {
   tap
 } from "rxjs";
 import {ArtistService} from "../../service/artist.service";
-import {ARTIST_TYPES, ArtistEditItem} from "../../model/artists";
+import {Artist, ARTIST_TYPES} from "../../model/artists";
 
 @Component({
   selector: 'app-processing',
@@ -156,7 +156,7 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
       } else if ('actionType' in v) {
         console.log(`Got action: ${JSON.stringify(v)}`);
         const processingAction: ProcessingAction = v as ProcessingAction;
-        const artistData: ArtistEditItem = {
+        const artistData: Artist = {
           artistName: v.value,
           artistType: ARTIST_TYPES[0].code
         }

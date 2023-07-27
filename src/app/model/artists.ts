@@ -1,24 +1,15 @@
-export interface ArtistTableItem {
-  id: number;
-  artistName: string;
-  artistType: string;
-  genre?: string;
-  isGenre: boolean;
-  styles?: Array<string>;
-  detailId?: number;
-  isDetail: boolean;
-  hasLyrics?: boolean;
-}
-
-export interface ArtistEditItem {
+export interface Artist {
   id?: number;
   artistName: string;
   artistType: string;
   artistBiography?: string;
   genre?: string;
+  isGenre?: boolean;
   styles?: Array<string>;
+  detailId?: number;
+  isDetail?: boolean;
+  hasLyrics?: boolean;
 }
-
 export const ARTIST_TYPE_CODE_ARTIST = 'A';
 export const ARTIST_TYPE_CODE_CLASSICS = 'C';
 

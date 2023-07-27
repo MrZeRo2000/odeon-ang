@@ -1,6 +1,6 @@
 import {EditConfigItem, getConfigItem} from "./edit-config";
 import {IdName} from "./common";
-import {ArtistTableItem} from "./artists";
+import {Artist} from "./artists";
 import {DVProduct} from "./dv-product";
 
 export interface TrackTableItem {
@@ -9,8 +9,8 @@ export interface TrackTableItem {
   artifactTitle?: string;
   diskNum: number;
   num: number;
-  artist?: ArtistTableItem;
-  performerArtistId?: ArtistTableItem;
+  artist?: Artist;
+  performerArtistId?: Artist;
   performerArtistName?: string;
   dvType?: IdName;
   title: string;

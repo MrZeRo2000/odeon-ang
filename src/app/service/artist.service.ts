@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
-import {ArtistEditItem, ArtistTableItem} from "../model/artists";
+import {Artist} from "../model/artists";
 import {Observable, of, shareReplay} from "rxjs";
 import {Biography} from "../model/biography";
 import {HttpParams} from "@angular/common/http";
@@ -10,7 +10,7 @@ import {CRUDService} from "./crud.service";
 @Injectable({
   providedIn: 'root'
 })
-export class ArtistService extends CRUDService<ArtistEditItem>{
+export class ArtistService extends CRUDService<Artist>{
 
   artistTable$ = this.getTable();
 
@@ -22,8 +22,8 @@ export class ArtistService extends CRUDService<ArtistEditItem>{
     super(restDataSource, "artist")
   }
 
-  getTable(): Observable<Array<ArtistTableItem>> {
-    return this.restDataSource.getResponseData<Array<ArtistTableItem>>("artist/artists/table");
+  getTable(): Observable<Array<Artist>> {
+    return this.restDataSource.getResponseData<Array<Artist>>("artist/artists/table");
   }
 
   getIdNameTable(artistTypeCode: string): Observable<Array<IdName>> {

@@ -3,7 +3,7 @@ import {ArtistService} from "../../service/artist.service";
 import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {ConfirmationService, FilterService, MessageService, PrimeNGConfig, SelectItem} from "primeng/api";
 import {Biography} from "../../model/biography";
-import {ArtistEditItem, ArtistTableItem} from "../../model/artists";
+import {Artist} from "../../model/artists";
 import {CRUDResult} from "../../model/crud";
 import {Router} from "@angular/router";
 import {BaseTableComponent} from "../base/base-table.component";
@@ -13,12 +13,12 @@ import {BaseTableComponent} from "../base/base-table.component";
   templateUrl: './artists-table.component.html',
   styleUrls: ['./artists-table.component.scss']
 })
-export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, ArtistEditItem> implements OnInit, AfterViewInit {
+export class ArtistsTableComponent extends BaseTableComponent<Artist, Artist> implements OnInit, AfterViewInit {
 
   displayArtistInfo = false;
   displayArtistName: string = "";
 
-  data$? : Observable<ArtistTableItem[]>;
+  data$? : Observable<Artist[]>;
 
   filterGenres: Array<SelectItem<string>> = [];
   filterStyles: Array<SelectItem<string>> = [];
@@ -101,7 +101,7 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
     );
   }
 
-  private getData(): Observable<ArtistTableItem[]> {
+  private getData(): Observable<Artist[]> {
     return this.artistService.artistTable$.pipe(
       catchError(err => {
         this.errorObject = err;
@@ -120,9 +120,9 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
     );
   }
 
-  protected getEditData(item: ArtistTableItem): Observable<CRUDResult<ArtistEditItem>> {
+  protected getEditData(item: Artist): Observable<CRUDResult<Artist>> {
     if (!item.id) {
-      return of({success: true, data: {} as ArtistEditItem});
+      return of({success: true, data: {} as Artist});
     } else if (!item.detailId) {
       return of ({success: true, data: {
         id: item.id,
@@ -131,7 +131,7 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
         artistBiography: '',
         genre: item.genre,
         styles: item.styles
-      } as ArtistEditItem});
+      } as Artist});
     } else {
       return this.artistService.getArtistDetail(item.detailId as number).pipe(
         map(d => {
@@ -142,7 +142,7 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
               artistBiography: d.biography,
               genre: item.genre,
               styles: item.styles
-            } as ArtistEditItem}
+            } as Artist}
           }
         ),
         catchError(err => {
@@ -152,12 +152,12 @@ export class ArtistsTableComponent extends BaseTableComponent<ArtistTableItem, A
     }
   }
 
-  displayArtistDetail(item: ArtistTableItem) : void {
+  displayArtistDetail(item: Artist) : void {
     this.displayArtistName = item.artistName;
     this.showArtistDetailAction.next(item.detailId as number);
   }
 
-  displayLyrics(item: ArtistTableItem) : void {
+  displayLyrics(item: Artist) : void {
     this.router.navigate([`lyrics/${item.id}`]).then();
   }
 

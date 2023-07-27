@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ArtistEditItem, ArtistTableItem, ARTIST_TYPES} from "../../model/artists";
+import {Artist, ARTIST_TYPES} from "../../model/artists";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ENTER} from "@angular/cdk/keycodes";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -12,7 +12,7 @@ import {filterString} from "../../utils/search-utils";
   templateUrl: './artist-form.component.html',
   styleUrls: ['./artist-form.component.scss']
 })
-export class ArtistFormComponent extends BaseCrudFormComponent<ArtistEditItem> implements OnInit {
+export class ArtistFormComponent extends BaseCrudFormComponent<Artist> implements OnInit {
   artistTypes =  ARTIST_TYPES;
 
   editForm: FormGroup = this.fb.group({
@@ -26,7 +26,7 @@ export class ArtistFormComponent extends BaseCrudFormComponent<ArtistEditItem> i
   displayBiography = false;
 
   @Input()
-  artistTable: Array<ArtistTableItem> = [];
+  artistTable: Array<Artist> = [];
 
   genres: Array<string> = [];
   filteredGenres: Array<string> = [];
@@ -57,7 +57,7 @@ export class ArtistFormComponent extends BaseCrudFormComponent<ArtistEditItem> i
     return this.editForm.valid;
   }
 
-  override createSavedItem(): ArtistEditItem {
+  override createSavedItem(): Artist {
     return {
       id: this.editItem?.id,
       artistName: this.editForm.value.artistName,
@@ -65,7 +65,7 @@ export class ArtistFormComponent extends BaseCrudFormComponent<ArtistEditItem> i
       artistBiography: this.editForm.value.biography || undefined,
       genre: this.editForm.value.genre,
       styles: this.editForm.value.styles
-    } as ArtistEditItem
+    } as Artist
   }
 
   previewBiography(): void {
