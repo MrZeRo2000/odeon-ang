@@ -1,8 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {
-  ArtifactEditItem,
   ARTIFACT_MUSIC_TYPES,
-  ArtifactConfigItem, getArtifactConfig
+  ArtifactConfigItem, getArtifactConfig, Artifact
 } from "../../model/artifacts";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ArtifactService} from "../../service/artifact.service";
@@ -16,7 +15,7 @@ import {filterIdName} from "../../utils/search-utils";
   templateUrl: './artifact-form.component.html',
   styleUrls: ['./artifact-form.component.scss']
 })
-export class ArtifactFormComponent extends BaseCrudFormComponent<ArtifactEditItem> implements OnInit {
+export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> implements OnInit {
   readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES;
 
   @Input()
@@ -44,7 +43,7 @@ export class ArtifactFormComponent extends BaseCrudFormComponent<ArtifactEditIte
   ) { super(messageService, artifactService) }
 
   ngOnInit(): void {
-    this.artifactTypeConfig = getArtifactConfig(this.editItem?.artifactTypeId as number, this.artistTypeCode);
+    this.artifactTypeConfig = getArtifactConfig(this.editItem?.artifactType?.id as number, this.artistTypeCode);
     console.log(`ArtifactForm: onInit: config: ${JSON.stringify(this.artifactTypeConfig)}`);
     this.editForm = this.fb.group({
       artifactTypeId: ['', Validators.required],
@@ -57,9 +56,9 @@ export class ArtifactFormComponent extends BaseCrudFormComponent<ArtifactEditIte
     });
 
     this.editForm.setValue({
-      artifactTypeId: this.editItem?.artifactTypeId?? '',
-      artistId: this.editItem?.artistId? {id: this.editItem.artistId, name: this.editItem.artistName} : '',
-      performerArtistId: this.editItem?.performerArtistId? {id: this.editItem.performerArtistId, name: this.editItem.performerArtistName} : '',
+      artifactTypeId: this.editItem?.artifactType?.id?? '',
+      artistId: this.editItem?.artist? {id: this.editItem.artist.id, name: this.editItem.artist.artistName} : '',
+      performerArtistId: this.editItem?.performerArtist? {id: this.editItem.performerArtist.id, name: this.editItem.performerArtist.artistName} : '',
       title: this.editItem?.title?? '',
       year: this.editItem?.year?? '',
       duration: this.editItem?.duration?? '',
@@ -72,19 +71,17 @@ export class ArtifactFormComponent extends BaseCrudFormComponent<ArtifactEditIte
     return this.editForm.valid;
   }
 
-  createSavedItem(): ArtifactEditItem {
+  createSavedItem(): Artifact {
     return {
       id: this.editItem?.id,
-      artifactTypeId: this.editForm.value.artifactTypeId,
-      artistId: this.editForm.value.artistId?.id,
-      artistName: this.editForm.value.artistId?.name,
-      performerArtistId: this.editForm.value.performerArtistId?.id,
-      performerArtistName: this.editForm.value.performerArtistId?.name,
+      artifactType: {id: this.editForm.value.artifactTypeId} as IdName,
+      artist: {id: this.editForm.value.artistId?.id, artistName: this.editForm.value.artistId?.name},
+      performerArtis: {id: this.editForm.value.performerArtistId?.id, artistName: this.editForm.value.performerArtistId?.name},
       title: this.editForm.value.title,
       year: this.editForm.value.year,
       duration: this.editForm.value.duration,
       size: this.editForm.value.size
-    } as ArtifactEditItem;
+    } as Artifact;
   }
 
 

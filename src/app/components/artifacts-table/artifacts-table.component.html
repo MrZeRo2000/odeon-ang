@@ -65,11 +65,11 @@
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="id" style="width:0; white-space: nowrap">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
-        <th pSortableColumn="artistName" style="width:20%; white-space: nowrap">
+        <th pSortableColumn="artist.artistName" style="width:20%; white-space: nowrap">
           <div class="flex justify-content-between align-items-center">
             Artist Name&nbsp;
-            <p-sortIcon field="artistName"></p-sortIcon>
-            <p-columnFilter field="artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+            <p-sortIcon field="artist.artistName"></p-sortIcon>
+            <p-columnFilter field="artist.artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect [ngModel]="value" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)">
                   <ng-template let-option pTemplate="item">
@@ -96,9 +96,9 @@
     <ng-template pTemplate="body" let-item>
       <tr [pSelectableRow]="item">
         <td>{{item.id}}</td>
-        <td>{{item.artistName}}</td>
+        <td>{{item.artist?.artistName}}</td>
         <td>{{item.title}}</td>
-        <td *ngIf="getArtistType() == 'C'">{{item.performerArtistName}}</td>
+        <td *ngIf="getArtistType() == 'C'">{{item.performerArtist?.artistName}}</td>
         <td>{{item.year}}</td>
         <td>
           <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
@@ -106,7 +106,7 @@
         <td>
           <div style="text-align: right; white-space: nowrap"><span *ngIf="item.size">{{item.size | fileSize}}</span></div>
         </td>
-        <td>{{item.artifactTypeName}}</td>
+        <td>{{item.artifactType.name}}</td>
         <td><div class="white-space-nowrap"><small>{{item.insertDateTime | date:'dd.MM.YYYY HH:mm:ss'}}</small></div></td>
         <td>
           <app-crud-panel class="app-crud-panel-small" [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>

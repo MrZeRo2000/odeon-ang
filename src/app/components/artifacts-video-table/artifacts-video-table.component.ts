@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {BaseTableComponent} from "../base/base-table.component";
 import {
-  ARTIFACT_MUSIC_TYPE_MP3,
   ARTIFACT_TYPE_VIDEO, ARTIFACT_VIDEO_TYPE_MUSIC,
   ARTIFACT_VIDEO_TYPES,
-  ArtifactEditItem,
-  ArtifactTableItem, isArtifactTypeVideoMusic
+  Artifact, isArtifactTypeVideoMusic
 } from "../../model/artifacts";
 import {IdName} from "../../model/common";
 import {Router} from "@angular/router";
@@ -15,7 +13,7 @@ import {ArtistService} from "../../service/artist.service";
 import {ArtifactService} from "../../service/artifact.service";
 import {CRUDResult} from "../../model/crud";
 import {catchError, forkJoin, iif, map, Observable, of, startWith, switchMap, tap} from "rxjs";
-import {ARTIST_TYPE_CODE_ARTIST, ARTIST_TYPES} from "../../model/artists";
+import {ARTIST_TYPE_CODE_ARTIST} from "../../model/artists";
 
 interface FilterControlsConfig
 {
@@ -27,7 +25,7 @@ interface FilterControlsConfig
   templateUrl: './artifacts-video-table.component.html',
   styleUrls: ['./artifacts-video-table.component.scss']
 })
-export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTableItem, [IdName[], ArtifactEditItem]> implements OnInit {
+export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-video-table-filter-form";
   ARTIFACT_VIDEO_TYPE_MUSIC = ARTIFACT_VIDEO_TYPE_MUSIC;
 
@@ -131,23 +129,23 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTab
     this.filterForm.setValue(this.filterForm.value as FilterControlsConfig);
   }
 
-  protected getEditData(item: ArtifactTableItem): Observable<CRUDResult<[IdName[], ArtifactEditItem]>> {
+  protected getEditData(item: Artifact): Observable<CRUDResult<[IdName[], Artifact]>> {
     return forkJoin([
       this.getArtists(),
       iif(() =>
         Object.keys(item).length === 0,
-        of({artifactTypeId: this.filterForm.value.artifactType} as ArtifactEditItem),
-        this.getArtifact(item.id)
+        of({artifactType: {id: this.filterForm.value.artifactType}} as Artifact),
+        this.getArtifact(item.id as number)
       )
     ]).pipe(
-      map(v => {return {success: true, data: v as [IdName[], ArtifactEditItem]}}),
+      map(v => {return {success: true, data: v as [IdName[], Artifact]}}),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});
       })
     )
   }
 
-  getArtifact(id: number): Observable<ArtifactEditItem> {
+  getArtifact(id: number): Observable<Artifact> {
     return this.artifactService.get(id).pipe(
       catchError(err => {
         this.messageService.add({
@@ -155,7 +153,7 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<ArtifactTab
           summary: 'Error',
           detail: `Error getting artifact details: ${err.error?.message || err.message}`
         });
-        return of({id: -1} as ArtifactEditItem);
+        return of({id: -1} as Artifact);
       })
     )
   }

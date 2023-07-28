@@ -5,7 +5,7 @@ import {TrackEditItem, TrackTableItem} from "../../model/track";
 import {TrackService} from "../../service/track.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {
-  ArtifactEditItem,
+  Artifact,
   isArtifactTypeMusic,
   isArtifactTypeVideo,
   isArtifactTypeVideoWithProducts
@@ -35,7 +35,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
 
   dataSize = 0;
 
-  data$?: Observable<[TrackTableItem[], ArtifactEditItem]>;
+  data$?: Observable<[TrackTableItem[], Artifact]>;
 
   deleteAction = this.deleteSubject.asObservable().pipe(
     switchMap(v =>
@@ -111,7 +111,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
     this.loadData();
   }
 
-  private getData(): Observable<[TrackTableItem[], ArtifactEditItem]> {
+  private getData(): Observable<[TrackTableItem[], Artifact]> {
     if (this.artifactId) {
       return forkJoin([
           this.getTable(this.artifactId),
@@ -129,7 +129,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
         })
       )
     } else {
-      return forkJoin([of([]), of({} as ArtifactEditItem)])
+      return forkJoin([of([]), of({} as Artifact)])
     }
   }
 
@@ -164,7 +164,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
   }
 
 
-  private getArtifact(id: number): Observable<ArtifactEditItem> {
+  private getArtifact(id: number): Observable<Artifact> {
     return this.artifactService.get(id).pipe(
       catchError(err => {
         this.errorObject = err;
@@ -173,12 +173,12 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
           summary: 'Error',
           detail: `Error reading artifact`
         });
-        return of({} as ArtifactEditItem);
+        return of({} as Artifact);
       }),
       tap(v => {
-        console.log(`Got artistTypeCode: ${v.artistTypeCode}, artifactTypeId: ${v.artifactTypeId}`);
-        this.artistTypeCode = v.artistTypeCode;
-        this.artifactTypeId = v.artifactTypeId;
+        console.log(`Got artistTypeCode: ${v.artist?.artistType}, artifactTypeId: ${v.artifactType?.id}`);
+        this.artistTypeCode = v.artist?.artistType as string;
+        this.artifactTypeId = v.artifactType?.id as number;
         this.isArtifactTypeMusic = isArtifactTypeMusic(this.artifactTypeId);
         this.isArtifactTypeVideo = isArtifactTypeVideo(this.artifactTypeId);
       })

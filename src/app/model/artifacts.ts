@@ -1,31 +1,18 @@
 import {EditConfigItem, getConfigItem} from "./edit-config";
+import {IdName} from "./common";
+import {Artist} from "./artists";
 
-export interface ArtifactTableItem {
-  id: number;
-  artistTypeCode: string;
-  artifactTypeName: string;
-  artistName: string;
+export interface Artifact {
+  id?: number;
+  artifactType?: IdName;
+  artist?: Artist;
+  performerArtist?: Artist;
   title: string;
   year?: number;
   duration?: number;
   size?: number;
-  insertDateTime: Date;
+  insertDateTime?: Date;
 }
-
-export interface ArtifactEditItem {
-  id?: number;
-  artifactTypeId: number;
-  artistTypeCode: string;
-  artistId: number;
-  artistName: string;
-  performerArtistId: number;
-  performerArtistName: string;
-  title: string;
-  year?: number;
-  duration?: number;
-  size?: number
-}
-
 export const ARTIFACT_TYPE_MUSIC = 100;
 
 export const ARTIFACT_TYPE_VIDEO = 200;

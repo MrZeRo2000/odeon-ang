@@ -1,7 +1,7 @@
 export interface Artist {
   id?: number;
   artistName: string;
-  artistType: string;
+  artistType?: string;
   artistBiography?: string;
   genre?: string;
   isGenre?: boolean;

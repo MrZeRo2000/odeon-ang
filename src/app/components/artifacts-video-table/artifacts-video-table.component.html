@@ -75,7 +75,7 @@
       <ng-template pTemplate="body" let-item>
         <tr [pSelectableRow]="item">
           <td>{{item.id}}</td>
-          <td *ngIf="filterData.artifactType == ARTIFACT_VIDEO_TYPE_MUSIC">{{item.artistName}}</td>
+          <td *ngIf="filterData.artifactType == ARTIFACT_VIDEO_TYPE_MUSIC">{{item.artist?.artistName}}</td>
           <td>{{item.title}}</td>
           <td *ngIf="filterData.artifactType == ARTIFACT_VIDEO_TYPE_MUSIC">{{item.year}}</td>
           <td>

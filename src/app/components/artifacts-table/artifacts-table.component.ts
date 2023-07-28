@@ -1,12 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ArtifactService} from "../../service/artifact.service";
 import {UntypedFormBuilder} from "@angular/forms";
 import {ARTIST_TYPES} from "../../model/artists";
 import {
   ARTIFACT_MUSIC_TYPE_MP3,
   ARTIFACT_MUSIC_TYPES,
-  ArtifactEditItem,
-  ArtifactTableItem
+  Artifact
 } from "../../model/artifacts";
 import {
   catchError,
@@ -26,7 +25,6 @@ import {ArtistService} from "../../service/artist.service";
 import {Router} from "@angular/router";
 import {BaseTableComponent} from "../base/base-table.component";
 import {IdName} from "../../model/common";
-import {Table} from "primeng/table";
 import {SelectItem} from "primeng/api/selectitem";
 
 interface FilterControlsConfig
@@ -40,7 +38,7 @@ interface FilterControlsConfig
   templateUrl: './artifacts-table.component.html',
   styleUrls: ['./artifacts-table.component.scss']
 })
-export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableItem, [IdName[], ArtifactEditItem]> implements OnInit {
+export class ArtifactsTableComponent extends BaseTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-table-filter-form";
 
   readonly ARTIST_TYPES =  ARTIST_TYPES;
@@ -57,7 +55,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
         summary: 'Error',
         detail: `Error reading artifacts`
       });
-      return of([]);
+      return of([] as Artifact[]);
     })
   );
 
@@ -84,7 +82,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
       )
     ),
     tap(v => {
-      this.filterArtists = [... new Set(v.map(v => {return v["artistName"] as string}))].sort().map(v => {return {label: v, value: v} as SelectItem});
+      this.filterArtists = [... new Set(v.map(v => {return v.artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem});
       console.log('End of filteredArtifacts')
       this.selectedItem = undefined;
     })
@@ -121,12 +119,12 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
     this.filterForm.setValue(this.filterForm.value);
   }
 
-  protected getEditData(item: ArtifactTableItem): Observable<CRUDResult<[IdName[], ArtifactEditItem]>> {
+  protected getEditData(item: Artifact): Observable<CRUDResult<[IdName[], Artifact]>> {
     return forkJoin([
       this.getArtists(),
-      iif(() => Object.keys(item).length === 0, of({artifactTypeId: ARTIFACT_MUSIC_TYPE_MP3} as ArtifactEditItem), this.getArtifact(item.id))
+      iif(() => Object.keys(item).length === 0, of({artifactType: {id: ARTIFACT_MUSIC_TYPE_MP3}} as Artifact), this.getArtifact(item.id as number))
     ]).pipe(
-      map(v => {return {success: true, data: v as [IdName[], ArtifactEditItem]}}),
+      map(v => {return {success: true, data: v as [IdName[], Artifact]}}),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});
       })
@@ -176,7 +174,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
     this.filterForm.setValue(this.filterForm.value);
   }
 
-  getArtifact(id: number): Observable<ArtifactEditItem> {
+  getArtifact(id: number): Observable<Artifact> {
     return this.artifactService.get(id).pipe(
       catchError(err => {
         this.messageService.add({
@@ -184,7 +182,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<ArtifactTableIte
           summary: 'Error',
           detail: `Error getting artifact details: ${err.error?.message || err.message}`
         });
-        return of({id: -1} as ArtifactEditItem);
+        return of({id: -1} as Artifact);
       })
     )
   }
