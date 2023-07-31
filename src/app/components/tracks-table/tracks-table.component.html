@@ -13,7 +13,7 @@
       <div class="flex">
         <div class="flex align-items-center justify-content-between text-xl mr-2">
           <div *ngIf="this.artifactId"><span class="text-primary">{{data[1] | artifactCaption}}</span>&nbsp;Tracks</div>
-          <div *ngIf="this.dvProductId">Product&nbsp;<span class="text-primary">{{data[0][0].dvProduct.title}}</span>&nbsp;Tracks</div>
+          <div *ngIf="this.dvProductId">Product&nbsp;<span class="text-primary">{{data[0][0].dvProduct?.title}}</span>&nbsp;Tracks</div>
         </div>
         <div class="flex align-self-end app-crud-panel-small" *ngIf="this.artifactId"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
       </div>
@@ -51,7 +51,7 @@
         <td style="text-align: right">{{item.bitRate}}</td>
         <td>
           <div class="flex flex-column text-sm">
-            <div *ngFor="let fileName of item.fileNames">{{fileName}}</div>
+            <div *ngFor="let mediaFile of item.mediaFiles">{{mediaFile.name}}</div>
           </div>
         </td>
         <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactTypeVideo">{{item.dvType.name}}</td>

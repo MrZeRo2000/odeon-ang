@@ -1,23 +1,27 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {getTrackConfig, TrackConfigItem, TrackEditItem} from "../../model/track";
+import {getTrackConfig, Track, TrackConfigItem} from "../../model/track";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {TrackService} from "../../service/track.service";
 import {BaseCrudFormComponent} from "../base/base-crud-form.component";
 import {IdName, IdTitle} from "../../model/common";
 import {
+  Artifact,
   isArtifactTypeMusic,
   isArtifactTypeVideo
 } from "../../model/artifacts";
-import {DV_TYPES} from "../../model/dvtype";
+import {DV_TYPES, DVType} from "../../model/dvtype";
 import {filterIdName, filterIdTitle} from "../../utils/search-utils";
+import {Artist} from "../../model/artists";
+import {DVProduct} from "../../model/dv-product";
+import {MediaFile} from "../../model/media-file";
 
 @Component({
   selector: 'app-track-form',
   templateUrl: './track-form.component.html',
   styleUrls: ['./track-form.component.scss'],
 })
-export class TrackFormComponent extends BaseCrudFormComponent<TrackEditItem> implements OnChanges, OnInit {
+export class TrackFormComponent extends BaseCrudFormComponent<Track> implements OnChanges, OnInit {
   DV_TYPES = DV_TYPES;
 
   @Input()
@@ -56,10 +60,11 @@ export class TrackFormComponent extends BaseCrudFormComponent<TrackEditItem> imp
   ngOnInit(): void {
     this.artifactTypeConfig = getTrackConfig(this.artifactTypeId as number, this.artistTypeCode)
     console.log(`TrackFormComponent: onInit: config: ${JSON.stringify(this.artifactTypeConfig)}`);
+    console.log(`TrackFormComponent: onInit: editItem: ${JSON.stringify(this.editItem)}`);
 
     this.editForm = this.fb.group({
-      artistId: this.editItem?.artistId? {id: this.editItem.artistId, name: this.editItem.artistName} : '',
-      performerArtistId: this.editItem?.performerArtistId? {id: this.editItem.performerArtistId, name: this.editItem.performerArtistName} : '',
+      artistId: this.editItem?.artist?.id ? {id: this.editItem.artist?.id, name: this.editItem.artist?.artistName} : '',
+      performerArtistId: this.editItem?.performerArtist?.id ? {id: this.editItem.performerArtist?.id, name: this.editItem.performerArtist?.artistName} : '',
       dvTypeId: ['', this.artifactTypeConfig?.hasDvType? Validators.required : null],
       title: ['', Validators.required],
       duration: [''],
@@ -71,74 +76,25 @@ export class TrackFormComponent extends BaseCrudFormComponent<TrackEditItem> imp
 
     // common values without defaults
     this.editForm.setValue({
-      "artistId": this.editItem?.artistId? {id: this.editItem.artistId, name: this.editItem.artistName} : '',
-      "performerArtistId": this.editItem?.performerArtistId? {id: this.editItem.performerArtistId, name: this.editItem.performerArtistName} : '',
+      "artistId": this.editItem?.artist?.id? {id: this.editItem.artist?.id, name: this.editItem.artist?.artistName} : '',
+      "performerArtistId": this.editItem?.performerArtist?.id? {id: this.editItem.performerArtist?.id, name: this.editItem.performerArtist?.artistName} : '',
       "dvTypeId": '',
       "title": this.editItem?.title?? '',
       "duration": this.editItem?.duration?? '',
       "diskNum": '',
       "num": this.editItem?.num?? '1',
-      "mediaFileIds": this.editItem?.mediaFileIds?? [],
-      "dvProductId": this.editItem?.dvProductId? {id: this.editItem.dvProductId, title: this.editItem.dvProductTitle} : '',
+      "mediaFileIds": this.editItem?.mediaFiles?.map(m => {return m.id})?? [],
+      "dvProductId": this.editItem?.dvProduct?.id? {id: this.editItem.dvProduct?.id, title: this.editItem.dvProduct?.title} : '',
     });
 
     // default values
     if (this.artifactTypeConfig?.hasDiskNum) {
-      this.editForm.patchValue({"diskNum": this.editItem?.diskNum?? '1'});
+      this.editForm.patchValue({"diskNum": this.editItem?.diskNum?? 1});
     }
 
     if (this.artifactTypeConfig?.hasDvType) {
-      this.editForm.patchValue({"dvTypeId": this.editItem?.dvTypeId?? 8});
+      this.editForm.patchValue({"dvTypeId": this.editItem?.dvType?.id?? 8});
     }
-
-    /*
-
-    if (this.isArtifactTypeMusic) {
-      console.log('isArtifactTypeMusic');
-      this.editForm = this.fb.group({
-        diskNum: ['', Validators.required],
-        num: ['1', Validators.required],
-        artistId: [''],
-        performerArtistId: [''],
-        title: ['', Validators.required],
-        duration: [''],
-        mediaFileIds: [[]]
-      });
-
-      this.editForm.setValue({
-        "diskNum": this.editItem?.diskNum?? '1',
-        "num": this.editItem?.num?? '1',
-        "artistId": this.editItem?.artistId? {id: this.editItem.artistId, name: this.editItem.artistName} : '',
-        "performerArtistId": this.editItem?.performerArtistId? {id: this.editItem.performerArtistId, name: this.editItem.performerArtistName} : '',
-        "title": this.editItem?.title?? '',
-        "duration": this.editItem?.duration?? '',
-        "mediaFileIds": this.editItem?.mediaFileIds?? [],
-      });
-
-    } else if (this.isArtifactTypeVideo) {
-      console.log('isArtifactTypeVideo');
-      this.editForm = this.fb.group({
-        num: ['1', Validators.required],
-        artistId: [''],
-        dvTypeId: ['', Validators.required],
-        title: ['', Validators.required],
-        duration: [''],
-        mediaFileIds: [[]],
-        dvProductId: ['']
-      });
-
-      this.editForm.setValue({
-        "num": this.editItem?.num?? '1',
-        "artistId": this.editItem?.artistId? {id: this.editItem.artistId, name: this.editItem.artistName} : '',
-        "dvTypeId": this.editItem?.dvTypeId?? 8,
-        "title": this.editItem?.title?? '',
-        "duration": this.editItem?.duration?? '',
-        "mediaFileIds": this.editItem?.mediaFileIds?? [],
-        "dvProductId": this.editItem?.dvProductId? {id: this.editItem.dvProductId, title: this.editItem.dvProductTitle} : '',
-      });
-    }
-
-     */
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -146,18 +102,6 @@ export class TrackFormComponent extends BaseCrudFormComponent<TrackEditItem> imp
       if (propName == 'editItem') {
         const trackProp = changes[propName];
         console.log(`changed track ${JSON.stringify(trackProp.currentValue)}`);
-/*
-        this.editForm.setValue({
-          "diskNum": trackProp.currentValue.diskNum?? '1',
-          "num": trackProp.currentValue.num?? '1',
-          "artistId": trackProp.currentValue.artistId? {id: trackProp.currentValue.artistId, name: trackProp.currentValue.artistName} : '',
-          "performerArtistId": trackProp.currentValue.performerArtistId? {id: trackProp.currentValue.performerArtistId, name: trackProp.currentValue.performerArtistName} : '',
-          "title": trackProp.currentValue.title?? '',
-          "duration": trackProp.currentValue.duration?? '',
-          "mediaFileIds": trackProp.currentValue.mediaFileIds?? []
-        })
-
- */
       } else if (propName === 'artifactTypeId') {
         const artifactTypeIdProp = changes[propName];
         console.log(`changed artifactTypeId ${JSON.stringify(artifactTypeIdProp.currentValue)}`);
@@ -172,23 +116,21 @@ export class TrackFormComponent extends BaseCrudFormComponent<TrackEditItem> imp
     return this.editForm.valid;
   }
 
-  override createSavedItem(): TrackEditItem {
+  override createSavedItem(): Track {
     console.log(`createSavedItem: dvProductId: ${JSON.stringify(this.editForm.value.dvProductId)}`)
     return {
       id: this.editItem?.id,
-      artifactId: this.editItem?.artifactId,
+      artifact: this.editItem?.artifact as Artifact,
       diskNum: this.editForm.value.diskNum,
       num: this.editForm.value.num,
-      artistId: this.editForm.value.artistId?.id,
-      artistName: this.editForm.value.artistId?.name,
-      performerArtistId: this.editForm.value.performerArtistId?.id,
-      performerArtistName: this.editForm.value.performerArtistId?.name,
-      dvTypeId: this.editForm.value.dvTypeId,
+      artist: {id: this.editForm.value.artistId?.id, artistName: this.editForm.value.artistId?.name} as Artist,
+      performerArtist: {id: this.editForm.value.performerArtistId?.id, artistName: this.editForm.value.performerArtistId?.name} as Artist,
+      dvType: this.editForm.value.dvTypeId ? {id: this.editForm.value.dvTypeId} as DVType : null,
       title: this.editForm.value.title,
       duration: this.editForm.value.duration,
-      mediaFileIds: this.editForm.value.mediaFileIds,
-      dvProductId: this.editForm.value.dvProductId?.id
-    } as TrackEditItem
+      mediaFiles: this.editForm.value.mediaFileIds.map((v: number) => {return {id: v} as MediaFile}),
+      dvProduct: {id: this.editForm.value.dvProductId?.id} as DVProduct
+    } as Track
   }
 
   searchArtists(event: any): void {

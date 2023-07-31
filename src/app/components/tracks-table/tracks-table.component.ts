@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {catchError, forkJoin, iif, map, Observable, of, switchMap, take, tap} from "rxjs";
-import {TrackEditItem, TrackTableItem} from "../../model/track";
+import {Track} from "../../model/track";
 import {TrackService} from "../../service/track.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {
@@ -24,7 +24,7 @@ import {DVProductService} from "../../service/dvproduct.service";
   templateUrl: './tracks-table.component.html',
   styleUrls: ['./tracks-table.component.scss']
 })
-export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [TrackEditItem, IdName[], IdName[], IdTitle[]]> implements OnInit {
+export class TracksTableComponent extends BaseTableComponent<Track, [Track, IdName[], IdName[], IdTitle[]]> implements OnInit {
   artifactId?: number;
   dvProductId?: number;
 
@@ -35,7 +35,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
 
   dataSize = 0;
 
-  data$?: Observable<[TrackTableItem[], Artifact]>;
+  data$?: Observable<[Track[], Artifact]>;
 
   deleteAction = this.deleteSubject.asObservable().pipe(
     switchMap(v =>
@@ -84,11 +84,11 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
     }
   }
 
-  protected getEditData(item: TrackTableItem): Observable<CRUDResult<[TrackEditItem, IdName[], IdName[], IdTitle[]]>> {
+  protected getEditData(item: Track): Observable<CRUDResult<[Track, IdName[], IdName[], IdTitle[]]>> {
     return forkJoin([
       iif(() => !!item.id,
-        this.trackService.get(item.id),
-        of({artifactId: this.artifactId, num: this.dataSize + 1})
+        this.trackService.get(item.id as number),
+        of({artifact: {id: this.artifactId} as Artifact, num: this.dataSize + 1} as Track)
       ),
       this.mediaFileService.getIdNameTable(this.artifactId as number),
       this.artistService.getIdNameTable(this.artistTypeCode as string),
@@ -97,7 +97,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
         of([])
         ),
     ]).pipe(
-      map(v => {return {success: true, data: v as [TrackEditItem, IdName[], IdName[], IdTitle[]]}}),
+      map(v => {return {success: true, data: v as [Track, IdName[], IdName[], IdTitle[]]}}),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});
       })
@@ -111,7 +111,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
     this.loadData();
   }
 
-  private getData(): Observable<[TrackTableItem[], Artifact]> {
+  private getData(): Observable<[Track[], Artifact]> {
     if (this.artifactId) {
       return forkJoin([
           this.getTable(this.artifactId),
@@ -123,7 +123,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
         switchMap(v => {
           return forkJoin([
             of(v),
-            this.getArtifact(v[0].artifactId as number)
+            this.getArtifact(v[0].artifact.id as number)
             ]
           )
         })
@@ -133,7 +133,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
     }
   }
 
-  private getTable(id: number): Observable<Array<TrackTableItem>> {
+  private getTable(id: number): Observable<Array<Track>> {
     return this.trackService.getTable(id).pipe(
       tap(v => this.dataSize = v.length),
       catchError(err => {
@@ -148,7 +148,7 @@ export class TracksTableComponent extends BaseTableComponent<TrackTableItem, [Tr
     )
   }
 
-  private getTableByProductId(dvProductId: number): Observable<Array<TrackTableItem>> {
+  private getTableByProductId(dvProductId: number): Observable<Array<Track>> {
     return this.trackService.getTableByProductId(dvProductId).pipe(
       tap(v => this.dataSize = v.length),
       catchError(err => {

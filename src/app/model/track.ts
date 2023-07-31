@@ -1,42 +1,24 @@
 import {EditConfigItem, getConfigItem} from "./edit-config";
-import {IdName} from "./common";
 import {Artist} from "./artists";
 import {DVProduct} from "./dv-product";
+import {Artifact} from "./artifacts";
+import {DVType} from "./dvtype";
+import {MediaFile} from "./media-file";
 
-export interface TrackTableItem {
-  id: number;
-  artifactId?: number;
-  artifactTitle?: string;
-  diskNum: number;
-  num: number;
+export interface Track {
+  id?: number;
+  artifact: Artifact;
   artist?: Artist;
-  performerArtistId?: Artist;
-  performerArtistName?: string;
-  dvType?: IdName;
+  performerArtist?: Artist;
+  dvType?: DVType;
   title: string;
   duration?: number;
+  diskNum?: number;
+  num: number;
   size?: number;
   bitRate?: number;
-  fileNames?: Array<string>;
-  dvProduct: DVProduct;
-}
-
-export interface TrackEditItem {
-  id?: number;
-  artifactId: number;
-  diskNum: number;
-  num: number;
-  artistId?: number;
-  artistName?: string;
-  performerArtistId?: number;
-  performerArtistName?: string;
-  dvTypeId?: number;
-  dvTypeName?: string;
-  title: string;
-  duration?: number;
-  mediaFileIds: number[];
-  dvProductId?: number;
-  dvProductTitle?: string;
+  mediaFiles: MediaFile[];
+  dvProduct?: DVProduct;
 }
 
 export interface TrackConfigItem extends EditConfigItem {

@@ -1,13 +1,4 @@
-export interface MediaFileTableItem {
-  id: number,
-  name: string,
-  format: string,
-  size: number,
-  bitrate: number,
-  duration: number
-}
-
-export interface MediaFileEditItem {
+export interface MediaFile {
   id?: number,
   artifactId: number,
   name: string,

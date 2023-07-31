@@ -1,6 +1,6 @@
 import {Component, OnChanges, SimpleChanges} from '@angular/core';
 import {BaseCrudFormComponent} from "../base/base-crud-form.component";
-import {MediaFileEditItem} from "../../model/media-file";
+import {MediaFile} from "../../model/media-file";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {MediaFileService} from "../../service/media-file.service";
@@ -10,7 +10,7 @@ import {MediaFileService} from "../../service/media-file.service";
   templateUrl: './media-file-form.component.html',
   styleUrls: ['./media-file-form.component.scss']
 })
-export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFileEditItem> implements OnChanges {
+export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> implements OnChanges {
 
   editForm = this.fb.group({
     name: ['', Validators.required],
@@ -44,7 +44,7 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFileEditI
     }
   }
 
-  override createSavedItem(): MediaFileEditItem {
+  override createSavedItem(): MediaFile {
     return {
       id: this.editItem?.id,
       artifactId: this.editItem?.artifactId,
@@ -53,7 +53,7 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFileEditI
       size: this.editForm.value.size,
       bitrate: this.editForm.value.bitrate,
       duration: this.editForm.value.duration
-    } as MediaFileEditItem
+    } as MediaFile
   }
 
   override validate(): boolean {

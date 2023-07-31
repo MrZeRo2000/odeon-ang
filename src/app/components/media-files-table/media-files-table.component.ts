@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BaseTableComponent} from "../base/base-table.component";
-import {MediaFileEditItem, MediaFileTableItem} from "../../model/media-file";
+import {MediaFile} from "../../model/media-file";
 import {CRUDResult} from "../../model/crud";
 import {ActivatedRoute} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -14,10 +14,10 @@ import {ArtifactService} from "../../service/artifact.service";
   templateUrl: './media-files-table.component.html',
   styleUrls: ['./media-files-table.component.scss']
 })
-export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableItem, MediaFileEditItem> implements OnInit {
+export class MediaFilesTableComponent extends BaseTableComponent<MediaFile, MediaFile> implements OnInit {
   private artifactId?: number;
 
-  data$?: Observable<[MediaFileTableItem[], Artifact]>;
+  data$?: Observable<[MediaFile[], Artifact]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,10 +44,10 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
     }
   }
 
-  protected getEditData(item: MediaFileTableItem): Observable<CRUDResult<MediaFileEditItem>> {
+  protected getEditData(item: MediaFile): Observable<CRUDResult<MediaFile>> {
     return iif(() => !!item.id,
-      this.get(item.id),
-      of({success: true, data: {artifactId: this.artifactId} as MediaFileEditItem} as CRUDResult<MediaFileEditItem>))
+      this.get(item.id as number),
+      of({success: true, data: {artifactId: this.artifactId} as MediaFile} as CRUDResult<MediaFile>))
 
   }
 
@@ -57,7 +57,7 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
     this.loadData();
   }
 
-  private getData(): Observable<[MediaFileTableItem[], Artifact]> {
+  private getData(): Observable<[MediaFile[], Artifact]> {
     return forkJoin([
         this.getTable(this.artifactId as number),
         this.getArtifact(this.artifactId as number)
@@ -65,7 +65,7 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFileTableI
     )
   }
 
-  private getTable(id: number): Observable<MediaFileTableItem[]> {
+  private getTable(id: number): Observable<MediaFile[]> {
     return this.mediaFileService.getTable(id).pipe(
       catchError(err => {
         this.errorObject = err;
