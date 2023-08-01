@@ -125,7 +125,7 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
       num: this.editForm.value.num,
       artist: {id: this.editForm.value.artistId?.id, artistName: this.editForm.value.artistId?.name} as Artist,
       performerArtist: {id: this.editForm.value.performerArtistId?.id, artistName: this.editForm.value.performerArtistId?.name} as Artist,
-      dvType: this.editForm.value.dvTypeId ? {id: this.editForm.value.dvTypeId} as DVType : null,
+      dvType: this.editForm.value.dvTypeId ? {id: this.editForm.value.dvTypeId} as DVType : {},
       title: this.editForm.value.title,
       duration: this.editForm.value.duration,
       mediaFiles: this.editForm.value.mediaFileIds.map((v: number) => {return {id: v} as MediaFile}),
