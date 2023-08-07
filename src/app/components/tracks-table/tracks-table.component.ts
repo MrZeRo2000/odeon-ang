@@ -18,13 +18,14 @@ import {MediaFileService} from "../../service/media-file.service";
 import {IdName, IdTitle} from "../../model/common";
 import {ArtistService} from "../../service/artist.service";
 import {DVProductService} from "../../service/dvproduct.service";
+import {MediaFile} from "../../model/media-file";
 
 @Component({
   selector: 'app-tracks-table',
   templateUrl: './tracks-table.component.html',
   styleUrls: ['./tracks-table.component.scss']
 })
-export class TracksTableComponent extends BaseTableComponent<Track, [Track, IdName[], IdName[], IdTitle[]]> implements OnInit {
+export class TracksTableComponent extends BaseTableComponent<Track, [Track, MediaFile[], IdName[], IdTitle[]]> implements OnInit {
   artifactId?: number;
   dvProductId?: number;
 
@@ -84,20 +85,20 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, IdNa
     }
   }
 
-  protected getEditData(item: Track): Observable<CRUDResult<[Track, IdName[], IdName[], IdTitle[]]>> {
+  protected getEditData(item: Track): Observable<CRUDResult<[Track, MediaFile[], IdName[], IdTitle[]]>> {
     return forkJoin([
       iif(() => !!item.id,
         this.trackService.get(item.id as number),
         of({artifact: {id: this.artifactId} as Artifact, num: this.dataSize + 1} as Track)
       ),
-      this.mediaFileService.getIdNameTable(this.artifactId as number),
+      this.mediaFileService.getIdNameDurationTable(this.artifactId as number),
       this.artistService.getIdNameTable(this.artistTypeCode as string),
       iif (() => isArtifactTypeVideoWithProducts(this.artifactTypeId as number),
         this.dvProductService.getIdTitleTable(this.artifactTypeId as number).pipe(take(1)),
         of([])
         ),
     ]).pipe(
-      map(v => {return {success: true, data: v as [Track, IdName[], IdName[], IdTitle[]]}}),
+      map(v => {return {success: true, data: v as [Track, MediaFile[], IdName[], IdTitle[]]}}),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});
       })

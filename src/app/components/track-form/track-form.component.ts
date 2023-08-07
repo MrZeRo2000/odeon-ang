@@ -15,6 +15,7 @@ import {filterIdName, filterIdTitle} from "../../utils/search-utils";
 import {Artist} from "../../model/artists";
 import {DVProduct} from "../../model/dv-product";
 import {MediaFile} from "../../model/media-file";
+import {Observable, tap} from "rxjs";
 
 @Component({
   selector: 'app-track-form',
@@ -25,7 +26,7 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
   DV_TYPES = DV_TYPES;
 
   @Input()
-  mediaFileTable: IdName[] = [];
+  mediaFileTable: MediaFile[] = [];
 
   @Input()
   artistsTable: IdName[] = [];
@@ -48,6 +49,10 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
   filteredDvProducts: Array<IdTitle> = [];
 
   editForm: FormGroup = this.fb.group({});
+
+  editFormData$: Observable<any> = this.editForm.valueChanges;
+
+  editMediaFileIds: Array<number> = [];
 
   constructor(
     private fb: FormBuilder,
@@ -95,6 +100,26 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
     if (this.artifactTypeConfig?.hasDvType) {
       this.editForm.patchValue({"dvTypeId": this.editItem?.dvType?.id?? 8});
     }
+
+    this.editMediaFileIds = this.editForm.value.mediaFileIds;
+
+    this.editFormData$ = this.editForm.valueChanges.pipe(
+      tap(v => {
+        if (this.editMediaFileIds !== v["mediaFileIds"]) {
+          const mediaFileDuration = this.mediaFileTable
+            .filter(m => v["mediaFileIds"].indexOf(m.id) !== -1)
+            .map(m => m.duration)
+            .reduce((m, a) => m + a, 0);
+          if ((mediaFileDuration > 0) && (mediaFileDuration !== this.editForm.value.duration)) {
+            setTimeout(() => {
+              this.editForm.patchValue({"duration": mediaFileDuration})
+            }, 0)
+          }
+
+          this.editMediaFileIds = v["mediaFileIds"]
+        }
+      })
+    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
