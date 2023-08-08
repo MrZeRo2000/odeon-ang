@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" styleClass="p-fluid" header="Product Edit">
+<p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" styleClass="p-fluid" [header]="'Product ' + (this.formReadOnly ? 'View' : 'Edit')">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <div class="grid">
@@ -93,7 +93,7 @@
     *ngIf="!!editForm.value.description"
     [(display)]="displayDescription"
     header="Description"
-    [htmlText]="editForm.value.description">
+    [htmlText]="String(editForm.value.description)">
   </app-text-view-dialog>
 
 

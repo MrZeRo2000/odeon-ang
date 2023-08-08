@@ -12,7 +12,6 @@ import {filterString} from "../../utils/search-utils";
   styleUrls: ['./dvproduct-form.component.scss']
 })
 export class DVProductFormComponent extends BaseCrudFormComponent<DVProduct> implements OnInit {
-
   @Input()
   dvOrigins: Array<DVOrigin> = [];
 
@@ -56,6 +55,10 @@ export class DVProductFormComponent extends BaseCrudFormComponent<DVProduct> imp
       notes: this.editItem?.notes?? '',
       dvCategories: this.editItem?.dvCategories?? [],
     })
+
+    if (this.formReadOnly) {
+      this.editForm.disable();
+    }
   }
 
   override validate(): boolean {
@@ -87,4 +90,5 @@ export class DVProductFormComponent extends BaseCrudFormComponent<DVProduct> imp
     }
   }
 
+  protected readonly String = String;
 }
