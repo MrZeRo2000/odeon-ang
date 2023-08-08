@@ -9,6 +9,9 @@ import {BaseFormComponent} from "./base-form.component";
 })
 export abstract class BaseCrudFormComponent<T extends { id?: number}> extends BaseFormComponent {
   @Input()
+  public formReadOnly = false
+
+  @Input()
   public editItem?: T;
 
   @Output()

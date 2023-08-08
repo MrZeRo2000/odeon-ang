@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {catchError, forkJoin, iif, map, Observable, of, switchMap, take, tap} from "rxjs";
+import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, take, tap} from "rxjs";
 import {Track} from "../../model/track";
 import {TrackService} from "../../service/track.service";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -19,6 +19,7 @@ import {IdName, IdTitle} from "../../model/common";
 import {ArtistService} from "../../service/artist.service";
 import {DVProductService} from "../../service/dvproduct.service";
 import {MediaFile} from "../../model/media-file";
+import {DVProduct} from "../../model/dv-product";
 
 @Component({
   selector: 'app-tracks-table',
@@ -54,6 +55,26 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
       }
     })
   );
+
+  displayProductForm = false;
+
+  showProductAction: Subject<number> = new Subject();
+
+  product$ = this.showProductAction.asObservable().pipe(
+    switchMap(v => {
+      return this.dvProductService.get(v).pipe(
+        catchError(err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Error getting product details: ${err.error?.message || err.message}`
+          })
+          return of({} as DVProduct);
+        }),
+        tap(v => {this.displayProductForm = !!v.id;})
+      )
+    })
+  )
 
   constructor(
     private route: ActivatedRoute,
@@ -185,8 +206,14 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
       })
     )
   }
+
   override savedEditData(event: any) {
     super.savedEditData(event);
     this.data$ = this.getData();
+  }
+
+  displayProduct(item: Track) {
+    console.log(`Display product: ${JSON.stringify(item)}`)
+    this.showProductAction.next(item.dvProduct?.id as number);
   }
 }

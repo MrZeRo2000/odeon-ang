@@ -32,6 +32,7 @@
         <th style="width:0">Size</th>
         <th style="width:0">Bitrate</th>
         <th style="width:30%">File name</th>
+        <th style="width:0" *ngIf="isArtifactTypeVideo">Product</th>
         <th style="width:0; white-space: nowrap" *ngIf="isArtifactTypeVideo">Video Type</th>
         <th style="width:0" *ngIf="this.artifactId"></th>
       </tr>
@@ -54,6 +55,11 @@
             <div *ngFor="let mediaFile of item.mediaFiles">{{mediaFile.name}}</div>
           </div>
         </td>
+        <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactTypeVideo">
+          <div class="flex justify-content-center app-crud-panel-small" *ngIf="item.dvProduct">
+            <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayProduct(item)"></button>
+          </div>
+        </td>
         <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactTypeVideo">{{item.dvType.name}}</td>
         <td *ngIf="this.artifactId">
           <div class="app-crud-panel-small">
@@ -69,6 +75,18 @@
 
   <ng-container *ngIf="editAction$ | async as editData">
     <app-track-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editData[0]" [mediaFileTable]="editData[1]" [artistsTable]="editData[2]" [dvProductsTable]="editData[3]" [artistTypeCode]="artistTypeCode" [artifactTypeId]="artifactTypeId" (onSavedItem)="savedEditData($event)"></app-track-form>
+  </ng-container>
+
+  <ng-container *ngIf="product$ | async as editItem">
+    <app-dvproduct-form
+      *ngIf="displayProductForm"
+      [(display)]="displayProductForm"
+      [editItem]="editItem"
+      [dvOrigins]="[editItem.dvOrigin]"
+      [dvCategories]="editItem.dvCategories"
+      [formReadOnly]="true"
+    >
+    </app-dvproduct-form>
   </ng-container>
 
 </div>
