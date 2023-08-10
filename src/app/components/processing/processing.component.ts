@@ -64,70 +64,100 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
       ]
     },
     {
-      label: "Validate",
+      label: "Classics",
       children: [
         {
-          label: "MP3",
-          data: ProcessorType.MP3_VALIDATOR,
-          leaf: true
-        },
-        {
-          label: "LA",
-          data: ProcessorType.LA_VALIDATOR,
-          leaf: true
-        },
-        {
-          label: "Classics",
+          label: "Validate",
           data: ProcessorType.CLASSICS_VALIDATOR,
           leaf: true
         },
-        {
-          label: "Video music",
-          data: ProcessorType.DV_MUSIC_VALIDATOR,
-          leaf: true
-        },
-        {
-          label: "Movies",
-          data: ProcessorType.DV_MOVIES_VALIDATOR,
-          leaf: true
-        }
       ]
     },
     {
-      label: "Load",
+      label: "Music",
       children: [
         {
-          label: "MP3",
+          label: "Load MP3",
           data: ProcessorType.MP3_LOADER,
           leaf: true
         },
         {
-          label: "LA",
+          label: "Validate MP3",
+          data: ProcessorType.MP3_VALIDATOR,
+          leaf: true
+        },
+        {
+          label: "Load LA",
           data: ProcessorType.LA_LOADER,
           leaf: true
         },
         {
-          label: "Video Music",
-          data: ProcessorType.DV_MUSIC_LOADER,
+          label: "Validate LA",
+          data: ProcessorType.LA_VALIDATOR,
           leaf: true
         },
+      ]
+    },
+    {
+      label: "Movies",
+      children: [
         {
-          label: "Video Music Media",
-          data: ProcessorType.DV_MUSIC_MEDIA_LOADER,
-          leaf: true
-        },
-        {
-          label: "Movies",
+          label: "Load",
           data: ProcessorType.DV_MOVIES_LOADER,
           leaf: true
         },
         {
-          label: "Movies Media",
+          label: "Validate",
+          data: ProcessorType.DV_MOVIES_VALIDATOR,
+          leaf: true
+        },
+        {
+          label: "Load Media",
           data: ProcessorType.DV_MOVIES_MEDIA_LOADER,
           leaf: true
-        }
+        },
       ]
-    }
+    },
+    {
+      label: "Video Music",
+      children: [
+        {
+          label: "Load",
+          data: ProcessorType.DV_MUSIC_LOADER,
+          leaf: true
+        },
+        {
+          label: "Validate",
+          data: ProcessorType.DV_MUSIC_VALIDATOR,
+          leaf: true
+        },
+        {
+          label: "Load Media",
+          data: ProcessorType.DV_MUSIC_MEDIA_LOADER,
+          leaf: true
+        },
+      ]
+    },
+    {
+      label: "Animation",
+      children: [
+        {
+          label: "Load",
+          data: ProcessorType.DV_ANIMATION_LOADER,
+          leaf: true
+        },
+        {
+          label: "Validate",
+          data: ProcessorType.DV_ANIMATION_VALIDATOR,
+          leaf: true
+        },
+        {
+          label: "Movies Media",
+          data: ProcessorType.DV_ANIMATION_MEDIA_LOADER,
+          leaf: true
+        },
+      ]
+    },
   ];
 
   private action = new Subject<ProcessorType | ProcessingAction | undefined>();
