@@ -152,7 +152,7 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
           leaf: true
         },
         {
-          label: "Movies Media",
+          label: "Load Media",
           data: ProcessorType.DV_ANIMATION_MEDIA_LOADER,
           leaf: true
         },
