@@ -103,7 +103,7 @@ export class ArtifactsTableComponent extends BaseTableComponent<Artifact, [IdNam
       confirmationService,
       artifactService,
       {
-        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.artistName} - ${event.data.title}(${event.data.year})</strong>?`",
+        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.artist.artistName} - ${event.data.title}(${event.data.year})</strong>?`",
         deleteErrorMessage: "`Error deleting artifact: ${v.data}`",
         editErrorMessage: "`Error getting artifact details: ${err.error?.message || err.message}`"
       }

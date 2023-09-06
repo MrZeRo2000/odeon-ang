@@ -20,7 +20,7 @@
            dataKey="id"
            stateStorage="session"
            stateKey="artifacts-table-session"
-           [globalFilterFields]="['artistName', 'performerArtistName', 'title']"
+           [globalFilterFields]="['artist.artistName', 'performerArtist.artistName', 'title']"
            (onFilter)="onFilter($event)"
            selectionMode="single"
            [(selection)]="selectedItem"
