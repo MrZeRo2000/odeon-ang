@@ -8,6 +8,11 @@ export interface IdTitle {
   title: string
 }
 
+export interface IdTitleOriginalTitle extends IdTitle {
+  originalTitle: string
+}
+
+
 export interface TextInterface {
   text: string
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, of, shareReplay, switchMap, tap} from "rxjs";
-import {IdTitle, TextInterface} from "../model/common";
+import {IdTitle, IdTitleOriginalTitle, TextInterface} from "../model/common";
 import {HttpParams} from "@angular/common/http";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {DVProduct} from "../model/dv-product";
@@ -13,6 +13,10 @@ export class DVProductService extends CRUDService<DVProduct> {
 
   private dvProductIdNameTable$: {
     [index: number]: Observable<Array<IdTitle>>
+  } = {};
+
+  private dvProductIdNameOriginalTitleTable$: {
+    [index: number]: Observable<Array<IdTitleOriginalTitle>>
   } = {};
 
   private dvProductTable$: {
@@ -42,6 +46,21 @@ export class DVProductService extends CRUDService<DVProduct> {
     }
 
     return this.dvProductIdNameTable$[artifactType];
+  }
+
+  getIdTitleOriginalTitleTable(artifactType: number): Observable<Array<IdTitleOriginalTitle>> {
+    if (!artifactType) {
+      return of([])
+    } else if (!this.dvProductIdNameOriginalTitleTable$[artifactType]) {
+      const params: HttpParams = new HttpParams().append("artifactTypeId", artifactType);
+      this.dvProductIdNameOriginalTitleTable$[artifactType] = this.refreshTable$.pipe(
+        tap(() => {console.log('Loading dvProduct idTitleOriginalTitleTable')}),
+        switchMap(() => this.restDataSource.getResponseData<Array<IdTitleOriginalTitle>>("dvproduct/dvproducts/table-id-title-original-title", params)),
+        shareReplay(1)
+      )
+    }
+
+    return this.dvProductIdNameOriginalTitleTable$[artifactType];
   }
 
   getTable(artifactType: number): Observable<Array<DVProduct>> {
