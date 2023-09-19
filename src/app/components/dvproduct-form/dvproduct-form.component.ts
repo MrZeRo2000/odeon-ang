@@ -3,8 +3,9 @@ import {BaseCrudFormComponent} from "../base/base-crud-form.component";
 import {DVCategory, DVOrigin, DVProduct} from "../../model/dv-product";
 import {MessageService} from "primeng/api";
 import {DVProductService} from "../../service/dvproduct.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {filterString} from "../../utils/search-utils";
+import {IdTitleOriginalTitle} from "../../model/common";
 
 @Component({
   selector: 'app-dvproduct-form',
@@ -21,10 +22,22 @@ export class DVProductFormComponent extends BaseCrudFormComponent<DVProduct> imp
   @Input()
   frontInfos: Array<string> = [];
 
+  @Input()
+  dvProductsTable: Array<IdTitleOriginalTitle> = [];
+
+  titles: Map<string, number> = new Map();
+  originalTitles: Map<string, number> = new Map();
+
   editForm: FormGroup = this.fb.group({
     dvOrigin: [{}, Validators.required],
-    title: ['', Validators.required],
-    originalTitle: [''],
+    title: [
+      '',
+      [Validators.required, this.uniqueValidator(() => this.titles)]
+    ],
+    originalTitle: [
+      '',
+      [Validators.compose([this.uniqueValidator(() => this.originalTitles)])]
+    ],
     year: [null, Validators.pattern("(1|2)[0-9]{3}")],
     frontInfo: [''],
     description: [''],
@@ -59,9 +72,28 @@ export class DVProductFormComponent extends BaseCrudFormComponent<DVProduct> imp
     if (this.formReadOnly) {
       this.editForm.disable();
     }
+
+    // maps
+    this.titles = new Map(this.dvProductsTable.map(v => {return [v.title, v.id]}));
+    this.originalTitles = new Map(this.dvProductsTable.map(v => {return [v.originalTitle, v.id]}));
+  }
+
+  uniqueValidator(mappingFn: (() => Map<string, number>)): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null;
+      }
+      const titleId = mappingFn().get(control.value);
+      if (titleId && (!this.editItem?.id || (!!this.editItem?.id && (titleId != this.editItem?.id)))) {
+        return {unique: {value: control.value}};
+      } else {
+        return null;
+      }
+    }
   }
 
   override validate(): boolean {
+    console.log(`Form errors: ${JSON.stringify(this.editForm.errors)}, form valid: ${this.editForm.valid}, error: ${this.editForm.getError('title')}`)
     return this.editForm.valid;
   }
 
@@ -91,4 +123,5 @@ export class DVProductFormComponent extends BaseCrudFormComponent<DVProduct> imp
   }
 
   protected readonly String = String;
+  protected readonly JSON = JSON;
 }

@@ -23,7 +23,7 @@ import {DVOriginService} from "../../service/dvorigin.service";
 import {DVCategoryService} from "../../service/dvcategory.service";
 import {ARTIFACT_EDIT_CONFIG, CodeName} from "../../model/artifacts";
 import {FormBuilder, Validators} from "@angular/forms";
-import {TextInterface} from "../../model/common";
+import {IdTitleOriginalTitle, TextInterface} from "../../model/common";
 import {Router} from "@angular/router";
 
 @Component({
@@ -32,7 +32,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./dvproducts-table.component.scss']
 })
 export class DVProductsTableComponent
-  extends BaseTableComponent<DVProduct, [DVProduct, Array<DVOrigin>, Array<DVCategory>]>
+  extends BaseTableComponent<DVProduct, [DVProduct, Array<DVOrigin>, Array<DVCategory>, Array<IdTitleOriginalTitle>]>
   implements OnInit {
 
   readonly ARTIFACT_TYPES = ARTIFACT_EDIT_CONFIG
@@ -175,7 +175,7 @@ export class DVProductsTableComponent
     )].sort();
   }
 
-  protected getEditData(item: DVProduct): Observable<CRUDResult<[DVProduct, Array<DVOrigin>, Array<DVCategory>]>> {
+  protected getEditData(item: DVProduct): Observable<CRUDResult<[DVProduct, Array<DVOrigin>, Array<DVCategory>, Array<IdTitleOriginalTitle>]>> {
     return forkJoin([
       iif(
         () => Object.keys(item).length === 0,
@@ -183,10 +183,11 @@ export class DVProductsTableComponent
         this.dvProductService.get(item.id as number)
         ),
       this.dvOriginService.table$.pipe(take(1)),
-      this.dvCategoryService.table$.pipe(take(1))
+      this.dvCategoryService.table$.pipe(take(1)),
+      this.dvProductService.getIdTitleOriginalTitleTable(this.filterForm.value.artifactTypeId as number).pipe(take(1)),
     ]).pipe(
       map(v => {
-        return {success: true, data: v as [DVProduct, Array<DVOrigin>, Array<DVCategory>]}
+        return {success: true, data: v as [DVProduct, Array<DVOrigin>, Array<DVCategory>, Array<IdTitleOriginalTitle>]}
       }),
       catchError(err => {
         return of({success: false, data: err.error?.message || err.message});

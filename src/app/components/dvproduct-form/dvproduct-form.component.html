@@ -19,6 +19,7 @@
           <div class="field">
             <label for="originalTitle">Original Title</label>
             <input type="text" pInputText id="originalTitle" formControlName="originalTitle"
+                   [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['originalTitle'].errors}"
             />
           </div>
 
@@ -78,7 +79,9 @@
       </div>
 
       <div>
-        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors ? 'visible' : 'hidden'}" >Name is required.</small>
+        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors?.['required'] ? 'visible' : 'hidden'}" >Title is required</small>
+        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors?.['unique'] ? 'visible' : 'hidden'}" >Title already exists</small>
+        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['originalTitle'].errors?.['unique'] ? 'visible' : 'hidden'}" >Original title already exists</small>
       </div>
     </form>
   </ng-template>
