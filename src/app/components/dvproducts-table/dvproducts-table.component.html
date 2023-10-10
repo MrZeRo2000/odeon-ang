@@ -72,7 +72,7 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th style="width:0">Id</th>
+        <th pSortableColumn="id" style="width:0; white-space: nowrap">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
         <th style="width:0">
           <div class="flex align-items-center">
             Origin
@@ -90,8 +90,8 @@
           </div>
         </th>
 
-        <th>Title</th>
-        <th>Original Title</th>
+        <th pSortableColumn="title" style="white-space: nowrap">Title&nbsp;<p-sortIcon field="title"></p-sortIcon></th>
+        <th pSortableColumn="originalTitle" style="white-space: nowrap">Original Title&nbsp;<p-sortIcon field="originalTitle"></p-sortIcon></th>
         <th>Front Info</th>
         <th style="width:15rem">
           <div class="flex align-items-center">
@@ -109,7 +109,12 @@
             </p-columnFilter>
           </div>
         </th>
-        <th style="width:0">Year</th>
+        <th style="width:0">
+          <div class="flex align-items-center">
+            Year
+            <p-columnFilter type="numeric" field="year" display="menu"></p-columnFilter>
+          </div>
+        </th>
         <th style="width:0">Notes</th>
         <th style="width:0">
           <div  class="flex flex-nowrap align-items-center justify-content-center">
