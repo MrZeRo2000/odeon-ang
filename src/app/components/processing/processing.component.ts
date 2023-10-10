@@ -164,6 +164,7 @@ export class ProcessingComponent extends BaseComponent implements OnInit, AfterV
 
   readonly PROGRESS_STATUS = ProcessingStatus[ProcessingStatus.IN_PROGRESS];
   readonly SUCCESS_STATUS = ProcessingStatus[ProcessingStatus.SUCCESS];
+  readonly FAILURE_STATUS = ProcessingStatus[ProcessingStatus.FAILURE];
 
   processInfo$ = this.action.asObservable().pipe(
     tap(v => {console.log(`value: ${JSON.stringify(v)}`)}),
