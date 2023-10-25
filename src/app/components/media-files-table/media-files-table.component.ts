@@ -8,6 +8,7 @@ import {catchError, forkJoin, iif, Observable, of} from "rxjs";
 import {MediaFileService} from "../../service/media-file.service";
 import {Artifact} from "../../model/artifacts";
 import {ArtifactService} from "../../service/artifact.service";
+import {sumByKey} from "../../utils/calc-utils";
 
 @Component({
   selector: 'app-media-files-table',
@@ -15,6 +16,8 @@ import {ArtifactService} from "../../service/artifact.service";
   styleUrls: ['./media-files-table.component.scss']
 })
 export class MediaFilesTableComponent extends BaseTableComponent<MediaFile, MediaFile> implements OnInit {
+  sumByKey = sumByKey
+
   private artifactId?: number;
 
   data$?: Observable<[MediaFile[], Artifact]>;
@@ -96,10 +99,6 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFile, Medi
   override savedEditData(event: any) {
     super.savedEditData(event);
     this.data$ = this.getData();
-  }
-
-  sumByKey(data: any, key: string): number {
-    return data.map((v: any) => v[key]).filter((v: number) => !isNaN(v)).reduce((a: number, b: number) => a + b, 0);
   }
 
 }
