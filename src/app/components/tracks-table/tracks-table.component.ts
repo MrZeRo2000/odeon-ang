@@ -20,6 +20,7 @@ import {ArtistService} from "../../service/artist.service";
 import {DVProductService} from "../../service/dvproduct.service";
 import {MediaFile} from "../../model/media-file";
 import {DVProduct} from "../../model/dv-product";
+import {sumByKey} from "../../utils/calc-utils";
 
 @Component({
   selector: 'app-tracks-table',
@@ -27,6 +28,8 @@ import {DVProduct} from "../../model/dv-product";
   styleUrls: ['./tracks-table.component.scss']
 })
 export class TracksTableComponent extends BaseTableComponent<Track, [Track, MediaFile[], IdName[], IdTitle[]]> implements OnInit {
+  sumByKey = sumByKey;
+
   artifactId?: number;
   dvProductId?: number;
 

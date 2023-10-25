@@ -48,6 +48,11 @@
         <th style="width:0; white-space: nowrap" *ngIf="isArtifactTypeVideo">Video Type</th>
         <th style="width:0" *ngIf="this.artifactId"></th>
       </tr>
+      <tr>
+        <th [colSpan]="1 + (this.dvProductId ? 1 : 0) + (isArtifactTypeMusic ? 1 : 0) + 2 + (data[1].artist?.artistType === 'C' ? 2 : 0)">Rows: {{dt.processedData.length}}</th>
+        <th>{{sumByKey(dt.processedData, 'duration')  * 1000 | date:'HH:mm:ss':'GMT'}}</th>
+        <th [colSpan]="3 + (isArtifactTypeVideo ? 2 : 0) + (this.artifactId ? 1 : 0)">{{sumByKey(dt.processedData, 'size') | fileSize}}</th>
+      </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-item>
