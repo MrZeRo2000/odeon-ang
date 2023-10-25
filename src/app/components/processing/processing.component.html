@@ -14,12 +14,14 @@
              [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : ''"
         >{{pi.processorType | processorTypeName}}</div>
         <div class="flex align-items-center flex-grow-1 mr-1">
-          <div *ngIf="pi.processingEvent && pi.processingStatus !== SUCCESS_STATUS" class="text-sm font-light text-primary">
+          <div *ngIf="pi.processingEvent && pi.processingStatus !== SUCCESS_STATUS" class="text-sm font-light ml-2"
+               [ngClass]="pi.processingStatus === FAILURE_STATUS ? 'text-white' : 'text-primary'"
+          >
             <div>
-              {{pi.processingEvent.lastUpdated | date:'dd.MM.YYYY HH:mm:ss'}}
+              {{pi.processingEvent?.lastUpdated | date:'dd.MM.YYYY HH:mm:ss'}}
             </div>
             <div class="text-overflow-ellipsis">
-              {{pi.processingEvent.eventText}}
+              {{pi.processingEvent?.eventText}}
             </div>
           </div>
         </div>
