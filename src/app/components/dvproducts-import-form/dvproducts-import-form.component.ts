@@ -10,7 +10,7 @@ import {
 } from "../../model/dv-product";
 import {filterString} from "../../utils/search-utils";
 import {catchError, iif, Observable, of, Subject, switchMap, tap} from "rxjs";
-import {DVProductImportService} from "../../service/dvproduct-import.service";
+import {UserImportService} from "../../service/user-import.service";
 import {MessageService} from "primeng/api";
 
 enum ImportAction {
@@ -60,13 +60,13 @@ export class DVProductsImportFormComponent extends BaseFormComponent implements 
     switchMap(v =>
       iif(
         () => v.action === ImportAction.ACTION_EXECUTE,
-        this.dvProductImportService.execute(v.data).pipe(
+        this.dvProductImportService.dvProductExecute(v.data).pipe(
           tap(() => this.onImport.next()),
           catchError(() => {
             this.messageService.add({severity:'error', summary:'Error', detail:`Error executing import`});
             return of(undefined);
           })),
-        this.dvProductImportService.analyze(v.data).pipe(
+        this.dvProductImportService.dvProductAnalyze(v.data).pipe(
           catchError(() => {
             this.messageService.add({severity:'error', summary:'Error', detail:`Error executing analysis`});
             return of(undefined);
@@ -79,7 +79,7 @@ export class DVProductsImportFormComponent extends BaseFormComponent implements 
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-    private dvProductImportService: DVProductImportService, ) {
+    private dvProductImportService: UserImportService, ) {
     super();
   }
 
