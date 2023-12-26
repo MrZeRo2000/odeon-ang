@@ -62,13 +62,13 @@ export class DVProductsImportFormComponent extends BaseFormComponent implements 
     switchMap(v =>
       iif(
         () => v.action === ImportAction.ACTION_EXECUTE,
-        this.dvProductImportService.dvProductExecute(v.data).pipe(
+        this.userImportService.dvProductExecute(v.data).pipe(
           tap(() => this.onImport.next()),
           catchError(() => {
             this.messageService.add({severity:'error', summary:'Error', detail:`Error executing import`});
             return of(undefined);
           })),
-        this.dvProductImportService.dvProductAnalyze(v.data).pipe(
+        this.userImportService.dvProductAnalyze(v.data).pipe(
           catchError(() => {
             this.messageService.add({severity:'error', summary:'Error', detail:`Error executing analysis`});
             return of(undefined);
@@ -81,7 +81,7 @@ export class DVProductsImportFormComponent extends BaseFormComponent implements 
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-    private dvProductImportService: UserImportService, ) {
+    private userImportService: UserImportService, ) {
     super();
   }
 

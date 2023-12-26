@@ -117,6 +117,7 @@
     <app-tracks-import-form
       *ngIf="displayImportTracksForm"
       [(display)]="displayImportTracksForm"
+      [artifact]="data[1]"
       [mediaFiles]="importTracksData"
       (onImport)="onImport()"
     >
