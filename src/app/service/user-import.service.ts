@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
-import {DVProductUserImport, ImportStats} from "../model/dv-product";
+import {DVProductUserImport, ImportStats} from "../model/user-import";
 import {Observable} from "rxjs";
 
 @Injectable({

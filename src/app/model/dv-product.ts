@@ -26,21 +26,3 @@ export interface DVProduct {
   hasTracks?: boolean
 }
 
-export interface DVProductUserImportDetail {
-  title: string;
-  originalTitle?: string;
-  year?: number
-}
-
-export interface DVProductUserImport {
-  artifactTypeId: number;
-  dvOriginId: number;
-  dvProductDetails: Array<DVProductUserImportDetail>;
-  frontInfo?: string;
-  dvCategories: Array<DVCategory>
-}
-
-export interface ImportStats {
-  rowsInserted: Array<string>;
-  rowsUpdated: Array<string>;
-}

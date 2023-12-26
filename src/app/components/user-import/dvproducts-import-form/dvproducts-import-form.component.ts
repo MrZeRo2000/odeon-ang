@@ -1,16 +1,18 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BaseFormComponent} from "../base/base-form.component";
+import {BaseFormComponent} from "../../base/base-form.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {
   DVCategory,
-  DVOrigin,
+  DVOrigin
+} from "../../../model/dv-product";
+import {
   DVProductUserImport,
   DVProductUserImportDetail,
   ImportStats
-} from "../../model/dv-product";
-import {filterString} from "../../utils/search-utils";
+} from "../../../model/user-import";
+import {filterString} from "../../../utils/search-utils";
 import {catchError, iif, Observable, of, Subject, switchMap, tap} from "rxjs";
-import {UserImportService} from "../../service/user-import.service";
+import {UserImportService} from "../../../service/user-import.service";
 import {MessageService} from "primeng/api";
 
 enum ImportAction {

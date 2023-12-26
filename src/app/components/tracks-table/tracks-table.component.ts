@@ -79,6 +79,19 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
     })
   )
 
+  displayImportTracksForm = false;
+
+  private importTracksSubject: Subject<void> = new Subject();
+
+  importTracks$ = this.importTracksSubject.asObservable().pipe(
+    switchMap(() =>
+      this.mediaFileService.getIdNameDurationTable(this.artifactId as number)
+    ),
+    tap(() => {
+      this.displayImportTracksForm = true
+    })
+  );
+
   constructor(
     private route: ActivatedRoute,
     private decimalPipe: DecimalPipe,
@@ -107,6 +120,11 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
     if (this.artifactId || this.dvProductId) {
       this.data$ = this.getData();
     }
+  }
+
+  onImport(): void {
+    this.displayImportTracksForm = false;
+    this.loadData();
   }
 
   protected getEditData(item: Track): Observable<CRUDResult<[Track, MediaFile[], IdName[], IdTitle[]]>> {
@@ -218,5 +236,10 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
   displayProduct(item: Track) {
     console.log(`Display product: ${JSON.stringify(item)}`)
     this.showProductAction.next(item.dvProduct?.id as number);
+  }
+
+  showImportTracks(event: any): void {
+    event.preventDefault();
+    this.importTracksSubject.next();
   }
 }

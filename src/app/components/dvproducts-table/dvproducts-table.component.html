@@ -59,9 +59,10 @@
           <p-button
             icon="pi pi-file-import"
             styleClass="p-button-secondary p-button-text mr-2"
+            pTooltip="Import products"
+            tooltipPosition="left"
             (onClick)="showImportDVProducts($event)"
-          >
-          </p-button>
+          ></p-button>
           <span class="p-input-icon-left flex align-items-center">
             <i class="pi pi-search"></i>
             <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;" placeholder="Search keyword" />

@@ -23,6 +23,13 @@
         </div>
         <div class="flex align-items-center app-crud-panel-small" *ngIf="this.artifactId"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
         <div class="flex justify-content-end flex-grow-1">
+          <p-button
+            icon="pi pi-file-import"
+            styleClass="p-button-secondary p-button-text mr-2"
+            pTooltip="Import tracks"
+            tooltipPosition="left"
+            (onClick)="showImportTracks($event)"
+          ></p-button>
           <span class="p-input-icon-left flex align-items-center">
             <i class="pi pi-search"></i>
             <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;" placeholder="Search keyword" />
@@ -104,6 +111,16 @@
       [formReadOnly]="true"
     >
     </app-dvproduct-form>
+  </ng-container>
+
+  <ng-container *ngIf="importTracks$ | async as importTracksData">
+    <app-tracks-import-form
+      *ngIf="displayImportTracksForm"
+      [(display)]="displayImportTracksForm"
+      [mediaFiles]="importTracksData"
+      (onImport)="onImport()"
+    >
+    </app-tracks-import-form>
   </ng-container>
 
 </div>

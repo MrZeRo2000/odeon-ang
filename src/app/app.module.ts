@@ -67,11 +67,10 @@ import { DVProductFormComponent } from './components/dvproduct-form/dvproduct-fo
 import { TextViewDialogComponent } from './components/text-view-dialog/text-view-dialog.component';
 import {SliderModule} from "primeng/slider";
 import { DatabaseBackupComponent } from './components/database-backup/database-backup.component';
-import { DVProductsImportFormComponent } from './components/dvproducts-import-form/dvproducts-import-form.component';
 import {TabViewModule} from "primeng/tabview";
 import {KeyFilterModule} from "primeng/keyfilter";
 import {ListboxModule} from "primeng/listbox";
-import { DVProductsImportResultFormComponent } from './components/dvproducts-import-result-form/dvproducts-import-result-form.component';
+import {UserImportModule} from "./components/user-import/user-import.module";
 
 
 @NgModule({
@@ -109,8 +108,6 @@ import { DVProductsImportResultFormComponent } from './components/dvproducts-imp
     DVProductFormComponent,
     TextViewDialogComponent,
     DatabaseBackupComponent,
-    DVProductsImportFormComponent,
-    DVProductsImportResultFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -147,7 +144,8 @@ import { DVProductsImportResultFormComponent } from './components/dvproducts-imp
     SliderModule,
     TabViewModule,
     KeyFilterModule,
-    ListboxModule
+    ListboxModule,
+    UserImportModule
   ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]
