@@ -1,0 +1,5 @@
+<p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" styleClass="p-fluid" header="Import Tracks">
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Import" icon="pi pi-play" class="p-button-text" (click)="this.executeImport()"></button>
+  </ng-template>
+</p-dialog>
