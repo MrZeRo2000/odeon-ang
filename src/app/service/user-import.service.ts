@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
-import {DVProductUserImport, ImportStats} from "../model/user-import";
+import {DVProductUserImport, ImportStats, TrackUserImport} from "../model/user-import";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -16,6 +16,10 @@ export class UserImportService {
 
   dvProductExecute(data: DVProductUserImport): Observable<ImportStats> {
     return this.restDataSource.postResponseData<ImportStats>("user-import/dvproduct/execute", data);
+  }
+
+  tracksExecute(data: TrackUserImport): Observable<ImportStats> {
+    return this.restDataSource.postResponseData<ImportStats>("user-import/track/execute", data);
   }
 
 }

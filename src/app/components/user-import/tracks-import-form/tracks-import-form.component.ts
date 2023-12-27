@@ -6,7 +6,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {UserImportService} from "../../../service/user-import.service";
 import {Artifact} from "../../../model/artifacts";
-import {TrackUserImport} from "../../../model/user-import";
+import {ImportStats, TrackUserImport} from "../../../model/user-import";
+import {catchError, Observable, of, Subject, switchMap, tap} from "rxjs";
 
 @Component({
   selector: 'app-tracks-import-form',
@@ -34,6 +35,27 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
     chapters: ['', Validators.required],
   })
 
+  private importSubject: Subject<TrackUserImport> = new Subject()
+
+  import$: Observable<ImportStats | undefined> = this.importSubject.asObservable().pipe(
+    switchMap(v =>
+      this.userImportService.tracksExecute(v).pipe(
+        tap(r => {
+          this.messageService.add({severity:'success', summary:'Success', detail:`Imported ${r.rowsInserted.length} tracks`});
+          this.onImport.next()
+        }),
+        catchError(error => {
+          this.messageService.add({severity:'error', summary:'Error', detail:`Error executing import`});
+          const errorMessage = error.error?.message
+          if (errorMessage) {
+            this.messageService.add({severity:'error', summary:'Details', detail:errorMessage});
+          }
+          return of(undefined);
+        })
+      )
+    )
+  )
+
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
@@ -51,8 +73,6 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
     const titles = this.editForm.value.titles.split('\n').filter((v: any) => !!v);
     const chapters = this.editForm.value.chapters.split('\n').filter((v: any) => !!v);
 
-    console.log(`Form value: ${JSON.stringify(this.editForm.value)}`)
-
     return {
       artifact: this.artifact as Artifact,
       mediaFile: {id: this.editForm.value.mediaFile} as MediaFile,
@@ -66,8 +86,7 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
     this.submitted = true;
     if (this.editForm.valid) {
       console.log(`Form data: ${JSON.stringify(this.getFormData())}`)
-    } else {
-      console.error(`The form is invalid: ${JSON.stringify(this.editForm.errors)}`)
+      this.importSubject.next(this.getFormData())
     }
   }
 }

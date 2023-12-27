@@ -74,3 +74,6 @@
     <button pButton pRipple label="Import" icon="pi pi-play" class="p-button-text" (click)="this.executeImport()"></button>
   </ng-template>
 </p-dialog>
+
+<ng-container *ngIf="import$ | async as importStats">
+</ng-container>
