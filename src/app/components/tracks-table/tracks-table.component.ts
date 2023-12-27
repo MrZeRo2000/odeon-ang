@@ -37,6 +37,7 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
   artifactTypeId?: number;
   isArtifactTypeMusic = true;
   isArtifactTypeVideo = false;
+  isArtifactVideoWithProducts = false;
 
   dataSize = 0;
 
@@ -224,6 +225,7 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
         this.artifactTypeId = v.artifactType?.id as number;
         this.isArtifactTypeMusic = isArtifactTypeMusic(this.artifactTypeId);
         this.isArtifactTypeVideo = isArtifactTypeVideo(this.artifactTypeId);
+        this.isArtifactVideoWithProducts = isArtifactTypeVideoWithProducts(this.artifactTypeId);
       })
     )
   }
