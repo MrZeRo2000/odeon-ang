@@ -15,6 +15,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import { TracksImportFormComponent } from './tracks-import-form/tracks-import-form.component';
+import {InputNumberModule} from "primeng/inputnumber";
 
 
 
@@ -29,18 +30,19 @@ import { TracksImportFormComponent } from './tracks-import-form/tracks-import-fo
     TracksImportFormComponent,
     UserImportResultFormComponent,
   ],
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    DialogModule,
-    PanelModule,
-    TabViewModule,
-    MultiSelectModule,
-    AutoCompleteModule,
-    DropdownModule,
-    InputTextareaModule,
-    ButtonModule,
-    RippleModule
-  ]
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        DialogModule,
+        PanelModule,
+        TabViewModule,
+        MultiSelectModule,
+        AutoCompleteModule,
+        DropdownModule,
+        InputTextareaModule,
+        ButtonModule,
+        RippleModule,
+        InputNumberModule
+    ]
 })
 export class UserImportModule { }

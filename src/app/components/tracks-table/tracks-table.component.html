@@ -29,6 +29,7 @@
             pTooltip="Import tracks"
             tooltipPosition="left"
             (onClick)="showImportTracks($event)"
+            *ngIf="isArtifactTypeVideo"
           ></p-button>
           <span class="p-input-icon-left flex align-items-center">
             <i class="pi pi-search"></i>

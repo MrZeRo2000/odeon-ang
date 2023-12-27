@@ -10,19 +10,62 @@
           optionLabel="name"
           optionValue="id"
           appendTo="body"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['mediaFile'].errors}"
         ></p-dropdown>
       </div>
 
-      <div class="field">
-        <label for="dvType">Video Type</label>
-        <p-dropdown
-          formControlName="dvType"
-          id="dvType"
-          [options]="DV_TYPES"
-          optionLabel="name"
-          optionValue="id"
-          appendTo="body"
-        ></p-dropdown>
+      <div class="grid">
+        <div class="field col">
+          <label for="dvType">Video Type</label>
+          <p-dropdown
+            formControlName="dvType"
+            id="dvType"
+            [options]="DV_TYPES"
+            optionLabel="name"
+            optionValue="id"
+            appendTo="body"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['dvType'].errors}"
+          ></p-dropdown>
+        </div>
+
+        <div class="field col">
+          <label for="num">Track #</label>
+          <p-dropdown
+            formControlName="num"
+            id="num"
+            [options]="NUM_OPTIONS"
+            optionLabel="name"
+            optionValue="id"
+            appendTo="body"
+            [editable]="true"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['num'].errors}"
+          ></p-dropdown>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="field col">
+          <label for="titles">Titles</label>
+          <textarea
+            pInputTextarea
+            id="titles"
+            formControlName="titles"
+            style="resize: none"
+            rows="5"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['titles'].errors}"
+          ></textarea>
+        </div>
+        <div class="field col">
+          <label for="chapters">Chapters</label>
+          <textarea
+            pInputTextarea
+            id="chapters"
+            formControlName="chapters"
+            style="resize: none"
+            rows="5"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['chapters'].errors}"
+          ></textarea>
+        </div>
       </div>
     </form>
   </ng-template>
