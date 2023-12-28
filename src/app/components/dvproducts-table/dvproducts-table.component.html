@@ -35,7 +35,9 @@
            [value]="table"
            dataKey="id"
            [scrollable]="true"
-           [scrollHeight]="scrollHeight"
+           [scrollHeight]="scrollHeight + 'px'"
+           [virtualScroll]="true"
+           [virtualScrollItemSize]="46"
            [globalFilterFields]="['title', 'originalTitle', 'frontInfo']"
            selectionMode="single" [(selection)]="selectedItem"
   >
@@ -130,7 +132,7 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-item>
-      <tr [pSelectableRow]="item">
+      <tr [pSelectableRow]="item" style="height:46px">
         <td>{{item.id}}</td>
         <td>{{item.dvOrigin.name}}</td>
         <td *ngIf="item.hasDescription"><a href="#" (click)="showDescription($event, item)">{{item.title}}</a></td>

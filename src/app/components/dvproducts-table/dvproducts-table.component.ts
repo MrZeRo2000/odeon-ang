@@ -52,7 +52,7 @@ export class DVProductsTableComponent
   @ViewChild('caption', { static: false})
   private tableCaptionElement?: ElementRef;
 
-  scrollHeight = "0px";
+  scrollHeight = window.innerHeight;
 
   displayDescription = false;
 
@@ -214,7 +214,10 @@ export class DVProductsTableComponent
       - tableContainerTop
       - tableCaptionOffset
       - parseFloat(getComputedStyle(document.documentElement).fontSize) / 2;
-    this.scrollHeight = `${containerHeight}px`
+    if (containerHeight > 0) {
+      this.scrollHeight = containerHeight
+      console.log(`Scroll height updated to ${this.scrollHeight}`)
+    }
   }
 
   @HostListener('window:resize', ['$event'])
