@@ -77,6 +77,7 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
       artifact: this.artifact as Artifact,
       mediaFile: {id: this.editForm.value.mediaFile} as MediaFile,
       dvType: {id: this.editForm.value.dvType} as DVType,
+      num: this.editForm.value.num?? null,
       titles,
       chapters
     }
