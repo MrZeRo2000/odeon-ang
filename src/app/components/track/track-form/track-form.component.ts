@@ -1,20 +1,20 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {getTrackConfig, Track, TrackConfigItem} from "../../model/track";
+import {getTrackConfig, Track, TrackConfigItem} from "../../../model/track";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
-import {TrackService} from "../../service/track.service";
-import {BaseCrudFormComponent} from "../base/base-crud-form.component";
-import {IdName, IdTitle} from "../../model/common";
+import {TrackService} from "../../../service/track.service";
+import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
+import {IdName, IdTitle} from "../../../model/common";
 import {
   Artifact,
   isArtifactTypeMusic,
   isArtifactTypeVideo
-} from "../../model/artifacts";
-import {DV_TYPES, DVType} from "../../model/dvtype";
-import {filterIdName, filterIdTitle} from "../../utils/search-utils";
-import {Artist} from "../../model/artists";
-import {DVProduct} from "../../model/dv-product";
-import {MediaFile} from "../../model/media-file";
+} from "../../../model/artifacts";
+import {DV_TYPES, DVType} from "../../../model/dvtype";
+import {filterIdName, filterIdTitle} from "../../../utils/search-utils";
+import {Artist} from "../../../model/artists";
+import {DVProduct} from "../../../model/dv-product";
+import {MediaFile} from "../../../model/media-file";
 import {Observable, tap} from "rxjs";
 
 @Component({

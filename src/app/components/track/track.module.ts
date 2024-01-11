@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MediaFileFormComponent} from "./media-file-form/media-file-form.component";
-import {MediaFilesTableComponent} from "./media-files-table/media-files-table.component";
+import {TrackFormComponent} from "./track-form/track-form.component";
+import {TracksTableComponent} from "./tracks-table/tracks-table.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RippleModule} from "primeng/ripple";
-import {TagModule} from "primeng/tag";
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
 import {TableModule} from "primeng/table";
@@ -12,18 +11,24 @@ import {SelectButtonModule} from "primeng/selectbutton";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {MultiSelectModule} from "primeng/multiselect";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
-import {CoreModule} from "../../core/core.module";
 import {InputTextModule} from "primeng/inputtext";
+import {CoreModule} from "../../core/core.module";
+import {UserImportModule} from "../user-import/user-import.module";
+import {DvModule} from "../dv/dv.module";
+import {DropdownModule} from "primeng/dropdown";
+import {InputNumberModule} from "primeng/inputnumber";
+import {TooltipModule} from "primeng/tooltip";
+
 
 
 @NgModule({
   declarations: [
-    MediaFileFormComponent,
-    MediaFilesTableComponent,
+    TrackFormComponent,
+    TracksTableComponent,
   ],
   exports: [
-    MediaFileFormComponent,
-    MediaFilesTableComponent,
+    TrackFormComponent,
+    TracksTableComponent,
   ],
   imports: [
     CommonModule,
@@ -31,17 +36,21 @@ import {InputTextModule} from "primeng/inputtext";
     FormsModule,
     // primeng
     RippleModule,
-    TagModule,
     ButtonModule,
     DialogModule,
     TableModule,
     SelectButtonModule,
+    DropdownModule,
+    InputNumberModule,
+    InputTextModule,
+    TooltipModule,
     AutoCompleteModule,
     MultiSelectModule,
     ConfirmPopupModule,
-    InputTextModule,
     // custom modules
     CoreModule,
+    DvModule,
+    UserImportModule,
   ]
 })
-export class MediaFileModule { }
+export class TrackModule { }

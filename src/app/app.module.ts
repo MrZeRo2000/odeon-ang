@@ -36,9 +36,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {SelectButtonModule} from "primeng/selectbutton";
-import { TracksTableComponent } from './components/tracks-table/tracks-table.component';
 import {DecimalPipe} from "@angular/common";
-import { TrackFormComponent } from './components/track-form/track-form.component';
 import {InputNumberModule} from "primeng/inputnumber";
 import {MultiSelectModule} from "primeng/multiselect";
 import {DropdownModule} from "primeng/dropdown";
@@ -54,6 +52,7 @@ import {CoreModule} from "./core/core.module";
 import {ArtistModule} from "./components/artist/artist.module";
 import {DvModule} from "./components/dv/dv.module";
 import {MediaFileModule} from "./components/media-file/media-file.module";
+import {TrackModule} from "./components/track/track.module";
 
 
 @NgModule({
@@ -65,8 +64,6 @@ import {MediaFileModule} from "./components/media-file/media-file.module";
     ProcessingComponent,
     BaseComponent,
     ProcessingStatusIndicatorComponent,
-    TracksTableComponent,
-    TrackFormComponent,
     DatabaseBackupComponent,
   ],
   imports: [
@@ -112,6 +109,7 @@ import {MediaFileModule} from "./components/media-file/media-file.module";
     ArtistModule,
     DvModule,
     MediaFileModule,
+    TrackModule,
   ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]

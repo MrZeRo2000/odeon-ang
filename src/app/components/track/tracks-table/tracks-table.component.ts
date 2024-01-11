@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, take, tap} from "rxjs";
-import {Track} from "../../model/track";
-import {TrackService} from "../../service/track.service";
+import {Track} from "../../../model/track";
+import {TrackService} from "../../../service/track.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {
   Artifact,
   isArtifactTypeMusic,
   isArtifactTypeVideo,
   isArtifactTypeVideoWithProducts
-} from "../../model/artifacts";
-import {ArtifactService} from "../../service/artifact.service";
-import {CRUDResult} from "../../model/crud";
+} from "../../../model/artifacts";
+import {ArtifactService} from "../../../service/artifact.service";
+import {CRUDResult} from "../../../model/crud";
 import {DecimalPipe} from "@angular/common";
-import {BaseTableComponent} from "../base/base-table.component";
-import {MediaFileService} from "../../service/media-file.service";
-import {IdName, IdTitle} from "../../model/common";
-import {ArtistService} from "../../service/artist.service";
-import {DVProductService} from "../../service/dvproduct.service";
-import {MediaFile} from "../../model/media-file";
-import {DVProduct} from "../../model/dv-product";
-import {sumByKey} from "../../utils/calc-utils";
+import {BaseTableComponent} from "../../base/base-table.component";
+import {MediaFileService} from "../../../service/media-file.service";
+import {IdName, IdTitle} from "../../../model/common";
+import {ArtistService} from "../../../service/artist.service";
+import {DVProductService} from "../../../service/dvproduct.service";
+import {MediaFile} from "../../../model/media-file";
+import {DVProduct} from "../../../model/dv-product";
+import {sumByKey} from "../../../utils/calc-utils";
 
 @Component({
   selector: 'app-tracks-table',
