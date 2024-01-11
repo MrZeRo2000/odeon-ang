@@ -1,7 +1,7 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import {BaseTableComponent} from "../base/base-table.component";
-import {DVCategory, DVOrigin, DVProduct} from "../../model/dv-product";
-import {CRUDResult} from "../../model/crud";
+import {BaseTableComponent} from "../../base/base-table.component";
+import {DVCategory, DVOrigin, DVProduct} from "../../../model/dv-product";
+import {CRUDResult} from "../../../model/crud";
 import {
   catchError,
   concatMap,
@@ -18,12 +18,12 @@ import {
   tap
 } from "rxjs";
 import {ConfirmationService, FilterService, MessageService, SelectItem} from "primeng/api";
-import {DVProductService} from "../../service/dvproduct.service";
-import {DVOriginService} from "../../service/dvorigin.service";
-import {DVCategoryService} from "../../service/dvcategory.service";
-import {ARTIFACT_EDIT_CONFIG, CodeName} from "../../model/artifacts";
+import {DVProductService} from "../../../service/dvproduct.service";
+import {DVOriginService} from "../../../service/dvorigin.service";
+import {DVCategoryService} from "../../../service/dvcategory.service";
+import {ARTIFACT_EDIT_CONFIG, CodeName} from "../../../model/artifacts";
 import {FormBuilder, Validators} from "@angular/forms";
-import {IdTitleOriginalTitle, TextInterface} from "../../model/common";
+import {IdTitleOriginalTitle, TextInterface} from "../../../model/common";
 import {Router} from "@angular/router";
 
 @Component({

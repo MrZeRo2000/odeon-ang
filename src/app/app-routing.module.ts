@@ -8,9 +8,9 @@ import {TracksTableComponent} from "./components/tracks-table/tracks-table.compo
 import {MediaFilesTableComponent} from "./components/media-files-table/media-files-table.component";
 import {ArtistLyricsTableComponent} from "./components/artist/artist-lyrics-table/artist-lyrics-table.component";
 import {ArtifactsVideoTableComponent} from "./components/artifact/artifacts-video-table/artifacts-video-table.component";
-import {DVOriginsTableComponent} from "./components/dvorigins-table/dvorigins-table.component";
-import {DVCategoriesTableComponent} from "./components/dvcategories-table/dvcategories-table.component";
-import {DVProductsTableComponent} from "./components/dvproducts-table/dvproducts-table.component";
+import {DVOriginsTableComponent} from "./components/dv/dvorigins-table/dvorigins-table.component";
+import {DVCategoriesTableComponent} from "./components/dv/dvcategories-table/dvcategories-table.component";
+import {DVProductsTableComponent} from "./components/dv/dvproducts-table/dvproducts-table.component";
 
 const routes: Routes = [
   {path: '', component: LandingComponent, pathMatch: 'full'},

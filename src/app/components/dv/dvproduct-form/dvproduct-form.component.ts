@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BaseCrudFormComponent} from "../base/base-crud-form.component";
-import {DVCategory, DVOrigin, DVProduct} from "../../model/dv-product";
+import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
+import {DVCategory, DVOrigin, DVProduct} from "../../../model/dv-product";
 import {MessageService} from "primeng/api";
-import {DVProductService} from "../../service/dvproduct.service";
+import {DVProductService} from "../../../service/dvproduct.service";
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
-import {filterString} from "../../utils/search-utils";
-import {IdTitleOriginalTitle} from "../../model/common";
+import {filterString} from "../../../utils/search-utils";
+import {IdTitleOriginalTitle} from "../../../model/common";
 
 @Component({
   selector: 'app-dvproduct-form',

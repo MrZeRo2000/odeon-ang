@@ -45,12 +45,6 @@ import { MediaFileFormComponent } from './components/media-file-form/media-file-
 import {MultiSelectModule} from "primeng/multiselect";
 import {DropdownModule} from "primeng/dropdown";
 
-import { DVOriginsTableComponent } from './components/dvorigins-table/dvorigins-table.component';
-import { DVOriginFormComponent } from './components/dvorigin-form/dvorigin-form.component';
-import { DVCategoriesTableComponent } from './components/dvcategories-table/dvcategories-table.component';
-import { DVCategoryFormComponent } from './components/dvcategory-form/dvcategory-form.component';
-import { DVProductsTableComponent } from './components/dvproducts-table/dvproducts-table.component';
-import { DVProductFormComponent } from './components/dvproduct-form/dvproduct-form.component';
 import {SliderModule} from "primeng/slider";
 import { DatabaseBackupComponent } from './components/database-backup/database-backup.component';
 import {TabViewModule} from "primeng/tabview";
@@ -60,6 +54,7 @@ import {UserImportModule} from "./components/user-import/user-import.module";
 import {ArtifactModule} from "./components/artifact/artifact.module";
 import {CoreModule} from "./core/core.module";
 import {ArtistModule} from "./components/artist/artist.module";
+import {DvModule} from "./components/dv/dv.module";
 
 
 @NgModule({
@@ -75,12 +70,6 @@ import {ArtistModule} from "./components/artist/artist.module";
     TrackFormComponent,
     MediaFilesTableComponent,
     MediaFileFormComponent,
-    DVOriginsTableComponent,
-    DVOriginFormComponent,
-    DVCategoriesTableComponent,
-    DVCategoryFormComponent,
-    DVProductsTableComponent,
-    DVProductFormComponent,
     DatabaseBackupComponent,
   ],
   imports: [
@@ -124,6 +113,7 @@ import {ArtistModule} from "./components/artist/artist.module";
     UserImportModule,
     ArtifactModule,
     ArtistModule,
+    DvModule,
   ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]

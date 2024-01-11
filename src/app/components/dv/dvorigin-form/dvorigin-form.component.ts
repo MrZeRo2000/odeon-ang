@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {BaseCrudFormComponent} from "../base/base-crud-form.component";
-import {DVOrigin} from "../../model/dv-product";
+import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
+import {DVOrigin} from "../../../model/dv-product";
 import {MessageService} from "primeng/api";
-import {DVOriginService} from "../../service/dvorigin.service";
+import {DVOriginService} from "../../../service/dvorigin.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({

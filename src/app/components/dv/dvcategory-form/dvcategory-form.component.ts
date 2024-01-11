@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {BaseCrudFormComponent} from "../base/base-crud-form.component";
-import {DVCategory} from "../../model/dv-product";
+import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
+import {DVCategory} from "../../../model/dv-product";
 import {MessageService} from "primeng/api";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DVCategoryService} from "../../service/dvcategory.service";
+import {DVCategoryService} from "../../../service/dvcategory.service";
 
 @Component({
   selector: 'app-dvcategory-form',

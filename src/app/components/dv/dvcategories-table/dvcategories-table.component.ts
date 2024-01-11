@@ -1,10 +1,10 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import {BaseTableComponent} from "../base/base-table.component";
-import {DVCategory} from "../../model/dv-product";
+import {BaseTableComponent} from "../../base/base-table.component";
+import {DVCategory} from "../../../model/dv-product";
 import {Observable, of, tap} from "rxjs";
-import {CRUDResult} from "../../model/crud";
+import {CRUDResult} from "../../../model/crud";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {DVCategoryService} from "../../service/dvcategory.service";
+import {DVCategoryService} from "../../../service/dvcategory.service";
 
 @Component({
   selector: 'app-dvcategory-table',

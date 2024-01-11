@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {BaseTableComponent} from "../base/base-table.component";
-import {DVOrigin} from "../../model/dv-product";
+import {BaseTableComponent} from "../../base/base-table.component";
+import {DVOrigin} from "../../../model/dv-product";
 import {Observable, of} from "rxjs";
-import {CRUDResult} from "../../model/crud";
+import {CRUDResult} from "../../../model/crud";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {DVOriginService} from "../../service/dvorigin.service";
+import {DVOriginService} from "../../../service/dvorigin.service";
 
 @Component({
   selector: 'app-dvorigins-table',
