@@ -5,8 +5,8 @@ import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {DataSourceModule} from "../../data-source/data-source.module";
-import {LoadingComponent} from "../loading/loading.component";
-import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
+import {LoadingComponent} from "../../core/components/loading/loading.component";
+import {ConfirmDialogComponent} from "../../core/components/confirm-dialog/confirm-dialog.component";
 
 describe('MediaFilesTableComponent', () => {
   let component: MediaFilesTableComponent;

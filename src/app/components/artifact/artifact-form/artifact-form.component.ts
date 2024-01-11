@@ -2,13 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {
   ARTIFACT_MUSIC_TYPES,
   ArtifactConfigItem, getArtifactConfig, Artifact
-} from "../../model/artifacts";
+} from "../../../model/artifacts";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ArtifactService} from "../../service/artifact.service";
+import {ArtifactService} from "../../../service/artifact.service";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {IdName} from "../../model/common";
-import {BaseCrudFormComponent} from "../base/base-crud-form.component";
-import {filterIdName} from "../../utils/search-utils";
+import {IdName} from "../../../model/common";
+import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
+import {filterIdName} from "../../../utils/search-utils";
 
 @Component({
   selector: 'app-artifact-form',

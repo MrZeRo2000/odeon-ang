@@ -21,8 +21,6 @@ import {ToastModule} from "primeng/toast";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {MessagesModule} from "primeng/messages";
 import { BaseComponent } from './components/base/base.component';
-import { ProcessingStatusNamePipe } from './pipes/processing-status-name.pipe';
-import { ProcessorTypeNamePipe } from './pipes/processor-type-name.pipe';
 import {TableModule} from "primeng/table";
 import {PanelModule} from "primeng/panel";
 import {BadgeModule} from "primeng/badge";
@@ -30,22 +28,16 @@ import { ProcessingStatusIndicatorComponent } from './components/processing-stat
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {ProgressBarModule} from "primeng/progressbar";
 import { ArtistsTableComponent } from './components/artists-table/artists-table.component';
-import { LoadingComponent } from './components/loading/loading.component';
 import {ChipModule} from "primeng/chip";
 import {TagModule} from "primeng/tag";
 import {InputTextModule} from "primeng/inputtext";
 import {RippleModule} from "primeng/ripple";
 import {DialogModule} from "primeng/dialog";
-import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { ArtistFormComponent } from './components/artist-form/artist-form.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {SelectButtonModule} from "primeng/selectbutton";
-import { ArtifactsTableComponent } from './components/artifacts-table/artifacts-table.component';
-import { FileSizePipe } from './pipes/file-size-pipe.pipe';
-import { CrudPanelComponent } from './components/crud-panel/crud-panel.component';
-import { ArtifactFormComponent } from './components/artifact-form/artifact-form.component';
 import { TracksTableComponent } from './components/tracks-table/tracks-table.component';
 import {DecimalPipe} from "@angular/common";
 import { TrackFormComponent } from './components/track-form/track-form.component';
@@ -55,9 +47,8 @@ import { MediaFileFormComponent } from './components/media-file-form/media-file-
 import {MultiSelectModule} from "primeng/multiselect";
 import { ArtistLyricsTableComponent } from './components/artist-lyrics-table/artist-lyrics-table.component';
 import { ArtistLyricsFormComponent } from './components/artist-lyrics-form/artist-lyrics-form.component';
-import { ArtifactsVideoTableComponent } from './components/artifacts-video-table/artifacts-video-table.component';
 import {DropdownModule} from "primeng/dropdown";
-import { ArtifactCaptionPipe } from './pipes/artifact-caption.pipe';
+
 import { DVOriginsTableComponent } from './components/dvorigins-table/dvorigins-table.component';
 import { DVOriginFormComponent } from './components/dvorigin-form/dvorigin-form.component';
 import { DVCategoriesTableComponent } from './components/dvcategories-table/dvcategories-table.component';
@@ -71,6 +62,8 @@ import {TabViewModule} from "primeng/tabview";
 import {KeyFilterModule} from "primeng/keyfilter";
 import {ListboxModule} from "primeng/listbox";
 import {UserImportModule} from "./components/user-import/user-import.module";
+import {ArtifactModule} from "./components/artifact/artifact.module";
+import {CoreModule} from "./core/core.module";
 
 
 @NgModule({
@@ -81,25 +74,15 @@ import {UserImportModule} from "./components/user-import/user-import.module";
     LandingComponent,
     ProcessingComponent,
     BaseComponent,
-    ProcessingStatusNamePipe,
-    ProcessorTypeNamePipe,
     ProcessingStatusIndicatorComponent,
     ArtistsTableComponent,
-    LoadingComponent,
-    ConfirmDialogComponent,
     ArtistFormComponent,
-    ArtifactsTableComponent,
-    FileSizePipe,
-    CrudPanelComponent,
-    ArtifactFormComponent,
     TracksTableComponent,
     TrackFormComponent,
     MediaFilesTableComponent,
     MediaFileFormComponent,
     ArtistLyricsTableComponent,
     ArtistLyricsFormComponent,
-    ArtifactsVideoTableComponent,
-    ArtifactCaptionPipe,
     DVOriginsTableComponent,
     DVOriginFormComponent,
     DVCategoriesTableComponent,
@@ -145,7 +128,10 @@ import {UserImportModule} from "./components/user-import/user-import.module";
     TabViewModule,
     KeyFilterModule,
     ListboxModule,
-    UserImportModule
+    // custom modules
+    CoreModule,
+    UserImportModule,
+    ArtifactModule
   ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]

@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ArtifactService} from "../../service/artifact.service";
+import {ArtifactService} from "../../../service/artifact.service";
 import {UntypedFormBuilder} from "@angular/forms";
-import {ARTIST_TYPES} from "../../model/artists";
+import {ARTIST_TYPES} from "../../../model/artists";
 import {
   ARTIFACT_MUSIC_TYPE_MP3,
   ARTIFACT_MUSIC_TYPES,
   Artifact
-} from "../../model/artifacts";
+} from "../../../model/artifacts";
 import {
   catchError,
   forkJoin,
@@ -20,11 +20,11 @@ import {
   tap
 } from "rxjs";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {CRUDResult} from "../../model/crud";
-import {ArtistService} from "../../service/artist.service";
+import {CRUDResult} from "../../../model/crud";
+import {ArtistService} from "../../../service/artist.service";
 import {Router} from "@angular/router";
-import {BaseTableComponent} from "../base/base-table.component";
-import {IdName} from "../../model/common";
+import {BaseTableComponent} from "../../base/base-table.component";
+import {IdName} from "../../../model/common";
 import {SelectItem} from "primeng/api/selectitem";
 
 interface FilterControlsConfig

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {PROCESSING_STATUS_NAMES, ProcessingStatus} from "../model/process-info";
+import {PROCESSING_STATUS_NAMES, ProcessingStatus} from "../../model/process-info";
 
 @Pipe({
   name: 'processingStatusName'

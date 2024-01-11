@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CRUDAction, CRUDOperation} from "../../model/crud";
+import {CRUDAction, CRUDOperation} from "../../../model/crud";
 
 @Component({
   selector: 'app-crud-panel',

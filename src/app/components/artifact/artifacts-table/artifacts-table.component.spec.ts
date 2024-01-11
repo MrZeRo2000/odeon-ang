@@ -3,10 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ArtifactsTableComponent } from './artifacts-table.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
-import {DataSourceModule} from "../../data-source/data-source.module";
+import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {LoadingComponent} from "../loading/loading.component";
-import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
+import {LoadingComponent} from "../../../core/components/loading/loading.component";
+import {ConfirmDialogComponent} from "../../../core/components/confirm-dialog/confirm-dialog.component";
 
 describe('ArtifactsTableComponent', () => {
   let component: ArtifactsTableComponent;

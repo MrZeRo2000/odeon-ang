@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Artifact} from "../model/artifacts";
+import {Artifact} from "../../model/artifacts";
 
 @Pipe({
   name: 'artifactCaption'

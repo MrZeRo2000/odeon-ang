@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {BaseTableComponent} from "../base/base-table.component";
+import {BaseTableComponent} from "../../base/base-table.component";
 import {
   ARTIFACT_TYPE_VIDEO, ARTIFACT_VIDEO_TYPE_MUSIC,
   ARTIFACT_VIDEO_TYPES,
   Artifact, isArtifactTypeVideoMusic
-} from "../../model/artifacts";
-import {IdName} from "../../model/common";
+} from "../../../model/artifacts";
+import {IdName} from "../../../model/common";
 import {Router} from "@angular/router";
 import {FormBuilder} from "@angular/forms";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {ArtistService} from "../../service/artist.service";
-import {ArtifactService} from "../../service/artifact.service";
-import {CRUDResult} from "../../model/crud";
+import {ArtistService} from "../../../service/artist.service";
+import {ArtifactService} from "../../../service/artifact.service";
+import {CRUDResult} from "../../../model/crud";
 import {catchError, forkJoin, iif, map, Observable, of, startWith, switchMap, tap} from "rxjs";
-import {ARTIST_TYPE_CODE_ARTIST} from "../../model/artists";
+import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 
 interface FilterControlsConfig
 {

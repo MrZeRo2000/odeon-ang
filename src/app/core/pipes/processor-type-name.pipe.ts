@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {PROCESSOR_TYPE_NAMES, ProcessorType} from "../model/process-info";
+import {PROCESSOR_TYPE_NAMES, ProcessorType} from "../../model/process-info";
 
 @Pipe({
   name: 'processorTypeName'
