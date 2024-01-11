@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AppInfoComponent } from './components/app-info/app-info.component';
 import { LandingComponent } from './components/landing/landing.component';
-import { ProcessingComponent } from './components/processing/processing.component';
 
 import {MenubarModule} from "primeng/menubar";
 import {ConfirmationService, MessageService, SharedModule} from "primeng/api";
@@ -24,7 +23,6 @@ import { BaseComponent } from './components/base/base.component';
 import {TableModule} from "primeng/table";
 import {PanelModule} from "primeng/panel";
 import {BadgeModule} from "primeng/badge";
-import { ProcessingStatusIndicatorComponent } from './components/processing-status-indicator/processing-status-indicator.component';
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {ProgressBarModule} from "primeng/progressbar";
 import {ChipModule} from "primeng/chip";
@@ -53,6 +51,7 @@ import {ArtistModule} from "./components/artist/artist.module";
 import {DvModule} from "./components/dv/dv.module";
 import {MediaFileModule} from "./components/media-file/media-file.module";
 import {TrackModule} from "./components/track/track.module";
+import {ProcessingModule} from "./components/processing/processing.module";
 
 
 @NgModule({
@@ -61,9 +60,7 @@ import {TrackModule} from "./components/track/track.module";
     HeaderComponent,
     AppInfoComponent,
     LandingComponent,
-    ProcessingComponent,
     BaseComponent,
-    ProcessingStatusIndicatorComponent,
     DatabaseBackupComponent,
   ],
   imports: [
@@ -109,6 +106,7 @@ import {TrackModule} from "./components/track/track.module";
     ArtistModule,
     DvModule,
     MediaFileModule,
+    ProcessingModule,
     TrackModule,
   ],
   providers: [MessageService, ConfirmationService, DecimalPipe],

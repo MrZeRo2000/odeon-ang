@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ProcessingStatus, ProcessorType} from "../../model/process-info";
+import {ProcessingStatus} from "../../../model/process-info";
 
 enum IndicatorType {
   IT_NONE,

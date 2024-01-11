@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LandingComponent} from "./components/landing/landing.component";
-import {ProcessingComponent} from "./components/processing/processing.component";
+import {ProcessingFormComponent} from "./components/processing/processing-form/processing-form.component";
 import {ArtistsTableComponent} from "./components/artist/artists-table/artists-table.component";
 import {ArtifactsTableComponent} from "./components/artifact/artifacts-table/artifacts-table.component";
 import {TracksTableComponent} from "./components/track/tracks-table/tracks-table.component";
@@ -14,7 +14,7 @@ import {DVProductsTableComponent} from "./components/dv/dvproducts-table/dvprodu
 
 const routes: Routes = [
   {path: '', component: LandingComponent, pathMatch: 'full'},
-  {path: 'processing', component: ProcessingComponent, pathMatch: 'full'},
+  {path: 'processing', component: ProcessingFormComponent, pathMatch: 'full'},
   {path: 'artists', component: ArtistsTableComponent, pathMatch: 'full'},
   {path: 'lyrics', component: ArtistLyricsTableComponent, pathMatch: 'full'},
   {path: 'lyrics/:id', component: ArtistLyricsTableComponent, pathMatch: 'full'},

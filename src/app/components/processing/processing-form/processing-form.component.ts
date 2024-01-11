@@ -5,10 +5,10 @@ import {
   ProcessingStatus,
   PROCESSOR_TYPE_NAMES,
   ProcessorType
-} from "../../model/process-info";
+} from "../../../model/process-info";
 import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
-import {ProcessService} from "../../service/process.service";
-import {BaseComponent} from "../base/base.component";
+import {ProcessService} from "../../../service/process.service";
+import {BaseComponent} from "../../base/base.component";
 import {
   catchError, of,
   startWith,
@@ -16,16 +16,16 @@ import {
   switchMap,
   tap
 } from "rxjs";
-import {ArtistService} from "../../service/artist.service";
-import {Artist, ARTIST_TYPES} from "../../model/artists";
+import {ArtistService} from "../../../service/artist.service";
+import {Artist, ARTIST_TYPES} from "../../../model/artists";
 
 @Component({
-  selector: 'app-processing',
-  templateUrl: './processing.component.html',
-  styleUrls: ['./processing.component.scss'],
+  selector: 'app-processing-form',
+  templateUrl: './processing-form.component.html',
+  styleUrls: ['./processing-form.component.scss'],
   providers: [ConfirmationService]
 })
-export class ProcessingComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class ProcessingFormComponent extends BaseComponent implements OnInit, AfterViewInit {
   readonly treeValues = [
     {
       label: "Import",

@@ -1,22 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProcessingComponent } from './processing.component';
+import { ProcessingFormComponent } from './processing-form.component';
 import {TreeModule} from "primeng/tree";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {MessageService} from "primeng/api";
-import {DataSourceModule} from "../../data-source/data-source.module";
+import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ToastModule} from "primeng/toast";
-import {ConfirmDialogComponent} from "../../core/components/confirm-dialog/confirm-dialog.component";
+import {ConfirmDialogComponent} from "../../../core/components/confirm-dialog/confirm-dialog.component";
 
 describe('ProcessingComponent', () => {
-  let component: ProcessingComponent;
-  let fixture: ComponentFixture<ProcessingComponent>;
+  let component: ProcessingFormComponent;
+  let fixture: ComponentFixture<ProcessingFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
         ConfirmDialogComponent,
-        ProcessingComponent
+        ProcessingFormComponent
       ],
       imports: [
         TreeModule,
@@ -32,7 +32,7 @@ describe('ProcessingComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProcessingComponent);
+    fixture = TestBed.createComponent(ProcessingFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
