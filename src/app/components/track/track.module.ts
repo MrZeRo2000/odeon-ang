@@ -14,7 +14,7 @@ import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {InputTextModule} from "primeng/inputtext";
 import {CoreModule} from "../../core/core.module";
 import {UserImportModule} from "../user-import/user-import.module";
-import {DvModule} from "../dv/dv.module";
+import {DVModule} from "../dv/d-v.module";
 import {DropdownModule} from "primeng/dropdown";
 import {InputNumberModule} from "primeng/inputnumber";
 import {TooltipModule} from "primeng/tooltip";
@@ -48,7 +48,7 @@ import {TooltipModule} from "primeng/tooltip";
     ConfirmPopupModule,
     // custom modules
     CoreModule,
-    DvModule,
+    DVModule,
     UserImportModule,
   ]
 })

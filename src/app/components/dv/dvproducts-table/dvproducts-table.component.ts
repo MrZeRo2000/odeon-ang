@@ -148,6 +148,10 @@ export class DVProductsTableComponent
     );
   }
 
+  onFilter(event: any): void {
+    this.globalFilterValue = event.filters?.global?.value || '';
+  }
+
   filteredTable$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
     switchMap(v => {

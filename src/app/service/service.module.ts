@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {AppService} from "./app.service";
 import {ProcessService} from "./process.service";
 import {ArtistService} from "./artist.service";
 
@@ -12,7 +11,6 @@ import {ArtistService} from "./artist.service";
     CommonModule
   ],
   providers: [
-    AppService,
     ProcessService,
     ArtistService
   ]

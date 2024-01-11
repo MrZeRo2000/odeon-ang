@@ -68,4 +68,4 @@ import {TooltipModule} from "primeng/tooltip";
     UserImportModule,
   ]
 })
-export class DvModule { }
+export class DVModule { }

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import {BackupService} from "../../service/backup.service";
+import {BackupService} from "../backup.service";
 import {catchError, Observable, of, Subject, switchMap, tap} from "rxjs";
-import {Message} from "../../model/message";
+import {Message} from "../../../model/message";
 import {MessageService} from "primeng/api";
-import {DatabaseBackupInfo} from "../../model/database-backup-info";
-import {DateFormatter} from "../../utils/date-utils";
+import {DatabaseBackupInfo} from "../../../model/database-backup-info";
+import {DateFormatter} from "../../../utils/date-utils";
 
 @Component({
   selector: 'app-database-backup',

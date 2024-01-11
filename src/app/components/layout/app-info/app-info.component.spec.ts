@@ -1,13 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AppInfoComponent } from './app-info.component';
-import {DataSourceModule} from "../../data-source/data-source.module";
+import {DataSourceModule} from "../../../data-source/data-source.module";
 import {MessagesModule} from "primeng/messages";
-import {ServiceModule} from "../../service/service.module";
 import {ToastModule} from "primeng/toast";
 import {MessageService} from "primeng/api";
-import {TreeModule} from "primeng/tree";
-import {MenubarModule} from "primeng/menubar";
 
 describe('AppInfoComponent', () => {
   let component: AppInfoComponent;

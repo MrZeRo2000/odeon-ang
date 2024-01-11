@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AppService } from './app.service';
-import {DataSourceModule} from "../data-source/data-source.module";
+import { AppInfoService } from './app-info.service';
+import {DataSourceModule} from "../../data-source/data-source.module";
 
 describe('AppService', () => {
-  let service: AppService;
+  let service: AppInfoService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -12,7 +12,7 @@ describe('AppService', () => {
         DataSourceModule
       ]
     });
-    service = TestBed.inject(AppService);
+    service = TestBed.inject(AppInfoService);
   });
 
   it('should be created', () => {

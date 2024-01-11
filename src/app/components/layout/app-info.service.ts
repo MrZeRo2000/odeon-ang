@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {RestDataSourceService} from "../data-source/rest-data-source.service";
-import {Observable, share, shareReplay} from "rxjs";
-import {AppInfo} from "../model/app-info";
+import {RestDataSourceService} from "../../data-source/rest-data-source.service";
+import {Observable, share} from "rxjs";
+import {AppInfo} from "../../model/app-info";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppService {
+export class AppInfoService {
 
   appInfo$ = this.getAppInfo();
 

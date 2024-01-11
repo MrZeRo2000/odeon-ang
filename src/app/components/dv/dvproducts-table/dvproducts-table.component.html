@@ -41,6 +41,7 @@
            [virtualScroll]="true"
            [virtualScrollItemSize]="46"
            [globalFilterFields]="['title', 'originalTitle', 'frontInfo']"
+           (onFilter)="onFilter($event)"
            selectionMode="single" [(selection)]="selectedItem"
   >
 

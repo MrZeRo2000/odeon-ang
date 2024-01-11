@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {LandingComponent} from "./components/landing/landing.component";
+import {LandingComponent} from "./components/layout/landing/landing.component";
 import {ProcessingFormComponent} from "./components/processing/processing-form/processing-form.component";
 import {ArtistsTableComponent} from "./components/artist/artists-table/artists-table.component";
 import {ArtifactsTableComponent} from "./components/artifact/artifacts-table/artifacts-table.component";

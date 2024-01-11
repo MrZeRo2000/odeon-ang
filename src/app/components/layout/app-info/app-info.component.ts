@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import packageJson from '../../../../package.json';
-import {AppService} from "../../service/app.service";
+import packageJson from '../../../../../package.json';
+import {AppInfoService} from "../app-info.service";
 import {catchError, of, share, switchMap, tap} from "rxjs";
 import {MessageService} from "primeng/api";
-import {compareVersions, ComparisonResult} from "../../utils/version-comparator";
+import {compareVersions, ComparisonResult} from "../../../utils/version-comparator";
 
 @Component({
   selector: 'app-app-info',
@@ -32,7 +32,7 @@ export class AppInfoComponent implements OnInit {
     })
   );
 
-  constructor(private appService: AppService, private messageService: MessageService) { }
+  constructor(private appService: AppInfoService, private messageService: MessageService) { }
 
   ngOnInit(): void {
 

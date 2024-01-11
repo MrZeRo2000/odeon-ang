@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {RestDataSourceService} from "../data-source/rest-data-source.service";
+import {RestDataSourceService} from "../../data-source/rest-data-source.service";
 import {Observable, tap} from "rxjs";
-import {DatabaseBackupInfo} from "../model/database-backup-info";
-import {SharedHandler} from "../utils/rxjs-utils";
-import {Message} from "../model/message";
+import {DatabaseBackupInfo} from "../../model/database-backup-info";
+import {SharedHandler} from "../../utils/rxjs-utils";
+import {Message} from "../../model/message";
 
 @Injectable({
   providedIn: 'root'

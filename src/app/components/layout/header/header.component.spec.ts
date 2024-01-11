@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
 import {AppInfoComponent} from "../app-info/app-info.component";
-import {DataSourceModule} from "../../data-source/data-source.module";
+import {DataSourceModule} from "../../../data-source/data-source.module";
 import {MessagesModule} from "primeng/messages";
 import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
