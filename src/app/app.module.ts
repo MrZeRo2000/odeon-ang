@@ -40,8 +40,6 @@ import { TracksTableComponent } from './components/tracks-table/tracks-table.com
 import {DecimalPipe} from "@angular/common";
 import { TrackFormComponent } from './components/track-form/track-form.component';
 import {InputNumberModule} from "primeng/inputnumber";
-import { MediaFilesTableComponent } from './components/media-files-table/media-files-table.component';
-import { MediaFileFormComponent } from './components/media-file-form/media-file-form.component';
 import {MultiSelectModule} from "primeng/multiselect";
 import {DropdownModule} from "primeng/dropdown";
 
@@ -55,6 +53,7 @@ import {ArtifactModule} from "./components/artifact/artifact.module";
 import {CoreModule} from "./core/core.module";
 import {ArtistModule} from "./components/artist/artist.module";
 import {DvModule} from "./components/dv/dv.module";
+import {MediaFileModule} from "./components/media-file/media-file.module";
 
 
 @NgModule({
@@ -68,8 +67,6 @@ import {DvModule} from "./components/dv/dv.module";
     ProcessingStatusIndicatorComponent,
     TracksTableComponent,
     TrackFormComponent,
-    MediaFilesTableComponent,
-    MediaFileFormComponent,
     DatabaseBackupComponent,
   ],
   imports: [
@@ -114,6 +111,7 @@ import {DvModule} from "./components/dv/dv.module";
     ArtifactModule,
     ArtistModule,
     DvModule,
+    MediaFileModule,
   ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]

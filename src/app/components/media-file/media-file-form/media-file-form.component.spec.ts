@@ -1,16 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MediaFilesTableComponent } from './media-files-table.component';
+import { MediaFileFormComponent } from './media-file-form.component';
+import {ConfirmationService, MessageService} from "primeng/api";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
-import {ConfirmationService, MessageService} from "primeng/api";
-import {DataSourceModule} from "../../data-source/data-source.module";
-import {LoadingComponent} from "../../core/components/loading/loading.component";
-import {ConfirmDialogComponent} from "../../core/components/confirm-dialog/confirm-dialog.component";
+import {DataSourceModule} from "../../../data-source/data-source.module";
+import {DialogModule} from "primeng/dialog";
 
-describe('MediaFilesTableComponent', () => {
-  let component: MediaFilesTableComponent;
-  let fixture: ComponentFixture<MediaFilesTableComponent>;
+describe('MediaFileFormComponent', () => {
+  let component: MediaFileFormComponent;
+  let fixture: ComponentFixture<MediaFileFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -18,6 +17,8 @@ describe('MediaFilesTableComponent', () => {
         //standard
         HttpClientTestingModule,
         RouterTestingModule,
+        //library
+        DialogModule,
         //custom
         DataSourceModule,
       ],
@@ -26,17 +27,13 @@ describe('MediaFilesTableComponent', () => {
         ConfirmationService,
         MessageService,
       ],
-      declarations: [
-        LoadingComponent,
-        ConfirmDialogComponent,
-        MediaFilesTableComponent
-      ]
+      declarations: [ MediaFileFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MediaFilesTableComponent);
+    fixture = TestBed.createComponent(MediaFileFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

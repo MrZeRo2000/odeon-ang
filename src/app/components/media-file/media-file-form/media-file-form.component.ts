@@ -1,9 +1,9 @@
 import {Component, OnChanges, SimpleChanges} from '@angular/core';
-import {BaseCrudFormComponent} from "../base/base-crud-form.component";
-import {MediaFile} from "../../model/media-file";
+import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
+import {MediaFile} from "../../../model/media-file";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
-import {MediaFileService} from "../../service/media-file.service";
+import {MediaFileService} from "../../../service/media-file.service";
 
 @Component({
   selector: 'app-media-file-form',

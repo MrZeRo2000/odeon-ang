@@ -5,7 +5,7 @@ import {ProcessingComponent} from "./components/processing/processing.component"
 import {ArtistsTableComponent} from "./components/artist/artists-table/artists-table.component";
 import {ArtifactsTableComponent} from "./components/artifact/artifacts-table/artifacts-table.component";
 import {TracksTableComponent} from "./components/tracks-table/tracks-table.component";
-import {MediaFilesTableComponent} from "./components/media-files-table/media-files-table.component";
+import {MediaFilesTableComponent} from "./components/media-file/media-files-table/media-files-table.component";
 import {ArtistLyricsTableComponent} from "./components/artist/artist-lyrics-table/artist-lyrics-table.component";
 import {ArtifactsVideoTableComponent} from "./components/artifact/artifacts-video-table/artifacts-video-table.component";
 import {DVOriginsTableComponent} from "./components/dv/dvorigins-table/dvorigins-table.component";

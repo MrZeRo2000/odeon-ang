@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {BaseTableComponent} from "../base/base-table.component";
-import {MediaFile} from "../../model/media-file";
-import {CRUDResult} from "../../model/crud";
+import {BaseTableComponent} from "../../base/base-table.component";
+import {MediaFile} from "../../../model/media-file";
+import {CRUDResult} from "../../../model/crud";
 import {ActivatedRoute} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {catchError, forkJoin, iif, Observable, of} from "rxjs";
-import {MediaFileService} from "../../service/media-file.service";
-import {Artifact} from "../../model/artifacts";
-import {ArtifactService} from "../../service/artifact.service";
-import {sumByKey} from "../../utils/calc-utils";
+import {MediaFileService} from "../../../service/media-file.service";
+import {Artifact} from "../../../model/artifacts";
+import {ArtifactService} from "../../../service/artifact.service";
+import {sumByKey} from "../../../utils/calc-utils";
 
 @Component({
   selector: 'app-media-files-table',
