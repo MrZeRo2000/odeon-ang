@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Artist, ARTIST_TYPES} from "../../model/artists";
+import {Artist, ARTIST_TYPES} from "../../../model/artists";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ENTER} from "@angular/cdk/keycodes";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {ArtistService} from "../../service/artist.service";
-import {BaseCrudFormComponent} from "../base/base-crud-form.component";
-import {filterString} from "../../utils/search-utils";
+import {ArtistService} from "../../../service/artist.service";
+import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
+import {filterString} from "../../../utils/search-utils";
 
 @Component({
   selector: 'app-artist-form',

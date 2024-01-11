@@ -27,13 +27,11 @@ import {BadgeModule} from "primeng/badge";
 import { ProcessingStatusIndicatorComponent } from './components/processing-status-indicator/processing-status-indicator.component';
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {ProgressBarModule} from "primeng/progressbar";
-import { ArtistsTableComponent } from './components/artists-table/artists-table.component';
 import {ChipModule} from "primeng/chip";
 import {TagModule} from "primeng/tag";
 import {InputTextModule} from "primeng/inputtext";
 import {RippleModule} from "primeng/ripple";
 import {DialogModule} from "primeng/dialog";
-import { ArtistFormComponent } from './components/artist-form/artist-form.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {AutoCompleteModule} from "primeng/autocomplete";
@@ -45,8 +43,6 @@ import {InputNumberModule} from "primeng/inputnumber";
 import { MediaFilesTableComponent } from './components/media-files-table/media-files-table.component';
 import { MediaFileFormComponent } from './components/media-file-form/media-file-form.component';
 import {MultiSelectModule} from "primeng/multiselect";
-import { ArtistLyricsTableComponent } from './components/artist-lyrics-table/artist-lyrics-table.component';
-import { ArtistLyricsFormComponent } from './components/artist-lyrics-form/artist-lyrics-form.component';
 import {DropdownModule} from "primeng/dropdown";
 
 import { DVOriginsTableComponent } from './components/dvorigins-table/dvorigins-table.component';
@@ -55,7 +51,6 @@ import { DVCategoriesTableComponent } from './components/dvcategories-table/dvca
 import { DVCategoryFormComponent } from './components/dvcategory-form/dvcategory-form.component';
 import { DVProductsTableComponent } from './components/dvproducts-table/dvproducts-table.component';
 import { DVProductFormComponent } from './components/dvproduct-form/dvproduct-form.component';
-import { TextViewDialogComponent } from './components/text-view-dialog/text-view-dialog.component';
 import {SliderModule} from "primeng/slider";
 import { DatabaseBackupComponent } from './components/database-backup/database-backup.component';
 import {TabViewModule} from "primeng/tabview";
@@ -64,6 +59,7 @@ import {ListboxModule} from "primeng/listbox";
 import {UserImportModule} from "./components/user-import/user-import.module";
 import {ArtifactModule} from "./components/artifact/artifact.module";
 import {CoreModule} from "./core/core.module";
+import {ArtistModule} from "./components/artist/artist.module";
 
 
 @NgModule({
@@ -75,21 +71,16 @@ import {CoreModule} from "./core/core.module";
     ProcessingComponent,
     BaseComponent,
     ProcessingStatusIndicatorComponent,
-    ArtistsTableComponent,
-    ArtistFormComponent,
     TracksTableComponent,
     TrackFormComponent,
     MediaFilesTableComponent,
     MediaFileFormComponent,
-    ArtistLyricsTableComponent,
-    ArtistLyricsFormComponent,
     DVOriginsTableComponent,
     DVOriginFormComponent,
     DVCategoriesTableComponent,
     DVCategoryFormComponent,
     DVProductsTableComponent,
     DVProductFormComponent,
-    TextViewDialogComponent,
     DatabaseBackupComponent,
   ],
   imports: [
@@ -131,7 +122,8 @@ import {CoreModule} from "./core/core.module";
     // custom modules
     CoreModule,
     UserImportModule,
-    ArtifactModule
+    ArtifactModule,
+    ArtistModule,
   ],
   providers: [MessageService, ConfirmationService, DecimalPipe],
   bootstrap: [AppComponent]

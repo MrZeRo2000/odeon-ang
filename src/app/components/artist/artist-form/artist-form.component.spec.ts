@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ArtistFormComponent } from './artist-form.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {ServiceModule} from "../../service/service.module";
-import {DataSourceModule} from "../../data-source/data-source.module";
+import {ServiceModule} from "../../../service/service.module";
+import {DataSourceModule} from "../../../data-source/data-source.module";
 import {DialogModule} from "primeng/dialog";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 

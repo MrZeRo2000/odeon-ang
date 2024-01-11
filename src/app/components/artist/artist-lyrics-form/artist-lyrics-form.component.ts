@@ -1,11 +1,11 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {BaseCrudFormComponent} from "../base/base-crud-form.component";
-import {ArtistLyricsEditItem} from "../../model/artist-lyrics";
+import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
+import {ArtistLyricsEditItem} from "../../../model/artist-lyrics";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
-import {ArtistLyricsService} from "../../service/artist-lyrics.service";
-import {IdName} from "../../model/common";
-import {filterIdName} from "../../utils/search-utils";
+import {ArtistLyricsService} from "../../../service/artist-lyrics.service";
+import {IdName} from "../../../model/common";
+import {filterIdName} from "../../../utils/search-utils";
 
 @Component({
   selector: 'app-artist-lyrics-form',

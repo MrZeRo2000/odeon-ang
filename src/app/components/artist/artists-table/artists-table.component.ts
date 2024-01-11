@@ -1,12 +1,12 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ArtistService} from "../../service/artist.service";
+import {ArtistService} from "../../../service/artist.service";
 import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {ConfirmationService, FilterService, MessageService, PrimeNGConfig, SelectItem} from "primeng/api";
-import {Biography} from "../../model/biography";
-import {Artist} from "../../model/artists";
-import {CRUDResult} from "../../model/crud";
+import {Biography} from "../../../model/biography";
+import {Artist} from "../../../model/artists";
+import {CRUDResult} from "../../../model/crud";
 import {Router} from "@angular/router";
-import {BaseTableComponent} from "../base/base-table.component";
+import {BaseTableComponent} from "../../base/base-table.component";
 
 @Component({
   selector: 'app-artists-table',

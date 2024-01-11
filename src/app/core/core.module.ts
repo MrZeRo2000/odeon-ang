@@ -10,6 +10,8 @@ import {ProgressBarModule} from "primeng/progressbar";
 import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog.component";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {RippleModule} from "primeng/ripple";
+import {TextViewDialogComponent} from "./components/text-view-dialog/text-view-dialog.component";
+import {DialogModule} from "primeng/dialog";
 
 
 
@@ -24,6 +26,7 @@ import {RippleModule} from "primeng/ripple";
     CrudPanelComponent,
     LoadingComponent,
     ConfirmDialogComponent,
+    TextViewDialogComponent,
   ],
   exports: [
     // pipes
@@ -35,12 +38,14 @@ import {RippleModule} from "primeng/ripple";
     CrudPanelComponent,
     LoadingComponent,
     ConfirmDialogComponent,
+    TextViewDialogComponent,
   ],
   imports: [
     CommonModule,
     ProgressBarModule, // for loading
     ConfirmDialogModule, // for confirm dialog
     RippleModule,
+    DialogModule, // for text view dialog
   ]
 })
 export class CoreModule { }
