@@ -34,14 +34,28 @@ import {Router} from "@angular/router";
 export class DVProductsTableComponent
   extends BaseTableComponent<DVProduct, [DVProduct, Array<DVOrigin>, Array<DVCategory>, Array<IdTitleOriginalTitle>]>
   implements OnInit {
+  private static readonly SESSION_KEY = "dvproducts-table-filter-form";
 
   readonly ARTIFACT_TYPES = ARTIFACT_EDIT_CONFIG
     .filter(v => v.hasProduct)
     .map(v =>  v as CodeName);
 
-  filterForm = this.fb.group({
-    artifactTypeId: [this.ARTIFACT_TYPES[0].code, Validators.required]
-  });
+  filterForm = this.fb.group(
+    (
+      () => {
+        try {
+          const savedState = sessionStorage.getItem(DVProductsTableComponent.SESSION_KEY);
+          const savedObject = JSON.parse(savedState as string);
+          return {
+            artifactTypeId: [savedObject.artifactTypeId, Validators.required]
+          }
+        } catch (e)  {
+          return {
+            artifactTypeId: [this.ARTIFACT_TYPES[0].code, Validators.required]
+          }
+        }
+      }
+    )());
 
   dvOriginNames: Array<SelectItem<string>> = [];
   dvCategoryNames: Array<SelectItem<string>> = [];
@@ -154,6 +168,10 @@ export class DVProductsTableComponent
 
   filteredTable$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
+    tap(v => {
+      console.log(`Writing to ${DVProductsTableComponent.SESSION_KEY}: ${JSON.stringify(v)}`);
+      sessionStorage.setItem(DVProductsTableComponent.SESSION_KEY, JSON.stringify(v));
+    }),
     switchMap(v => {
       return from([0, v.artifactTypeId]).pipe(
         concatMap(v => {
