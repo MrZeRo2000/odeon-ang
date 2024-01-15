@@ -43,23 +43,6 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
 
   data$?: Observable<[Track[], Artifact]>;
 
-  deleteAction = this.deleteSubject.asObservable().pipe(
-    switchMap(v =>
-      this.delete(v.data.id as number)
-    ),
-    tap(v => {
-      if (v?.success) {
-        this.data$ = this.getData();
-      } else if (!!v) {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `Error: ${v.data}`
-        });
-      }
-    })
-  );
-
   displayProductForm = false;
 
   showProductAction: Subject<number> = new Subject();
