@@ -6,7 +6,7 @@ import {
   Artifact, isArtifactTypeVideoMusic
 } from "../../../model/artifacts";
 import {IdName} from "../../../model/common";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder} from "@angular/forms";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistService} from "../../../service/artist.service";
@@ -35,7 +35,10 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [
 
   readonly ARTIST_TYPE_CODE_ARTIST = ARTIST_TYPE_CODE_ARTIST;
 
-  filterForm = this.fb.group(ArtifactsVideoTableComponent.getControlsConfig());
+  private routedArtifactId?: number;
+  private routedArtifactTypeId?: number;
+
+  filterForm = this.fb.group(this.getControlsConfig());
 
   filterData$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
@@ -56,41 +59,63 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [
     })
   );
 
+  artifactRow$ = (v: number) => this.artifactService.get(v).pipe(
+    tap(v => `getting row with ${v}`),
+    catchError(err => {
+      this.errorObject = err;
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: `Error reading artifact row`
+      });
+      return of([]);
+    }),
+    map(v => [v])
+  );
+
   filteredArtifacts$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
     tap(v => {
-      console.log(`Got: ${JSON.stringify(v)}`);
       sessionStorage.setItem(ArtifactsVideoTableComponent.SESSION_KEY, JSON.stringify(v))
     }),
     switchMap(
       v => iif(
         () => !v.artifactType,
         of([]),
-        this.artifactTable$(v)
+        iif(
+          () => !!this.routedArtifactId,
+          this.artifactRow$(this.routedArtifactId as number),
+          this.artifactTable$(v)
+        )
       )
     ),
     tap(v => {
-      console.log(`End of filteredArtifacts with data: ${JSON.stringify(v)}`)
       this.selectedItem = undefined;
     })
   );
 
-  private static getControlsConfig(): FilterControlsConfig {
-    try {
-      const savedState = sessionStorage.getItem(ArtifactsVideoTableComponent.SESSION_KEY);
-      const savedObject = JSON.parse(savedState as string);
-      return {
-        artifactType: savedObject.artifactType as number
-      }
-    } catch (e)  {
-      return {
-        artifactType: ARTIFACT_VIDEO_TYPES[0].code
+  private getControlsConfig(): FilterControlsConfig {
+    let artifactType;
+
+    // take from routed, otherwise from saved or default
+    if (this.routedArtifactTypeId) {
+      artifactType = this.routedArtifactTypeId
+    } else {
+      try {
+        const savedState = sessionStorage.getItem(ArtifactsVideoTableComponent.SESSION_KEY);
+        const savedObject = JSON.parse(savedState as string);
+        artifactType = savedObject.artifactType as number
+      } catch (e) {
+        artifactType = ARTIFACT_VIDEO_TYPES[0].code
       }
     }
+
+    return {artifactType}
   }
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     messageService: MessageService,
     confirmationService: ConfirmationService,
@@ -110,6 +135,11 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [
   }
 
   ngOnInit(): void {
+    this.routedArtifactId = Number.parseInt(this.route.snapshot.queryParams['artifactId'] as string, 10);
+    this.routedArtifactTypeId = Number.parseInt(this.route.snapshot.queryParams['artifactTypeId'] as string, 10);
+    if (this.routedArtifactTypeId) {
+      this.filterForm.setValue({artifactType: this.routedArtifactTypeId})
+    }
   }
 
   onFilter(event: any): void {
@@ -117,15 +147,14 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [
   }
 
   onTracksButton(event: any): void {
-    this.router.navigate([`/tracks/${this.selectedItem?.id}`]);
+    this.router.navigate([`/tracks/${this.selectedItem?.id}`]).then();
   }
 
   onMediaFilesButton(event: any): void {
-    this.router.navigate([`/media-files/${this.selectedItem?.id}`]);
+    this.router.navigate([`/media-files/${this.selectedItem?.id}`]).then();
   }
 
   protected loadData(): void {
-    console.log(`Load data filter value: ${JSON.stringify(this.filterForm.value)}`)
     this.filterForm.setValue(this.filterForm.value as FilterControlsConfig);
   }
 

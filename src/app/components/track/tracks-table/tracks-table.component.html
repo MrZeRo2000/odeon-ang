@@ -66,7 +66,7 @@
     <ng-template pTemplate="body" let-item>
       <tr>
         <td>{{item.id}}</td>
-        <td style="white-space: nowrap" *ngIf="this.dvProductId">{{item.artifact.title}}</td>
+        <td style="white-space: nowrap" *ngIf="this.dvProductId"><a href="#" (click)="onArtifactClick($event, item, data[1])">{{item.artifact.title}}</a></td>
         <td *ngIf="isArtifactTypeMusic">{{item.diskNum}}</td>
         <td>{{item.num | number : '2.0-0'}}</td>
         <td *ngIf="data[1].artist?.artistType === 'C'">{{item.artist?.artistName}}</td>

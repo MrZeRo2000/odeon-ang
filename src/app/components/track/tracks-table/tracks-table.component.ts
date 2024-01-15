@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, take, tap} from "rxjs";
 import {Track} from "../../../model/track";
 import {TrackService} from "../../../service/track.service";
@@ -77,6 +77,7 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
   );
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private decimalPipe: DecimalPipe,
     messageService: MessageService,
@@ -226,5 +227,12 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
   showImportTracks(event: any): void {
     event.preventDefault();
     this.importTracksSubject.next();
+  }
+
+  onArtifactClick(event: any, item: Track, artifact: Artifact): void {
+    event.preventDefault();
+    console.log(`Navigating to artifact, artifactId=${item.id}, artifactTypeId: ${artifact.artifactType?.id}`)
+    this.router.navigate(['/artifacts-video'],
+      {queryParams: {artifactId: item.artifact?.id, artifactTypeId: artifact.artifactType?.id}})
   }
 }
