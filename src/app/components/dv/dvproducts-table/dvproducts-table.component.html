@@ -52,7 +52,7 @@
 
         <form [formGroup]="filterForm">
           <div class="flex white-space-nowrap ml-2">
-            <p-selectButton class="mr-1" [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="false" formControlName="artifactTypeId"></p-selectButton>
+            <p-selectButton class="mr-1" [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="false" [allowEmpty]="false" formControlName="artifactTypeId"></p-selectButton>
           </div>
         </form>
 

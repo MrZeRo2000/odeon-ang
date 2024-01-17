@@ -33,7 +33,7 @@
 
           <form [formGroup]="filterForm">
             <div class="flex align-items-center white-space-nowrap ml-2">
-              <p-selectButton [options]="ARTIFACT_VIDEO_TYPES" optionLabel="name" optionValue="code" [multiple]="false" formControlName="artifactType"></p-selectButton>
+              <p-selectButton [options]="ARTIFACT_VIDEO_TYPES" optionLabel="name" optionValue="code" [multiple]="false" [allowEmpty]="false" formControlName="artifactType"></p-selectButton>
             </div>
           </form>
 

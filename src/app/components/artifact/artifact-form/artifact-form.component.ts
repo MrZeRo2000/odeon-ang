@@ -9,6 +9,9 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {IdName} from "../../../model/common";
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {filterIdName} from "../../../utils/search-utils";
+import {MediaFileService} from "../../../service/media-file.service";
+import {catchError, of, Subject, switchMap, tap} from "rxjs";
+import {MediaFile} from "../../../model/media-file";
 
 @Component({
   selector: 'app-artifact-form',
@@ -16,6 +19,7 @@ import {filterIdName} from "../../../utils/search-utils";
   styleUrls: ['./artifact-form.component.scss']
 })
 export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> implements OnInit {
+
   readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES;
 
   @Input()
@@ -35,11 +39,57 @@ export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> imple
 
   editForm: FormGroup = this.fb.group({});
 
+  sizeDurationSubject: Subject<number> = new Subject<number>();
+
+  sizeDurationAction$ = this.sizeDurationSubject.asObservable().pipe(
+    switchMap(v => {
+      return this.mediaFileService.getTable(v).pipe(
+        switchMap(v => {return of(
+          v.reduce<MediaFile>((p: MediaFile, c:MediaFile) => {
+            return {size: p.size + c.size?? 0, duration: p.duration + c.duration?? 0} as MediaFile
+          }, {size: 0, duration: 0} as MediaFile)
+        )}),
+        catchError(() => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Error getting size and duration information`
+          });
+          return of({} as MediaFile);
+        })
+      )
+    }),
+    tap(v => {
+      if (!!v) {
+        if (v.size) {
+          this.editForm.patchValue({"size": v.size})
+        }
+        if (v.duration) {
+          this.editForm.patchValue({"duration": v.duration})
+        }
+        if (v.size || v.duration) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Info',
+            detail: `Updated size and duration`
+          });
+        } else {
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Warning',
+            detail: `Size and duration info not found`
+          });
+        }
+      }
+    })
+  )
+
   constructor(
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
     override messageService: MessageService,
-    private artifactService: ArtifactService
+    private artifactService: ArtifactService,
+    private mediaFileService: MediaFileService,
   ) { super(messageService, artifactService) }
 
   ngOnInit(): void {
@@ -91,5 +141,12 @@ export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> imple
 
   searchPerformerArtists(event: any): void {
     this.filteredPerformerArtists = filterIdName(this.artists, event.query)
+  }
+
+  onUpdateSizeDuration(event: any): void {
+    event.preventDefault();
+    if (this.editItem?.id) {
+      this.sizeDurationSubject.next(this.editItem?.id as number)
+    }
   }
 }

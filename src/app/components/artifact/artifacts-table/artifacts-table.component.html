@@ -34,8 +34,8 @@
 
         <form [formGroup]="filterForm">
           <div class="flex white-space-nowrap ml-2">
-            <p-selectButton class="mr-1" [options]="ARTIST_TYPES" optionLabel="name" optionValue="code" [multiple]="false" formControlName="artistType"></p-selectButton>
-            <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="true" formControlName="artifactTypes"></p-selectButton>
+            <p-selectButton class="mr-1" [options]="ARTIST_TYPES" optionLabel="name" optionValue="code" [multiple]="false" [allowEmpty]="false" formControlName="artistType"></p-selectButton>
+            <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="true" [allowEmpty]="false" formControlName="artifactTypes"></p-selectButton>
           </div>
         </form>
 
