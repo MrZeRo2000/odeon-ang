@@ -1,7 +1,8 @@
 <div *ngIf="databaseBackupInfo$ | async as databaseBackupInfo">
   <p-button
     icon="pi pi-file-export"
-    styleClass="p-button-secondary p-button-text"
+    [text]="true"
+    severity="secondary"
     [pTooltip]="getBackupTooltipText(databaseBackupInfo)"
     tooltipPosition="left"
     (onClick)="backupSubject.next(undefined)"
