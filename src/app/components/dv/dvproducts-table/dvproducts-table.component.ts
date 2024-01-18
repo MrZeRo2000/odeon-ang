@@ -176,7 +176,9 @@ export class DVProductsTableComponent
       return from([0, v.artifactTypeId]).pipe(
         concatMap(v => {
           if (v) {
-            return this.dvProductService.getTable(v as number)
+            return this.dvProductService.getTable(v as number).pipe(
+              tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
+            )
           } else {
             return of(null)
           }
@@ -187,7 +189,6 @@ export class DVProductsTableComponent
       this.dvOriginNames = [... new Set(v?.map(v => v.dvOrigin.name))].sort().map(v => {return {label: v, value: v} as SelectItem});
       this.dvCategoryNames = [... new Set(v?.map(v => v.dvCategories.map(v => v.name)).flat())].sort().map(v => {return {label: v, value: v} as SelectItem});
     }),
-    tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
   )
 
   getFrontInfos(table: Array<DVProduct>): Array<string> {
