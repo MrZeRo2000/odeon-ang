@@ -17,10 +17,10 @@
           <div *ngIf="pi.processingEvent && pi.processingStatus !== SUCCESS_STATUS" class="text-sm font-light ml-2"
                [ngClass]="pi.processingStatus === FAILURE_STATUS ? 'text-white' : 'text-primary'">
             <div *ngIf="pi.processingEvent">
-              {{pi.processingEvent.lastUpdated | date:'dd.MM.YYYY HH:mm:ss'}}
+              {{pi.processingEvent.updateDateTime | date:'dd.MM.YYYY HH:mm:ss'}}
             </div>
             <div *ngIf="pi.processingEvent" class="text-overflow-ellipsis">
-              {{pi.processingEvent.eventText}}
+              {{pi.processingEvent.message}}
             </div>
           </div>
         </div>
@@ -50,13 +50,13 @@
           </ng-template>
           <ng-template pTemplate="body" let-processDetail>
             <tr>
-              <td style="white-space: nowrap">{{processDetail.time | date:'dd.MM.YYYY HH:mm:ss'}}</td>
+              <td style="white-space: nowrap">{{processDetail.updateDateTime | date:'dd.MM.YYYY HH:mm:ss'}}</td>
               <td>
                 <div class="flex align-content-center">
                   <div class="flex align-items-center">
-                    {{processDetail.info.message}}
+                    {{processDetail.message}}
                     <ul class="list-none text-sm" *ngIf="processDetail?.info?.items?.length > 0">
-                      <li *ngFor="let item of processDetail.info.items">{{item}}</li>
+                      <li *ngFor="let item of processDetail.items">{{item}}</li>
                     </ul>
                     <span *ngIf="processDetail.processingAction?.actionType === 'ADD_ARTIST'">
                     <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined ml-2" (click)="resolveActionAddArtist(processDetail.processingAction)"></button>

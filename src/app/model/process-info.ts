@@ -80,27 +80,23 @@ export interface ProcessingAction {
 }
 
 export interface ProcessingEvent {
-  lastUpdated: string;
-  eventText: string;
+  updateDateTime: string;
+  message: string;
 }
 
 export interface ProcessDetail {
-  time: string,
-  info: ProcessDetailInfo,
+  updateDateTime: string,
   rows: number,
   status: string,
-  processingAction: ProcessingAction
-}
-
-export interface ProcessDetailInfo {
   message: string,
-  items: Array<string>
+  items: Array<string>,
+  processingAction: ProcessingAction
 }
 
 export interface ProcessInfo {
   processorType?: string,
   processingStatus?: string,
-  lastUpdated?: string,
+  updateDateTime?: string,
   processDetails?: Array<ProcessDetail>,
   processingEvent?: ProcessingEvent,
 }
