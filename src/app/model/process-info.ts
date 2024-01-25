@@ -94,6 +94,7 @@ export interface ProcessDetail {
 }
 
 export interface ProcessInfo {
+  id?: number,
   processorType?: string,
   processingStatus?: string,
   updateDateTime?: string,

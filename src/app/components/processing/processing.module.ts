@@ -8,6 +8,7 @@ import {TreeModule} from "primeng/tree";
 import {CoreModule} from "../../core/core.module";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
+import {DropdownModule} from "primeng/dropdown";
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {RippleModule} from "primeng/ripple";
     ProgressBarModule,
     ButtonModule,
     RippleModule,
+    DropdownModule,
     //
     CoreModule,
   ]

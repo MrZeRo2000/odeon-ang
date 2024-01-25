@@ -10,7 +10,7 @@ import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {ProcessService} from "../../../service/process.service";
 import {BaseComponent} from "../../base/base.component";
 import {
-  catchError, of,
+  catchError, map, of,
   startWith,
   Subject,
   switchMap,
@@ -18,6 +18,7 @@ import {
 } from "rxjs";
 import {ArtistService} from "../../../service/artist.service";
 import {Artist, ARTIST_TYPES} from "../../../model/artists";
+import {DateFormatter} from "../../../utils/date-utils";
 
 @Component({
   selector: 'app-processing-form',
@@ -166,6 +167,16 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
   readonly SUCCESS_STATUS = ProcessingStatus[ProcessingStatus.SUCCESS];
   readonly FAILURE_STATUS = ProcessingStatus[ProcessingStatus.FAILURE];
 
+  table$ = this.processService.getTable().pipe(
+    map(
+      v => v.map(
+        p => {
+          return {id: p.id, updateDateTime: DateFormatter.formatDateTime(new Date(p.updateDateTime as string))} as ProcessInfo
+        }))
+  );
+
+  private tableRefreshed = false;
+
   processInfo$ = this.action.asObservable().pipe(
     tap(v => {console.log(`value: ${JSON.stringify(v)}`)}),
     startWith(undefined),
@@ -235,8 +246,12 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
       } else {
         return this.processService.getProcessInfo();
       }
-    }
-    )
+    },
+    ),
+    tap (() => {
+      this.tableRefreshed = false;
+      //this.processService.refreshTable()
+    })
   );
 
   constructor(
@@ -278,6 +293,13 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
           this.action.next(processorAction);
         }
       });
+    }
+  }
+
+  onLazyLoad(event: any) {
+    if (!this.tableRefreshed) {
+      this.tableRefreshed = true;
+      this.processService.refreshTable();
     }
   }
 

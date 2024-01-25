@@ -5,6 +5,20 @@
     <p-tree [value]="treeValues" selectionMode="single"
             (onNodeSelect)="nodeSelect($event, pi.processingStatus)">
     </p-tree>
+    <div *ngIf="table$ | async as t" class="field mt-2">
+      <p-dropdown
+        placeholder="Select a Date"
+        [options]="t"
+        optionValue="id"
+        optionLabel="updateDateTime"
+        [showClear]="true"
+        [style]="{'minWidth':'100%'}"
+        [virtualScroll]="true"
+        [virtualScrollItemSize]="38"
+        [lazy]="true"
+        (onLazyLoad)="onLazyLoad($event)"
+      ></p-dropdown>
+    </div>
   </div>
   <div class="lg:col-9 md:col-12 col-12" *ngIf="pi.processingStatus">
     <div class="p-panel p-component">

@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import {ProcessorRequest} from "../model/processor-request";
 import {
-  catchError,
-  interval,
+  BehaviorSubject,
+  catchError, iif,
   map,
   Observable,
-  of,
+  of, shareReplay,
   Subject,
   switchMap,
   takeUntil,
-  takeWhile,
   tap,
   throwError,
   timer
@@ -26,6 +25,14 @@ export class ProcessService {
   processInfo$ = this.getProcessInfo();
 
   private processingStatus$ = new Subject<void>();
+
+  private refreshTable$ = new BehaviorSubject<boolean>(false);
+
+  public refreshTable(): void {
+    this.refreshTable$.next(true);
+  }
+
+  private table$: Observable<Array<ProcessInfo>> = this.getTable();
 
   constructor(private restDataSource: RestDataSourceService) { }
 
@@ -68,8 +75,27 @@ export class ProcessService {
         if (pi.processingStatus === undefined || pi.processingStatus !== ProcessingStatus[ProcessingStatus.IN_PROGRESS]) {
           this.processingStatus$.next();
           this.processingStatus$.complete();
+          this.refreshTable$.next(false);
+          console.log(`ProcessingStatus completed`)
         }
       })
     )
+  }
+
+  getTable(): Observable<Array<ProcessInfo>> {
+    if (!this.table$)
+    {
+      this.table$ = this.refreshTable$.pipe(
+        tap(v => {console.log(`Refreshing process table with ${v}`)}),
+        switchMap(v =>
+          iif(
+            () => v,
+            this.restDataSource.getResponseData<Array<ProcessInfo>>("process/table"),
+            of([]))),
+        shareReplay(1),
+      )
+    }
+
+    return this.table$;
   }
 }
