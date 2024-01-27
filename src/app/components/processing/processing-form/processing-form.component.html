@@ -69,7 +69,7 @@
                 <div class="flex align-content-center">
                   <div class="flex align-items-center">
                     {{processDetail.message}}
-                    <ul class="list-none text-sm" *ngIf="processDetail?.info?.items?.length > 0">
+                    <ul class="list-none text-sm" *ngIf="processDetail?.items?.length > 0">
                       <li *ngFor="let item of processDetail.items">{{item}}</li>
                     </ul>
                     <span *ngIf="processDetail.processingAction?.actionType === 'ADD_ARTIST'">
