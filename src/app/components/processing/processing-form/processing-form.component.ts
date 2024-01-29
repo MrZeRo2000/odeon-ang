@@ -19,6 +19,7 @@ import {
 import {ArtistService} from "../../../service/artist.service";
 import {Artist, ARTIST_TYPES} from "../../../model/artists";
 import {DateFormatter} from "../../../utils/date-utils";
+import {FormBuilder} from "@angular/forms";
 
 @Component({
   selector: 'app-processing-form',
@@ -167,6 +168,15 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
   readonly SUCCESS_STATUS = ProcessingStatus[ProcessingStatus.SUCCESS];
   readonly FAILURE_STATUS = ProcessingStatus[ProcessingStatus.FAILURE];
 
+  dateForm = this.fb.group({
+    selectedDate: [null]
+  })
+
+  dateSelection$ = this.dateForm.valueChanges.pipe(
+    startWith(this.dateForm.value),
+    tap(v => {console.log(`Date selection value: ${JSON.stringify(v)}`)})
+  )
+
   table$ = this.processService.getTable().pipe(
     map(
       v => v.map(
@@ -250,11 +260,11 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
     ),
     tap (() => {
       this.tableRefreshed = false;
-      //this.processService.refreshTable()
     })
   );
 
   constructor(
+    private fb: FormBuilder,
     private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig,
     private messageService: MessageService,
@@ -281,7 +291,7 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
         detail: "Another process is already running"
       })
     } else {
-      console.log('Note select:' + event.node.data);
+      console.log('Node select:' + event.node.data);
       const processorAction: ProcessorType = event.node.data;
       this.confirmationService.confirm({
         message: `Are you sure that you want to execute <strong> ${PROCESSOR_TYPE_NAMES[processorAction]}</strong>?`,

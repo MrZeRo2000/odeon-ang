@@ -9,6 +9,7 @@ import {CoreModule} from "../../core/core.module";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {DropdownModule} from "primeng/dropdown";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {DropdownModule} from "primeng/dropdown";
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     // primeng
     TableModule,
     TreeModule,
