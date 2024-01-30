@@ -82,6 +82,10 @@ export class ProcessService {
     )
   }
 
+  getProcessInfoById(id: number): Observable<ProcessInfo> {
+    return this.restDataSource.getResponseData<ProcessInfo>(`process/${id}`)
+  }
+
   getTable(): Observable<Array<ProcessInfo>> {
     if (!this.table$)
     {
