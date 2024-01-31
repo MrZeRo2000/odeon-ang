@@ -8,6 +8,7 @@ import {
   Artifact,
   isArtifactTypeMusic,
   isArtifactTypeVideo,
+  isArtifactTypeVideoMusic,
   isArtifactTypeVideoWithProducts
 } from "../../../model/artifacts";
 import {ArtifactService} from "../../../service/artifact.service";
@@ -37,6 +38,7 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
   artifactTypeId?: number;
   isArtifactTypeMusic = true;
   isArtifactTypeVideo = false;
+  isArtifactTypeVideoMusic = false;
   isArtifactVideoWithProducts = false;
 
   dataSize = 0;
@@ -209,6 +211,7 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
         this.artifactTypeId = v.artifactType?.id as number;
         this.isArtifactTypeMusic = isArtifactTypeMusic(this.artifactTypeId);
         this.isArtifactTypeVideo = isArtifactTypeVideo(this.artifactTypeId);
+        this.isArtifactTypeVideoMusic = isArtifactTypeVideoMusic(this.artifactTypeId);
         this.isArtifactVideoWithProducts = isArtifactTypeVideoWithProducts(this.artifactTypeId);
       })
     )

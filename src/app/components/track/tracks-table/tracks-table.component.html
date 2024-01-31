@@ -47,19 +47,19 @@
         <th style="width:0" *ngIf="this.dvProductId">Artifact</th>
         <th style="width:0" *ngIf="isArtifactTypeMusic">Disk #</th>
         <th style="width:0;">Track</th>
-        <th *ngIf="data[1].artist?.artistType === 'C'">Artist</th>
+        <th *ngIf="isArtifactTypeVideoMusic || data[1].artist?.artistType === 'C'">Artist</th>
         <th>Title</th>
         <th *ngIf="data[1].artist?.artistType === 'C'">Performer Artist</th>
         <th style="width:0">Duration</th>
         <th style="width:0">Size</th>
         <th style="width:0">Bitrate</th>
         <th style="width:30%">File name</th>
-        <th style="width:0" *ngIf="isArtifactTypeVideo">Product</th>
+        <th style="width:0" *ngIf="isArtifactVideoWithProducts">Product</th>
         <th style="width:0; white-space: nowrap" *ngIf="isArtifactTypeVideo">Video Type</th>
         <th style="width:0" *ngIf="this.artifactId"></th>
       </tr>
       <tr>
-        <th [colSpan]="1 + (this.dvProductId ? 1 : 0) + (isArtifactTypeMusic ? 1 : 0) + 2 + (data[1].artist?.artistType === 'C' ? 2 : 0)">Rows: {{dt.processedData.length}}</th>
+        <th [colSpan]="1 + (this.dvProductId ? 1 : 0) + (isArtifactTypeMusic ? 1 : 0) + (isArtifactTypeVideoMusic ? 1 : 0) + 2 + (data[1].artist?.artistType === 'C' ? 2 : 0)">Rows: {{dt.processedData.length}}</th>
         <th>{{sumByKey(dt.processedData, 'duration')  * 1000 | date:'HH:mm:ss':'GMT'}}</th>
         <th [colSpan]="3 + (isArtifactTypeVideo ? 2 : 0) + (this.artifactId ? 1 : 0)">{{sumByKey(dt.processedData, 'size') | fileSize}}</th>
       </tr>
@@ -71,7 +71,7 @@
         <td style="white-space: nowrap" *ngIf="this.dvProductId"><a href="#" (click)="onArtifactClick($event, item, data[1])">{{item.artifact.title}}</a></td>
         <td *ngIf="isArtifactTypeMusic">{{item.diskNum}}</td>
         <td>{{item.num | number : '2.0-0'}}</td>
-        <td *ngIf="data[1].artist?.artistType === 'C'">{{item.artist?.artistName}}</td>
+        <td *ngIf="isArtifactTypeVideoMusic || data[1].artist?.artistType === 'C'">{{item.artist?.artistName}}</td>
         <td>{{item.title}}</td>
         <td *ngIf="data[1].artist?.artistType === 'C'">{{item.performerArtist?.artistName}}</td>
         <td>{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</td>
@@ -82,7 +82,7 @@
             <div *ngFor="let mediaFile of item.mediaFiles">{{mediaFile.name}}</div>
           </div>
         </td>
-        <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactTypeVideo">
+        <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactVideoWithProducts">
           <div class="flex justify-content-center app-crud-panel-small" *ngIf="item.dvProduct">
             <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayProduct(item)"></button>
           </div>
