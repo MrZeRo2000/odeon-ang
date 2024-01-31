@@ -162,7 +162,7 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
     },
   ];
 
-  private action = new Subject<ProcessorType | ProcessingAction | undefined>();
+  private action = new Subject<ProcessorType | ProcessingAction | {selectedDate: number} | undefined>();
 
   readonly PROGRESS_STATUS = ProcessingStatus[ProcessingStatus.IN_PROGRESS];
   readonly SUCCESS_STATUS = ProcessingStatus[ProcessingStatus.SUCCESS];
@@ -174,14 +174,25 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
 
   dateSelection$ = this.dateForm.valueChanges.pipe(
     startWith(this.dateForm.value),
-    tap(v => {console.log(`Date selection value: ${JSON.stringify(v)}`)})
+    tap(v => {
+      console.log(`Date selection value: ${JSON.stringify(v)}`);
+      if (!!v.selectedDate) {
+        this.action.next({selectedDate: v.selectedDate});
+      } else {
+        this.action.next(undefined);
+      }
+    })
   )
 
   table$ = this.processService.getTable().pipe(
     map(
       v => v.map(
         p => {
-          return {id: p.id, updateDateTime: DateFormatter.formatDateTime(new Date(p.updateDateTime as string))} as ProcessInfo
+          return {
+            id: p.id,
+            updateDateTime: DateFormatter.formatDateTime(new Date(p.updateDateTime as string)),
+            processingStatus: p.processingStatus
+          } as ProcessInfo
         }))
   );
 
@@ -245,6 +256,18 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
             }
           })
         );
+      } else if ('selectedDate' in v) {
+        const selectedDate = v['selectedDate'] as number;
+        return this.processService.getProcessInfoById(selectedDate).pipe(
+          catchError(err => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: `Error getting process data`
+            });
+            return of(undefined);
+          })
+        )
       } else {
         return of({message: undefined})
       }
@@ -254,13 +277,11 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
       if (v !== undefined && 'processingStatus' in v) {
         return of(v as ProcessInfo);
       } else {
+        this.tableRefreshed = false;
         return this.processService.getProcessInfo();
       }
     },
     ),
-    tap (() => {
-      this.tableRefreshed = false;
-    })
   );
 
   constructor(
@@ -307,6 +328,7 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
   }
 
   onLazyLoad(event: any) {
+    console.log('onLazyLoad')
     if (!this.tableRefreshed) {
       this.tableRefreshed = true;
       this.processService.refreshTable();
@@ -330,4 +352,5 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
     this.action.next(ProcessorType[pi.processorType as keyof typeof ProcessorType]);
   }
 
+  protected readonly JSON = JSON;
 }

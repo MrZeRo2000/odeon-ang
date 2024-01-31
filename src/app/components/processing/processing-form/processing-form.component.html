@@ -21,7 +21,18 @@
               [lazy]="true"
               (onLazyLoad)="onLazyLoad($event)"
               formControlName="selectedDate"
-            ></p-dropdown>
+            >
+              <ng-template let-item pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                  <div class="flex inline-flex">{{ item.updateDateTime }}</div>
+                  <span
+                    class="border-circle w-1rem h-1rem flex align-items-center justify-content-center"
+                    [ngClass]="item.processingStatus === SUCCESS_STATUS ? 'bg-success': item.processingStatus === FAILURE_STATUS ? 'bg-failure': ''"
+                    *ngIf="item.processingStatus === SUCCESS_STATUS || item.processingStatus === FAILURE_STATUS"
+                  >&nbsp;</span>
+                </div>
+              </ng-template>
+            </p-dropdown>
           </form>
         </div>
       </ng-container>
