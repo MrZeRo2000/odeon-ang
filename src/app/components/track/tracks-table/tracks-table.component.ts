@@ -238,4 +238,13 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
     this.router.navigate(['/artifacts-video'],
       {queryParams: {artifactId: item.artifact?.id, artifactTypeId: artifact.artifactType?.id}})
   }
+
+  sumTrackSize(data: Track[]): number {
+    const uniqueData = [...
+      new Map(data.map(
+        v => [(v.mediaFiles?? []).length > 0 ? JSON.stringify(v.mediaFiles) : v.id as number, v.size?? 0]))
+        .values()
+    ]
+    return uniqueData.reduce((a, b) => a + b, 0)
+  }
 }
