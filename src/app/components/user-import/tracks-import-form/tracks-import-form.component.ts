@@ -5,9 +5,10 @@ import {DV_TYPES, DVType} from "../../../model/dvtype";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {UserImportService} from "../../../service/user-import.service";
-import {Artifact} from "../../../model/artifacts";
+import {Artifact, isArtifactTypeVideoMusic, isArtifactTypeVideoWithProducts, } from "../../../model/artifacts";
 import {ImportStats, TrackUserImport} from "../../../model/user-import";
 import {catchError, Observable, of, Subject, switchMap, tap} from "rxjs";
+
 
 @Component({
   selector: 'app-tracks-import-form',
@@ -27,13 +28,10 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
   @Output()
   public onImport: EventEmitter<void> = new EventEmitter();
 
-  editForm: FormGroup = this.fb.group({
-    mediaFile: ['', Validators.required],
-    dvType: [8, Validators.required],
-    num: ['', Validators.pattern('[1-9][0-9]*$')],
-    titles: ['', Validators.required],
-    chapters: ['', Validators.required],
-  })
+  isArtifactTypeVideoMusic = false;
+  isArtifactTypeVideoWithProducts = false;
+
+  editForm: FormGroup = this.fb.group({})
 
   private importSubject: Subject<TrackUserImport> = new Subject()
 
@@ -67,10 +65,23 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
     if (this.mediaFiles && this.mediaFiles.length > 0) {
       this.editForm.patchValue({'mediaFile': this.mediaFiles[0].id})
     }
+    this.isArtifactTypeVideoMusic = isArtifactTypeVideoMusic(this.artifact?.artifactType?.id)
+    this.isArtifactTypeVideoWithProducts = isArtifactTypeVideoWithProducts(this.artifact?.artifactType?.id)
+
+    this.editForm = this.fb.group({
+      mediaFile: ['', Validators.required],
+      dvType: [8, Validators.required],
+      num: ['', Validators.pattern('[1-9][0-9]*$')],
+      titles: ['', Validators.required],
+      artists: [''],
+      chapters: ['', this.isArtifactTypeVideoWithProducts ? Validators.required : Validators.nullValidator],
+    })
+
   }
 
   private getFormData(): TrackUserImport {
     const titles = this.editForm.value.titles.split('\n').filter((v: any) => !!v);
+    const artists = this.editForm.value.artists.split('\n').filter((v: any) => !!v);
     const chapters = this.editForm.value.chapters.split('\n').filter((v: any) => !!v);
 
     return {
@@ -79,6 +90,7 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
       dvType: {id: this.editForm.value.dvType} as DVType,
       num: this.editForm.value.num?? null,
       titles,
+      artists,
       chapters
     }
   }

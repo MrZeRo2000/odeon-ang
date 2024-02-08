@@ -55,7 +55,7 @@
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['titles'].errors}"
           ></textarea>
         </div>
-        <div class="field col">
+        <div class="field col" *ngIf="isArtifactTypeVideoWithProducts">
           <label for="chapters">Chapters</label>
           <textarea
             pInputTextarea
@@ -64,6 +64,17 @@
             style="resize: none"
             rows="5"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['chapters'].errors}"
+          ></textarea>
+        </div>
+        <div class="field col" *ngIf="isArtifactTypeVideoMusic">
+          <label for="chapters">Artists</label>
+          <textarea
+            pInputTextarea
+            id="artists"
+            formControlName="artists"
+            style="resize: none"
+            rows="5"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['artists'].errors}"
           ></textarea>
         </div>
       </div>

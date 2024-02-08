@@ -28,5 +28,6 @@ export interface TrackUserImport {
   dvType: IdName;
   num?: number
   titles: Array<string>;
-  chapters: Array<string>;
+  artists?: Array<string>;
+  chapters?: Array<string>;
 }
