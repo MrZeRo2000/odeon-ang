@@ -71,7 +71,7 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
     tap(() => {console.log('Resetting track numbers')}),
     switchMap(v => {
       return this.trackService.resetTrackNumbers(v).pipe(
-        map(_ => {return of(true)}),
+        map(r => {return r.rowsAffected}),
         catchError(err => {
           console.log(`Error:${JSON.stringify(err)}`)
           this.messageService.add({
@@ -79,12 +79,17 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
             summary: 'Error',
             detail: `Error resetting track numbers`
           })
-          return of(false)
+          return of(0)
         })
       )}),
-    tap(success => {
-      console.log(`Reset track numbers result: ${success}`)
-      if (success) {
+    tap(r => {
+      console.log(`Reset track numbers result: ${r}`)
+      if (r > 0) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Info',
+          detail: `Updated ${r} rows`
+        });
         this.loadData();
       }
     })

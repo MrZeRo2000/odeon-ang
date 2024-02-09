@@ -128,6 +128,10 @@ const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
   },
 ]
 
+export interface RowsAffected {
+  rowsAffected: number
+}
+
 export function getTrackConfig(code: number, artistType: string = ""): TrackConfigItem {
   return getConfigItem(TRACK_EDIT_CONFIG, code, artistType)
 }
