@@ -22,4 +22,8 @@ export class TrackService extends CRUDService<Track>{
     return this.restDataSource.getResponseData<Array<Track>>(`track/table`, new HttpParams().set('dvProductId', dvProductId))
   }
 
+  resetTrackNumbers(artifactId: number): Observable<true> {
+    return this.restDataSource.postResponseData(`track/reset-track-numbers/${artifactId}`, null);
+  }
+
 }

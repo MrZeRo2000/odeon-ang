@@ -22,7 +22,17 @@
           <div *ngIf="this.dvProductId">Product&nbsp;<span class="text-primary">{{data[0][0].dvProduct?.title}}</span>&nbsp;Tracks</div>
         </div>
         <div class="flex align-items-center app-crud-panel-small" *ngIf="this.artifactId"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
-        <div class="flex justify-content-end flex-grow-1">
+        <div class="flex align-items-center justify-content-end flex-grow-1">
+          <p-button
+            icon="pi pi-angle-up"
+            styleClass="mr-2"
+            [text]="true"
+            severity="secondary"
+            pTooltip="Reset track numbers"
+            tooltipPosition="left"
+            (onClick)="resetTrackNumbers($event)"
+            *ngIf="isArtifactVideoWithProducts || isArtifactTypeVideoMusic"
+          ></p-button>
           <p-button
             icon="pi pi-file-import"
             styleClass="mr-2"
@@ -115,6 +125,8 @@
     >
     </app-dvproduct-form>
   </ng-container>
+
+  <ng-container *ngIf="resetTrackNumbers$ | async"></ng-container>
 
   <ng-container *ngIf="importTracks$ | async as importTracksData">
     <app-tracks-import-form

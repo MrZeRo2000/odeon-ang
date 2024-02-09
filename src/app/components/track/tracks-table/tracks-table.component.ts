@@ -65,6 +65,31 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
     })
   )
 
+  private resetTrackNumbersSubject: Subject<number> = new Subject();
+
+  resetTrackNumbers$ = this.resetTrackNumbersSubject.asObservable().pipe(
+    tap(() => {console.log('Resetting track numbers')}),
+    switchMap(v => {
+      return this.trackService.resetTrackNumbers(v).pipe(
+        map(_ => {return of(true)}),
+        catchError(err => {
+          console.log(`Error:${JSON.stringify(err)}`)
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Error resetting track numbers`
+          })
+          return of(false)
+        })
+      )}),
+    tap(success => {
+      console.log(`Reset track numbers result: ${success}`)
+      if (success) {
+        this.loadData();
+      }
+    })
+  )
+
   displayImportTracksForm = false;
 
   private importTracksSubject: Subject<void> = new Subject();
@@ -225,6 +250,19 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
   displayProduct(item: Track) {
     console.log(`Display product: ${JSON.stringify(item)}`)
     this.showProductAction.next(item.dvProduct?.id as number);
+  }
+
+  resetTrackNumbers(event: any): void {
+    event.preventDefault();
+    this.confirmationService.confirm({
+      message: "Track numbers will be reset. Are you sure?",
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      defaultFocus: 'reject',
+      accept: () => {
+        this.resetTrackNumbersSubject.next(this.artifactId as number);
+      }
+    })
   }
 
   showImportTracks(event: any): void {
