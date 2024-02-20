@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,8 @@ import {TrackModule} from "./components/track/track.module";
 import {ProcessingModule} from "./components/processing/processing.module";
 import {LayoutModule} from "./components/layout/layout.module";
 import {ToastModule} from "primeng/toast";
+import {AppInfoService} from "./components/layout/app-info.service";
+import {Observable} from "rxjs";
 
 
 @NgModule({
@@ -38,7 +40,22 @@ import {ToastModule} from "primeng/toast";
     ProcessingModule,
     TrackModule,
   ],
-  providers: [MessageService, ConfirmationService, DecimalPipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [
+    MessageService,
+    ConfirmationService,
+    DecimalPipe,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AppInfoService],
+      multi: true
+    }
+  ],
 })
 export class AppModule { }
+
+
+export function initializeApp(appInfoService: AppInfoService): () => Observable<any> {
+  return () => appInfoService.getAppInfo()
+}

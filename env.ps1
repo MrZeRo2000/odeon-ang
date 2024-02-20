@@ -1,2 +1,2 @@
 $env:Path += ";$env:LOCALAPPDATA\Programs\node"
-echo $env:Path
+Write-Host $env:Path -ForegroundColor Cyan
