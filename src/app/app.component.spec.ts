@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import {HeaderComponent} from "./components/header/header.component";
+import {HeaderComponent} from "./components/layout/header/header.component";
 import {ToastModule} from "primeng/toast";
 import {MenubarModule} from "primeng/menubar";
 import {DataSourceModule} from "./data-source/data-source.module";
