@@ -1,7 +1,7 @@
-import {Component, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {MediaFile} from "../../../model/media-file";
-import {UntypedFormBuilder, Validators} from "@angular/forms";
+import {FormGroup, UntypedFormBuilder, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {MediaFileService} from "../../../service/media-file.service";
 
@@ -12,13 +12,10 @@ import {MediaFileService} from "../../../service/media-file.service";
 })
 export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> implements OnChanges {
 
-  editForm = this.fb.group({
-    name: ['', Validators.required],
-    format: ['', Validators.required],
-    size: ['', Validators.required],
-    bitrate: ['', Validators.required],
-    duration: ['', Validators.required],
-  })
+  @Input()
+  isVideo: boolean = false;
+
+  editForm: FormGroup = this.fb.group({});
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -32,13 +29,17 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
     for (const propName of Object.keys(changes)) {
       if (propName == 'editItem') {
         const mediaFileProp = changes[propName];
-        console.log(`changed media file ${JSON.stringify(mediaFileProp.currentValue)}`);
-        this.editForm.setValue({
-          "name": mediaFileProp.currentValue.name?? '',
-          "format": mediaFileProp.currentValue.format?? '',
-          "size": mediaFileProp.currentValue.size?? '',
-          "bitrate": mediaFileProp.currentValue.bitrate?? '',
-          "duration": mediaFileProp.currentValue.duration?? '',
+        console.log(`changed media file ${JSON.stringify(mediaFileProp.currentValue)}, isVideo=${this.isVideo}`);
+
+        this.editForm = this.fb.group({
+          name: [mediaFileProp.currentValue.name?? '', Validators.required],
+          format: [mediaFileProp.currentValue.format?? '', Validators.required],
+          size: [mediaFileProp.currentValue.size?? '', Validators.required],
+          bitrate: [mediaFileProp.currentValue.bitrate?? '', Validators.required],
+          duration: [mediaFileProp.currentValue.duration?? '', Validators.required],
+          width: [mediaFileProp.currentValue.width?? '', this.isVideo ? Validators.required : Validators.nullValidator],
+          height: [mediaFileProp.currentValue.height?? '', this.isVideo ? Validators.required : Validators.nullValidator],
+          extra: [mediaFileProp.currentValue.extra?? ''],
         })
       }
     }
@@ -52,7 +53,10 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
       format: this.editForm.value.format,
       size: this.editForm.value.size,
       bitrate: this.editForm.value.bitrate,
-      duration: this.editForm.value.duration
+      duration: this.editForm.value.duration,
+      width: this.editForm.value.width?? null,
+      height: this.editForm.value.height?? null,
+      extra: this.editForm.value.extra?? null,
     } as MediaFile
   }
 

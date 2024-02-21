@@ -5,5 +5,7 @@ export interface MediaFile {
   format: string,
   size: number,
   bitrate: number,
-  duration: number
+  duration: number,
+  width?: number,
+  height?: number
 }

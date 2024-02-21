@@ -16,27 +16,55 @@
         />
       </div>
 
-      <div class="field">
-        <label for="size">Size ({{this.editForm.value.size | fileSize}})</label>
-        <input type="number" pInputText id="size" formControlName="size"
-               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['size'].errors}"
-        />
+      <div class="grid">
+        <div class="col field">
+          <label for="size">Size ({{this.editForm.value.size | fileSize}})</label>
+          <input type="number" pInputText id="size" formControlName="size"
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['size'].errors}"
+          />
+        </div>
+
+        <div class="col field">
+          <label for="bitrate">Bitrate</label>
+          <input type="number" pInputText id="bitrate" formControlName="bitrate"
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['bitrate'].errors}"
+          />
+        </div>
+
+        <div class="col field">
+          <label for="duration">Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})</label>
+          <input type="number" pInputText id="duration" formControlName="duration"
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
+          />
+        </div>
       </div>
 
-      <div class="field">
-        <label for="bitrate">Bitrate</label>
-        <input type="number" pInputText id="bitrate" formControlName="bitrate"
-               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['bitrate'].errors}"
-        />
+      <div class="grid" *ngIf="isVideo">
+        <div class="col field">
+          <label for="width">Width</label>
+          <input type="number" pInputText id="width" formControlName="width"
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['width'].errors}"
+          />
+        </div>
+
+        <div class="col field">
+          <label for="height">Height</label>
+          <input type="number" pInputText id="height" formControlName="height"
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['height'].errors}"
+          />
+        </div>
       </div>
 
-      <div class="field">
-        <label for="duration">Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})</label>
-        <input type="number" pInputText id="duration" formControlName="duration"
-               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
-        />
+      <div class="field" *ngIf="isVideo">
+        <label for="extra">Extra</label>
+        <textarea
+          pInputTextarea
+          id="extra"
+          formControlName="extra"
+          style="resize: none"
+          rows="5"
+        ></textarea>
       </div>
-
     </form>
 
   </ng-template>

@@ -4,9 +4,9 @@ import {MediaFile} from "../../../model/media-file";
 import {CRUDResult} from "../../../model/crud";
 import {ActivatedRoute} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {catchError, forkJoin, iif, Observable, of} from "rxjs";
+import {catchError, forkJoin, iif, Observable, of, tap} from "rxjs";
 import {MediaFileService} from "../../../service/media-file.service";
-import {Artifact} from "../../../model/artifacts";
+import {Artifact, isArtifactTypeVideo,} from "../../../model/artifacts";
 import {ArtifactService} from "../../../service/artifact.service";
 import {sumByKey} from "../../../utils/calc-utils";
 
@@ -21,6 +21,8 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFile, Medi
   private artifactId?: number;
 
   data$?: Observable<[MediaFile[], Artifact]>;
+
+  isArtifactTypeVideo = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -63,7 +65,11 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFile, Medi
   private getData(): Observable<[MediaFile[], Artifact]> {
     return forkJoin([
         this.getTable(this.artifactId as number),
-        this.getArtifact(this.artifactId as number)
+        this.getArtifact(this.artifactId as number).pipe(
+          tap(v => {
+            this.isArtifactTypeVideo = isArtifactTypeVideo(v.artifactType?.id as number);
+          })
+        )
       ]
     )
   }

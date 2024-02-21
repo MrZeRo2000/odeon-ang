@@ -26,12 +26,14 @@
             <th style="width:0">Duration</th>
             <th style="width:0">Size</th>
             <th style="width:0">Bitrate</th>
+            <th *ngIf="isArtifactTypeVideo" style="width:0">Width</th>
+            <th *ngIf="isArtifactTypeVideo" style="width:0">Height</th>
             <th style="width:0"></th>
           </tr>
           <tr>
             <th colspan="3">Rows: {{dt.processedData.length}}</th>
             <th>{{sumByKey(dt.processedData, 'duration')  * 1000 | date:'HH:mm:ss':'GMT'}}</th>
-            <th colspan="3">{{sumByKey(dt.processedData, 'size') | fileSize}}</th>
+            <th [colSpan]="isArtifactTypeVideo ? 5 : 3">{{sumByKey(dt.processedData, 'size') | fileSize}}</th>
           </tr>
         </ng-template>
 
@@ -43,6 +45,8 @@
             <td>{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</td>
             <td style="text-align: right; white-space: nowrap"><div *ngIf="item.size">{{item.size | fileSize}}</div></td>
             <td style="text-align: right">{{item.bitrate}}</td>
+            <td *ngIf="isArtifactTypeVideo" style="text-align: center">{{item.width}}</td>
+            <td *ngIf="isArtifactTypeVideo" style="text-align: center">{{item.height}}</td>
             <td>
               <div class="app-crud-panel-small">
                 <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
@@ -56,7 +60,7 @@
       <ng-container *ngIf="deleteAction$ | async"></ng-container>
 
       <ng-container *ngIf="editAction$ | async as editItem">
-        <app-media-file-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editItem" (onSavedItem)="savedEditData($event)"></app-media-file-form>
+        <app-media-file-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editItem" [isVideo]="isArtifactTypeVideo" (onSavedItem)="savedEditData($event)"></app-media-file-form>
       </ng-container>
 
     </div>

@@ -14,6 +14,7 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {CoreModule} from "../../core/core.module";
 import {InputTextModule} from "primeng/inputtext";
+import {InputTextareaModule} from "primeng/inputtextarea";
 
 
 @NgModule({
@@ -25,23 +26,24 @@ import {InputTextModule} from "primeng/inputtext";
     MediaFileFormComponent,
     MediaFilesTableComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    // primeng
-    RippleModule,
-    TagModule,
-    ButtonModule,
-    DialogModule,
-    TableModule,
-    SelectButtonModule,
-    AutoCompleteModule,
-    MultiSelectModule,
-    ConfirmPopupModule,
-    InputTextModule,
-    // custom modules
-    CoreModule,
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        // primeng
+        RippleModule,
+        TagModule,
+        ButtonModule,
+        DialogModule,
+        TableModule,
+        SelectButtonModule,
+        AutoCompleteModule,
+        MultiSelectModule,
+        ConfirmPopupModule,
+        InputTextModule,
+        // custom modules
+        CoreModule,
+        InputTextareaModule,
+    ]
 })
 export class MediaFileModule { }
