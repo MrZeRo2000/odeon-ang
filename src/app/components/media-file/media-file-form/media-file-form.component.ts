@@ -1,7 +1,14 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {MediaFile} from "../../../model/media-file";
-import {FormGroup, UntypedFormBuilder, Validators} from "@angular/forms";
+import {
+  AbstractControl,
+  FormGroup,
+  UntypedFormBuilder,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {MediaFileService} from "../../../service/media-file.service";
 
@@ -39,7 +46,7 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
           duration: [mediaFileProp.currentValue.duration?? '', Validators.required],
           width: [mediaFileProp.currentValue.width?? '', this.isVideo ? Validators.required : Validators.nullValidator],
           height: [mediaFileProp.currentValue.height?? '', this.isVideo ? Validators.required : Validators.nullValidator],
-          extra: [mediaFileProp.currentValue.extra?? ''],
+          extra: [mediaFileProp.currentValue.extra?? '', this.createExtraValidator()],
         })
       }
     }
@@ -62,6 +69,42 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
 
   override validate(): boolean {
     return this.editForm.valid;
+  }
+
+  createExtraValidator(): ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null => {
+
+      const value = control.value;
+
+      if (!value) {
+        return null;
+      }
+
+      let object;
+      try {
+        object = JSON.parse(value)
+      } catch (e) {
+        return {extra: "Error parsing extra value"}
+      }
+
+      if (!object.extra) {
+        return {extra: "Extra value not found"}
+      }
+
+      if (!object.extra.length) {
+        return {extra: "Empty array"}
+      }
+
+      for (const element of object.extra) {
+        const dt = new Date(`2000-01-01T${element}`);
+        if (!(dt.getDate())) {
+          return {extra: `Error parsing element ${element}`}
+        }
+      }
+
+      return null;
+
+    }
   }
 
 }
