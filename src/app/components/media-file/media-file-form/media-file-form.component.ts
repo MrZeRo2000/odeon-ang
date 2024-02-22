@@ -63,7 +63,7 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
       duration: this.editForm.value.duration,
       width: this.editForm.value.width?? null,
       height: this.editForm.value.height?? null,
-      extra: this.editForm.value.extra?? null,
+      extra: this.editForm.value.extra.trim().length == 0 ? null : this.editForm.value.extra.trim(),
     } as MediaFile
   }
 
@@ -96,9 +96,12 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
       }
 
       for (const element of object.extra) {
+        if (!element.match(/\d{2}:\d{2}:\d{2}/)) {
+          return {extra: `Error parsing element (match) ${element}`}
+        }
         const dt = new Date(`2000-01-01T${element}`);
         if (!(dt.getDate())) {
-          return {extra: `Error parsing element ${element}`}
+          return {extra: `Error parsing element (date) ${element}`}
         }
       }
 
@@ -107,4 +110,5 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
     }
   }
 
+  protected readonly JSON = JSON;
 }

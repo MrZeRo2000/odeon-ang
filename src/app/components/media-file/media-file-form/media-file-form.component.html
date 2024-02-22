@@ -63,7 +63,11 @@
           formControlName="extra"
           style="resize: none"
           rows="5"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['extra'].errors}"
         ></textarea>
+        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['extra'].errors ? 'visible' : 'hidden'}">
+          {{editForm.controls['extra'].errors?.['extra']}} &nbsp;
+        </small>
       </div>
     </form>
 
