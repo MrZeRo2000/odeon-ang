@@ -95,6 +95,19 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
     })
   )
 
+  displayUpdateDurationsForm = false;
+
+  private updateDurationsSubject = new Subject<void>();
+
+  updateDurations$ = this.updateDurationsSubject.asObservable().pipe(
+    switchMap(() =>
+      this.mediaFileService.getIdNameDurationTable(this.artifactId as number)
+    ),
+    tap(() => {
+      this.displayUpdateDurationsForm = true
+    })
+  )
+
   displayImportTracksForm = false;
 
   private importTracksSubject: Subject<void> = new Subject();
@@ -141,6 +154,11 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
 
   onImport(): void {
     this.displayImportTracksForm = false;
+    this.loadData();
+  }
+
+  onUpdateDurations(): void {
+    this.displayUpdateDurationsForm = false;
     this.loadData();
   }
 
@@ -268,6 +286,11 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
         this.resetTrackNumbersSubject.next(this.artifactId as number);
       }
     })
+  }
+
+  showUpdateDurations(event: any): void {
+    event.preventDefault();
+    this.updateDurationsSubject.next();
   }
 
   showImportTracks(event: any): void {

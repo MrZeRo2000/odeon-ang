@@ -29,6 +29,12 @@ export interface TrackConfigItem extends EditConfigItem {
   hasProducts: boolean,
 }
 
+export interface TrackDurationsUserUpdate {
+  artifact: Artifact,
+  mediaFile: MediaFile,
+  chapters: Array<string>
+}
+
 const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
   {
     code: 101,

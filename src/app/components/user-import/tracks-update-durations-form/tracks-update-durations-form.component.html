@@ -1,0 +1,41 @@
+<p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" styleClass="p-fluid" header="Update Durations">
+  <ng-template pTemplate="content">
+    <form [formGroup]="editForm">
+      <div class="field mt-2">
+        <label for="mediaFile">Media File</label>
+        <p-dropdown
+          formControlName="mediaFile"
+          id="mediaFile"
+          [options]="mediaFiles"
+          optionLabel="name"
+          optionValue="id"
+          appendTo="body"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['mediaFile'].errors}"
+        ></p-dropdown>
+      </div>
+
+      <div class="field">
+        <label for="chapters">
+          Chapters
+          <span *ngIf="this.editForm.value.mediaFile" (click)="onUpdateChaptersFromMediaFile($event, this.editForm.value.mediaFile)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
+        </label>
+        <textarea
+          pInputTextarea
+          id="chapters"
+          formControlName="chapters"
+          style="resize: none"
+          rows="5"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['chapters'].errors}"
+        ></textarea>
+      </div>
+
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Update" icon="pi pi-play" class="p-button-text" (click)="this.execute()"></button>
+  </ng-template>
+</p-dialog>
+
+<ng-container *ngIf="update$ | async"></ng-container>
+<ng-container *ngIf="updateChapters$ | async"></ng-container>

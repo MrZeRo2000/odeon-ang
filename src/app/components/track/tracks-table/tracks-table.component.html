@@ -34,6 +34,16 @@
             *ngIf="isArtifactVideoWithProducts || isArtifactTypeVideoMusic"
           ></p-button>
           <p-button
+            icon="pi pi-arrows-h"
+            styleClass="mr-2"
+            [text]="true"
+            severity="secondary"
+            pTooltip="Update durations"
+            tooltipPosition="left"
+            (onClick)="showUpdateDurations($event)"
+            *ngIf="isArtifactTypeVideo"
+          ></p-button>
+          <p-button
             icon="pi pi-file-import"
             styleClass="mr-2"
             [text]="true"
@@ -137,6 +147,17 @@
       (onImport)="onImport()"
     >
     </app-tracks-import-form>
+  </ng-container>
+
+  <ng-container *ngIf="updateDurations$ | async as updateDurationsData">
+    <app-tracks-update-durations-form
+      *ngIf="displayUpdateDurationsForm"
+      [(display)]="displayUpdateDurationsForm"
+      [artifact]="data[1]"
+      [mediaFiles]="updateDurationsData"
+      (onImport)="onUpdateDurations()"
+    >
+    </app-tracks-update-durations-form>
   </ng-container>
 
 </div>

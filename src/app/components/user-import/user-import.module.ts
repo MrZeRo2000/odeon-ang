@@ -16,6 +16,9 @@ import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import { TracksImportFormComponent } from './tracks-import-form/tracks-import-form.component';
 import {InputNumberModule} from "primeng/inputnumber";
+import {
+  TracksUpdateDurationsFormComponent
+} from "./tracks-update-durations-form/tracks-update-durations-form.component";
 
 
 @NgModule({
@@ -23,11 +26,13 @@ import {InputNumberModule} from "primeng/inputnumber";
     DVProductsImportFormComponent,
     TracksImportFormComponent,
     UserImportResultFormComponent,
+    TracksUpdateDurationsFormComponent,
   ],
   exports: [
     DVProductsImportFormComponent,
     TracksImportFormComponent,
     UserImportResultFormComponent,
+    TracksUpdateDurationsFormComponent,
   ],
     imports: [
         ReactiveFormsModule,
