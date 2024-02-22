@@ -93,7 +93,7 @@ const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
     hasArtist: true,
     hasPerformerArtist: false,
     hasDvType: true,
-    hasDiskNum: true,
+    hasDiskNum: false,
     hasProducts: false,
   },
   {

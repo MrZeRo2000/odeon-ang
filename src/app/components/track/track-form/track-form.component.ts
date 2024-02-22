@@ -70,10 +70,10 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
     this.editForm = this.fb.group({
       artistId: this.editItem?.artist?.id ? {id: this.editItem.artist?.id, name: this.editItem.artist?.artistName} : '',
       performerArtistId: this.editItem?.performerArtist?.id ? {id: this.editItem.performerArtist?.id, name: this.editItem.performerArtist?.artistName} : '',
-      dvTypeId: ['', this.artifactTypeConfig?.hasDvType? Validators.required : null],
+      dvTypeId: ['', this.artifactTypeConfig?.hasDvType? Validators.required : Validators.nullValidator],
       title: ['', Validators.required],
       duration: [''],
-      diskNum: ['', this.artifactTypeConfig?.hasDiskNum? Validators.required : null],
+      diskNum: ['', this.artifactTypeConfig?.hasDiskNum? Validators.required : Validators.nullValidator],
       num: ['1', Validators.required],
       mediaFileIds: [[]],
       dvProductId: [''],
@@ -146,7 +146,7 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
     return {
       id: this.editItem?.id,
       artifact: this.editItem?.artifact as Artifact,
-      diskNum: this.editForm.value.diskNum,
+      diskNum: this.artifactTypeConfig?.hasDiskNum ? this.editForm.value.diskNum : null,
       num: this.editForm.value.num,
       artist: {id: this.editForm.value.artistId?.id, artistName: this.editForm.value.artistId?.name} as Artist,
       performerArtist: {id: this.editForm.value.performerArtistId?.id, artistName: this.editForm.value.performerArtistId?.name} as Artist,
