@@ -53,7 +53,6 @@ export class TracksUpdateDurationsFormComponent extends BaseFormComponent {
   updateChapters$ = this.updateChaptersSubject.asObservable().pipe(
     switchMap(v => this.mediaFileService.get(v).pipe(
       tap(r => {
-        console.log(`Got media file data: ${JSON.stringify(r)}`)
         const extra = JSON.parse(r.extra as string)["extra"];
         this.editForm.patchValue({'chapters': extra.join('\n')})
 
@@ -87,14 +86,12 @@ export class TracksUpdateDurationsFormComponent extends BaseFormComponent {
   execute(): void {
     this.submitted = true;
     if (this.editForm.valid) {
-      console.log(`Form data: ${JSON.stringify(this.getFormData())}`)
       this.updateSubject.next(this.getFormData())
     }
   }
 
   onUpdateChaptersFromMediaFile(event: any, value: string) {
     event.preventDefault();
-    console.log(`Value: ${value}`);
     this.updateChaptersSubject.next(Number.parseInt(value, 10))
   }
 }
