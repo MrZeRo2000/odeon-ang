@@ -106,20 +106,23 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
     this.editFormData$ = this.editForm.valueChanges.pipe(
       tap(v => {
         if (this.editMediaFileIds !== v["mediaFileIds"]) {
-          const mediaFileDuration = this.mediaFileTable
-            .filter(m => v["mediaFileIds"].indexOf(m.id) !== -1)
-            .map(m => m.duration)
-            .reduce((m, a) => m + a, 0);
-          if ((mediaFileDuration > 0) && (mediaFileDuration !== this.editForm.value.duration)) {
-            setTimeout(() => {
-              this.editForm.patchValue({"duration": mediaFileDuration})
-            }, 0)
-          }
-
+          this.updateFormDuration(v["mediaFileIds"]);
           this.editMediaFileIds = v["mediaFileIds"]
         }
       })
     );
+  }
+
+  updateFormDuration(ids: Array<number>): void {
+    const mediaFileDuration = this.mediaFileTable
+      .filter(m => ids.indexOf(m.id as number) !== -1)
+      .map(m => m.duration)
+      .reduce((m, a) => m + a, 0);
+    if ((mediaFileDuration > 0) && (mediaFileDuration !== this.editForm.value.duration)) {
+      setTimeout(() => {
+        this.editForm.patchValue({"duration": mediaFileDuration})
+      }, 0)
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -168,5 +171,10 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
 
   searchDvProducts(event: any): void {
     this.filteredDvProducts = filterIdTitle(this.dvProductsTable, event.query)
+  }
+
+  onUpdateDuration(event: any): void {
+    event.preventDefault();
+    this.updateFormDuration(this.editForm.value.mediaFileIds)
   }
 }

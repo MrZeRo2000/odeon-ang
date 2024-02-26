@@ -26,7 +26,10 @@
           </div>
 
           <div class="field mb-0" [ngClass]="artifactTypeConfig?.hasDvType ? 'col-6' : 'col-12'">
-            <label for="duration">Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})</label>
+            <label for="duration">
+              Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})
+              <span *ngIf="this.editMediaFileIds.length > 0" (click)="onUpdateDuration($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
+            </label>
             <input type="number" pInputText id="duration" formControlName="duration"
                    [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
             />
@@ -74,7 +77,7 @@
 
           <div class="field col-12 mb-0">
             <label for="mediaFileIds">Media files</label>
-            <p-multiSelect [options]="mediaFileTable" optionLabel="name" optionValue="id" id="mediaFileIds" formControlName="mediaFileIds"></p-multiSelect>
+            <p-multiSelect [options]="mediaFileTable" optionLabel="name" optionValue="id" id="mediaFileIds" formControlName="mediaFileIds" appendTo="body"></p-multiSelect>
           </div>
 
           <div class="field col-12" *ngIf="artifactTypeConfig?.hasProducts">
