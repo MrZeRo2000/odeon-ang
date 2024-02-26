@@ -1,34 +1,40 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Update Durations">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
-      <div class="grid mt-2">
-        <div class="col field">
-          <label for="mediaFile">Media File</label>
-          <p-dropdown
-            formControlName="mediaFile"
-            id="mediaFile"
-            [options]="mediaFiles"
-            optionLabel="name"
-            optionValue="id"
-            appendTo="body"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['mediaFile'].errors}"
-          ></p-dropdown>
-        </div>
+      <div class="field">
+        <label for="mediaFile">
+          Media File<span *ngIf="editFormData$ | async as editFormData">&nbsp; {{getMediaFileDuration(editFormData.mediaFile) * 1000 | date:'HH:mm:ss':'GMT'}}</span>
+        </label>
+        <p-dropdown
+          formControlName="mediaFile"
+          id="mediaFile"
+          [options]="mediaFiles"
+          optionLabel="name"
+          optionValue="id"
+          appendTo="body"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['mediaFile'].errors}"
+        ></p-dropdown>
+      </div>
 
-        <div class="col field">
-          <label for="chapters">
-            Chapters
-            <span *ngIf="this.editForm.value.mediaFile" (click)="onUpdateChaptersFromMediaFile($event, this.editForm.value.mediaFile)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
-          </label>
-          <textarea
-            pInputTextarea
-            id="chapters"
-            formControlName="chapters"
-            style="resize: none"
-            rows="10"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['chapters'].errors}"
-          ></textarea>
-        </div>
+      <div class="field">
+        <label for="chapters">
+          Chapters
+          <span *ngIf="this.editForm.value.mediaFile" (click)="onUpdateChaptersFromMediaFile($event, this.editForm.value.mediaFile)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
+          <span *ngIf="editFormData$ | async as editFormData">
+            <span *ngIf="getChapters(editFormData.chapters || '').length > 0">
+              ({{getChapters(editFormData.chapters || "").length}} lines)
+            </span>
+          </span>
+        </label>
+        <textarea
+          pInputTextarea
+          id="chapters"
+          formControlName="chapters"
+          style="resize: none"
+          [autoResize]="true"
+          rows="10"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['chapters'].errors}"
+        ></textarea>
       </div>
 
     </form>

@@ -29,6 +29,8 @@ export class TracksUpdateDurationsFormComponent extends BaseFormComponent {
     chapters: ['', Validators.required],
   })
 
+  editFormData$ = this.editForm.valueChanges;
+
   updateSubject = new Subject<TrackDurationsUserUpdate>();
 
   update$ = this.updateSubject.asObservable().pipe(
@@ -73,8 +75,12 @@ export class TracksUpdateDurationsFormComponent extends BaseFormComponent {
     super();
   }
 
+  getChapters(value: string): Array<string> {
+    return value.split('\n').filter((v: any) => !!v);
+  }
+
   private getFormData(): TrackDurationsUserUpdate {
-    const chapters = (this.editForm.value.chapters as string).split('\n').filter((v: any) => !!v);
+    const chapters = this.getChapters(this.editForm.value.chapters as string);
 
     return {
       artifact: this.artifact as Artifact,
@@ -93,5 +99,9 @@ export class TracksUpdateDurationsFormComponent extends BaseFormComponent {
   onUpdateChaptersFromMediaFile(event: any, value: string) {
     event.preventDefault();
     this.updateChaptersSubject.next(Number.parseInt(value, 10))
+  }
+
+  getMediaFileDuration(value: string | null | undefined): number {
+    return this.mediaFiles.find(v => v.id as number === Number.parseInt(value?? "0", 10))?.duration ?? 0
   }
 }
