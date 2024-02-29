@@ -42,10 +42,16 @@
           ></p-dropdown>
         </div>
       </div>
-
       <div class="grid">
         <div class="field col">
-          <label for="titles">Titles</label>
+          <label for="titles">
+            Titles
+            <span *ngIf="editFormData$ | async as editFormData">
+              <span *ngIf="textToArray(editFormData.titles).length > 0">
+                ({{textToArray(editFormData.titles).length}} lines)
+              </span>
+            </span>
+          </label>
           <textarea
             pInputTextarea
             id="titles"
@@ -56,7 +62,9 @@
           ></textarea>
         </div>
         <div class="field col" *ngIf="isArtifactTypeVideoWithProducts">
-          <label for="chapters">Chapters</label>
+          <label for="chapters">
+            Chapters
+          </label>
           <textarea
             pInputTextarea
             id="chapters"
@@ -67,7 +75,14 @@
           ></textarea>
         </div>
         <div class="field col" *ngIf="isArtifactTypeVideoMusic">
-          <label for="chapters">Artists</label>
+          <label for="chapters">
+            Artists
+            <span *ngIf="editFormData$ | async as editFormData">
+              <span *ngIf="textToArray(editFormData.artists).length > 0">
+                ({{textToArray(editFormData.artists).length}} lines)
+              </span>
+            </span>
+          </label>
           <textarea
             pInputTextarea
             id="artists"

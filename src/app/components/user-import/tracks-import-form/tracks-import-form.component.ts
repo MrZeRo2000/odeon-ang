@@ -8,6 +8,7 @@ import {UserImportService} from "../../../service/user-import.service";
 import {Artifact, isArtifactTypeVideoMusic, isArtifactTypeVideoWithProducts, } from "../../../model/artifacts";
 import {ImportStats, TrackUserImport} from "../../../model/user-import";
 import {catchError, Observable, of, Subject, switchMap, tap} from "rxjs";
+import {textToArray} from "../../../utils/form-utils";
 
 
 @Component({
@@ -16,6 +17,8 @@ import {catchError, Observable, of, Subject, switchMap, tap} from "rxjs";
   styleUrls: ['./tracks-import-form.component.scss']
 })
 export class TracksImportFormComponent extends BaseFormComponent implements OnInit {
+  textToArray = textToArray
+
   DV_TYPES = DV_TYPES;
   readonly NUM_OPTIONS = [{'id': 1, 'name': '1'}]
 
@@ -32,6 +35,8 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
   isArtifactTypeVideoWithProducts = false;
 
   editForm: FormGroup = this.fb.group({})
+
+  editFormData$ = this.editForm.valueChanges;
 
   private importSubject: Subject<TrackUserImport> = new Subject()
 
@@ -77,12 +82,13 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
       chapters: ['', this.isArtifactTypeVideoWithProducts ? Validators.required : Validators.nullValidator],
     })
 
+    this.editFormData$ = this.editForm.valueChanges;
   }
 
   private getFormData(): TrackUserImport {
-    const titles = this.editForm.value.titles.split('\n').filter((v: any) => !!v);
-    const artists = this.editForm.value.artists.split('\n').filter((v: any) => !!v);
-    const chapters = this.editForm.value.chapters.split('\n').filter((v: any) => !!v);
+    const titles = textToArray(this.editForm.value.titles);
+    const artists = textToArray(this.editForm.value.artists);
+    const chapters = textToArray(this.editForm.value.chapters);
 
     return {
       artifact: this.artifact as Artifact,

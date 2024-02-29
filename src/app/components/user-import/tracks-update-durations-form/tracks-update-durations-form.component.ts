@@ -8,6 +8,7 @@ import {catchError, of, Subject, switchMap, tap} from "rxjs";
 import {TrackDurationsUserUpdate} from "../../../model/track";
 import {TrackService} from "../../../service/track.service";
 import {MediaFileService} from "../../../service/media-file.service";
+import {textToArray} from "../../../utils/form-utils";
 
 @Component({
   selector: 'app-tracks-update-durations-form',
@@ -76,7 +77,7 @@ export class TracksUpdateDurationsFormComponent extends BaseFormComponent {
   }
 
   getChapters(value: string): Array<string> {
-    return value.split('\n').filter((v: any) => !!v);
+    return textToArray(value)
   }
 
   private getFormData(): TrackDurationsUserUpdate {
