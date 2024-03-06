@@ -1,0 +1,26 @@
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Update Video Types">
+  <ng-template pTemplate="content">
+    <form [formGroup]="editForm">
+      <div class="field">
+        <label for="dvType">Video Type</label>
+        <p-dropdown
+          id="dvType"
+          [options]="DV_TYPES"
+          optionLabel="name"
+          optionValue="id"
+          formControlName="dvTypeId"
+          appendTo="body"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['dvTypeId'].errors}"
+        ></p-dropdown>
+      </div>
+
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Update" icon="pi pi-play" class="p-button-text" (click)="this.execute()"></button>
+  </ng-template>
+</p-dialog>
+
+<ng-container *ngIf="update$ | async"></ng-container>
+

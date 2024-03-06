@@ -29,27 +29,27 @@ import {TooltipModule} from "primeng/tooltip";
     TrackFormComponent,
     TracksTableComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    // primeng
-    RippleModule,
-    ButtonModule,
-    DialogModule,
-    TableModule,
-    SelectButtonModule,
-    DropdownModule,
-    InputNumberModule,
-    InputTextModule,
-    TooltipModule,
-    AutoCompleteModule,
-    MultiSelectModule,
-    ConfirmPopupModule,
-    // custom modules
-    CoreModule,
-    DVModule,
-    UserImportModule,
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        // primeng
+        RippleModule,
+        ButtonModule,
+        DialogModule,
+        TableModule,
+        SelectButtonModule,
+        DropdownModule,
+        InputNumberModule,
+        InputTextModule,
+        TooltipModule,
+        AutoCompleteModule,
+        MultiSelectModule,
+        ConfirmPopupModule,
+        // custom modules
+        CoreModule,
+        DVModule,
+        UserImportModule,
+    ]
 })
 export class TrackModule { }

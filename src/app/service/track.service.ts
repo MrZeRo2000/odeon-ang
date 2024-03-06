@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {RowsAffected, Track, TrackDurationsUserUpdate} from "../model/track";
+import {RowsAffected, Track, TrackDurationsUserUpdate, TrackDVTypeUserUpdate} from "../model/track";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {CRUDService} from "./crud.service";
 import {HttpParams} from "@angular/common/http";
@@ -24,6 +24,10 @@ export class TrackService extends CRUDService<Track>{
 
   resetTrackNumbers(artifactId: number): Observable<RowsAffected> {
     return this.restDataSource.postResponseData<RowsAffected>(`track/reset-track-numbers/${artifactId}`, null);
+  }
+
+  updateVideoTypes(videoTypes: TrackDVTypeUserUpdate): Observable<RowsAffected> {
+    return this.restDataSource.postResponseData<RowsAffected>(`track/update-track-video-types`, videoTypes);
   }
 
   updateTrackDurations(trackDurations: TrackDurationsUserUpdate): Observable<RowsAffected> {

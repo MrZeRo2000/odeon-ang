@@ -29,6 +29,11 @@ export interface TrackConfigItem extends EditConfigItem {
   hasProducts: boolean,
 }
 
+export interface TrackDVTypeUserUpdate {
+  artifact: Artifact,
+  dvType: DVType
+}
+
 export interface TrackDurationsUserUpdate {
   artifact: Artifact,
   mediaFile: MediaFile,

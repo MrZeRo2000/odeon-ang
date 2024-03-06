@@ -108,6 +108,17 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
     })
   )
 
+  displayUpdateVideoTypesForm = false;
+
+  private updateVideoTypesSubject = new Subject<void>();
+
+  updateVideoTypes$ = this.updateVideoTypesSubject.asObservable().pipe(
+    tap(() => {
+      this.displayUpdateVideoTypesForm = true
+      console.log(`updateVideoTypes$ event: ${this.displayUpdateVideoTypesForm}`);
+    })
+  )
+
   displayImportTracksForm = false;
 
   private importTracksSubject: Subject<void> = new Subject();
@@ -154,6 +165,11 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
 
   onImport(): void {
     this.displayImportTracksForm = false;
+    this.loadData();
+  }
+
+  onUpdateVideoTypes(): void {
+    this.displayUpdateVideoTypesForm = false;
     this.loadData();
   }
 
@@ -286,6 +302,11 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
         this.resetTrackNumbersSubject.next(this.artifactId as number);
       }
     })
+  }
+
+  showUpdateDVTypes(event: any): void {
+    event.preventDefault();
+    this.updateVideoTypesSubject.next();
   }
 
   showUpdateDurations(event: any): void {

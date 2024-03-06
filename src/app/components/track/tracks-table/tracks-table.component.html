@@ -44,6 +44,16 @@
             *ngIf="isArtifactTypeVideo"
           ></p-button>
           <p-button
+            icon="pi pi-tag"
+            styleClass="mr-2"
+            [text]="true"
+            severity="secondary"
+            pTooltip="Update video types"
+            tooltipPosition="left"
+            (onClick)="showUpdateDVTypes($event)"
+            *ngIf="isArtifactTypeVideo"
+          ></p-button>
+          <p-button
             icon="pi pi-file-import"
             styleClass="mr-2"
             [text]="true"
@@ -148,6 +158,16 @@
     >
     </app-tracks-import-form>
   </ng-container>
+
+  <ng-container *ngIf="updateVideoTypes$ | async"></ng-container>
+
+  <app-tracks-update-video-types-form
+    *ngIf="displayUpdateVideoTypesForm"
+    [(display)]="displayUpdateVideoTypesForm"
+    [artifact]="data[1]"
+    (onImport)="onUpdateVideoTypes()"
+  />
+
 
   <ng-container *ngIf="updateDurations$ | async as updateDurationsData">
     <app-tracks-update-durations-form

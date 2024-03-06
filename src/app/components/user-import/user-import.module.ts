@@ -19,6 +19,9 @@ import {InputNumberModule} from "primeng/inputnumber";
 import {
   TracksUpdateDurationsFormComponent
 } from "./tracks-update-durations-form/tracks-update-durations-form.component";
+import {
+  TracksUpdateVideoTypesFormComponent
+} from "./tracks-update-video-types-form/tracks-update-video-types-form.component";
 
 
 @NgModule({
@@ -27,12 +30,14 @@ import {
     TracksImportFormComponent,
     UserImportResultFormComponent,
     TracksUpdateDurationsFormComponent,
+    TracksUpdateVideoTypesFormComponent,
   ],
   exports: [
     DVProductsImportFormComponent,
     TracksImportFormComponent,
     UserImportResultFormComponent,
     TracksUpdateDurationsFormComponent,
+    TracksUpdateVideoTypesFormComponent,
   ],
     imports: [
         ReactiveFormsModule,
