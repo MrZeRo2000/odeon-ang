@@ -19,9 +19,23 @@
       <div class="field">
         <label for="chapters">
           Chapters
-          <span *ngIf="this.editForm.value.mediaFile" (click)="onUpdateChaptersFromMediaFile($event, this.editForm.value.mediaFile)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
+          <span
+            *ngIf="this.editForm.value.mediaFile"
+            class="cursor-pointer mr-2"
+            (click)="onUpdateChaptersFromMediaFile($event, this.editForm.value.mediaFile)"
+            pTooltip="Update chapters from file"
+          >
+            <i class="pi pi-download"></i>
+          </span>
           <span *ngIf="editFormData$ | async as editFormData">
-            <span *ngIf="getChapters(editFormData.chapters || '').length > 0">
+            <span *ngIf="this.editForm.value.mediaFile && getChapters(editFormData.chapters || '').length > 0">
+              <span
+                class="cursor-pointer"
+                pTooltip="Convert durations to chapters"
+                (click)="onConvertDurationsToChapters($event, this.editForm.value.mediaFile, getChapters(editFormData.chapters || ''))"
+              >
+                <i class="pi pi-refresh"></i>
+              </span>
               ({{getChapters(editFormData.chapters || "").length}} lines)
             </span>
           </span>

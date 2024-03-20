@@ -9,6 +9,7 @@ import {TrackDurationsUserUpdate} from "../../../model/track";
 import {TrackService} from "../../../service/track.service";
 import {MediaFileService} from "../../../service/media-file.service";
 import {textToArray} from "../../../utils/form-utils";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-tracks-update-durations-form',
@@ -72,6 +73,7 @@ export class TracksUpdateDurationsFormComponent extends BaseFormComponent {
     private messageService: MessageService,
     private trackService: TrackService,
     private mediaFileService: MediaFileService,
+    private datePipe: DatePipe,
   ) {
     super();
   }
@@ -100,6 +102,30 @@ export class TracksUpdateDurationsFormComponent extends BaseFormComponent {
   onUpdateChaptersFromMediaFile(event: any, value: string) {
     event.preventDefault();
     this.updateChaptersSubject.next(Number.parseInt(value, 10))
+  }
+
+  onConvertDurationsToChapters(event: any, mediaFile: string, chapters: string[]): void {
+    event.preventDefault();
+    // console.log(`onConvertDurationsToChapters mediaFile=${mediaFile}, chapters=${chapters}, duration=${this.getMediaFileDuration(mediaFile)}`)
+    const numChapters: number[] = chapters.map(v => Number.parseInt(v, 10)).filter(v => !isNaN(v))
+
+    if (numChapters.length > 0) {
+      const duration = numChapters.reduce((a, v) => a + v, 0)
+      const targetDuration = this.getMediaFileDuration(mediaFile);
+
+      const accChapters = numChapters.reduce(
+        (a, v) => {
+          a.push((a[a.length-1] || 0)  + Math.floor(v * targetDuration / duration));
+          return a;},
+        [] as number[])
+      if (accChapters.length > 1) {
+
+        const timeChapters = accChapters.map(
+          v => this.datePipe.transform(v * 1000, 'HH:mm:ss', 'GMT'))
+
+        this.editForm.patchValue({'chapters': timeChapters.slice(0, -1).join("\n")})
+      }
+    }
   }
 
   getMediaFileDuration(value: string | null | undefined): number {

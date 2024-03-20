@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {DVProductsImportFormComponent} from "./dvproducts-import-form/dvproducts-import-form.component";
 import {
   UserImportResultFormComponent
@@ -22,6 +22,7 @@ import {
 import {
   TracksUpdateVideoTypesFormComponent
 } from "./tracks-update-video-types-form/tracks-update-video-types-form.component";
+import {TooltipModule} from "primeng/tooltip";
 
 
 @NgModule({
@@ -39,19 +40,23 @@ import {
     TracksUpdateDurationsFormComponent,
     TracksUpdateVideoTypesFormComponent,
   ],
-    imports: [
-        ReactiveFormsModule,
-        CommonModule,
-        DialogModule,
-        PanelModule,
-        TabViewModule,
-        MultiSelectModule,
-        AutoCompleteModule,
-        DropdownModule,
-        InputTextareaModule,
-        ButtonModule,
-        RippleModule,
-        InputNumberModule
-    ]
+  imports: [
+      ReactiveFormsModule,
+      CommonModule,
+      DialogModule,
+      PanelModule,
+      TabViewModule,
+      MultiSelectModule,
+      AutoCompleteModule,
+      DropdownModule,
+      InputTextareaModule,
+      ButtonModule,
+      RippleModule,
+      InputNumberModule,
+      TooltipModule,
+  ],
+  providers: [
+    DatePipe,
+  ]
 })
 export class UserImportModule { }
