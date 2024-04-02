@@ -7,12 +7,11 @@ import {ProcessorTypeNamePipe} from "./pipes/processor-type-name.pipe";
 import {CrudPanelComponent} from "./components/crud-panel/crud-panel.component";
 import {LoadingComponent} from "./components/loading/loading.component";
 import {ProgressBarModule} from "primeng/progressbar";
-import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog.component";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {RippleModule} from "primeng/ripple";
 import {TextViewDialogComponent} from "./components/text-view-dialog/text-view-dialog.component";
 import {DialogModule} from "primeng/dialog";
-
+import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog.component";
 
 
 @NgModule({
@@ -43,9 +42,9 @@ import {DialogModule} from "primeng/dialog";
   imports: [
     CommonModule,
     ProgressBarModule, // for loading
+    DialogModule, // for text view dialog
     ConfirmDialogModule, // for confirm dialog
     RippleModule,
-    DialogModule, // for text view dialog
   ]
 })
 export class CoreModule { }

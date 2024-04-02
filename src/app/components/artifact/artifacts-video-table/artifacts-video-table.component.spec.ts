@@ -6,6 +6,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {LoadingComponent} from "../../../core/components/loading/loading.component";
+import {ConfirmDialogComponent} from "../../../core/components/confirm-dialog/confirm-dialog.component";
 
 describe('ArtifactsVideoTableComponent', () => {
   let component: ArtifactsVideoTableComponent;
@@ -27,6 +28,7 @@ describe('ArtifactsVideoTableComponent', () => {
       ],
       declarations: [
         LoadingComponent,
+        ConfirmDialogComponent,
         ArtifactsVideoTableComponent
       ]
     })

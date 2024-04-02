@@ -12,13 +12,15 @@ describe('ConfirmDialogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ConfirmDialogModule,
         DialogModule,
+        ConfirmDialogModule,
       ],
       providers: [
         ConfirmationService
       ],
-      declarations: [ ConfirmDialogComponent ]
+      declarations: [
+        ConfirmDialogComponent
+      ]
     })
     .compileComponents();
   });

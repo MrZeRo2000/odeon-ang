@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TextViewDialogComponent } from './text-view-dialog.component';
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {DialogModule} from "primeng/dialog";
 
 describe('TextViewDialogComponent', () => {
   let component: TextViewDialogComponent;
@@ -8,7 +10,14 @@ describe('TextViewDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TextViewDialogComponent ]
+      declarations: [
+        TextViewDialogComponent
+      ],
+      imports: [
+        // primeng
+        DialogModule,
+        ConfirmDialogModule,
+      ]
     })
     .compileComponents();
 

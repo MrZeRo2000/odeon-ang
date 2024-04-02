@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserImportResultFormComponent } from './user-import-result-form.component';
+import {DialogModule} from "primeng/dialog";
 
 describe('DVProductsImportResultFormComponent', () => {
   let component: UserImportResultFormComponent;
@@ -8,7 +9,12 @@ describe('DVProductsImportResultFormComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [UserImportResultFormComponent]
+      declarations: [
+        UserImportResultFormComponent
+      ],
+      imports: [
+        DialogModule,
+      ]
     });
     fixture = TestBed.createComponent(UserImportResultFormComponent);
     component = fixture.componentInstance;

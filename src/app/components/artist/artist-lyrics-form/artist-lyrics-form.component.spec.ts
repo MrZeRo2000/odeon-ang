@@ -6,6 +6,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {DialogModule} from "primeng/dialog";
 
 describe('ArtistLyricsFormComponent', () => {
   let component: ArtistLyricsFormComponent;
@@ -18,6 +19,7 @@ describe('ArtistLyricsFormComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         //library
+        DialogModule,
         ConfirmDialogModule,
         //custom
         DataSourceModule,

@@ -59,7 +59,7 @@ export class DVProductFormComponent extends BaseCrudFormComponent<DVProduct> imp
   ngOnInit(): void {
     console.log(`editForm origin value: ${JSON.stringify(this.editItem?.dvOrigin || {})}`)
     this.editForm.setValue({
-      dvOrigin: this.editItem?.dvOrigin || this.dvOrigins[0],
+      dvOrigin: this.editItem?.dvOrigin || this.dvOrigins[0] || '',
       title: this.editItem?.title?? '',
       originalTitle: this.editItem?.originalTitle?? '',
       year: this.editItem?.year?? null,

@@ -70,6 +70,6 @@ describe('MediaFileFormComponent', () => {
   it('parse object no time should fail', () => {
     const value = '{"extra": [\"00:44:86\", \"01:12:55\"]}'
     const formControl = new FormControl(value)
-    expect(component.createExtraValidator()(formControl)).toEqual({extra: "Error parsing element 00:44:86"})
+    expect(component.createExtraValidator()(formControl)).toEqual({extra: "Error parsing element (date) 00:44:86"})
   })
 });

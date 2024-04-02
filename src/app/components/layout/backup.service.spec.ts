@@ -1,12 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 
 import { BackupService } from './backup.service';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {DataSourceModule} from "../../data-source/data-source.module";
 
 describe('BackupService', () => {
   let service: BackupService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+        DataSourceModule,
+      ]
+    });
     service = TestBed.inject(BackupService);
   });
 

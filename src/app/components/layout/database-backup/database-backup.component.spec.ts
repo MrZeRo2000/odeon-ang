@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DatabaseBackupComponent } from './database-backup.component';
+import {MessageService} from "primeng/api";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {DataSourceModule} from "../../../data-source/data-source.module";
 
 describe('DatabaseBackupComponent', () => {
   let component: DatabaseBackupComponent;
@@ -8,7 +11,18 @@ describe('DatabaseBackupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DatabaseBackupComponent ]
+      declarations: [
+        DatabaseBackupComponent
+      ],
+      providers: [
+        MessageService
+      ],
+      imports: [
+        // angular
+        HttpClientTestingModule,
+        // custom
+        DataSourceModule,
+      ]
     })
     .compileComponents();
 

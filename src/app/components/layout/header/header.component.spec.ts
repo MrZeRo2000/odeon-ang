@@ -8,6 +8,7 @@ import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {MenubarModule} from "primeng/menubar";
 import {RouterTestingModule} from "@angular/router/testing";
+import {DatabaseBackupComponent} from "../database-backup/database-backup.component";
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -15,7 +16,11 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeaderComponent, AppInfoComponent ],
+      declarations: [
+        HeaderComponent,
+        AppInfoComponent,
+        DatabaseBackupComponent,
+      ],
       imports: [
         RouterTestingModule,
         DataSourceModule,
