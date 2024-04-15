@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, take, tap} from "rxjs";
 import {Track} from "../../../model/track";
@@ -23,6 +23,11 @@ import {MediaFile} from "../../../model/media-file";
 import {DVProduct} from "../../../model/dv-product";
 import {sumByKey} from "../../../utils/calc-utils";
 
+interface Column {
+  field: string;
+  header: string;
+}
+
 @Component({
   selector: 'app-tracks-table',
   templateUrl: './tracks-table.component.html',
@@ -40,6 +45,20 @@ export class TracksTableComponent extends BaseTableComponent<Track, [Track, Medi
   isArtifactTypeVideo = false;
   isArtifactTypeVideoMusic = false;
   isArtifactVideoWithProducts = false;
+
+  readonly cols: Column[] = [
+    { field: 'id', header: 'Id' },
+    { field: 'artifact.title', header: 'Artifact' },
+    { field: 'diskNum', header: 'Disk #' },
+    { field: 'num', header: 'Track' },
+    { field: 'artist.artistName', header: 'Artist' },
+    { field: 'title', header: 'Title' },
+    { field: 'performerArtist.artistName', header: 'Performer Artist' },
+    { field: 'duration', header: 'Duration' },
+    { field: 'size', header: 'Size' },
+    { field: 'bitRate', header: 'Bitrate' },
+    { field: 'dvType.name', header: 'Video Type' },
+  ];
 
   dataSize = 0;
 

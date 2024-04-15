@@ -11,6 +11,7 @@
   <p-table #dt
     styleClass="p-datatable-sm"
     responsiveLayout="scroll"
+    [columns]="cols"
     [value]="data[0]"
     dataKey="id"
     [globalFilterFields]="['title']"
@@ -86,7 +87,17 @@
         <th style="width:30%">File name</th>
         <th style="width:0" *ngIf="isArtifactVideoWithProducts">Product</th>
         <th style="width:0; white-space: nowrap" *ngIf="isArtifactTypeVideo">Video Type</th>
-        <th style="width:0" *ngIf="this.artifactId"></th>
+        <th style="width:0" *ngIf="this.artifactId">
+          <p-button
+            styleClass="mr-2"
+            [text]="true"
+            icon="pi pi-file"
+            severity="secondary"
+            (click)="dt.exportCSV()"
+            pTooltip="CSV"
+            tooltipPosition="bottom">
+          </p-button>
+        </th>
       </tr>
       <tr>
         <th [colSpan]="1 + (this.dvProductId ? 1 : 0) + (isArtifactTypeMusic ? 1 : 0) + (isArtifactTypeVideoMusic ? 1 : 0) + 2 + (data[1].artist?.artistType === 'C' ? 2 : 0)">Rows: {{dt.processedData.length}}</th>
