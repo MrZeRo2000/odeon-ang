@@ -13,10 +13,11 @@ import {MessageService} from "primeng/api";
 import {MediaFileService} from "../../../service/media-file.service";
 import {DV_TYPES} from "../../../model/dvtype";
 import {
+  catchError,
   concat,
   delay,
   Observable,
-  of
+  of, Subject, switchMap, tap
 } from "rxjs";
 import {TextInterface} from "../../../model/common";
 
@@ -34,6 +35,40 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
 
   mediaFileNames!: Observable<Array<TextInterface>>;
 
+  mediaFileAttributesSubject = new Subject<MediaFile>();
+
+  mediaFileAttributesAction$ = this.mediaFileAttributesSubject.asObservable().pipe(
+    switchMap(v => {
+      return this.mediaFileService.getMediaFileAttributes(v.artifactId, v.name).pipe(
+        catchError(() => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Error getting media file attributes`
+          });
+          return of({} as MediaFile);
+        })
+      )
+    }),
+    tap(v => {
+      if (!!v && Object.keys(v).length > 0) {
+        Object
+          .keys(v)
+          .filter(k => k !== 'name')
+          .forEach(k => {
+            let pv = {} as any
+            pv[k] = (v as any)[k]
+            this.editForm.patchValue(pv)
+          })
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Info',
+          detail: `Updated media file attributes`
+        });
+      }
+    })
+  )
+
   constructor(
     private fb: UntypedFormBuilder,
     override messageService: MessageService,
@@ -50,7 +85,7 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
 
         this.mediaFileNames = concat(
           of([]) as Observable<Array<TextInterface>>,
-          this.mediaFileService.getTableFiles(this.editItem?.artifactId).pipe(
+          this.mediaFileService.getTableFiles(this.editItem?.artifactId!).pipe(
             delay(0))
         )
 
@@ -123,6 +158,13 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
 
       return null;
 
+    }
+  }
+
+  onUpdateMediaFileAttributes(event: any): void {
+    event.preventDefault();
+    if (this.editItem?.artifactId && this.editForm.value.name) {
+      this.mediaFileAttributesSubject.next({artifactId: this.editItem?.artifactId, name: this.editForm.value.name} as MediaFile)
     }
   }
 
