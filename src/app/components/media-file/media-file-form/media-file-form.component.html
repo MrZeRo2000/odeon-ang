@@ -4,7 +4,7 @@
 
       <div class="field" *ngIf="mediaFileNames | async as mediaFileNames">
         <label for="name">
-          Name&nbsp;<span *ngIf="this.editItem?.id" (click)="onUpdateMediaFileAttributes($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
+          Name&nbsp;<span *ngIf="this.editItem?.artifactId && this.editForm.value.name" (click)="onUpdateMediaFileAttributes($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
         </label>
         <p-dropdown
           id="name"
