@@ -2,16 +2,26 @@
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
 
-      <div class="field">
+      <div class="field" *ngIf="mediaFileNames | async as mediaFileNames">
         <label for="name">Name</label>
-        <input type="text" pInputText id="name" formControlName="name" required autofocus
-               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['name'].errors}"
-        />
+        <p-dropdown
+          id="name"
+          [options]="mediaFileNames"
+          [editable]="true"
+          optionLabel="text"
+          optionValue="text"
+          formControlName="name"
+          [required]="true"
+          [autofocus]="true"
+          appendTo="body"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['name'].errors}"
+        ></p-dropdown>
+
       </div>
 
       <div class="field">
         <label for="format">Format</label>
-        <input type="text" pInputText id="format" formControlName="format" required autofocus
+        <input type="text" pInputText id="format" formControlName="format" required
                [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['format'].errors}"
         />
       </div>

@@ -12,7 +12,6 @@ export interface IdTitleOriginalTitle extends IdTitle {
   originalTitle: string
 }
 
-
 export interface TextInterface {
   text: string
 }

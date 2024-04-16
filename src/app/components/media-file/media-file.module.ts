@@ -15,6 +15,7 @@ import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {CoreModule} from "../../core/core.module";
 import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
+import {DropdownModule} from "primeng/dropdown";
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
         // custom modules
         CoreModule,
         InputTextareaModule,
+        DropdownModule,
     ]
 })
 export class MediaFileModule { }

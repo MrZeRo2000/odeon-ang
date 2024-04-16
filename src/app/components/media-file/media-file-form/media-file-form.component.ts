@@ -11,6 +11,14 @@ import {
 } from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {MediaFileService} from "../../../service/media-file.service";
+import {DV_TYPES} from "../../../model/dvtype";
+import {
+  concat,
+  delay,
+  Observable,
+  of
+} from "rxjs";
+import {TextInterface} from "../../../model/common";
 
 @Component({
   selector: 'app-media-file-form',
@@ -23,6 +31,8 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
   isVideo: boolean = false;
 
   editForm: FormGroup = this.fb.group({});
+
+  mediaFileNames!: Observable<Array<TextInterface>>;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -37,6 +47,12 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
       if (propName == 'editItem') {
         const mediaFileProp = changes[propName];
         console.log(`changed media file ${JSON.stringify(mediaFileProp.currentValue)}, isVideo=${this.isVideo}`);
+
+        this.mediaFileNames = concat(
+          of([]) as Observable<Array<TextInterface>>,
+          this.mediaFileService.getTableFiles(this.editItem?.artifactId).pipe(
+            delay(0))
+        )
 
         this.editForm = this.fb.group({
           name: [mediaFileProp.currentValue.name?? '', Validators.required],
@@ -111,4 +127,5 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
   }
 
   protected readonly JSON = JSON;
+  protected readonly DV_TYPES = DV_TYPES;
 }
