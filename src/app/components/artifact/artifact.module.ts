@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ArtifactFormComponent} from "./artifact-form/artifact-form.component";
+import {ArtifactTagsFormComponent} from "./artifact-tags-form/artifact-tags-form.component";
 import {ArtifactsTableComponent} from "./artifacts-table/artifacts-table.component";
 import {ArtifactsVideoTableComponent} from "./artifacts-video-table/artifacts-video-table.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -19,30 +20,33 @@ import {ChipModule} from "primeng/chip";
 @NgModule({
   declarations: [
     ArtifactFormComponent,
+    ArtifactTagsFormComponent,
     ArtifactsTableComponent,
     ArtifactsVideoTableComponent,
   ],
   exports: [
     ArtifactFormComponent,
+    ArtifactTagsFormComponent,
     ArtifactsTableComponent,
     ArtifactsVideoTableComponent,
   ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        // primeng
-        ButtonModule,
-        RippleModule,
-        ChipsModule,
-        DialogModule,
-        TableModule,
-        SelectButtonModule,
-        AutoCompleteModule,
-        MultiSelectModule,
-        // custom modules
-        CoreModule,
-        ChipModule,
-    ]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    // primeng
+    ButtonModule,
+    RippleModule,
+    ChipsModule,
+    DialogModule,
+    TableModule,
+    SelectButtonModule,
+    AutoCompleteModule,
+    MultiSelectModule,
+    // custom modules
+    CoreModule,
+    ChipModule,
+
+  ]
 })
 export class ArtifactModule { }

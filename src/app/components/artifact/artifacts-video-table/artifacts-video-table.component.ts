@@ -12,7 +12,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistService} from "../../../service/artist.service";
 import {ArtifactService} from "../../../service/artifact.service";
 import {CRUDResult} from "../../../model/crud";
-import {catchError, forkJoin, iif, map, Observable, of, startWith, switchMap, tap} from "rxjs";
+import {catchError, forkJoin, iif, map, Observable, of, startWith, Subject, switchMap, tap} from "rxjs";
 import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 
 interface FilterControlsConfig
@@ -94,6 +94,16 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [
     })
   );
 
+  displayUpdateTagsForm = false
+
+  private updateTagsSubject = new Subject<Artifact>()
+
+  updateTagsAction$ = this.updateTagsSubject.asObservable().pipe(
+    tap(() => {
+      this.displayUpdateTagsForm = true
+    })
+  )
+
   private getControlsConfig(): FilterControlsConfig {
     let artifactType;
 
@@ -156,6 +166,7 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [
 
   onTagsButton(event: any): void {
     event.preventDefault()
+    this.updateTagsSubject.next(this.selectedItem!)
   }
 
   protected loadData(): void {

@@ -1,0 +1,14 @@
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Artifac Tags">
+  <ng-template pTemplate="content">
+    <form [formGroup]="editForm">
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+  </ng-template>
+
+  <ng-container *ngIf="saveAction$ | async as saver"></ng-container>
+
+</p-dialog>
