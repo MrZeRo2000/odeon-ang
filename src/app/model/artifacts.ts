@@ -11,6 +11,7 @@ export interface Artifact {
   year?: number;
   duration?: number;
   size?: number;
+  tags?: Array<string>;
   insertDateTime?: Date;
 }
 export const ARTIFACT_TYPE_MUSIC = 100;

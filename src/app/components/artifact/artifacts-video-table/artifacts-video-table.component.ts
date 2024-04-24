@@ -154,6 +154,10 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [
     this.router.navigate([`/media-files/${this.selectedItem?.id}`]).then();
   }
 
+  onTagsButton(event: any): void {
+    event.preventDefault()
+  }
+
   protected loadData(): void {
     this.filterForm.setValue(this.filterForm.value as FilterControlsConfig);
   }

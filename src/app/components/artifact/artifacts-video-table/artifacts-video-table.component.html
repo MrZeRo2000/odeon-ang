@@ -51,6 +51,13 @@
           >
           </button>
 
+          <button pButton type="button" label="Tags" icon="pi pi-tags" iconPos="left"
+                  class="ml-1 p-button-outlined p-button-secondary"
+                  *ngIf="selectedItem"
+                  (click)="onTagsButton($event)"
+          >
+          </button>
+
           <div class="flex justify-content-end flex-grow-1">
             <span class="p-input-icon-left flex align-items-center">
               <i class="pi pi-search"></i>
@@ -68,6 +75,7 @@
           <th style="width:0" *ngIf="filterData.artifactType == ARTIFACT_VIDEO_TYPE_MUSIC">Year</th>
           <th style="width:0; text-align: center">Duration</th>
           <th style="width:0; text-align: center">Size</th>
+          <th style="width:0; text-align: center">Tags</th>
           <th style="width:0"></th>
         </tr>
       </ng-template>
@@ -83,6 +91,13 @@
           </td>
           <td>
             <div style="text-align: right; white-space: nowrap"><span *ngIf="item.size">{{item.size | fileSize}}</span></div>
+          </td>
+          <td>
+            <div class="flex flex-wrap gap-1" *ngIf="item.tags">
+              <div *ngFor="let tag of item.tags">
+                <p-chip label="{{tag}}" styleClass="flex align-items-center text-xs" *ngIf="tag"></p-chip>
+              </div>
+            </div>
           </td>
           <td>
             <app-crud-panel class="app-crud-panel-small" [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>

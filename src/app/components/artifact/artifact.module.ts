@@ -13,6 +13,7 @@ import {AutoCompleteModule} from "primeng/autocomplete";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {ChipsModule} from "primeng/chips";
+import {ChipModule} from "primeng/chip";
 
 
 @NgModule({
@@ -26,21 +27,22 @@ import {ChipsModule} from "primeng/chips";
     ArtifactsTableComponent,
     ArtifactsVideoTableComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    // primeng
-    ButtonModule,
-    RippleModule,
-    ChipsModule,
-    DialogModule,
-    TableModule,
-    SelectButtonModule,
-    AutoCompleteModule,
-    MultiSelectModule,
-    // custom modules
-    CoreModule,
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        // primeng
+        ButtonModule,
+        RippleModule,
+        ChipsModule,
+        DialogModule,
+        TableModule,
+        SelectButtonModule,
+        AutoCompleteModule,
+        MultiSelectModule,
+        // custom modules
+        CoreModule,
+        ChipModule,
+    ]
 })
 export class ArtifactModule { }
