@@ -15,6 +15,9 @@ import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {ChipsModule} from "primeng/chips";
 import {ChipModule} from "primeng/chip";
+import {ConfirmPopupModule} from "primeng/confirmpopup";
+import {DropdownModule} from "primeng/dropdown";
+import {TagModule} from "primeng/tag";
 
 
 @NgModule({
@@ -46,6 +49,9 @@ import {ChipModule} from "primeng/chip";
     // custom modules
     CoreModule,
     ChipModule,
+    ConfirmPopupModule,
+    DropdownModule,
+    TagModule,
 
   ]
 })

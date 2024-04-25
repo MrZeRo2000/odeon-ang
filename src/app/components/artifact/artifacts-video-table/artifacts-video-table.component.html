@@ -75,7 +75,20 @@
           <th style="width:0" *ngIf="filterData.artifactType == ARTIFACT_VIDEO_TYPE_MUSIC">Year</th>
           <th style="width:0; text-align: center">Duration</th>
           <th style="width:0; text-align: center">Size</th>
-          <th style="width:0; text-align: center">Tags</th>
+          <th style="width:0; text-align: center; white-space: nowrap">
+            Tags
+            <p-columnFilter field="tags" matchMode="filter_tags" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [ngModel]="value" [options]="filterTags" placeholder="Any" (onChange)="filter($event.value)">
+                  <ng-template let-option pTemplate="item">
+                    <div class="inline-block vertical-align-middle">
+                      <span class="ml-1 mt-1">{{ option.label }}</span>
+                    </div>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
           <th style="width:0"></th>
         </tr>
       </ng-template>
@@ -113,7 +126,7 @@
     </ng-container>
 
     <ng-container *ngIf="updateTagsAction$ | async as artifactTagsEdit">
-      <app-artifact-tags-form *ngIf="displayUpdateTagsForm" [(display)]="displayUpdateTagsForm" [editItem]="artifactTagsEdit" [artifacts]="artifactsVideoTable"></app-artifact-tags-form>
+      <app-artifact-tags-form *ngIf="displayUpdateTagsForm" [(display)]="displayUpdateTagsForm" [editItem]="artifactTagsEdit" [artifacts]="artifactsVideoTable" (onSavedItem)="savedUpdateTags($event)"></app-artifact-tags-form>
     </ng-container>
 
   </div>

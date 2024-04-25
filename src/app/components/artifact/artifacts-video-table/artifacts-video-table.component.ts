@@ -8,7 +8,7 @@ import {
 import {IdName} from "../../../model/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder} from "@angular/forms";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmationService, FilterService, MessageService, SelectItem} from "primeng/api";
 import {ArtistService} from "../../../service/artist.service";
 import {ArtifactService} from "../../../service/artifact.service";
 import {CRUDResult} from "../../../model/crud";
@@ -91,8 +91,12 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [
     ),
     tap(v => {
       this.selectedItem = undefined;
+      // console.log(`Filtered artifacts: ${JSON.stringify(v)}`)
+      this.filterTags = [... new Set(v.map(v => (v as Artifact).tags || []).flat())].sort().map(v => {return {label: v, value: v} as SelectItem});
     })
   );
+
+  filterTags: Array<SelectItem<string>> = [];
 
   displayUpdateTagsForm = false
 
@@ -127,6 +131,7 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    private filterService: FilterService,
     messageService: MessageService,
     confirmationService: ConfirmationService,
     private artistService: ArtistService,
@@ -150,6 +155,22 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [
     if (this.routedArtifactTypeId) {
       this.filterForm.setValue({artifactType: this.routedArtifactTypeId})
     }
+
+    this.filterService.register(
+      'filter_tags',
+      (value: any, filter: any): boolean => {
+        console.log(`Filter: Value: ${JSON.stringify(value)}, filter: ${JSON.stringify(filter)}`)
+        if (filter === undefined || filter === null || filter.length === 0) {
+          return true;
+        }
+
+        if (value === undefined || value === null) {
+          return false;
+        }
+
+        return (value as string[]).filter(v => filter.indexOf(v) !== -1).length > 0;
+      }
+    )
   }
 
   onFilter(event: any): void {
@@ -219,4 +240,8 @@ export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [
     }
   }
 
+  savedUpdateTags(event: any): void {
+    this.displayUpdateTagsForm = false;
+    this.loadData();
+  }
 }

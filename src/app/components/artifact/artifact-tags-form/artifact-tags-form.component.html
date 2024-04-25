@@ -1,6 +1,22 @@
+<p-confirmPopup key="tags"></p-confirmPopup>
+
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Artifac Tags">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
+      <div class="field">
+        <label for="tags">Tags</label>
+        <p-autoComplete
+          [suggestions]="filteredTags"
+          (completeMethod)="searchTags($event)"
+          id="tags"
+          formControlName="tags"
+          [multiple]="true"
+          class="mt-2"
+          (onKeyUp)="tagsKeyUp($event)"
+          appendTo="body"
+        >
+        </p-autoComplete>
+      </div>
     </form>
   </ng-template>
 
