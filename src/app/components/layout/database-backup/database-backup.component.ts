@@ -19,9 +19,13 @@ export class DatabaseBackupComponent {
 
   backupSubject = new Subject<void>();
 
+  displayProgress = false
+
   backupAction$ = this.backupSubject.asObservable().pipe(
+    tap(() => {this.displayProgress = true}),
     switchMap(() => this.backup()),
     tap(v => {
+      this.displayProgress = false
       if (v.message) {
         this.databaseBackupInfoSharedHandler.refreshTable();
         this.messageService.add({

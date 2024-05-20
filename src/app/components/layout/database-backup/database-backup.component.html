@@ -1,3 +1,5 @@
+<app-progress-spinner-overlay *ngIf="displayProgress"></app-progress-spinner-overlay>
+
 <div *ngIf="databaseBackupInfo$ | async as databaseBackupInfo">
   <p-button
     icon="pi pi-file-export"
@@ -7,7 +9,6 @@
     tooltipPosition="left"
     (onClick)="backupSubject.next(undefined)"
   >
-
   </p-button>
 
   <ng-container *ngIf="backupAction$ | async"></ng-container>

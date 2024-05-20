@@ -8,6 +8,8 @@ import {MenubarModule} from "primeng/menubar";
 import {TagModule} from "primeng/tag";
 import {ButtonModule} from "primeng/button";
 import {DataSourceModule} from "../../data-source/data-source.module";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {ProgressSpinnerOverlayComponent} from "./progress-spinner-overlay/progress-spinner-overlay.component";
 
 
 @NgModule({
@@ -15,12 +17,14 @@ import {DataSourceModule} from "../../data-source/data-source.module";
     HeaderComponent,
     AppInfoComponent,
     LandingComponent,
+    ProgressSpinnerOverlayComponent,
     DatabaseBackupComponent,
   ],
   exports: [
     HeaderComponent,
     AppInfoComponent,
     LandingComponent,
+    ProgressSpinnerOverlayComponent,
     DatabaseBackupComponent,
   ],
   imports: [
@@ -29,6 +33,7 @@ import {DataSourceModule} from "../../data-source/data-source.module";
     MenubarModule,
     TagModule,
     ButtonModule,
+    ProgressSpinnerModule,
     // custom
     DataSourceModule,
   ],
