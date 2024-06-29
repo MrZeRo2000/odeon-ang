@@ -24,6 +24,8 @@ import {UserImportModule} from "../user-import/user-import.module";
 import {InputNumberModule} from "primeng/inputnumber";
 import {DropdownModule} from "primeng/dropdown";
 import {TooltipModule} from "primeng/tooltip";
+import {DVProductsImportFormComponent} from "./dvproducts-import-form/dvproducts-import-form.component";
+import {TabViewModule} from "primeng/tabview";
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import {TooltipModule} from "primeng/tooltip";
     DVCategoriesTableComponent,
     DVProductFormComponent,
     DVProductsTableComponent,
+    DVProductsImportFormComponent,
   ],
   exports: [
     DVOriginFormComponent,
@@ -42,6 +45,7 @@ import {TooltipModule} from "primeng/tooltip";
     DVCategoriesTableComponent,
     DVProductFormComponent,
     DVProductsTableComponent,
+    DVProductsImportFormComponent,
   ],
   imports: [
     CommonModule,
@@ -63,6 +67,7 @@ import {TooltipModule} from "primeng/tooltip";
     InputNumberModule,
     DropdownModule,
     TooltipModule,
+    TabViewModule,
     // custom modules
     CoreModule,
     UserImportModule,

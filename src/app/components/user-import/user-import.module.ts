@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import {CommonModule, DatePipe} from '@angular/common';
-import {DVProductsImportFormComponent} from "./dvproducts-import-form/dvproducts-import-form.component";
 import {
   UserImportResultFormComponent
 } from "./user-import-result-form/user-import-result-form.component";
 import {DialogModule} from "primeng/dialog";
 import {PanelModule} from "primeng/panel";
-import {TabViewModule} from "primeng/tabview";
 import {MultiSelectModule} from "primeng/multiselect";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {DropdownModule} from "primeng/dropdown";
@@ -27,14 +25,12 @@ import {TooltipModule} from "primeng/tooltip";
 
 @NgModule({
   declarations: [
-    DVProductsImportFormComponent,
     TracksImportFormComponent,
     UserImportResultFormComponent,
     TracksUpdateDurationsFormComponent,
     TracksUpdateVideoTypesFormComponent,
   ],
   exports: [
-    DVProductsImportFormComponent,
     TracksImportFormComponent,
     UserImportResultFormComponent,
     TracksUpdateDurationsFormComponent,
@@ -45,7 +41,6 @@ import {TooltipModule} from "primeng/tooltip";
       CommonModule,
       DialogModule,
       PanelModule,
-      TabViewModule,
       MultiSelectModule,
       AutoCompleteModule,
       DropdownModule,
