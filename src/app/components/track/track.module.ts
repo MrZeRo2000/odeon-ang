@@ -18,16 +18,30 @@ import {DVModule} from "../dv/d-v.module";
 import {DropdownModule} from "primeng/dropdown";
 import {InputNumberModule} from "primeng/inputnumber";
 import {TooltipModule} from "primeng/tooltip";
+import {
+  TracksUpdateVideoTypesFormComponent
+} from "./tracks-update-video-types-form/tracks-update-video-types-form.component";
+import {
+  TracksUpdateDurationsFormComponent
+} from "./tracks-update-durations-form/tracks-update-durations-form.component";
+import {TracksImportFormComponent} from "./tracks-import-form/tracks-import-form.component";
+import {InputTextareaModule} from "primeng/inputtextarea";
 
 
 @NgModule({
   declarations: [
     TrackFormComponent,
     TracksTableComponent,
+    TracksImportFormComponent,
+    TracksUpdateDurationsFormComponent,
+    TracksUpdateVideoTypesFormComponent,
   ],
   exports: [
     TrackFormComponent,
     TracksTableComponent,
+    TracksImportFormComponent,
+    TracksUpdateDurationsFormComponent,
+    TracksUpdateVideoTypesFormComponent,
   ],
     imports: [
         CommonModule,
@@ -46,6 +60,7 @@ import {TooltipModule} from "primeng/tooltip";
         AutoCompleteModule,
         MultiSelectModule,
         ConfirmPopupModule,
+        InputTextareaModule,
         // custom modules
         CoreModule,
         DVModule,
