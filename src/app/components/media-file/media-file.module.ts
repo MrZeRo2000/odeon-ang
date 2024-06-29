@@ -16,16 +16,21 @@ import {CoreModule} from "../../core/core.module";
 import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {DropdownModule} from "primeng/dropdown";
+import {TooltipModule} from "primeng/tooltip";
+import {MediaFilesLoadFormComponent} from "./media-files-load-form/media-files-load-form.component";
+import {ListboxModule} from "primeng/listbox";
 
 
 @NgModule({
   declarations: [
     MediaFileFormComponent,
     MediaFilesTableComponent,
+    MediaFilesLoadFormComponent,
   ],
   exports: [
     MediaFileFormComponent,
     MediaFilesTableComponent,
+    MediaFilesLoadFormComponent,
   ],
     imports: [
         CommonModule,
@@ -42,10 +47,12 @@ import {DropdownModule} from "primeng/dropdown";
         MultiSelectModule,
         ConfirmPopupModule,
         InputTextModule,
+        ListboxModule,
         // custom modules
         CoreModule,
         InputTextareaModule,
         DropdownModule,
+        TooltipModule,
     ]
 })
 export class MediaFileModule { }

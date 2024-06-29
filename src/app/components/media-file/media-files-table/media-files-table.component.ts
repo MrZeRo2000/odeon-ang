@@ -4,7 +4,7 @@ import {MediaFile} from "../../../model/media-file";
 import {CRUDResult} from "../../../model/crud";
 import {ActivatedRoute} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {catchError, forkJoin, iif, Observable, of, tap} from "rxjs";
+import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {MediaFileService} from "../../../service/media-file.service";
 import {Artifact, isArtifactTypeVideo,} from "../../../model/artifacts";
 import {ArtifactService} from "../../../service/artifact.service";
@@ -23,6 +23,30 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFile, Medi
   data$?: Observable<[MediaFile[], Artifact]>;
 
   isArtifactTypeVideo = false;
+
+  //media files load
+  displayMediaFilesLoadForm = false;
+
+  private mediaFilesLoadSubject = new Subject<void>()
+
+  mediaFilesLoad$ = this.mediaFilesLoadSubject.asObservable().pipe(
+    switchMap(() =>
+      forkJoin([
+        this.mediaFileService.getTableFiles(this.artifactId as number),
+        this.mediaFileService.getTable(this.artifactId as number).pipe(
+          map(v => new Set(v.map(v => v.name)))
+        ),
+      ]),
+    ),
+    map(v => v[0]
+      .filter(vi => !v[1].has(vi.text))
+      .map(vi => vi.text)
+    ),
+    tap(v => {
+      console.log(`mediaFilesLoad data: ${JSON.stringify(v)}`)
+      this.displayMediaFilesLoadForm = true;
+    })
+  );
 
   constructor(
     private route: ActivatedRoute,
@@ -105,6 +129,16 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFile, Medi
   override savedEditData(event: any) {
     super.savedEditData(event);
     this.data$ = this.getData();
+  }
+
+  loadMediaFiles(event: any): void {
+    event.preventDefault();
+    this.mediaFilesLoadSubject.next();
+  }
+
+  onLoadMediaFiles(): void {
+    this.displayMediaFilesLoadForm = false;
+    this.loadData();
   }
 
 }

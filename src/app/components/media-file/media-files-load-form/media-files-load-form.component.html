@@ -1,0 +1,28 @@
+<p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" styleClass="p-fluid" header="Load Media Files">
+  <ng-template pTemplate="content">
+    <form [formGroup]="editForm">
+      <p-listbox
+        formControlName="selectedMediaFileNames"
+        id="selectedMediaFileNames"
+        [options]="optionMediaFileNames"
+        optionLabel="label"
+        optionValue="value"
+        [multiple]="true"
+        [checkbox]="true"
+        [filter]="true"
+        [listStyle]="{'max-height': '220px'}" />
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer" *ngIf="editFormData$ | async as editFormData">
+    <button
+      pButton
+      pRipple
+      label="Load"
+      icon="pi pi-play"
+      class="p-button-text"
+      [disabled]="!editFormData.selectedMediaFileNames || editFormData.selectedMediaFileNames.length === 0"
+      (click)="this.execute()"
+    ></button>
+  </ng-template>
+</p-dialog>
