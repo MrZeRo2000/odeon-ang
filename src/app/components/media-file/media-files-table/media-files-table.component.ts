@@ -18,7 +18,7 @@ import {sumByKey} from "../../../utils/calc-utils";
 export class MediaFilesTableComponent extends BaseTableComponent<MediaFile, MediaFile> implements OnInit {
   sumByKey = sumByKey
 
-  private artifactId?: number;
+  artifactId?: number;
 
   data$?: Observable<[MediaFile[], Artifact]>;
 
@@ -44,7 +44,11 @@ export class MediaFilesTableComponent extends BaseTableComponent<MediaFile, Medi
     ),
     tap(v => {
       console.log(`mediaFilesLoad data: ${JSON.stringify(v)}`)
-      this.displayMediaFilesLoadForm = true;
+      if (!(v?.length > 0)) {
+        this.messageService.add({severity:'warn', summary:'Warning', detail:'No media files to load'});
+      } else {
+        this.displayMediaFilesLoadForm = true;
+      }
     })
   );
 

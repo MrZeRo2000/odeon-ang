@@ -80,6 +80,7 @@
         <app-media-files-load-form
           *ngIf="displayMediaFilesLoadForm"
           [(display)]="displayMediaFilesLoadForm"
+          [artifactId]="this.artifactId!"
           [mediaFileNames]="data"
           (onExecute)="onLoadMediaFiles()"
         />

@@ -5,6 +5,7 @@ import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {Observable} from "rxjs";
 import {TextInterface} from "../model/common";
 import {HttpParams} from "@angular/common/http";
+import {RowsAffected} from "../model/track";
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,10 @@ export class MediaFileService extends CRUDService<MediaFile>{
       .append('artifactId', artifactId)
       .append('mediaFileName', mediaFileName)
     return this.restDataSource.getResponseData<MediaFile>(`${this.resourceName}/file-attributes`, params)
+  }
+
+  insertMediaFiles(artifactId: number, mediaFileNames: Array<string>): Observable<RowsAffected> {
+    return this.restDataSource.postResponseData(
+      `${this.resourceName}/insert-media-files/${artifactId}`, mediaFileNames)
   }
 }
