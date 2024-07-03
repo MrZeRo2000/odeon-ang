@@ -1,0 +1,4 @@
+GET {{restUrl}}artifact/table-by-optional?artifactTypeId=102
+Accept: application/json
+
+###

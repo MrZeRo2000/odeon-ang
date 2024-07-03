@@ -18,6 +18,7 @@ import {ChipModule} from "primeng/chip";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {DropdownModule} from "primeng/dropdown";
 import {TagModule} from "primeng/tag";
+import {ArtifactsAllTableComponent} from "./artifacts-all-table/artifacts-all-table.component";
 
 
 @NgModule({
@@ -26,12 +27,14 @@ import {TagModule} from "primeng/tag";
     ArtifactTagsFormComponent,
     ArtifactsTableComponent,
     ArtifactsVideoTableComponent,
+    ArtifactsAllTableComponent,
   ],
   exports: [
     ArtifactFormComponent,
     ArtifactTagsFormComponent,
     ArtifactsTableComponent,
     ArtifactsVideoTableComponent,
+    ArtifactsAllTableComponent,
   ],
   imports: [
     CommonModule,

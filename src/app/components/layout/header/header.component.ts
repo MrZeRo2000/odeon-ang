@@ -31,6 +31,15 @@ export class HeaderComponent implements OnInit {
         routerLink: ['/artifacts-video']
       },
       {
+        label: "All",
+        items: [
+          {
+            label: "Artifacts",
+            routerLink: ['artifacts-all']
+          }
+        ]
+      },
+      {
         label: "Products",
         items: [
           {

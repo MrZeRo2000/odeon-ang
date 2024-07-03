@@ -11,6 +11,7 @@ import {ArtifactsVideoTableComponent} from "./components/artifact/artifacts-vide
 import {DVOriginsTableComponent} from "./components/dv/dvorigins-table/dvorigins-table.component";
 import {DVCategoriesTableComponent} from "./components/dv/dvcategories-table/dvcategories-table.component";
 import {DVProductsTableComponent} from "./components/dv/dvproducts-table/dvproducts-table.component";
+import {ArtifactsAllTableComponent} from "./components/artifact/artifacts-all-table/artifacts-all-table.component";
 
 const routes: Routes = [
   {path: '', component: LandingComponent, pathMatch: 'full'},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'lyrics/:id', component: ArtistLyricsTableComponent, pathMatch: 'full'},
   {path: 'artifacts', component: ArtifactsTableComponent, pathMatch: 'full'},
   {path: 'artifacts-video', component: ArtifactsVideoTableComponent, pathMatch: 'full'},
+  {path: 'artifacts-all', component: ArtifactsAllTableComponent, pathMatch: 'full'},
   {path: 'tracks', component: TracksTableComponent, pathMatch: 'prefix'},
   {path: 'tracks/:id', component: TracksTableComponent, pathMatch: 'prefix'},
   {path: 'media-files/:id', component: MediaFilesTableComponent, pathMatch: 'prefix'},
