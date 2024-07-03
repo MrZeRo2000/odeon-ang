@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BaseTableComponent} from "../../base/base-table.component";
+import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {ArtistLyricsEditItem, ArtistLyricsTableItem, ArtistLyricsText} from "../../../model/artist-lyrics";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ArtistLyricsService} from "../../../service/artist-lyrics.service";
@@ -18,7 +18,7 @@ export interface NameInterface {
   templateUrl: './artist-lyrics-table.component.html',
   styleUrls: ['./artist-lyrics-table.component.scss']
 })
-export class ArtistLyricsTableComponent extends BaseTableComponent<ArtistLyricsTableItem, [ArtistLyricsEditItem, IdName[]]> implements OnInit {
+export class ArtistLyricsTableComponent extends BaseCrudTableComponent<ArtistLyricsTableItem, [ArtistLyricsEditItem, IdName[]]> implements OnInit {
   private artistId?: number;
 
   displayArtistLyricsText = false;

@@ -6,14 +6,14 @@ import {Biography} from "../../../model/biography";
 import {Artist} from "../../../model/artists";
 import {CRUDResult} from "../../../model/crud";
 import {Router} from "@angular/router";
-import {BaseTableComponent} from "../../base/base-table.component";
+import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 
 @Component({
   selector: 'app-artists-table',
   templateUrl: './artists-table.component.html',
   styleUrls: ['./artists-table.component.scss']
 })
-export class ArtistsTableComponent extends BaseTableComponent<Artist, Artist> implements OnInit, AfterViewInit {
+export class ArtistsTableComponent extends BaseCrudTableComponent<Artist, Artist> implements OnInit, AfterViewInit {
 
   displayArtistInfo = false;
   displayArtistName: string = "";

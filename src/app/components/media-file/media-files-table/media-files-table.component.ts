@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BaseTableComponent} from "../../base/base-table.component";
+import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {MediaFile} from "../../../model/media-file";
 import {CRUDResult} from "../../../model/crud";
 import {ActivatedRoute} from "@angular/router";
@@ -15,7 +15,7 @@ import {sumByKey} from "../../../utils/calc-utils";
   templateUrl: './media-files-table.component.html',
   styleUrls: ['./media-files-table.component.scss']
 })
-export class MediaFilesTableComponent extends BaseTableComponent<MediaFile, MediaFile> implements OnInit {
+export class MediaFilesTableComponent extends BaseCrudTableComponent<MediaFile, MediaFile> implements OnInit {
   sumByKey = sumByKey
 
   artifactId?: number;

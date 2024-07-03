@@ -1,4 +1,4 @@
-GET {{restUrl}}artifact/table-by-optional?artifactTypeId=102
+GET {{restUrl}}artifact/table-by-optional?artifactTypeId=101&artistId=109
 Accept: application/json
 
 ###

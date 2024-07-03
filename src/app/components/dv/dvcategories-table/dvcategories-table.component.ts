@@ -1,5 +1,5 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import {BaseTableComponent} from "../../base/base-table.component";
+import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {DVCategory} from "../../../model/dv-product";
 import {Observable, of, tap} from "rxjs";
 import {CRUDResult} from "../../../model/crud";
@@ -11,7 +11,7 @@ import {DVCategoryService} from "../../../service/dvcategory.service";
   templateUrl: './dvcategories-table.component.html',
   styleUrls: ['./dvcategories-table.component.scss']
 })
-export class DVCategoriesTableComponent extends BaseTableComponent<DVCategory, DVCategory> implements OnInit {
+export class DVCategoriesTableComponent extends BaseCrudTableComponent<DVCategory, DVCategory> implements OnInit {
 
   @ViewChild('dtc', { static: false})
   private tableContainerElement?: ElementRef;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BaseTableComponent} from "../../base/base-table.component";
+import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {
   ARTIFACT_TYPE_VIDEO, ARTIFACT_VIDEO_TYPE_MUSIC,
   ARTIFACT_VIDEO_TYPES,
@@ -25,7 +25,7 @@ interface FilterControlsConfig
   templateUrl: './artifacts-video-table.component.html',
   styleUrls: ['./artifacts-video-table.component.scss']
 })
-export class ArtifactsVideoTableComponent extends BaseTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
+export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-video-table-filter-form";
   ARTIFACT_VIDEO_TYPE_MUSIC = ARTIFACT_VIDEO_TYPE_MUSIC;
 

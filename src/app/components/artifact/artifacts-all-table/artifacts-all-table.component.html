@@ -1,1 +1,26 @@
-<p>artifacts-all-table works!</p>
+<ng-template #loadingOrError>
+  <ng-container *ngIf="!errorObject">
+    <app-loading></app-loading>
+  </ng-container>
+</ng-template>
+
+<div *ngIf="artifactTable$ | async as artifactsTable; else loadingOrError">
+
+  <p-table #dt
+           styleClass="p-datatable-sm"
+           [value]="artifactsTable"
+           [rows]="10"
+           [paginator]="true"
+           [showCurrentPageReport]="true"
+           [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
+           [(first)]="first"
+           dataKey="id"
+           stateStorage="session"
+           stateKey="artifacts-all-table-session"
+           sortField=""
+  >
+
+  </p-table>
+
+
+</div>

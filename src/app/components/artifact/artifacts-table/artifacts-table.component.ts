@@ -23,7 +23,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {CRUDResult} from "../../../model/crud";
 import {ArtistService} from "../../../service/artist.service";
 import {Router} from "@angular/router";
-import {BaseTableComponent} from "../../base/base-table.component";
+import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {IdName} from "../../../model/common";
 import {SelectItem} from "primeng/api/selectitem";
 
@@ -38,7 +38,7 @@ interface FilterControlsConfig
   templateUrl: './artifacts-table.component.html',
   styleUrls: ['./artifacts-table.component.scss']
 })
-export class ArtifactsTableComponent extends BaseTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
+export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-table-filter-form";
 
   readonly ARTIST_TYPES =  ARTIST_TYPES;

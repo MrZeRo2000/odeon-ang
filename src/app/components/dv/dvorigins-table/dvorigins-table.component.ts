@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BaseTableComponent} from "../../base/base-table.component";
+import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {DVOrigin} from "../../../model/dv-product";
 import {Observable, of} from "rxjs";
 import {CRUDResult} from "../../../model/crud";
@@ -11,7 +11,7 @@ import {DVOriginService} from "../../../service/dvorigin.service";
   templateUrl: './dvorigins-table.component.html',
   styleUrls: ['./dvorigins-table.component.scss']
 })
-export class DVOriginsTableComponent extends BaseTableComponent<DVOrigin, DVOrigin> implements OnInit {
+export class DVOriginsTableComponent extends BaseCrudTableComponent<DVOrigin, DVOrigin> implements OnInit {
 
   table$?: Observable<Array<DVOrigin>>;
 

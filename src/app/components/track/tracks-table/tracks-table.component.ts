@@ -14,7 +14,7 @@ import {
 import {ArtifactService} from "../../../service/artifact.service";
 import {CRUDResult} from "../../../model/crud";
 import {DecimalPipe} from "@angular/common";
-import {BaseTableComponent} from "../../base/base-table.component";
+import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {MediaFileService} from "../../../service/media-file.service";
 import {IdName, IdTitle} from "../../../model/common";
 import {ArtistService} from "../../../service/artist.service";
@@ -33,7 +33,7 @@ interface Column {
   templateUrl: './tracks-table.component.html',
   styleUrls: ['./tracks-table.component.scss']
 })
-export class TracksTableComponent extends BaseTableComponent<Track, [Track, MediaFile[], IdName[], IdTitle[]]> implements OnInit {
+export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, MediaFile[], IdName[], IdTitle[]]> implements OnInit {
   sumByKey = sumByKey;
 
   artifactId?: number;

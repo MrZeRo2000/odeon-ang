@@ -1,5 +1,5 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import {BaseTableComponent} from "../../base/base-table.component";
+import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {DVCategory, DVOrigin, DVProduct} from "../../../model/dv-product";
 import {CRUDResult} from "../../../model/crud";
 import {
@@ -32,7 +32,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./dvproducts-table.component.scss']
 })
 export class DVProductsTableComponent
-  extends BaseTableComponent<DVProduct, [DVProduct, Array<DVOrigin>, Array<DVCategory>, Array<IdTitleOriginalTitle>]>
+  extends BaseCrudTableComponent<DVProduct, [DVProduct, Array<DVOrigin>, Array<DVCategory>, Array<IdTitleOriginalTitle>]>
   implements OnInit {
   private static readonly SESSION_KEY = "dvproducts-table-filter-form";
 

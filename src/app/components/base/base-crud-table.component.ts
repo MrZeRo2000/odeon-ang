@@ -2,8 +2,7 @@ import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {CRUDAction, CRUDOperation, CRUDResult} from "../../model/crud";
 import {CRUDService} from "../../service/crud.service";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {ArtistLyricsEditItem, ArtistLyricsTableItem} from "../../model/artist-lyrics";
-import {IdName} from "../../model/common";
+import {BaseTableComponent} from "./base-table-component";
 
 export interface BaseTableConfig {
   deleteConfirmation: string,
@@ -11,16 +10,10 @@ export interface BaseTableConfig {
   editErrorMessage: string
 }
 
-export abstract class BaseTableComponent<T extends {id?: number}, E> {
+export abstract class BaseCrudTableComponent<T extends {id?: number}, E> extends BaseTableComponent<T>{
   CRUDAction = CRUDAction;
 
-  errorObject: any = undefined;
-
   displayForm = false;
-
-  globalFilterValue = '';
-
-  first: number = 0;
 
   selectedItem?: T;
 
@@ -64,13 +57,11 @@ export abstract class BaseTableComponent<T extends {id?: number}, E> {
   );
 
   protected constructor(
-    protected messageService: MessageService,
+    messagesService: MessageService,
     protected confirmationService: ConfirmationService,
     protected dataService: CRUDService<any>,
     protected config: BaseTableConfig
-  ) { }
-
-  protected abstract loadData(): void;
+  ) { super(messagesService); }
 
   protected abstract getEditData(item: T): Observable<CRUDResult<E>>;
 
