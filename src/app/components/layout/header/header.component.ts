@@ -36,6 +36,10 @@ export class HeaderComponent implements OnInit {
           {
             label: "Artifacts",
             routerLink: ['artifacts-all']
+          },
+          {
+            label: "Tracks",
+            routerLink: ['tracks-all']
           }
         ]
       },
