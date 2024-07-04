@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import {Artifact} from "../../../model/artifacts";
+import {Artifact, ARTIFACT_MUSIC_TYPES, ARTIFACT_VIDEO_TYPES} from "../../../model/artifacts";
 import {BaseTableComponent} from "../../base/base-table-component";
 import {MessageService} from "primeng/api";
 import {FormBuilder} from "@angular/forms";
 import {catchError, of, tap} from "rxjs";
 import {ArtifactService} from "../../../service/artifact.service";
+import {ARTIST_TYPES} from "../../../model/artists";
+import {SelectItem} from "primeng/api/selectitem";
 
 @Component({
   selector: 'app-artifacts-all-table',
@@ -28,8 +30,11 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact>{
         detail: `Error reading artifacts`
       });
       return of([] as Artifact[]);
-    })
+    }),
+    tap(v => this.filterArtists = [... new Set(v.map(v => {return v.artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem}))
   );
+
+  filterArtists: SelectItem[] = [];
 
   protected loadData(): void {
   }
@@ -41,4 +46,7 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact>{
   ) {
     super(messageService);
   }
+
+  protected readonly ARTIST_TYPES = ARTIST_TYPES;
+  protected readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES.concat(ARTIFACT_VIDEO_TYPES);
 }

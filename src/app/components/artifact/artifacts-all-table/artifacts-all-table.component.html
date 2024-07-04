@@ -19,6 +19,65 @@
            stateKey="artifacts-all-table-session"
            sortField=""
   >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <div class="flex align-items-center justify-content-between text-xl mr-2">All artifacts</div>
+
+        <form [formGroup]="filterForm">
+          <div class="flex white-space-nowrap ml-2">
+            <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="true" [allowEmpty]="false" formControlName="artifactTypes"></p-selectButton>
+          </div>
+        </form>
+
+        <div class="flex justify-content-end flex-grow-1">
+          <span class="p-input-icon-left flex align-items-center">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+          </span>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id" style="width:0; white-space: nowrap">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
+        <th style="width:0">Type</th>
+        <th pSortableColumn="artist.artistName" style="width:20%; white-space: nowrap">
+          <div class="flex justify-content-between align-items-center">
+            Artist Name&nbsp;
+            <p-sortIcon field="artist.artistName"></p-sortIcon>
+            <p-columnFilter field="artist.artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [ngModel]="value" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)">
+                  <ng-template let-option pTemplate="item">
+                    <div class="inline-block vertical-align-middle">
+                      <span>{{ option.label }}</span>
+                    </div>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+        <th>Title</th>
+        <th style="width:0">Year</th>
+        <th style="width:0; text-align: center">Duration</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>{{item.id}}</td>
+        <td>{{item.artifactType.name}}</td>
+        <td>{{item.artist?.artistName}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.year}}</td>
+        <td>
+          <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
+        </td>
+      </tr>
+    </ng-template>
+
 
   </p-table>
 
