@@ -1,0 +1,38 @@
+<div class="flex flex-row">
+  <div class="flex flex-column">
+    <div class="p-fluid">
+      <p-selectButton
+        [options]="ARTIFACT_TYPE_GROUPS_MUSIC"
+        optionLabel="name"
+        optionValue="code"
+        [allowEmpty]="true"
+      >
+      </p-selectButton>
+    </div>
+    <p-selectButton
+      [options]="ARTIFACT_MUSIC_TYPES"
+      optionLabel="name"
+      optionValue="code"
+      [allowEmpty]="true"
+    >
+    </p-selectButton>
+  </div>
+  <div class="flex flex-column">
+    <div class="p-fluid">
+      <p-selectButton
+        [options]="ARTIFACT_TYPE_GROUPS_VIDEO"
+        optionLabel="name"
+        optionValue="code"
+        [allowEmpty]="true"
+      >
+      </p-selectButton>
+    </div>
+    <p-selectButton
+      [options]="ARTIFACT_VIDEO_TYPES"
+      optionLabel="name"
+      optionValue="code"
+      [allowEmpty]="true"
+    >
+    </p-selectButton>
+  </div>
+</div>

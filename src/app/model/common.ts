@@ -15,3 +15,9 @@ export interface IdTitleOriginalTitle extends IdTitle {
 export interface TextInterface {
   text: string
 }
+
+export interface NameCode {
+  name: string,
+  code: number
+}
+

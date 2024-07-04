@@ -1,5 +1,5 @@
 import {EditConfigItem, getConfigItem} from "./edit-config";
-import {IdName} from "./common";
+import {IdName, NameCode} from "./common";
 import {Artist} from "./artists";
 
 export interface Artifact {
@@ -14,16 +14,21 @@ export interface Artifact {
   tags?: Array<string>;
   insertDateTime?: Date;
 }
+
 export const ARTIFACT_TYPE_MUSIC = 100;
 
 export const ARTIFACT_TYPE_VIDEO = 200;
 
+export const ARTIFACT_TYPE_GROUPS: NameCode[] = [
+  {name: "Music", code: ARTIFACT_TYPE_MUSIC},
+  {name: "Video", code: ARTIFACT_TYPE_VIDEO}
+]
 
 export const ARTIFACT_MUSIC_TYPE_MP3 = 101;
 
 export const ARTIFACT_MUSIC_TYPE_LA = 102;
 
-export const ARTIFACT_MUSIC_TYPES =
+export const ARTIFACT_MUSIC_TYPES: NameCode[] =
   [
     {name: 'MP3', code: ARTIFACT_MUSIC_TYPE_MP3},
     {name: 'LA', code: ARTIFACT_MUSIC_TYPE_LA}

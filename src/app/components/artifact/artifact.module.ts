@@ -19,6 +19,7 @@ import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {DropdownModule} from "primeng/dropdown";
 import {TagModule} from "primeng/tag";
 import {ArtifactsAllTableComponent} from "./artifacts-all-table/artifacts-all-table.component";
+import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
 
 
 @NgModule({
@@ -49,13 +50,13 @@ import {ArtifactsAllTableComponent} from "./artifacts-all-table/artifacts-all-ta
     SelectButtonModule,
     AutoCompleteModule,
     MultiSelectModule,
-    // custom modules
     CoreModule,
     ChipModule,
     ConfirmPopupModule,
     DropdownModule,
     TagModule,
-
+    // custom modules
+    ArtifactTypeModule,
   ]
 })
 export class ArtifactModule { }

@@ -25,7 +25,10 @@
 
         <form [formGroup]="filterForm">
           <div class="flex white-space-nowrap ml-2">
+            <!--
             <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="true" [allowEmpty]="false" formControlName="artifactTypes"></p-selectButton>
+            -->
+            <app-artifact-type-select></app-artifact-type-select>
           </div>
         </form>
 
