@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ArtifactTypeSelectComponent} from "./artifact-type-select/artifact-type-select.component";
 import {SelectButtonModule} from "primeng/selectbutton";
 
@@ -13,11 +13,12 @@ import {SelectButtonModule} from "primeng/selectbutton";
   exports: [
     ArtifactTypeSelectComponent
   ],
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    //primeng modules
-    SelectButtonModule,
-  ]
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        //primeng modules
+        SelectButtonModule,
+        FormsModule,
+    ]
 })
 export class ArtifactTypeModule { }

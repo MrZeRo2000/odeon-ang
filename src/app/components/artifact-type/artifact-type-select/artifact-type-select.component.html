@@ -8,7 +8,9 @@
           optionValue="code"
           [allowEmpty]="true"
           id="artifactTypeGroupMusic"
-          formControlName="artifactTypeGroupMusic"
+          [(ngModel)]="musicGroupValue"
+          [ngModelOptions]="{standalone: true}"
+          (onOptionClick)="groupMusicClick()"
         >
         </p-selectButton>
       </div>
@@ -31,7 +33,9 @@
           optionValue="code"
           [allowEmpty]="true"
           id="artifactTypeGroupVideo"
-          formControlName="artifactTypeGroupVideo"
+          [(ngModel)]="videoGroupValue"
+          [ngModelOptions]="{standalone: true}"
+          (onOptionClick)="groupVideoClick()"
         >
         </p-selectButton>
       </div>
@@ -49,4 +53,4 @@
   </div>
 </form>
 
-<ng-container *ngIf="selectedArtifactTypes$ | async"></ng-container>
+<ng-container *ngIf="formGroupChange$ | async"></ng-container>

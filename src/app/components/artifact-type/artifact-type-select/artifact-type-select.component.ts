@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {ARTIFACT_MUSIC_TYPES, ARTIFACT_TYPE_GROUPS, ARTIFACT_VIDEO_TYPES} from "../../../model/artifacts";
 import {ControlValueAccessor, FormBuilder} from "@angular/forms";
-import {pairwise, startWith, tap} from "rxjs";
+import {tap} from "rxjs";
 
 
 @Component({
@@ -17,54 +17,33 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
   readonly ARTIFACT_MUSIC_TYPES = ARTIFACT_MUSIC_TYPES
   readonly ARTIFACT_VIDEO_TYPES = ARTIFACT_VIDEO_TYPES
 
+  musicGroupValue: number | null = null
+  videoGroupValue: number | null = null
+
   formGroup = this.fb.group({
-    artifactTypeGroupMusic: [null as null | number],
     artifactTypeMusic: [[] as number[]],
-    artifactTypeGroupVideo: [[] as number[]],
     artifactTypeVideo: [[] as number[]],
   })
 
-  selectedArtifactTypes$ = this.formGroup.valueChanges.pipe(
-    startWith(this.formGroup.value),
-    pairwise(),
+  formGroupChange$ = this.formGroup.valueChanges.pipe(
     tap(v => console.log(`Value changes: ${JSON.stringify(v)}`)),
     tap(v => {
-      const p = v[0]
-      const c = v[1]
-      if (p.artifactTypeGroupMusic !== c.artifactTypeGroupMusic) {
-        const value= c.artifactTypeGroupMusic ? this.ARTIFACT_MUSIC_TYPES.map(t => t.code) : []
-        this.formGroup.controls.artifactTypeMusic.setValue(value);
+      const newMusicGroupValue = v?.artifactTypeMusic?.length === this.ARTIFACT_MUSIC_TYPES.length ?
+        this.ARTIFACT_TYPE_GROUPS_MUSIC[0].code : null;
+      if (newMusicGroupValue != this.musicGroupValue) {
+        this.musicGroupValue = newMusicGroupValue
       }
-    })
-  )
-
-  groupMusicChange$ = this.formGroup.controls.artifactTypeGroupMusic.valueChanges.pipe(
-    tap(v => {
-      const value= v ? this.ARTIFACT_MUSIC_TYPES.map(t => t.code) : []
-      this.formGroup.controls.artifactTypeMusic.setValue(value);
-    })
-  )
-
-  musicChange$ = this.formGroup.controls.artifactTypeMusic.valueChanges.pipe(
-    tap(v => {
-      console.log(`MusicChange value: ${JSON.stringify(v)}`)
-
-      const value = v && v.length === this.ARTIFACT_MUSIC_TYPES.length ?
-        this.ARTIFACT_TYPE_GROUPS_MUSIC[0].code : null
-    })
-  )
-
-  groupVideoChange$ = this.formGroup.controls.artifactTypeGroupVideo.valueChanges.pipe(
-    tap(v => {
-      const value= v ? this.ARTIFACT_VIDEO_TYPES.map(t => t.code) : []
-      this.formGroup.controls.artifactTypeVideo.setValue(value);
+      const newVideoGroupValue = v?.artifactTypeVideo?.length === this.ARTIFACT_VIDEO_TYPES.length ?
+        this.ARTIFACT_TYPE_GROUPS_VIDEO[0].code : null;
+      if (newVideoGroupValue != this.videoGroupValue) {
+        this.videoGroupValue = newVideoGroupValue
+      }
     })
   )
 
   onTouched = () => {};
 
   touched = false;
-
 
   constructor(
     private fb: FormBuilder
@@ -88,6 +67,16 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
       this.onTouched();
       this.touched = true;
     }
+  }
+
+  groupMusicClick(): void {
+    const value= this.musicGroupValue ? this.ARTIFACT_MUSIC_TYPES.map(t => t.code) : []
+    this.formGroup.controls.artifactTypeMusic.setValue(value);
+  }
+
+  groupVideoClick(): void {
+    const value= this.videoGroupValue ? this.ARTIFACT_VIDEO_TYPES.map(t => t.code) : []
+    this.formGroup.controls.artifactTypeVideo.setValue(value);
   }
 }
 
