@@ -1,38 +1,52 @@
-<div class="flex flex-row">
-  <div class="flex flex-column">
-    <div class="p-fluid">
+<form [formGroup]="formGroup">
+  <div class="flex flex-row">
+    <div class="flex flex-column">
+      <div class="p-fluid">
+        <p-selectButton
+          [options]="ARTIFACT_TYPE_GROUPS_MUSIC"
+          optionLabel="name"
+          optionValue="code"
+          [allowEmpty]="true"
+          id="artifactTypeGroupMusic"
+          formControlName="artifactTypeGroupMusic"
+        >
+        </p-selectButton>
+      </div>
       <p-selectButton
-        [options]="ARTIFACT_TYPE_GROUPS_MUSIC"
+        [options]="ARTIFACT_MUSIC_TYPES"
         optionLabel="name"
         optionValue="code"
         [allowEmpty]="true"
+        [multiple]="true"
+        id="artifactTypeMusic"
+        formControlName="artifactTypeMusic"
       >
       </p-selectButton>
     </div>
-    <p-selectButton
-      [options]="ARTIFACT_MUSIC_TYPES"
-      optionLabel="name"
-      optionValue="code"
-      [allowEmpty]="true"
-    >
-    </p-selectButton>
-  </div>
-  <div class="flex flex-column">
-    <div class="p-fluid">
+    <div class="flex flex-column">
+      <div class="p-fluid">
+        <p-selectButton
+          [options]="ARTIFACT_TYPE_GROUPS_VIDEO"
+          optionLabel="name"
+          optionValue="code"
+          [allowEmpty]="true"
+          id="artifactTypeGroupVideo"
+          formControlName="artifactTypeGroupVideo"
+        >
+        </p-selectButton>
+      </div>
       <p-selectButton
-        [options]="ARTIFACT_TYPE_GROUPS_VIDEO"
+        [options]="ARTIFACT_VIDEO_TYPES"
         optionLabel="name"
         optionValue="code"
         [allowEmpty]="true"
+        [multiple]="true"
+        id="artifactTypeVideo"
+        formControlName="artifactTypeVideo"
       >
       </p-selectButton>
     </div>
-    <p-selectButton
-      [options]="ARTIFACT_VIDEO_TYPES"
-      optionLabel="name"
-      optionValue="code"
-      [allowEmpty]="true"
-    >
-    </p-selectButton>
   </div>
-</div>
+</form>
+
+<ng-container *ngIf="selectedArtifactTypes$ | async"></ng-container>
