@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {ARTIFACT_MUSIC_TYPES, ARTIFACT_TYPE_GROUPS, ARTIFACT_VIDEO_TYPES} from "../../../model/artifacts";
-import {ControlValueAccessor, FormBuilder} from "@angular/forms";
+import {ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {tap} from "rxjs";
 
 
@@ -9,13 +9,21 @@ import {tap} from "rxjs";
   templateUrl: './artifact-type-select.component.html',
   styleUrl: './artifact-type-select.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi:true,
+      useExisting: ArtifactTypeSelectComponent
+    },
+  ]
 })
 export class ArtifactTypeSelectComponent implements ControlValueAccessor {
-  readonly ARTIFACT_TYPE_GROUPS = ARTIFACT_TYPE_GROUPS
   readonly ARTIFACT_TYPE_GROUPS_MUSIC = [ARTIFACT_TYPE_GROUPS[0]]
   readonly ARTIFACT_TYPE_GROUPS_VIDEO = [ARTIFACT_TYPE_GROUPS[1]]
   readonly ARTIFACT_MUSIC_TYPES = ARTIFACT_MUSIC_TYPES
+  readonly ARTIFACT_MUSIC_TYPE_CODES = this.ARTIFACT_MUSIC_TYPES.map(v => v.code)
   readonly ARTIFACT_VIDEO_TYPES = ARTIFACT_VIDEO_TYPES
+  readonly ARTIFACT_VIDEO_TYPE_CODES = this.ARTIFACT_VIDEO_TYPES.map(v => v.code)
 
   musicGroupValue: number | null = null
   videoGroupValue: number | null = null
@@ -38,8 +46,15 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
       if (newVideoGroupValue != this.videoGroupValue) {
         this.videoGroupValue = newVideoGroupValue
       }
-    })
+    }),
+    tap(v => {
+      this.markAsTouched()
+      const value = (v?.artifactTypeMusic || []).concat(v?.artifactTypeVideo || [])
+      this.onChange(value)
+    }),
   )
+
+  onChange = (value: number[]) => {};
 
   onTouched = () => {};
 
@@ -50,6 +65,7 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
   ) { }
 
   registerOnChange(onChange: any): void {
+    this.onChange = onChange
   }
 
   registerOnTouched(onTouched: any): void {
@@ -59,7 +75,15 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
   }
 
-  writeValue(value: any): void {
+  writeValue(value?: number[]): void {
+    const musicValue = value ?
+      value.filter(v => this.ARTIFACT_MUSIC_TYPE_CODES.indexOf(v) > -1) : []
+    const videoValue = value ?
+      value.filter(v => this.ARTIFACT_VIDEO_TYPE_CODES.indexOf(v) > -1) : []
+    this.formGroup.setValue({
+      artifactTypeMusic: musicValue,
+      artifactTypeVideo: videoValue
+    })
   }
 
   markAsTouched() {
