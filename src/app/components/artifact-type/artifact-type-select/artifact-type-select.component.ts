@@ -34,7 +34,6 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
   })
 
   formGroupChange$ = this.formGroup.valueChanges.pipe(
-    tap(v => console.log(`Value changes: ${JSON.stringify(v)}`)),
     tap(v => {
       const newMusicGroupValue = v?.artifactTypeMusic?.length === this.ARTIFACT_MUSIC_TYPES.length ?
         this.ARTIFACT_TYPE_GROUPS_MUSIC[0].code : null;
@@ -84,6 +83,10 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
       artifactTypeMusic: musicValue,
       artifactTypeVideo: videoValue
     })
+    this.musicGroupValue = musicValue.length === this.ARTIFACT_MUSIC_TYPES.length ?
+      this.ARTIFACT_TYPE_GROUPS_MUSIC[0].code : null;
+    this.videoGroupValue = videoValue.length === this.ARTIFACT_VIDEO_TYPES.length ?
+      this.ARTIFACT_TYPE_GROUPS_VIDEO[0].code : null;
   }
 
   markAsTouched() {

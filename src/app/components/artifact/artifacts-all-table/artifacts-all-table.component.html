@@ -4,7 +4,7 @@
   </ng-container>
 </ng-template>
 
-<div *ngIf="artifactTable$ | async as artifactsTable; else loadingOrError">
+<div *ngIf="filteredArtifactTable$ | async as artifactsTable; else loadingOrError">
 
   <p-table #dt
            styleClass="p-datatable-sm"
@@ -28,7 +28,7 @@
             <!--
             <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="true" [allowEmpty]="false" formControlName="artifactTypes"></p-selectButton>
             -->
-            <app-artifact-type-select></app-artifact-type-select>
+            <app-artifact-type-select formControlName="artifactTypeIds"></app-artifact-type-select>
           </div>
         </form>
 

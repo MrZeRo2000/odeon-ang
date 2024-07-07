@@ -3,7 +3,7 @@ import {Artifact, ARTIFACT_MUSIC_TYPES, ARTIFACT_VIDEO_TYPES} from "../../../mod
 import {BaseTableComponent} from "../../base/base-table-component";
 import {MessageService} from "primeng/api";
 import {FormBuilder} from "@angular/forms";
-import {catchError, of, tap} from "rxjs";
+import {catchError, of, startWith, switchMap, tap} from "rxjs";
 import {ArtifactService} from "../../../service/artifact.service";
 import {ARTIST_TYPES} from "../../../model/artists";
 import {SelectItem} from "primeng/api/selectitem";
@@ -16,23 +16,33 @@ import {SelectItem} from "primeng/api/selectitem";
 export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact>{
 
   filterForm = this.fb.group({
-    artifactType: [''],
-    artist: ['']
+    artifactTypeIds: [[] as number[]],
+    artist: [null as null | number]
   })
 
-  artifactTable$ = this.artifactService.getTableByOptional().pipe(
-    tap(v => `getting table with ${v}`),
-    catchError(err => {
-      this.errorObject = err;
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: `Error reading artifacts`
-      });
-      return of([] as Artifact[]);
-    }),
-    tap(v => this.filterArtists = [... new Set(v.map(v => {return v.artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem}))
+  artifactTable$ = (artifactIds: number[] | null, artistId: number | null) =>
+    this.artifactService.getTableByOptional(artifactIds, artistId).pipe(
+      tap(v => `getting table with ${v}`),
+      catchError(err => {
+        this.errorObject = err;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error reading artifacts`
+        });
+        return of([] as Artifact[]);
+      }),
+      tap(v => this.filterArtists = [... new Set(v.map(v => {return v.artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem}))
   );
+
+  filteredArtifactTable$ = this.filterForm.valueChanges.pipe(
+    startWith(this.filterForm.value),
+    tap(v => {console.log(`filter value: ${JSON.stringify(v)}`)}),
+    switchMap(v => this.artifactTable$(
+      v.artifactTypeIds == undefined ? null : v.artifactTypeIds,
+      v.artist == undefined ? null : v.artist
+    ))
+  )
 
   filterArtists: SelectItem[] = [];
 
