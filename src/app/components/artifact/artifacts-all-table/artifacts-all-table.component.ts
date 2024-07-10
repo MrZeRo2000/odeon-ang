@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
-import {Artifact, ARTIFACT_MUSIC_TYPES, ARTIFACT_VIDEO_TYPES} from "../../../model/artifacts";
+import {Component, OnInit} from '@angular/core';
+import {Artifact} from "../../../model/artifacts";
 import {BaseTableComponent} from "../../base/base-table-component";
 import {MessageService} from "primeng/api";
 import {FormBuilder} from "@angular/forms";
 import {catchError, of, startWith, switchMap, tap} from "rxjs";
 import {ArtifactService} from "../../../service/artifact.service";
-import {ARTIST_TYPES} from "../../../model/artists";
 import {SelectItem} from "primeng/api/selectitem";
 
 @Component({
@@ -13,7 +12,7 @@ import {SelectItem} from "primeng/api/selectitem";
   templateUrl: './artifacts-all-table.component.html',
   styleUrl: './artifacts-all-table.component.scss'
 })
-export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact>{
+export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> implements OnInit {
 
   filterForm = this.fb.group({
     artifactTypeIds: [[] as number[]],
@@ -57,6 +56,7 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact>{
     super(messageService);
   }
 
-  protected readonly ARTIST_TYPES = ARTIST_TYPES;
-  protected readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES.concat(ARTIFACT_VIDEO_TYPES);
+  ngOnInit(): void {
+    this.filterForm.setValue({artifactTypeIds: [], artistIds: []})
+  }
 }
