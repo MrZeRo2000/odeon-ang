@@ -17,11 +17,11 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact>{
 
   filterForm = this.fb.group({
     artifactTypeIds: [[] as number[]],
-    artist: [null as null | number]
+    artistIds: [[] as number[]]
   })
 
-  artifactTable$ = (artifactIds: number[] | null, artistId: number | null) =>
-    this.artifactService.getTableByOptional(artifactIds, artistId).pipe(
+  artifactTable$ = (artifactIds: number[] | null, artistIds: number[] | null) =>
+    this.artifactService.getTableByOptional(artifactIds, artistIds).pipe(
       tap(v => `getting table with ${v}`),
       catchError(err => {
         this.errorObject = err;
@@ -40,7 +40,7 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact>{
     tap(v => {console.log(`filter value: ${JSON.stringify(v)}`)}),
     switchMap(v => this.artifactTable$(
       v.artifactTypeIds == undefined ? null : v.artifactTypeIds,
-      v.artist == undefined ? null : v.artist
+      v.artistIds == undefined ? null : v.artistIds
     ))
   )
 
