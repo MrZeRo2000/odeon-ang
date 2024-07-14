@@ -121,7 +121,7 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
 
   protected getEditData(item: Artifact): Observable<CRUDResult<[IdName[], Artifact]>> {
     return forkJoin([
-      this.getArtists(),
+      this.getArtists(this.filterForm.value.artistType),
       iif(() => Object.keys(item).length === 0, of({artifactType: {id: ARTIFACT_MUSIC_TYPE_MP3}} as Artifact), this.getArtifact(item.id as number))
     ]).pipe(
       map(v => {return {success: true, data: v as [IdName[], Artifact]}}),
@@ -187,8 +187,8 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
     )
   }
 
-  getArtists(): Observable<Array<IdName>> {
-    return this.artistService.getIdNameTable(this.filterForm.value.artistType).pipe(
+  getArtists(artistTypeCode: string): Observable<Array<IdName>> {
+    return this.artistService.getIdNameTable(artistTypeCode).pipe(
       catchError(err => {
         this.messageService.add({
           severity: 'error',

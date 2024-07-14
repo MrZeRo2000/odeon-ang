@@ -3,9 +3,12 @@ import {Artifact} from "../../../model/artifacts";
 import {BaseTableComponent} from "../../base/base-table-component";
 import {MessageService} from "primeng/api";
 import {FormBuilder} from "@angular/forms";
-import {catchError, of, startWith, switchMap, tap} from "rxjs";
+import {catchError, Observable, of, startWith, switchMap, tap} from "rxjs";
 import {ArtifactService} from "../../../service/artifact.service";
 import {SelectItem} from "primeng/api/selectitem";
+import {IdName} from "../../../model/common";
+import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
+import {ArtistService} from "../../../service/artist.service";
 
 @Component({
   selector: 'app-artifacts-all-table',
@@ -16,7 +19,7 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
 
   filterForm = this.fb.group({
     artifactTypeIds: [[] as number[]],
-    artistIds: [[] as number[]]
+    artistIds: [[] as IdName[]]
   })
 
   artifactTable$ = (artifactIds: number[] | null, artistIds: number[] | null) =>
@@ -39,11 +42,23 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
     tap(v => {console.log(`filter value: ${JSON.stringify(v)}`)}),
     switchMap(v => this.artifactTable$(
       v.artifactTypeIds == undefined ? null : v.artifactTypeIds,
-      v.artistIds == undefined ? null : v.artistIds
+      v.artistIds == undefined ? null : v.artistIds.map(v => v.id)
     ))
   )
 
   filterArtists: SelectItem[] = [];
+
+  artistsTable$: Observable<Array<IdName>> =
+    this.artistService.getIdNameTable(ARTIST_TYPE_CODE_ARTIST).pipe(
+      catchError(err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error getting artists: ${err.error?.message || err.message}`
+        });
+        return of([]);
+      })
+    )
 
   protected loadData(): void {
   }
@@ -52,6 +67,7 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
     messageService: MessageService,
     private fb: FormBuilder,
     private artifactService: ArtifactService,
+    private artistService: ArtistService,
   ) {
     super(messageService);
   }
@@ -59,4 +75,5 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
   ngOnInit(): void {
     this.filterForm.setValue({artifactTypeIds: [], artistIds: []})
   }
+
 }

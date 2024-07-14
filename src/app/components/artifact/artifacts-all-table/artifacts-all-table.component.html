@@ -23,16 +23,36 @@
       <div class="flex">
         <div class="flex align-items-center justify-content-between text-xl mr-2">All artifacts</div>
 
-        <form [formGroup]="filterForm">
-          <div class="flex white-space-nowrap ml-2">
+        <form [formGroup]="filterForm" class="flex white-space-nowrap ml-2 flex-grow-1">
             <!--
             <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="true" [allowEmpty]="false" formControlName="artifactTypes"></p-selectButton>
             -->
-            <app-artifact-type-select formControlName="artifactTypeIds"></app-artifact-type-select>
-          </div>
+            <app-artifact-type-select
+              class="flex"
+              formControlName="artifactTypeIds"
+            ></app-artifact-type-select>
+            <div
+              class="flex flex-column flex-grow-1 align-items-start justify-content-end mr-2 ml-2"
+                 *ngIf="artistsTable$ | async as artistsTable"
+            >
+           <label for="artistIds" class="mb-2">Artists</label>
+              <span style="width: 100%">
+              <p-multiSelect
+                id="artistIds"
+                formControlName="artistIds"
+                dataKey="id"
+                optionLabel="name"
+                [options]="artistsTable"
+                [showClear]="true"
+                [style]="{'min-width':'100%'}"
+              >
+              </p-multiSelect>
+                </span>
+            </div>
+
         </form>
 
-        <div class="flex justify-content-end flex-grow-1">
+        <div class="flex justify-content-end">
           <span class="p-input-icon-left flex align-items-center">
             <i class="pi pi-search"></i>
             <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
