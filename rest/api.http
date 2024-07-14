@@ -2,3 +2,5 @@ GET {{restUrl}}artifact/table-by-optional?artifactTypeId=101&artistId=109
 Accept: application/json
 
 ###
+GET {{restUrl}}track/table-by-optional?artifactTypeId=101
+Accept: application/json
