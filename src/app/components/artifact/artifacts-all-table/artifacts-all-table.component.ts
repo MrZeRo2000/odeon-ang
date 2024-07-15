@@ -76,4 +76,8 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
     this.filterForm.setValue({artifactTypeIds: [], artistIds: []})
   }
 
+  onFilter(event: any): void {
+    this.globalFilterValue = event.filters?.global?.value || '';
+  }
+
 }

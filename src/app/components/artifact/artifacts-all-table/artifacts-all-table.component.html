@@ -17,6 +17,8 @@
            dataKey="id"
            stateStorage="session"
            stateKey="artifacts-all-table-session"
+           [globalFilterFields]="['artist.artistName', 'title']"
+           (onFilter)="onFilter($event)"
            sortField=""
   >
     <ng-template pTemplate="caption">
