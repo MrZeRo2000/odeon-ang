@@ -25,7 +25,7 @@ export class ArtifactService extends CRUDService<Artifact>{
     }
   }
 
-  getTableByOptional(artifactTypeIds: number[] | null, artistIds: number[] | null): Observable<Array<Artifact>> {
+  getTableByOptional(artifactTypeIds: number[] | null | undefined, artistIds: number[] | null | undefined): Observable<Array<Artifact>> {
     let params: HttpParams = new HttpParams();
     if (!!artifactTypeIds && artifactTypeIds.length > 0) {
       params = params.appendAll({"artifactTypeIds": artifactTypeIds});

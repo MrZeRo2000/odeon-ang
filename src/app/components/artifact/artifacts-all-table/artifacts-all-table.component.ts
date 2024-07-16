@@ -19,7 +19,7 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
     artistIds: [[] as number[]]
   })
 
-  artifactTable$ = (artifactIds: number[] | null, artistIds: number[] | null) =>
+  artifactTable$ = (artifactIds: number[] | null | undefined, artistIds: number[] | null | undefined) =>
     this.artifactService.getTableByOptional(artifactIds, artistIds).pipe(
       tap(v => `getting table with ${v}`),
       catchError(err => {
@@ -31,15 +31,18 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
         });
         return of([] as Artifact[]);
       }),
-      tap(v => this.filterArtists = [... new Set(v.map(v => {return v.artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem}))
+      tap(v => this.filterArtists =
+        [... new Set(v.map(v => {return v.artist?.artistName as string}))]
+          .sort()
+          .map(v => {return {label: v, value: v} as SelectItem}))
   );
 
   filteredArtifactTable$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
     tap(v => {console.log(`filter value: ${JSON.stringify(v)}`)}),
     switchMap(v => this.artifactTable$(
-      v.artifactTypeIds == undefined ? null : v.artifactTypeIds,
-      v.artistIds == undefined ? null : v.artistIds
+      v.artifactTypeIds,
+      v.artistIds
     ))
   )
 
