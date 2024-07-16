@@ -7,6 +7,8 @@ export abstract class BaseTableComponent <T extends {id?: number}> {
 
   first: number = 0;
 
+  selectedItem?: T;
+
   protected abstract loadData(): void;
 
   protected constructor(

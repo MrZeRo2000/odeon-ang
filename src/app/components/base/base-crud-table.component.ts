@@ -15,8 +15,6 @@ export abstract class BaseCrudTableComponent<T extends {id?: number}, E> extends
 
   displayForm = false;
 
-  selectedItem?: T;
-
   protected deleteSubject: Subject<CRUDOperation<T>> = new Subject<CRUDOperation<T>>();
 
   deleteAction$ = this.deleteSubject.asObservable().pipe(
