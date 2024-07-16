@@ -24,6 +24,7 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
   readonly ARTIFACT_MUSIC_TYPE_CODES = this.ARTIFACT_MUSIC_TYPES.map(v => v.code)
   readonly ARTIFACT_VIDEO_TYPES = ARTIFACT_VIDEO_TYPES
   readonly ARTIFACT_VIDEO_TYPE_CODES = this.ARTIFACT_VIDEO_TYPES.map(v => v.code)
+  readonly ARTIFACT_MUSIC_VIDEO_TYPE_CODES = this.ARTIFACT_MUSIC_TYPE_CODES.concat(this.ARTIFACT_VIDEO_TYPE_CODES)
 
   musicGroupValue: number | null = null
   videoGroupValue: number | null = null
@@ -48,7 +49,10 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
     }),
     tap(v => {
       this.markAsTouched()
-      const value = (v?.artifactTypeMusic || []).concat(v?.artifactTypeVideo || [])
+      let value = (v?.artifactTypeMusic || []).concat(v?.artifactTypeVideo || [])
+      if (value.length === 0) {
+        value = this.ARTIFACT_MUSIC_VIDEO_TYPE_CODES
+      }
       this.onChange(value)
     }),
   )
