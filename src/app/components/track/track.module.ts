@@ -26,12 +26,14 @@ import {
 } from "./tracks-update-durations-form/tracks-update-durations-form.component";
 import {TracksImportFormComponent} from "./tracks-import-form/tracks-import-form.component";
 import {InputTextareaModule} from "primeng/inputtextarea";
+import {TracksAllTableComponent} from "./tracks-all-table/tracks-all-table.component";
 
 
 @NgModule({
   declarations: [
     TrackFormComponent,
     TracksTableComponent,
+    TracksAllTableComponent,
     TracksImportFormComponent,
     TracksUpdateDurationsFormComponent,
     TracksUpdateVideoTypesFormComponent,
@@ -39,33 +41,34 @@ import {InputTextareaModule} from "primeng/inputtextarea";
   exports: [
     TrackFormComponent,
     TracksTableComponent,
+    TracksAllTableComponent,
     TracksImportFormComponent,
     TracksUpdateDurationsFormComponent,
     TracksUpdateVideoTypesFormComponent,
   ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        // primeng
-        RippleModule,
-        ButtonModule,
-        DialogModule,
-        TableModule,
-        SelectButtonModule,
-        DropdownModule,
-        InputNumberModule,
-        InputTextModule,
-        TooltipModule,
-        AutoCompleteModule,
-        MultiSelectModule,
-        ConfirmPopupModule,
-        InputTextareaModule,
-        // custom modules
-        CoreModule,
-        DVModule,
-        UserImportModule,
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    // primeng
+    RippleModule,
+    ButtonModule,
+    DialogModule,
+    TableModule,
+    SelectButtonModule,
+    DropdownModule,
+    InputNumberModule,
+    InputTextModule,
+    TooltipModule,
+    AutoCompleteModule,
+    MultiSelectModule,
+    ConfirmPopupModule,
+    InputTextareaModule,
+    // custom modules
+    CoreModule,
+    DVModule,
+    UserImportModule,
+  ],
   providers: [
     DatePipe,
   ]

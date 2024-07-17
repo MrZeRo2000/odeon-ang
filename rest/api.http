@@ -1,6 +1,6 @@
-GET {{restUrl}}artifact/table-by-optional?artifactTypeId=101&artistId=109
+GET {{restUrl}}artifact/table-by-optional?artifactTypeIds=101&artistIds=109
 Accept: application/json
 
 ###
-GET {{restUrl}}track/table-by-optional?artifactTypeId=101
+GET {{restUrl}}track/table-by-optional?artifactTypeIds=102
 Accept: application/json
