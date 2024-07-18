@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {RestDataSourceService} from "../../data-source/rest-data-source.service";
-import {Observable, share} from "rxjs";
+import {delay, Observable, share} from "rxjs";
 import {AppInfo} from "../../model/app-info";
 
 @Injectable({
@@ -15,6 +15,8 @@ export class AppInfoService {
   getAppInfo(): Observable<AppInfo> {
     if (!this.appInfo$) {
       return this.restDataSource.getResponseData<AppInfo>("app/info").pipe(
+        // use 3000 to test preloader
+        delay(0),
         share({resetOnComplete: true, resetOnError: true, resetOnRefCountZero: true})
       );
     } else {
