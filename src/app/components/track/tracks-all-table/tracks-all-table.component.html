@@ -1,1 +1,108 @@
-<p>tracks-all-table works!</p>
+<ng-template #loadingOrError>
+  <ng-container *ngIf="!errorObject">
+    <app-loading></app-loading>
+  </ng-container>
+</ng-template>
+
+<div *ngIf="filteredTrackTable$ | async as table; else loadingOrError">
+
+  <p-table #dt
+           styleClass="p-datatable-sm"
+           [value]="table"
+           [rows]="10"
+           [paginator]="true"
+           [showCurrentPageReport]="true"
+           [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
+           [(first)]="first"
+           dataKey="id"
+           stateStorage="session"
+           stateKey="tracks-all-table-session"
+           [globalFilterFields]="['artist.artistName', 'title']"
+           (onFilter)="onFilter($event)"
+           selectionMode="single"
+           [(selection)]="selectedItem"
+           sortField=""
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <div class="flex align-items-center justify-content-between text-xl mr-2">All artifacts</div>
+
+        <form [formGroup]="filterForm" class="flex white-space-nowrap ml-2 flex-grow-1">
+          <!--
+          <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="true" [allowEmpty]="false" formControlName="artifactTypes"></p-selectButton>
+          -->
+          <app-artifact-type-select
+            class="flex"
+            formControlName="artifactTypeIds"
+          ></app-artifact-type-select>
+          <div
+            class="flex flex-column flex-grow-1 align-items-start justify-content-end mr-2 ml-2"
+            *ngIf="artistsTable$ | async as artistsTable"
+          >
+            <label for="artistIds" class="mb-2">Artists</label>
+            <span style="width: 100%">
+              <p-multiSelect
+                id="artistIds"
+                formControlName="artistIds"
+                dataKey="id"
+                optionLabel="name"
+                [options]="artistsTable"
+                [showClear]="true"
+                [style]="{'min-width':'100%'}"
+              >
+              </p-multiSelect>
+                </span>
+          </div>
+        </form>
+
+        <div class="flex justify-content-end align-items-end">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+          </span>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id" style="width:5%; white-space: nowrap">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
+        <th style="width:5%">Type</th>
+        <th pSortableColumn="artist.artistName" style="width:20%; white-space: nowrap">
+          <div class="flex justify-content-between align-items-center">
+            Artist Name&nbsp;
+            <p-sortIcon field="artist.artistName"></p-sortIcon>
+            <p-columnFilter field="artist.artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [ngModel]="value" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)">
+                  <ng-template let-option pTemplate="item">
+                    <div class="inline-block vertical-align-middle">
+                      <span>{{ option.label }}</span>
+                    </div>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+        <th>Title</th>
+        <th style="width:0">Year</th>
+        <th style="width:0; text-align: center">Duration</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr [pSelectableRow]="item">
+        <td>{{item.id}}</td>
+        <td>{{item.artifactType.name}}</td>
+        <td>{{item.artist?.artistName}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.year}}</td>
+        <td>
+          <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+

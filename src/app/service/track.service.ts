@@ -18,6 +18,17 @@ export class TrackService extends CRUDService<Track>{
     return this.restDataSource.getResponseData<Array<Track>>(`track/table/${artifactId}`)
   }
 
+  getTableByOptional(artifactTypeIds: number[] | null | undefined, artistIds: number[] | null | undefined): Observable<Array<Track>> {
+    let params: HttpParams = new HttpParams();
+    if (!!artifactTypeIds && artifactTypeIds.length > 0) {
+      params = params.appendAll({"artifactTypeIds": artifactTypeIds});
+    }
+    if (!!artistIds && artistIds.length > 0) {
+      params = params.appendAll({"artistIds": artistIds});
+    }
+    return this.restDataSource.getResponseData<Array<Track>>(`${this.resourceName}/table-by-optional`, params);
+  }
+
   getTableByProductId(dvProductId: number): Observable<Array<Track>> {
     return this.restDataSource.getResponseData<Array<Track>>(`track/table`, new HttpParams().set('dvProductId', dvProductId))
   }
