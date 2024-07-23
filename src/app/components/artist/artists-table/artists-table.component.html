@@ -24,11 +24,15 @@
            [paginator]="true"
            [showCurrentPageReport]="true"
            [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
+           [(first)]="first"
            dataKey="id"
            stateStorage="session"
            stateKey="artist-table-session"
            [globalFilterFields]="['artistName']"
-           (onFilter)="onFilter($event)">
+           (onFilter)="onFilter($event)"
+           selectionMode="single"
+           [(selection)]="selectedItem"
+  >
 
     <ng-template pTemplate="caption">
       <div #dtcp class="flex">
@@ -90,7 +94,7 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-item>
-      <tr>
+      <tr [pSelectableRow]="item">
         <td>{{item.id}}</td>
         <td>{{item.artistName}}</td>
         <td>
