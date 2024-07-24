@@ -165,6 +165,17 @@ export class ArtistsTableComponent extends BaseCrudTableComponent<Artist, Artist
     this.globalFilterValue = event.filters?.global?.value || '';
   }
 
+  onArtifactsButton(event: any): void {
+    event.preventDefault();
+    this.router.navigate([`/artifacts-all`],{queryParams: {artistId: this.selectedItem?.id}}).then();
+  }
+
+  onTracksButton(event: any): void {
+    event.preventDefault();
+    this.router.navigate([`/tracks-all`],{queryParams: {artistId: this.selectedItem?.id}}).then();
+  }
+
+
   /*
   @HostListener('window:resize', ['$event'])
   onResize() {

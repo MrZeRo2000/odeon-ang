@@ -39,14 +39,16 @@
         <div class="flex align-items-center justify-content-between text-xl mr-2">Artists</div>
         <div class="flex align-self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
 
-        <button pButton type="button" label="Artifacts" icon="pi pi-building-columns" iconPos="left"
+        <button pButton type="button" label="Artifacts" icon="pi pi-building" iconPos="left"
                 class="ml-2 p-button-outlined p-button-secondary"
                 *ngIf="selectedItem"
+                (click)="onArtifactsButton($event)"
         ></button>
 
         <button pButton type="button" label="Tracks" icon="pi pi-list" iconPos="left"
                 class="ml-2 p-button-outlined p-button-secondary"
                 *ngIf="selectedItem"
+                (click)="onTracksButton($event)"
         ></button>
 
         <div class="flex justify-content-end flex-grow-1">
