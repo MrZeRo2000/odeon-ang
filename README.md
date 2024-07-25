@@ -32,6 +32,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 or
 `./env.ps1`
 
+## Running npm install with PowerShell
+
+`."$env:LOCALAPPDATA\Programs\node\node.exe" "$env:LOCALAPPDATA\Programs\node\node_modules\npm\bin\npm-cli.js" install`
+
 ## Red cross without cursor
 
 `<div pButton icon="pi pi-times" class="p-button-danger p-button-text" style="cursor: auto;"></div>`
