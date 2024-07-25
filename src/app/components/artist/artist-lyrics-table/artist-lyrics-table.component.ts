@@ -63,9 +63,9 @@ export class ArtistLyricsTableComponent extends BaseCrudTableComponent<ArtistLyr
       confirmationService,
       artistLyricsService,
       {
-        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.artistName} - ${event.data.title} </strong>?`",
-        deleteErrorMessage: "`Error deleting artist lyrics: ${v.data}`",
-        editErrorMessage: "`Error getting lyrics details: ${v.data}`"
+        deleteConfirmation: event => `Are you sure that you want to delete <strong> ${event.data.artistName} - ${event.data.title} </strong>?`,
+        deleteErrorMessage: v => `Error deleting artist lyrics: ${v.data}`,
+        editErrorMessage: v => `Error getting lyrics details: ${v.data}`
       }
     )
   }

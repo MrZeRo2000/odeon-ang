@@ -20,9 +20,9 @@ export class DVOriginsTableComponent extends BaseCrudTableComponent<DVOrigin, DV
     confirmationService: ConfirmationService,
     private dvOriginService: DVOriginService) {
     super(messageService, confirmationService, dvOriginService, {
-      deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.name}</strong>?`",
-      deleteErrorMessage: "`Error deleting origin: ${v.data}`",
-      editErrorMessage: "Error getting origin details"
+      deleteConfirmation: event => `Are you sure that you want to delete <strong> ${event.data.name}</strong>?`,
+      deleteErrorMessage: v => `Error deleting origin: ${v.data}`,
+      editErrorMessage: () => "Error getting origin details"
     });
   }
 

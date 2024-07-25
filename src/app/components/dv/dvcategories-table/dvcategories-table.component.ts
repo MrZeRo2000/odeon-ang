@@ -28,9 +28,9 @@ export class DVCategoriesTableComponent extends BaseCrudTableComponent<DVCategor
     confirmationService: ConfirmationService,
     private dvCategoryService: DVCategoryService) {
     super(messageService, confirmationService, dvCategoryService, {
-      deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.name}</strong>?`",
-      deleteErrorMessage: "`Error deleting category: ${v.data}`",
-      editErrorMessage: "Error getting category details"
+      deleteConfirmation: event => `Are you sure that you want to delete <strong> ${event.data.name}</strong>?`,
+      deleteErrorMessage: v => `Error deleting category: ${v.data}`,
+      editErrorMessage: () => "Error getting category details"
     });
   }
 

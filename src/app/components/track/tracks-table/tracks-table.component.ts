@@ -168,11 +168,10 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
       confirmationService,
       trackService,
       {
-        deleteConfirmation: "`Are you sure that you want to delete <strong> ${this.decimalPipe.transform(event.data.num, '2.0-0')} ${event.data.title}</strong>?`",
-        deleteErrorMessage: "`Error deleting track: ${v.data}`",
-        editErrorMessage: "`Error getting track details: ${v.data}`"
+        deleteConfirmation: event => `Are you sure that you want to delete <strong> ${this.decimalPipe.transform(event.data.num, '2.0-0')} ${event.data.title}</strong>?`,
+        deleteErrorMessage: v => `Error deleting track: ${v.data}`,
+        editErrorMessage: v => `Error getting track details: ${v.data}`
       }
-
     );
   }
 

@@ -64,9 +64,9 @@ export class MediaFilesTableComponent extends BaseCrudTableComponent<MediaFile, 
       confirmationService,
       mediaFileService,
       {
-        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.name}</strong>?`",
-        deleteErrorMessage: "`Error deleting media file: ${v.data}`",
-        editErrorMessage: "`Error getting track details: ${v.data}`"
+        deleteConfirmation: event => `Are you sure that you want to delete <strong> ${event.data.name}</strong>?`,
+        deleteErrorMessage: v => `Error deleting media file: ${v.data}`,
+        editErrorMessage: v => `Error getting track details: ${v.data}`
       }
     )
   }

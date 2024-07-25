@@ -43,7 +43,7 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
   filterData$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
     tap(v => console.log(`filter data got value: ${JSON.stringify(v)}`)),
-    tap(v => {this.first = 0})
+    tap(() => {this.first = 0})
   );
 
   artifactTable$ = (v: any) => this.artifactService.getTable(ARTIST_TYPE_CODE_ARTIST, [v.artifactType]).pipe(
@@ -142,9 +142,9 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
       confirmationService,
       artifactService,
       {
-        deleteConfirmation: "`Are you sure that you want to delete <strong>${event.data.title}</strong>?`",
-        deleteErrorMessage: "`Error deleting artifact: ${v.data}`",
-        editErrorMessage: "`Error getting artifact details: ${err.error?.message || err.message}`"
+        deleteConfirmation: event => `Are you sure that you want to delete <strong>${event.data.title}</strong>?`,
+        deleteErrorMessage: v => `Error deleting artifact: ${v.data}`,
+        editErrorMessage: v => `Error getting artifact details: ${v.data}`
       }
     )
   }

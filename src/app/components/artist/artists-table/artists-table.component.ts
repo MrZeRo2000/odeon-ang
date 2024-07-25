@@ -61,9 +61,9 @@ export class ArtistsTableComponent extends BaseCrudTableComponent<Artist, Artist
       confirmationService,
       artistService,
       {
-        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.artistName}</strong>?`",
-        deleteErrorMessage: "`Error deleting artist: ${v.data}`",
-        editErrorMessage: "`Error getting artist details: ${v.data}`"
+        deleteConfirmation: event => `Are you sure that you want to delete <strong> ${event.data.artistName}</strong>?`,
+        deleteErrorMessage: v => `Error deleting artist: ${v.data}`,
+        editErrorMessage: v => `Error getting artist details: ${v.data}`
       }
       );
   }

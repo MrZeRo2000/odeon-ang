@@ -5,9 +5,9 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {BaseTableComponent} from "./base-table-component";
 
 export interface BaseTableConfig {
-  deleteConfirmation: string,
-  deleteErrorMessage: string,
-  editErrorMessage: string
+  deleteConfirmation: (v: any) => string,
+  deleteErrorMessage: (v: any) => string,
+  editErrorMessage: (v: any) => string
 }
 
 export abstract class BaseCrudTableComponent<T extends {id?: number}, E> extends BaseTableComponent<T>{
@@ -28,7 +28,7 @@ export abstract class BaseCrudTableComponent<T extends {id?: number}, E> extends
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: eval(this.config.deleteErrorMessage)
+          detail: this.config.deleteErrorMessage(v)
         });
       }
     })
@@ -47,7 +47,7 @@ export abstract class BaseCrudTableComponent<T extends {id?: number}, E> extends
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: eval(this.config.editErrorMessage)
+          detail: this.config.editErrorMessage(v)
         });
       }
     }),
@@ -90,7 +90,7 @@ export abstract class BaseCrudTableComponent<T extends {id?: number}, E> extends
   crudEvent(event: any): void {
     if (event.action === CRUDAction.EA_DELETE) {
       this.confirmationService.confirm({
-        message: eval(this.config.deleteConfirmation),
+        message: this.config.deleteConfirmation(event),
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {

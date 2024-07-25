@@ -103,9 +103,9 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
       confirmationService,
       artifactService,
       {
-        deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.artist.artistName} - ${event.data.title}(${event.data.year})</strong>?`",
-        deleteErrorMessage: "`Error deleting artifact: ${v.data}`",
-        editErrorMessage: "`Error getting artifact details: ${err.error?.message || err.message}`"
+        deleteConfirmation: event => `Are you sure that you want to delete <strong> ${event.data.artist.artistName} - ${event.data.title}(${event.data.year})</strong>?`,
+        deleteErrorMessage: v => `Error deleting artifact: ${v.data}`,
+        editErrorMessage: v => `Error getting artifact details: ${v.data}`
       }
     )
   }

@@ -139,9 +139,9 @@ export class DVProductsTableComponent
     private dvOriginService: DVOriginService,
     private dvCategoryService: DVCategoryService) {
     super(messageService, confirmationService, dvProductService, {
-      deleteConfirmation: "`Are you sure that you want to delete <strong> ${event.data.title}</strong>?`",
-      deleteErrorMessage: "`Error deleting product: ${v.data}`",
-      editErrorMessage: "`Error getting product details`"
+      deleteConfirmation: event => `Are you sure that you want to delete <strong> ${event.data.title}</strong>?`,
+      deleteErrorMessage: v => `Error deleting product: ${v.data}`,
+      editErrorMessage: () => `Error getting product details`
     });
   }
 
