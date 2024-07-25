@@ -10,6 +10,7 @@ import {Artifact} from "../../../model/artifacts";
 import {SelectItem} from "primeng/api/selectitem";
 import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 import {TrackService} from "../../../service/track.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-tracks-all-table',
@@ -42,10 +43,9 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
 
   filteredTrackTable$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
-    tap(v => {console.log(`filter value: ${JSON.stringify(v)}`)}),
-    switchMap(v => this.trackTable$(
-      v.artifactTypeIds == undefined ? null : v.artifactTypeIds,
-      v.artistIds == undefined ? null : v.artistIds.map(v => v.id)
+    switchMap(() => this.trackTable$(
+      this.filterForm.value.artifactTypeIds == undefined ? null : this.filterForm.value.artifactTypeIds,
+      this.filterForm.value.artistIds == undefined ? null : this.filterForm.value.artistIds.map(v => v.id)
     ))
   )
 
@@ -66,6 +66,8 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
   protected loadData(): void { }
 
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     messageService: MessageService,
     private fb: FormBuilder,
     private trackService: TrackService,
@@ -75,7 +77,9 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
   }
 
   ngOnInit(): void {
-    this.filterForm.setValue({artifactTypeIds: [], artistIds: []})
+    const artistId =  Number.parseInt(this.route.snapshot.queryParams['artistId'], 10)
+    const artistIds = artistId? [{id: artistId} as IdName] : []
+    this.filterForm.setValue({artifactTypeIds: [], artistIds: artistIds})
   }
 
   onFilter(event: any): void {
