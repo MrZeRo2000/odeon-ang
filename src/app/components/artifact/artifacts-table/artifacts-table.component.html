@@ -42,14 +42,14 @@
         <button pButton type="button" label="Tracks" icon="pi pi-list" iconPos="left"
                 class="ml-4 p-button-outlined p-button-secondary"
                 *ngIf="selectedItem"
-                (click)="onTracksButton($event)"
+                (click)="onTracksButton()"
         >
         </button>
 
         <button pButton type="button" label="Media&nbsp;files" icon="pi pi-file" iconPos="left"
                 class="ml-1 p-button-outlined p-button-secondary"
                 *ngIf="selectedItem"
-                (click)="onMediaFilesButton($event)"
+                (click)="onMediaFilesButton()"
         >
         </button>
 
@@ -119,7 +119,7 @@
   <ng-container *ngIf="deleteAction$ | async"></ng-container>
 
   <ng-container *ngIf="editAction$ | async as artifactEdit">
-    <app-artifact-form *ngIf="displayForm" [(display)]="displayForm" [artists]="artifactEdit[0]" [editItem]="artifactEdit[1]" [artistTypeCode]="this.filterForm.value['artistType']" (onSavedItem)="savedEditData($event)"></app-artifact-form>
+    <app-artifact-form *ngIf="displayForm" [(display)]="displayForm" [artists]="artifactEdit[0]" [editItem]="artifactEdit[1]" [artistTypeCode]="this.filterForm.value['artistType']!" (onSavedItem)="savedEditData($event)"></app-artifact-form>
   </ng-container>
 
 </div>

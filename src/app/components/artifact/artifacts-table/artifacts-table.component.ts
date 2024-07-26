@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtifactService} from "../../../service/artifact.service";
-import {UntypedFormBuilder} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {ARTIST_TYPES} from "../../../model/artists";
 import {
   ARTIFACT_MUSIC_TYPE_MP3,
@@ -47,7 +47,7 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
   private routedArtifactId?: number;
   private routedArtifactTypeId?: number;
 
-  filterForm = this.fb.group(ArtifactsTableComponent.getControlsConfig())
+  filterForm = this.fb.group(this.getControlsConfig())
 
   filterData$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
@@ -102,7 +102,7 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     messageService: MessageService,
     confirmationService: ConfirmationService,
     private artistService: ArtistService,
@@ -121,17 +121,17 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
   }
 
   getArtistType(): string {
-    return this.filterForm.value.artistType;
+    return this.filterForm.value.artistType as string
   }
 
   protected loadData(): void {
     console.log(`Load data filter value: ${JSON.stringify(this.filterForm.value)}`)
-    this.filterForm.setValue(this.filterForm.value);
+    //this.filterForm.setValue(this.filterForm.value as FilterControlsConfig);
   }
 
   protected getEditData(item: Artifact): Observable<CRUDResult<[IdName[], Artifact]>> {
     return forkJoin([
-      this.getArtists(this.filterForm.value.artistType),
+      this.getArtists(this.filterForm.value.artistType as string),
       iif(() => Object.keys(item).length === 0, of({artifactType: {id: ARTIFACT_MUSIC_TYPE_MP3}} as Artifact), this.getArtifact(item.id as number))
     ]).pipe(
       map(v => {return {success: true, data: v as [IdName[], Artifact]}}),
@@ -141,39 +141,48 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
     )
   }
 
-  private static getControlsConfig(): FilterControlsConfig {
-    try {
-      const savedState = sessionStorage.getItem(ArtifactsTableComponent.SESSION_KEY);
-      const savedObject = JSON.parse(savedState as string);
-      return {
-        artistType: [savedObject.artistType as string],
-        artifactTypes: [savedObject.artifactTypes as number[]]
-      }
-    } catch (e)  {
-      return {
-        artistType: [ARTIST_TYPES[0].code],
-        artifactTypes: [[ARTIFACT_MUSIC_TYPES[0].code, ARTIFACT_MUSIC_TYPES[1].code]]
-      }
+  private getControlsConfig(): FilterControlsConfig {
+    let artifactTypes: number[];
+    let artistType: string;
+
+    if (this.routedArtifactTypeId) {
+      artifactTypes = [this.routedArtifactTypeId] as number[]
+      artistType = ARTIST_TYPES[0].code
+    } else {
+      try {
+        const savedState = sessionStorage.getItem(ArtifactsTableComponent.SESSION_KEY);
+        const savedObject = JSON.parse(savedState as string);
+        artistType = savedObject.artistType as string
+        artifactTypes = savedObject.artifactTypes as number[]
+      } catch (e) {
+        artistType = ARTIST_TYPES[0].code
+        artifactTypes = [ARTIFACT_MUSIC_TYPES[0].code, ARTIFACT_MUSIC_TYPES[1].code] as number[]
+       }
     }
+
+    return {'artistType': [artistType], 'artifactTypes': [artifactTypes]}
   }
 
   ngOnInit(): void {
     this.routedArtifactId = Number.parseInt(this.route.snapshot.queryParams['artifactId'] as string, 10);
     this.routedArtifactTypeId = Number.parseInt(this.route.snapshot.queryParams['artifactTypeId'] as string, 10);
+    /*
     if (this.routedArtifactTypeId) {
       this.filterForm.setValue({artifactType: this.routedArtifactTypeId})
     }
+
+     */
   }
 
   onFilter(event: any): void {
     this.globalFilterValue = event.filters?.global?.value || '';
   }
 
-  onTracksButton(event: any): void {
+  onTracksButton(): void {
     this.router.navigate([`/tracks/${this.selectedItem?.id}`]);
   }
 
-  onMediaFilesButton(event: any): void {
+  onMediaFilesButton(): void {
     this.router.navigate([`/media-files/${this.selectedItem?.id}`]);
   }
 
@@ -186,7 +195,7 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
 
   override savedEditData(event: any): void {
     super.savedEditData(event);
-    this.filterForm.setValue(this.filterForm.value);
+    //this.filterForm.setValue(this.filterForm.value);
   }
 
   getArtifact(id: number): Observable<Artifact> {
