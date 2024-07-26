@@ -22,7 +22,7 @@ import {
 import {ConfirmationService, MessageService} from "primeng/api";
 import {CRUDResult} from "../../../model/crud";
 import {ArtistService} from "../../../service/artist.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {IdName} from "../../../model/common";
 import {SelectItem} from "primeng/api/selectitem";
@@ -44,7 +44,16 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
   readonly ARTIST_TYPES =  ARTIST_TYPES;
   readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES;
 
+  private routedArtifactId?: number;
+  private routedArtifactTypeId?: number;
+
   filterForm = this.fb.group(ArtifactsTableComponent.getControlsConfig())
+
+  filterData$ = this.filterForm.valueChanges.pipe(
+    startWith(this.filterForm.value),
+    tap(v => console.log(`filter data got value: ${JSON.stringify(v)}`)),
+    tap(() => {this.first = 0})
+  );
 
   artifactTable$ = (v: any) => this.artifactService.getTable(v.artistType, v.artifactTypes).pipe(
     tap(v => `getting table with ${v}`),
@@ -92,6 +101,7 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private fb: UntypedFormBuilder,
     messageService: MessageService,
     confirmationService: ConfirmationService,
@@ -148,6 +158,11 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
   }
 
   ngOnInit(): void {
+    this.routedArtifactId = Number.parseInt(this.route.snapshot.queryParams['artifactId'] as string, 10);
+    this.routedArtifactTypeId = Number.parseInt(this.route.snapshot.queryParams['artifactTypeId'] as string, 10);
+    if (this.routedArtifactTypeId) {
+      this.filterForm.setValue({artifactType: this.routedArtifactTypeId})
+    }
   }
 
   onFilter(event: any): void {

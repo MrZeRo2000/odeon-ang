@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Artifact} from "../../../model/artifacts";
+import {Artifact, isArtifactTypeMusic, isArtifactTypeVideo} from "../../../model/artifacts";
 import {BaseTableComponent} from "../../base/base-table-component";
 import {MessageService} from "primeng/api";
 import {FormBuilder} from "@angular/forms";
@@ -35,7 +35,10 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
         });
         return of([] as Artifact[]);
       }),
-      tap(v => this.filterArtists = [... new Set(v.map(v => {return v.artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem}))
+      tap(v => this.filterArtists =
+        [... new Set(v.map(v => {return v.artist?.artistName as string}))]
+          .sort()
+          .map(v => {return {label: v, value: v} as SelectItem}))
   );
 
   filteredArtifactTable$ = this.filterForm.valueChanges.pipe(
@@ -84,4 +87,20 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
     this.globalFilterValue = event.filters?.global?.value || '';
   }
 
+  onDetailClick(event: MouseEvent, item: Artifact): void {
+    event.preventDefault();
+    const artifactTypeId = item.artifactType?.id!
+    console.log(`artifactTypeId: ${artifactTypeId}`)
+
+    let routePath = ''
+    if (isArtifactTypeMusic(artifactTypeId)) {
+      routePath = 'artifacts'
+    } else if (isArtifactTypeVideo(artifactTypeId)) {
+      routePath = 'artifacts-video'
+    }
+    if (!!routePath) {
+      this.router.navigate([routePath], {queryParams: {'artifactId': item.id, 'artifactTypeId': artifactTypeId}})
+    }
+
+  }
 }

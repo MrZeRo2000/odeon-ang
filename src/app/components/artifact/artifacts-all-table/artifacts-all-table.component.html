@@ -19,8 +19,6 @@
            stateKey="artifacts-all-table-session"
            [globalFilterFields]="['artist.artistName', 'title']"
            (onFilter)="onFilter($event)"
-           selectionMode="single"
-           [(selection)]="selectedItem"
            sortField=""
   >
     <ng-template pTemplate="caption">
@@ -89,11 +87,12 @@
         <th>Title</th>
         <th style="width:0">Year</th>
         <th style="width:0; text-align: center">Duration</th>
+        <th style="width:0"></th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-item>
-      <tr [pSelectableRow]="item">
+      <tr>
         <td>{{item.id}}</td>
         <td>{{item.artifactType.name}}</td>
         <td>{{item.artist?.artistName}}</td>
@@ -101,6 +100,16 @@
         <td>{{item.year}}</td>
         <td>
           <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
+        </td>
+        <td class="app-crud-panel-small">
+          <button
+            pButton
+            icon="pi pi-arrow-circle-right"
+            [rounded]="true"
+            [text]="true"
+            severity="secondary"
+            (click)="onDetailClick($event, item)"
+          ></button>
         </td>
       </tr>
     </ng-template>
