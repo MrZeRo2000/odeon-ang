@@ -35,8 +35,8 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
 
   readonly ARTIST_TYPE_CODE_ARTIST = ARTIST_TYPE_CODE_ARTIST;
 
-  private routedArtifactId?: number;
-  private routedArtifactTypeId?: number;
+  routedArtifactId?: number;
+  routedArtifactTypeId?: number;
 
   filterForm = this.fb.group(this.getControlsConfig());
 

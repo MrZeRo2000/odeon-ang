@@ -44,8 +44,8 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
   readonly ARTIST_TYPES =  ARTIST_TYPES;
   readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES;
 
-  private routedArtifactId?: number;
-  private routedArtifactTypeId?: number;
+  routedArtifactId?: number;
+  routedArtifactTypeId?: number;
 
   filterForm = this.fb.group(this.getControlsConfig())
 
@@ -68,9 +68,24 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
     })
   );
 
+  artifactRow$ = (v: number) => this.artifactService.get(v).pipe(
+    tap(v => `getting row with ${v}`),
+    catchError(err => {
+      this.errorObject = err;
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: `Error reading artifact row`
+      });
+      return of([] as Artifact[]);
+    }),
+    map(v => [v])
+  );
+
   filteredArtifacts$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
     startWith(this.filterForm.value),
+    tap(() => console.log(`filterForm value: ${JSON.stringify(this.filterForm.value)}`)),
     tap(v => {
       console.log(`Writing to ${ArtifactsTableComponent.SESSION_KEY}: ${JSON.stringify(v)}`);
       sessionStorage.setItem(ArtifactsTableComponent.SESSION_KEY, JSON.stringify(v))
@@ -87,11 +102,15 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
       v => iif(
         () =>  !v.artifactTypes,
         of([]),
-        this.artifactTable$(v)
+        iif(
+          () => !!this.routedArtifactId,
+          this.artifactRow$(this.routedArtifactId as number),
+          this.artifactTable$(v)
+        )
       )
     ),
     tap(v => {
-      this.filterArtists = [... new Set(v.map(v => {return v.artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem});
+      this.filterArtists = [... new Set(v.map(v => {return (v as Artifact).artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem});
       console.log('End of filteredArtifacts')
       this.selectedItem = undefined;
     })
@@ -166,12 +185,11 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
   ngOnInit(): void {
     this.routedArtifactId = Number.parseInt(this.route.snapshot.queryParams['artifactId'] as string, 10);
     this.routedArtifactTypeId = Number.parseInt(this.route.snapshot.queryParams['artifactTypeId'] as string, 10);
-    /*
     if (this.routedArtifactTypeId) {
-      this.filterForm.setValue({artifactType: this.routedArtifactTypeId})
+      const controlsConfig = this.getControlsConfig()
+      this.filterForm.setValue({artistType: controlsConfig.artistType[0], artifactTypes: controlsConfig.artifactTypes[0]})
     }
 
-     */
   }
 
   onFilter(event: any): void {
