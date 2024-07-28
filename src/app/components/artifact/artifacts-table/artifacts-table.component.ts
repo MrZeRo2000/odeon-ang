@@ -33,6 +33,12 @@ interface FilterControlsConfig
   artifactTypes: [number[]]
 }
 
+interface FilterControlsConfigValue
+{
+  artistType: string,
+  artifactTypes: number[]
+}
+
 @Component({
   selector: 'app-artifacts-table',
   templateUrl: './artifacts-table.component.html',
@@ -48,12 +54,6 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
   routedArtifactTypeId?: number;
 
   filterForm = this.fb.group(this.getControlsConfig())
-
-  filterData$ = this.filterForm.valueChanges.pipe(
-    startWith(this.filterForm.value),
-    tap(v => console.log(`filter data got value: ${JSON.stringify(v)}`)),
-    tap(() => {this.first = 0})
-  );
 
   artifactTable$ = (v: any) => this.artifactService.getTable(v.artistType, v.artifactTypes).pipe(
     tap(v => `getting table with ${v}`),
@@ -144,14 +144,17 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
   }
 
   protected loadData(): void {
-    console.log(`Load data filter value: ${JSON.stringify(this.filterForm.value)}`)
-    //this.filterForm.setValue(this.filterForm.value as FilterControlsConfig);
+    this.filterForm.setValue(this.getControlsConfigValue());
   }
 
   protected getEditData(item: Artifact): Observable<CRUDResult<[IdName[], Artifact]>> {
     return forkJoin([
       this.getArtists(this.filterForm.value.artistType as string),
-      iif(() => Object.keys(item).length === 0, of({artifactType: {id: ARTIFACT_MUSIC_TYPE_MP3}} as Artifact), this.getArtifact(item.id as number))
+      iif(() =>
+        Object.keys(item).length === 0,
+        of({artifactType: {id: ARTIFACT_MUSIC_TYPE_MP3}} as Artifact),
+        this.getArtifact(item.id as number)
+      )
     ]).pipe(
       map(v => {return {success: true, data: v as [IdName[], Artifact]}}),
       catchError(err => {
@@ -182,14 +185,20 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
     return {'artistType': [artistType], 'artifactTypes': [artifactTypes]}
   }
 
+  private getControlsConfigValue(): FilterControlsConfigValue {
+    const controlsConfig = this.getControlsConfig()
+    return {
+      artistType: controlsConfig.artistType[0],
+      artifactTypes: controlsConfig.artifactTypes[0]
+    }
+  }
+
   ngOnInit(): void {
     this.routedArtifactId = Number.parseInt(this.route.snapshot.queryParams['artifactId'] as string, 10);
     this.routedArtifactTypeId = Number.parseInt(this.route.snapshot.queryParams['artifactTypeId'] as string, 10);
     if (this.routedArtifactTypeId) {
-      const controlsConfig = this.getControlsConfig()
-      this.filterForm.setValue({artistType: controlsConfig.artistType[0], artifactTypes: controlsConfig.artifactTypes[0]})
+      this.filterForm.setValue(this.getControlsConfigValue())
     }
-
   }
 
   onFilter(event: any): void {
@@ -202,18 +211,6 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
 
   onMediaFilesButton(): void {
     this.router.navigate([`/media-files/${this.selectedItem?.id}`]);
-  }
-
-  deleteArtifact(id: number): Observable<CRUDResult<void>> {
-    return this.artifactService.delete(id).pipe(
-      map(_ => {return {success: true} as CRUDResult<void>}),
-      catchError(err => of({success: false, data: err.error?.message || err.message}))
-    )
-  }
-
-  override savedEditData(event: any): void {
-    super.savedEditData(event);
-    //this.filterForm.setValue(this.filterForm.value);
   }
 
   getArtifact(id: number): Observable<Artifact> {
@@ -241,5 +238,4 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
       })
     )
   }
-
 }
