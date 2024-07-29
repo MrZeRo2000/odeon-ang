@@ -54,6 +54,7 @@
               [dropdown]="true"
               [forceSelection]="true"
               [autofocus]="true"
+              appendTo="body"
             >
             </p-autoComplete>
           </div>
@@ -70,14 +71,21 @@
               [multiple]="false"
               [dropdown]="true"
               [forceSelection]="true"
-              [autofocus]="true"
+              appendTo="body"
             >
             </p-autoComplete>
           </div>
 
           <div class="field col-12 mb-0">
             <label for="mediaFileIds">Media files</label>
-            <p-multiSelect [options]="mediaFileTable" optionLabel="name" optionValue="id" id="mediaFileIds" formControlName="mediaFileIds" appendTo="body"></p-multiSelect>
+            <p-multiSelect
+              [options]="mediaFileTable"
+              optionLabel="name"
+              optionValue="id"
+              id="mediaFileIds"
+              formControlName="mediaFileIds"
+              appendTo="body"
+            ></p-multiSelect>
           </div>
 
           <div class="field col-12" *ngIf="artifactTypeConfig?.hasProducts">
