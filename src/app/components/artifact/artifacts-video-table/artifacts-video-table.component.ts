@@ -38,12 +38,18 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
   routedArtifactId?: number;
   routedArtifactTypeId?: number;
 
+  isArtifactTypeVideoMusic = true;
+
   filterForm = this.fb.group(this.getControlsConfig());
 
   filterData$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
-    tap(v => console.log(`filter data got value: ${JSON.stringify(v)}`)),
-    tap(() => {this.first = 0})
+    tap(v =>
+      console.log(`filter data got value: ${JSON.stringify(v)}, real filter value: ${JSON.stringify(this.filterForm.value)}`)),
+    tap(() => {
+      this.isArtifactTypeVideoMusic = isArtifactTypeVideoMusic(this.filterForm.value.artifactType!)
+      this.first = 0
+    })
   );
 
   artifactTable$ = (v: any) => this.artifactService.getTable(ARTIST_TYPE_CODE_ARTIST, [v.artifactType]).pipe(
@@ -153,7 +159,7 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     this.routedArtifactId = Number.parseInt(this.route.snapshot.queryParams['artifactId'] as string, 10);
     this.routedArtifactTypeId = Number.parseInt(this.route.snapshot.queryParams['artifactTypeId'] as string, 10);
     if (this.routedArtifactTypeId) {
-      this.filterForm.setValue({artifactType: this.routedArtifactTypeId})
+      this.filterForm.patchValue({artifactType: this.routedArtifactTypeId})
     }
 
     this.filterService.register(
@@ -177,11 +183,11 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     this.globalFilterValue = event.filters?.global?.value || '';
   }
 
-  onTracksButton(event: any): void {
+  onTracksButton(): void {
     this.router.navigate([`/tracks/${this.selectedItem?.id}`]).then();
   }
 
-  onMediaFilesButton(event: any): void {
+  onMediaFilesButton(): void {
     this.router.navigate([`/media-files/${this.selectedItem?.id}`]).then();
   }
 
@@ -240,7 +246,7 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     }
   }
 
-  savedUpdateTags(event: any): void {
+  savedUpdateTags(): void {
     this.displayUpdateTagsForm = false;
     this.loadData();
   }

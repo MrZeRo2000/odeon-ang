@@ -87,8 +87,8 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
     this.globalFilterValue = event.filters?.global?.value || '';
   }
 
-  onDetailClick(event: MouseEvent, item: Artifact): void {
+  onDetailClick(event: MouseEvent, item: Track): void {
     event.preventDefault();
-    artifactNavigation(this.router, item)
+    artifactNavigation(this.router, item.artifact.id!, item.artifactType?.id!)
   }
 }

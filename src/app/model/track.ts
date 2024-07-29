@@ -4,10 +4,12 @@ import {DVProduct} from "./dv-product";
 import {Artifact} from "./artifacts";
 import {DVType} from "./dvtype";
 import {MediaFile} from "./media-file";
+import {IdName} from "./common";
 
 export interface Track {
   id?: number;
   artifact: Artifact;
+  artifactType?: IdName,
   artist?: Artist;
   performerArtist?: Artist;
   dvType?: DVType;

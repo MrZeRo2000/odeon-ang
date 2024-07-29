@@ -90,6 +90,6 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
 
   onDetailClick(event: MouseEvent, item: Artifact): void {
     event.preventDefault();
-    artifactNavigation(this.router, item)
+    artifactNavigation(this.router, item.id!, item.artifactType?.id!)
   }
 }

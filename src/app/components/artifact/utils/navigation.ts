@@ -1,9 +1,7 @@
 import {Router} from "@angular/router";
-import {Artifact, isArtifactTypeMusic, isArtifactTypeVideo} from "../../../model/artifacts";
+import {isArtifactTypeMusic, isArtifactTypeVideo} from "../../../model/artifacts";
 
-export function artifactNavigation(router: Router, item: Artifact): void {
-  const artifactTypeId = item.artifactType?.id!
-
+export function artifactNavigation(router: Router, artifactId: number, artifactTypeId: number): void {
   let routePath = ''
   if (isArtifactTypeMusic(artifactTypeId)) {
     routePath = 'artifacts'
@@ -13,6 +11,6 @@ export function artifactNavigation(router: Router, item: Artifact): void {
   if (!!routePath) {
     router.navigate(
       [routePath],
-      {queryParams: {'artifactId': item.id, 'artifactTypeId': artifactTypeId}})
+      {queryParams: {'artifactId': artifactId, 'artifactTypeId': artifactTypeId}})
   }
 }
