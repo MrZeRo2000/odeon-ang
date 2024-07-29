@@ -17,7 +17,7 @@ export class AppInfoService {
       return this.restDataSource.getResponseData<AppInfo>("app/info").pipe(
         // use 3000 to test preloader
         delay(0),
-        share({resetOnComplete: true, resetOnError: true, resetOnRefCountZero: true})
+        share({resetOnComplete: false, resetOnError: true, resetOnRefCountZero: true})
       );
     } else {
       return this.appInfo$;
