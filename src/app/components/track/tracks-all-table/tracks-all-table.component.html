@@ -25,7 +25,7 @@
   >
     <ng-template pTemplate="caption">
       <div class="flex">
-        <div class="flex align-items-center justify-content-between text-xl mr-2">All artifacts</div>
+        <div class="flex align-items-center justify-content-between text-xl mr-2">All tracks</div>
 
         <form [formGroup]="filterForm" class="flex white-space-nowrap ml-2 flex-grow-1">
           <app-artifact-type-select
@@ -85,6 +85,7 @@
         <th style="width:20%; white-space: nowrap">Artifact</th>
         <th>Title</th>
         <th style="width:0; text-align: center">Duration</th>
+        <th style="width:0"></th>
       </tr>
     </ng-template>
 
@@ -97,6 +98,16 @@
         <td>{{item.title}}</td>
         <td>
           <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
+        </td>
+        <td class="app-crud-panel-small">
+          <button
+            pButton
+            icon="pi pi-arrow-circle-right"
+            [rounded]="true"
+            [text]="true"
+            severity="secondary"
+            (click)="onDetailClick($event, item)"
+          ></button>
         </td>
       </tr>
     </ng-template>

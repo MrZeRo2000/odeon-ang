@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Artifact, isArtifactTypeMusic, isArtifactTypeVideo} from "../../../model/artifacts";
+import {Artifact} from "../../../model/artifacts";
 import {BaseTableComponent} from "../../base/base-table-component";
 import {MessageService} from "primeng/api";
 import {FormBuilder} from "@angular/forms";
@@ -10,6 +10,7 @@ import {IdName} from "../../../model/common";
 import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 import {ArtistService} from "../../../service/artist.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {artifactNavigation} from "../utils/navigation";
 
 @Component({
   selector: 'app-artifacts-all-table',
@@ -89,18 +90,6 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
 
   onDetailClick(event: MouseEvent, item: Artifact): void {
     event.preventDefault();
-    const artifactTypeId = item.artifactType?.id!
-    console.log(`artifactTypeId: ${artifactTypeId}`)
-
-    let routePath = ''
-    if (isArtifactTypeMusic(artifactTypeId)) {
-      routePath = 'artifacts'
-    } else if (isArtifactTypeVideo(artifactTypeId)) {
-      routePath = 'artifacts-video'
-    }
-    if (!!routePath) {
-      this.router.navigate([routePath], {queryParams: {'artifactId': item.id, 'artifactTypeId': artifactTypeId}})
-    }
-
+    artifactNavigation(this.router, item)
   }
 }

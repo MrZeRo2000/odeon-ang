@@ -11,6 +11,7 @@ import {SelectItem} from "primeng/api/selectitem";
 import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 import {TrackService} from "../../../service/track.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {artifactNavigation} from "../../artifact/utils/navigation";
 
 @Component({
   selector: 'app-tracks-all-table',
@@ -84,5 +85,10 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
 
   onFilter(event: any): void {
     this.globalFilterValue = event.filters?.global?.value || '';
+  }
+
+  onDetailClick(event: MouseEvent, item: Artifact): void {
+    event.preventDefault();
+    artifactNavigation(this.router, item)
   }
 }
