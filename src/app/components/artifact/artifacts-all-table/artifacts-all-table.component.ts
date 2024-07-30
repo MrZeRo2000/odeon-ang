@@ -3,7 +3,7 @@ import {Artifact} from "../../../model/artifacts";
 import {BaseTableComponent} from "../../base/base-table-component";
 import {MessageService} from "primeng/api";
 import {FormBuilder} from "@angular/forms";
-import {catchError, Observable, of, startWith, switchMap, tap} from "rxjs";
+import {catchError, merge, Observable, of, startWith, switchMap, tap} from "rxjs";
 import {ArtifactService} from "../../../service/artifact.service";
 import {SelectItem} from "primeng/api/selectitem";
 import {IdName} from "../../../model/common";
@@ -44,10 +44,13 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
 
   filteredArtifactTable$ = this.filterForm.valueChanges.pipe(
     startWith({}),
-    switchMap(() => this.artifactTable$(
+    switchMap(() => merge(
+      of(undefined),
+      this.artifactTable$(
       this.filterForm.value.artifactTypeIds == undefined ? null : this.filterForm.value.artifactTypeIds,
-      this.filterForm.value.artistIds == undefined ? null : this.filterForm.value.artistIds.map(v => v.id)
-    ))
+      this.filterForm.value.artistIds == undefined ? null : this.filterForm.value.artistIds.map(v => v.id))
+      )
+    ),
   )
 
   filterArtists: SelectItem[] = [];
