@@ -15,7 +15,8 @@ import {filterIdName, filterIdTitle} from "../../../utils/search-utils";
 import {Artist} from "../../../model/artists";
 import {DVProduct} from "../../../model/dv-product";
 import {MediaFile} from "../../../model/media-file";
-import {Observable, tap} from "rxjs";
+import {Observable, pairwise, startWith, tap} from "rxjs";
+import {Parser} from "../utils/parser";
 
 @Component({
   selector: 'app-track-form',
@@ -51,8 +52,6 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
   editForm: FormGroup = this.fb.group({});
 
   editFormData$: Observable<any> = this.editForm.valueChanges;
-
-  editMediaFileIds: Array<number> = [];
 
   constructor(
     private fb: FormBuilder,
@@ -101,13 +100,31 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
       this.editForm.patchValue({"dvTypeId": this.editItem?.dvType?.id?? 8});
     }
 
-    this.editMediaFileIds = this.editForm.value.mediaFileIds;
-
     this.editFormData$ = this.editForm.valueChanges.pipe(
-      tap(v => {
-        if (this.editMediaFileIds !== v["mediaFileIds"]) {
-          this.updateFormDuration(v["mediaFileIds"]);
-          this.editMediaFileIds = v["mediaFileIds"]
+      startWith(this.editForm.value),
+      pairwise(),
+      tap(([o, v]) => {
+        if (JSON.stringify(o.mediaFileIds) !== JSON.stringify(v.mediaFileIds)) {
+          this.updateFormDuration(v.mediaFileIds);
+
+          if (!this.editForm.value.title && (v.mediaFileIds.length === 1)) {
+            const mediaFileId = v.mediaFileIds[0]
+            const mediaFileNames = this.mediaFileTable.filter(f => f.id === mediaFileId)
+            if (mediaFileNames.length > 0) {
+              const parsed = Parser.parseMusicVideoTrack(mediaFileNames[0].name)
+              let value: {[k: string]: any} = {}
+              value['title'] = parsed.title || mediaFileNames[0].name
+
+              if (!this.editForm.value.artistId && parsed.artistName) {
+                const artistIds = this.artistsTable.filter(a => a.name === parsed.artistName)
+                if (artistIds.length > 0) {
+                  value['artistId'] = {id: artistIds[0].id, name: artistIds[0].name}
+                }
+              }
+
+              this.editForm.patchValue(value)
+            }
+          }
         }
       })
     );

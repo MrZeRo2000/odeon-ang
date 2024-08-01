@@ -28,7 +28,7 @@
           <div class="field mb-0" [ngClass]="artifactTypeConfig?.hasDvType ? 'col-6' : 'col-12'">
             <label for="duration">
               Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})
-              <span *ngIf="this.editMediaFileIds.length > 0" (click)="onUpdateDuration($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
+              <span *ngIf="this.editForm.value.mediaFileIds.length > 0" (click)="onUpdateDuration($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
             </label>
             <input type="number" pInputText id="duration" formControlName="duration"
                    [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
