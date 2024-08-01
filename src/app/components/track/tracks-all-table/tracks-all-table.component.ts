@@ -19,6 +19,8 @@ import {artifactNavigation} from "../../artifact/utils/navigation";
   styleUrl: './tracks-all-table.component.scss'
 })
 export class TracksAllTableComponent extends BaseTableComponent<Track> {
+  private static readonly SESSION_KEY = "tracks-all-table-filter-form";
+
   filterForm = this.fb.group({
     artifactTypeIds: [[] as number[]],
     artistIds: [[] as IdName[]]
@@ -44,6 +46,10 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
 
   filteredTrackTable$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
+    tap(() => {
+      const value = this.filterForm.value
+      sessionStorage.setItem(TracksAllTableComponent.SESSION_KEY, JSON.stringify(value))
+    }),
     switchMap(() => merge(
       of(undefined),
       this.trackTable$(
@@ -81,9 +87,23 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
   }
 
   ngOnInit(): void {
+    let artifactTypeIds: number[]
     const artistId =  Number.parseInt(this.route.snapshot.queryParams['artistId'], 10)
-    const artistIds = artistId? [{id: artistId} as IdName] : []
-    this.filterForm.setValue({artifactTypeIds: [], artistIds: artistIds})
+    let artistIds = artistId? [{id: artistId} as IdName] : []
+    try {
+      const savedState = sessionStorage.getItem(TracksAllTableComponent.SESSION_KEY);
+      const savedObject = JSON.parse(savedState as string);
+      artifactTypeIds = savedObject.artifactTypeIds as number[]
+      if (artistIds.length === 0) {
+        artistIds = savedObject.artistIds as IdName[]
+      }
+    } catch (e) {
+      artifactTypeIds = []
+    }
+
+    const value = {artifactTypeIds: artifactTypeIds || [], artistIds: artistIds || []}
+    console.log(`Setting value: ${JSON.stringify(value)}`)
+    this.filterForm.setValue(value)
   }
 
   onFilter(event: any): void {
