@@ -9,7 +9,12 @@
 
 <div #dtc *ngIf="table$ | async as table; else loadingOrError">
 
-  <p-table #dt styleClass="p-datatable-sm" [value]="table" dataKey="id" [scrollable]="true" [scrollHeight]="scrollHeight"
+  <p-table #dt
+           styleClass="p-datatable-sm"
+           [value]="table"
+           dataKey="id"
+           [scrollable]="true"
+           [scrollHeight]="scrollHeight"
            [globalFilterFields]="['name']">
 
     <ng-template pTemplate="caption">
