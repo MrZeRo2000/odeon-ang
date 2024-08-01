@@ -12,7 +12,7 @@ import {
 } from "../../../model/artifacts";
 import {DV_TYPES, DVType} from "../../../model/dvtype";
 import {filterIdName, filterIdTitle} from "../../../utils/search-utils";
-import {Artist} from "../../../model/artists";
+import {Artist, ARTIST_NAME_VARIOUS_ARTISTS} from "../../../model/artists";
 import {DVProduct} from "../../../model/dv-product";
 import {MediaFile} from "../../../model/media-file";
 import {Observable, pairwise, startWith, tap} from "rxjs";
@@ -25,6 +25,9 @@ import {Parser} from "../utils/parser";
 })
 export class TrackFormComponent extends BaseCrudFormComponent<Track> implements OnChanges, OnInit {
   DV_TYPES = DV_TYPES;
+
+  @Input()
+  public artifact?: Artifact;
 
   @Input()
   mediaFileTable: MediaFile[] = [];
@@ -80,7 +83,11 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
 
     // common values without defaults
     this.editForm.setValue({
-      "artistId": this.editItem?.artist?.id? {id: this.editItem.artist?.id, name: this.editItem.artist?.artistName} : '',
+      "artistId": this.editItem?.artist?.id ?
+        {id: this.editItem.artist?.id, name: this.editItem.artist?.artistName} :
+        (this.artifact?.artist?.id && this.artifact?.artist?.artistName !== ARTIST_NAME_VARIOUS_ARTISTS) ?
+          {id: this.artifact.artist.id, name: this.artifact.artist.artistName} :
+          '',
       "performerArtistId": this.editItem?.performerArtist?.id? {id: this.editItem.performerArtist?.id, name: this.editItem.performerArtist?.artistName} : '',
       "dvTypeId": '',
       "title": this.editItem?.title?? '',

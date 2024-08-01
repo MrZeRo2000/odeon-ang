@@ -18,3 +18,5 @@ export const ARTIST_TYPES =
     {name: 'Artist', code: ARTIST_TYPE_CODE_ARTIST},
     {name: 'Classics', code: ARTIST_TYPE_CODE_CLASSICS}
   ];
+
+export const ARTIST_NAME_VARIOUS_ARTISTS = 'Various Artists'
