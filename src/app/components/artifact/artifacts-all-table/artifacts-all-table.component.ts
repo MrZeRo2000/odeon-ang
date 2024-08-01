@@ -18,6 +18,7 @@ import {artifactNavigation} from "../utils/navigation";
   styleUrl: './artifacts-all-table.component.scss'
 })
 export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> implements OnInit {
+  private static readonly SESSION_KEY = "artifacts-all-table-filter-form";
 
   filterForm = this.fb.group({
     artifactTypeIds: [[] as number[]],
@@ -44,6 +45,11 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
 
   filteredArtifactTable$ = this.filterForm.valueChanges.pipe(
     startWith({}),
+    tap(() => {
+      const value = this.filterForm.value
+      //console.log(`Writing to ${ArtifactsAllTableComponent.SESSION_KEY}: ${JSON.stringify(value)}`);
+      sessionStorage.setItem(ArtifactsAllTableComponent.SESSION_KEY, JSON.stringify(value))
+    }),
     switchMap(() => merge(
       of(undefined),
       this.artifactTable$(
@@ -82,9 +88,23 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
   }
 
   ngOnInit(): void {
-    const artistId =  Number.parseInt(this.route.snapshot.queryParams['artistId'], 10)
-    const artistIds = artistId? [{id: artistId} as IdName] : []
-    this.filterForm.setValue({artifactTypeIds: [], artistIds: artistIds})
+    let artifactTypeIds: number[]
+    let artistId =  Number.parseInt(this.route.snapshot.queryParams['artistId'], 10)
+    let artistIds = artistId? [{id: artistId} as IdName] : []
+    try {
+      const savedState = sessionStorage.getItem(ArtifactsAllTableComponent.SESSION_KEY);
+      const savedObject = JSON.parse(savedState as string);
+      artifactTypeIds = savedObject.artifactTypeIds as number[]
+      if (artistIds.length === 0) {
+        artistIds = savedObject.artistIds as IdName[]
+      }
+    } catch (e) {
+      artifactTypeIds = []
+    }
+
+    const value = {artifactTypeIds: artifactTypeIds || [], artistIds: artistIds || []}
+    console.log(`Setting value: ${JSON.stringify(value)}`)
+    this.filterForm.setValue(value)
   }
 
   onFilter(event: any): void {
