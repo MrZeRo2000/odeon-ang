@@ -5,7 +5,7 @@ import {IdName} from "../../../model/common";
 import {MessageService} from "primeng/api";
 import {FormBuilder} from "@angular/forms";
 import {ArtistService} from "../../../service/artist.service";
-import {catchError, merge, Observable, of, startWith, switchMap, tap} from "rxjs";
+import {catchError, iif, merge, Observable, of, startWith, switchMap, tap} from "rxjs";
 import {Artifact} from "../../../model/artifacts";
 import {SelectItem} from "primeng/api/selectitem";
 import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
@@ -52,11 +52,15 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
     }),
     switchMap(() => merge(
       of(undefined),
-      this.trackTable$(
-      this.filterForm.value.artifactTypeIds == undefined ? null : this.filterForm.value.artifactTypeIds,
-      this.filterForm.value.artistIds == undefined ? null : this.filterForm.value.artistIds.map(v => v.id))
-      )
-    )
+      iif(
+        () => (this.filterForm.value.artifactTypeIds?.length == 0) &&
+              (this.filterForm.value.artistIds?.length == 0),
+        of([]),
+        this.trackTable$(
+          this.filterForm.value.artifactTypeIds == undefined ? null : this.filterForm.value.artifactTypeIds,
+          this.filterForm.value.artistIds == undefined ? null : this.filterForm.value.artistIds.map(v => v.id))
+        )
+    ))
   )
 
   filterArtists: SelectItem[] = [];
