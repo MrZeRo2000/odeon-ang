@@ -14,3 +14,9 @@ export function artifactNavigation(router: Router, artifactId: number, artifactT
       {queryParams: {'artifactId': artifactId, 'artifactTypeId': artifactTypeId}})
   }
 }
+
+export function mediaFileNavigation(router: Router, artifactId: number, trackId?: number): void {
+  const routePath = `media-files/${artifactId}`
+  const params = trackId ? {queryParams: {'trackId': trackId as number}} : {}
+  router.navigate([routePath], params).then()
+}

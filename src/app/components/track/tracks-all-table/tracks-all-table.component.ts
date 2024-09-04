@@ -11,7 +11,7 @@ import {SelectItem} from "primeng/api/selectitem";
 import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 import {TrackService} from "../../../service/track.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {artifactNavigation} from "../../artifact/utils/navigation";
+import {artifactNavigation, mediaFileNavigation} from "../../artifact/utils/navigation";
 
 @Component({
   selector: 'app-tracks-all-table',
@@ -112,6 +112,11 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
 
   onFilter(event: any): void {
     this.globalFilterValue = event.filters?.global?.value || '';
+  }
+
+  onMediaFileClick(event: MouseEvent, item: Track): void {
+    event.preventDefault();
+    mediaFileNavigation(this.router, item.artifact.id!, item.id!)
   }
 
   onDetailClick(event: MouseEvent, item: Track): void {

@@ -99,7 +99,15 @@
         <td>
           <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
         </td>
-        <td class="app-crud-panel-small">
+        <td class="flex app-crud-panel-small">
+          <button
+            pButton
+            icon="pi pi-info-circle"
+            [rounded]="true"
+            [text]="true"
+            severity="secondary"
+            (click)="onMediaFileClick($event, item)"
+          ></button>
           <button
             pButton
             icon="pi pi-arrow-circle-right"

@@ -19,6 +19,7 @@ export class MediaFilesTableComponent extends BaseCrudTableComponent<MediaFile, 
   sumByKey = sumByKey
 
   artifactId?: number;
+  trackId?: number;
 
   data$?: Observable<[MediaFile[], Artifact]>;
 
@@ -72,7 +73,7 @@ export class MediaFilesTableComponent extends BaseCrudTableComponent<MediaFile, 
   }
 
   protected loadData(): void {
-    if (this.artifactId) {
+    if (this.artifactId || this.trackId) {
       this.data$ = this.getData();
     }
   }
@@ -86,13 +87,16 @@ export class MediaFilesTableComponent extends BaseCrudTableComponent<MediaFile, 
 
   ngOnInit(): void {
     this.artifactId = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
+    this.trackId =  Number.parseInt(this.route.snapshot.queryParams['trackId'], 10)
     console.log(`Routed with id=${this.artifactId}`)
     this.loadData();
   }
 
   private getData(): Observable<[MediaFile[], Artifact]> {
     return forkJoin([
-        this.getTable(this.artifactId as number),
+        iif(() => !!this.artifactId && !this.trackId, this.getTable(this.artifactId as number),
+          iif(() => !!this.trackId, this.getTableByTrackId(this.trackId as number),
+            of([]))),
         this.getArtifact(this.artifactId as number).pipe(
           tap(v => {
             this.isArtifactTypeVideo = isArtifactTypeVideo(v.artifactType?.id as number);
@@ -109,7 +113,21 @@ export class MediaFilesTableComponent extends BaseCrudTableComponent<MediaFile, 
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: `Error reading media files`
+          detail: `Error reading media files by artifact`
+        });
+        return of([]);
+      })
+    )
+  }
+
+  private getTableByTrackId(trackId: number): Observable<MediaFile[]> {
+    return this.mediaFileService.getTableByTrackId(trackId).pipe(
+      catchError(err => {
+        this.errorObject = err;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error reading media files by track`
         });
         return of([]);
       })

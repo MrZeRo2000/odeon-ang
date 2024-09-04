@@ -20,6 +20,10 @@ export class MediaFileService extends CRUDService<MediaFile>{
     return this.restDataSource.getResponseData<Array<MediaFile>>(`${this.resourceName}/table/${artifactId}`)
   }
 
+  getTableByTrackId(trackId: number): Observable<Array<MediaFile>> {
+    return this.restDataSource.getResponseData<Array<MediaFile>>(`${this.resourceName}/table`, new HttpParams().set('trackId', trackId))
+  }
+
   getIdNameDurationTable(artifactId: number): Observable<Array<MediaFile>> {
     return this.restDataSource.getResponseData<Array<MediaFile>>(`${this.resourceName}/table-id-name-duration/${artifactId}`)
   }

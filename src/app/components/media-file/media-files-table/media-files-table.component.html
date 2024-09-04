@@ -14,8 +14,8 @@
         <ng-template pTemplate="caption">
           <div class="flex">
             <div class="flex align-items-center justify-content-between text-xl mr-2">{{data[1] | artifactCaption}} Media files</div>
-            <div class="flex align-items-center app-crud-panel-small"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
-            <div class="flex align-items-center justify-content-end flex-grow-1">
+            <div class="flex align-items-center app-crud-panel-small" *ngIf="!this.trackId"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
+            <div class="flex align-items-center justify-content-end flex-grow-1" *ngIf="!this.trackId">
               <p-button
                 icon="pi pi-download"
                 styleClass="mr-2"
@@ -40,7 +40,7 @@
             <th *ngIf="isArtifactTypeVideo" style="width:0">Width</th>
             <th *ngIf="isArtifactTypeVideo" style="width:0">Height</th>
             <th *ngIf="isArtifactTypeVideo" style="width:0">Extra</th>
-            <th style="width:0"></th>
+            <th style="width:0" *ngIf="!this.trackId"></th>
           </tr>
           <tr>
             <th colspan="3">Rows: {{dt.processedData.length}}</th>
@@ -60,7 +60,7 @@
             <td *ngIf="isArtifactTypeVideo" style="text-align: center">{{item.width}}</td>
             <td *ngIf="isArtifactTypeVideo" style="text-align: center">{{item.height}}</td>
             <td *ngIf="isArtifactTypeVideo" style="text-align: center"><i *ngIf="item.hasExtra" class="pi pi-check"></i></td>
-            <td>
+            <td *ngIf="!this.trackId">
               <div class="app-crud-panel-small">
                 <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
               </div>
