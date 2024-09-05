@@ -73,12 +73,13 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th style="width:0">Id</th>
-        <th style="width:20%" *ngIf="isArtifactTypeVideoMusic">Artist Name</th>
-        <th>Title</th>
+        <th pSortableColumn="id" style="width:0">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
+        <th pSortableColumn="artist.artistName" style="width:20%" *ngIf="isArtifactTypeVideoMusic">Artist Name&nbsp;<p-sortIcon field="artist.artistName"></p-sortIcon></th>
+        <th pSortableColumn="title">Title&nbsp;<p-sortIcon field="title"></p-sortIcon></th>
         <th style="width:0" *ngIf="isArtifactTypeVideoMusic">Year</th>
         <th style="width:0; text-align: center">Duration</th>
         <th style="width:0; text-align: center">Size</th>
+        <th pSortableColumn="insertDateTime" style="width:0; text-align: center; white-space: nowrap">Inserted&nbsp;<p-sortIcon field="insertDateTime"></p-sortIcon></th>
         <th style="width:0; text-align: center; white-space: nowrap">
           Tags
           <p-columnFilter field="tags" matchMode="filter_tags" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
@@ -109,6 +110,7 @@
         <td>
           <div style="text-align: right; white-space: nowrap"><span *ngIf="item.size">{{item.size | fileSize}}</span></div>
         </td>
+        <td><div class="white-space-nowrap"><small>{{item.insertDateTime | date:'dd.MM.YYYY HH:mm:ss'}}</small></div></td>
         <td>
           <div class="flex flex-wrap gap-1" *ngIf="item.tags">
             <div *ngFor="let tag of item.tags">
