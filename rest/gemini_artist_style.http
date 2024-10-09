@@ -1,0 +1,8 @@
+### GET request to example server
+POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={{GEMINI_API_KEY}}
+Content-Type: application/json
+
+{
+  "contents":[{"parts":[{"text":"You are a music expert. What are the styles for band 'Theatre of Tragedy'? Answer should contain a comma separated list of styles only"}]}]
+}
+###
