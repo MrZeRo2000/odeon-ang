@@ -2,10 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TracksUpdateDurationsFormComponent } from './tracks-update-durations-form.component';
 import {ConfirmationService, MessageService} from "primeng/api";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {DatePipe} from "@angular/common";
 import {DialogModule} from "primeng/dialog";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TracksUpdateDurationsFormComponent', () => {
   let component: TracksUpdateDurationsFormComponent;
@@ -13,21 +14,20 @@ describe('TracksUpdateDurationsFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TracksUpdateDurationsFormComponent],
-      providers: [
-        MessageService,
-        ConfirmationService,
-        DatePipe,
-      ],
-      imports: [
-        // angular
-        HttpClientTestingModule,
+    declarations: [TracksUpdateDurationsFormComponent],
+    imports: [
         // primeng
         DialogModule,
         // custom
-        DataSourceModule,
-      ]
-    })
+        DataSourceModule],
+    providers: [
+        MessageService,
+        ConfirmationService,
+        DatePipe,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(TracksUpdateDurationsFormComponent);

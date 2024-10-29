@@ -2,10 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DVProductFormComponent } from './dvproduct-form.component';
 import {MessageService} from "primeng/api";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DialogModule} from "primeng/dialog";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('DVProductFormComponent', () => {
   let component: DVProductFormComponent;
@@ -13,22 +14,21 @@ describe('DVProductFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         DVProductFormComponent
-      ],
-      providers: [
-        MessageService,
-      ],
-      imports: [
-        // angular
-        HttpClientTestingModule,
+    ],
+    imports: [
         // primeng
         DialogModule,
         ConfirmDialogModule,
         // custom
-        DataSourceModule,
-      ]
-    })
+        DataSourceModule],
+    providers: [
+        MessageService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(DVProductFormComponent);

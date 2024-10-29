@@ -2,10 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArtifactFormComponent } from './artifact-form.component';
 import {ConfirmationService, MessageService} from "primeng/api";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {DialogModule} from "primeng/dialog";
 import {RouterTestingModule} from "@angular/router/testing";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ArtifactFormComponent', () => {
   let component: ArtifactFormComponent;
@@ -13,24 +14,22 @@ describe('ArtifactFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        //standard
-        HttpClientTestingModule,
-        RouterTestingModule,
+    declarations: [
+        ArtifactFormComponent
+    ],
+    imports: [RouterTestingModule,
         //library
         DialogModule,
         //custom
-        DataSourceModule,
-      ],
-      providers: [
+        DataSourceModule],
+    providers: [
         //library
         ConfirmationService,
         MessageService,
-      ],
-      declarations: [
-        ArtifactFormComponent
-      ],
-    })
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+})
     .compileComponents();
   });
 

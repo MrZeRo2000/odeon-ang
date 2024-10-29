@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
 import {REST_URL_ENV, RestDataSourceService} from './rest-data-source.service';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('RestDataSourceService',() => {
   let service: RestDataSourceService;
@@ -9,9 +10,9 @@ describe('RestDataSourceService',() => {
   beforeEach(() => {
     TestBed.configureTestingModule(
       {
-        imports: [HttpClientTestingModule],
-        providers: [REST_URL_ENV]
-      },
+    imports: [],
+    providers: [REST_URL_ENV, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+},
     )
     ;
     service = TestBed.inject(RestDataSourceService);

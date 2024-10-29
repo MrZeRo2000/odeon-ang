@@ -2,11 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DVCategoriesTableComponent } from './dvcategories-table.component';
 import {ConfirmationService, MessageService} from "primeng/api";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {LayoutModule} from "../../layout/layout.module";
 import {LoadingComponent} from "../../../core/components/loading/loading.component";
 import {ConfirmDialogComponent} from "../../../core/components/confirm-dialog/confirm-dialog.component";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('DVCategoriesTableComponent', () => {
   let component: DVCategoriesTableComponent;
@@ -14,24 +15,23 @@ describe('DVCategoriesTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         LoadingComponent,
         ConfirmDialogComponent,
         DVCategoriesTableComponent
-      ],
-      providers: [
-        MessageService,
-        ConfirmationService,
-      ],
-      imports: [
-        // angular
-        HttpClientTestingModule,
+    ],
+    imports: [
         // primeng
         // custom
         DataSourceModule,
-        LayoutModule,
-      ]
-    })
+        LayoutModule],
+    providers: [
+        MessageService,
+        ConfirmationService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(DVCategoriesTableComponent);

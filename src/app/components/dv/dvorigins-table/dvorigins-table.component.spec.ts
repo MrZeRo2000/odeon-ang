@@ -3,7 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DVOriginsTableComponent } from './dvorigins-table.component';
 import {ConfirmationService, MessageService} from "primeng/api";
 import {DataSourceModule} from "../../../data-source/data-source.module";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('DVOriginsTableComponent', () => {
   let component: DVOriginsTableComponent;
@@ -11,21 +12,20 @@ describe('DVOriginsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         DVOriginsTableComponent
-      ],
-      providers: [
+    ],
+    imports: [
+        // custom
+        DataSourceModule],
+    providers: [
         // primeng
         MessageService,
         ConfirmationService,
-      ],
-      imports: [
-        // angular
-        HttpClientTestingModule,
-        // custom
-        DataSourceModule,
-      ]
-    })
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(DVOriginsTableComponent);

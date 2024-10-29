@@ -3,8 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TracksImportFormComponent } from './tracks-import-form.component';
 import {DialogModule} from "primeng/dialog";
 import {MessageService} from "primeng/api";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TrackImportFormComponent', () => {
   let component: TracksImportFormComponent;
@@ -12,21 +13,20 @@ describe('TrackImportFormComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         TracksImportFormComponent,
-      ],
-      providers: [
-        MessageService,
-      ],
-      imports: [
-        // angular
-        HttpClientTestingModule,
+    ],
+    imports: [
         // primeng
         DialogModule,
         // custom
-        DataSourceModule,
-      ]
-    });
+        DataSourceModule],
+    providers: [
+        MessageService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+});
     fixture = TestBed.createComponent(TracksImportFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

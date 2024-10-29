@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs";
 import {Artifact} from "../model/artifacts";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
-import {HttpParams} from "@angular/common/http";
+import { HttpParams } from "@angular/common/http";
 import {CRUDService} from "./crud.service";
 
 @Injectable({

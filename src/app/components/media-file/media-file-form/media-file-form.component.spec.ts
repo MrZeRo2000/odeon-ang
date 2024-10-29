@@ -2,11 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MediaFileFormComponent } from './media-file-form.component';
 import {ConfirmationService, MessageService} from "primeng/api";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {DialogModule} from "primeng/dialog";
 import {FormControl} from "@angular/forms";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MediaFileFormComponent', () => {
   let component: MediaFileFormComponent;
@@ -14,22 +15,20 @@ describe('MediaFileFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        //standard
-        HttpClientTestingModule,
-        RouterTestingModule,
+    declarations: [MediaFileFormComponent],
+    imports: [RouterTestingModule,
         //library
         DialogModule,
         //custom
-        DataSourceModule,
-      ],
-      providers: [
+        DataSourceModule],
+    providers: [
         //library
         ConfirmationService,
         MessageService,
-      ],
-      declarations: [ MediaFileFormComponent ]
-    })
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+})
     .compileComponents();
   });
 

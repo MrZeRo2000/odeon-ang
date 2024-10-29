@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {RowsAffected, Track, TrackDurationsUserUpdate, TrackDVTypeUserUpdate} from "../model/track";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {CRUDService} from "./crud.service";
-import {HttpParams} from "@angular/common/http";
+import { HttpParams } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'

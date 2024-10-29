@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TrackFormComponent } from './track-form.component';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ServiceModule} from "../../../service/service.module";
 import {MessageService} from "primeng/api";
 import {RouterTestingModule} from "@angular/router/testing";
 import {DialogModule} from "primeng/dialog";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TrackFormComponent', () => {
   let component: TrackFormComponent;
@@ -14,21 +15,19 @@ describe('TrackFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        //standard
-        HttpClientTestingModule,
-        RouterTestingModule,
+    declarations: [TrackFormComponent],
+    imports: [RouterTestingModule,
         //library
         DialogModule,
         //custom
         DataSourceModule,
-        ServiceModule,
-        ],
-      providers: [
+        ServiceModule],
+    providers: [
         MessageService,
-      ],
-      declarations: [ TrackFormComponent ]
-    })
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+})
     .compileComponents();
   });
 

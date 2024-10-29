@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArtistLyricsFormComponent } from './artist-lyrics-form.component';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DialogModule} from "primeng/dialog";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ArtistLyricsFormComponent', () => {
   let component: ArtistLyricsFormComponent;
@@ -14,23 +15,21 @@ describe('ArtistLyricsFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        //standard
-        HttpClientTestingModule,
-        RouterTestingModule,
+    declarations: [ArtistLyricsFormComponent],
+    imports: [RouterTestingModule,
         //library
         DialogModule,
         ConfirmDialogModule,
         //custom
-        DataSourceModule,
-      ],
-      providers: [
+        DataSourceModule],
+    providers: [
         //library
         ConfirmationService,
         MessageService,
-      ],
-      declarations: [ ArtistLyricsFormComponent ]
-    })
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+})
     .compileComponents();
   });
 

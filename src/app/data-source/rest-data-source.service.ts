@@ -1,6 +1,6 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from "@angular/common/http";
 import {Observable} from "rxjs";
 
 export const REST_URL = new InjectionToken<string>('rest-url');

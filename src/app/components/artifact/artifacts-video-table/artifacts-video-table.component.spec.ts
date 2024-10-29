@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArtifactsVideoTableComponent } from './artifacts-video-table.component';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {LoadingComponent} from "../../../core/components/loading/loading.component";
 import {ConfirmDialogComponent} from "../../../core/components/confirm-dialog/confirm-dialog.component";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ArtifactsVideoTableComponent', () => {
   let component: ArtifactsVideoTableComponent;
@@ -14,24 +15,22 @@ describe('ArtifactsVideoTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        //standard
-        HttpClientTestingModule,
-        RouterTestingModule,
-        //custom
-        DataSourceModule,
-      ],
-      providers: [
-        //library
-        ConfirmationService,
-        MessageService,
-      ],
-      declarations: [
+    declarations: [
         LoadingComponent,
         ConfirmDialogComponent,
         ArtifactsVideoTableComponent
-      ]
-    })
+    ],
+    imports: [RouterTestingModule,
+        //custom
+        DataSourceModule],
+    providers: [
+        //library
+        ConfirmationService,
+        MessageService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(ArtifactsVideoTableComponent);

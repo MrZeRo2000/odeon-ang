@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, of, shareReplay, switchMap, tap} from "rxjs";
 import {IdTitle, IdTitleOriginalTitle, TextInterface} from "../model/common";
-import {HttpParams} from "@angular/common/http";
+import { HttpParams } from "@angular/common/http";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {DVProduct} from "../model/dv-product";
 import {CRUDService} from "./crud.service";

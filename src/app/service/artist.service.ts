@@ -3,7 +3,7 @@ import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {Artist} from "../model/artists";
 import {Observable, of, shareReplay} from "rxjs";
 import {Biography} from "../model/biography";
-import {HttpParams} from "@angular/common/http";
+import { HttpParams } from "@angular/common/http";
 import {IdName} from "../model/common";
 import {CRUDService} from "./crud.service";
 
