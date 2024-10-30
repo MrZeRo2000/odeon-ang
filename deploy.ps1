@@ -1,1 +1,2 @@
-Invoke-Expression "../common/builder/deployWebProject.ps1 odeon-ang"
+$folderName = Split-Path -Path $PSScriptRoot -Leaf
+Invoke-Expression "../common/builder/deployWebProject.ps1 $folderName"
