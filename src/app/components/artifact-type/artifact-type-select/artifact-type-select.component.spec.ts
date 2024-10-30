@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArtifactTypeSelectComponent } from './artifact-type-select.component';
+import {ArtifactTypeModule} from "../artifact-type.module";
 
 describe('ArtifactTypeSelectComponent', () => {
   let component: ArtifactTypeSelectComponent;
@@ -8,10 +9,13 @@ describe('ArtifactTypeSelectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ArtifactTypeSelectComponent]
+      declarations: [ArtifactTypeSelectComponent],
+      imports: [
+        ArtifactTypeModule
+      ]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ArtifactTypeSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
