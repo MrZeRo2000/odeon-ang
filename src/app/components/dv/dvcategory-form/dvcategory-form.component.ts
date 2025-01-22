@@ -6,9 +6,10 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DVCategoryService} from "../../../service/dvcategory.service";
 
 @Component({
-  selector: 'app-dvcategory-form',
-  templateUrl: './dvcategory-form.component.html',
-  styleUrls: ['./dvcategory-form.component.scss']
+    selector: 'app-dvcategory-form',
+    templateUrl: './dvcategory-form.component.html',
+    styleUrls: ['./dvcategory-form.component.scss'],
+    standalone: false
 })
 export class DVCategoryFormComponent extends BaseCrudFormComponent<DVCategory> implements OnInit {
 

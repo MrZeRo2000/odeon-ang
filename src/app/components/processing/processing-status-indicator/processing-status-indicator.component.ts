@@ -18,9 +18,10 @@ const PROCESSING_TYPES : {[processingStatus: number] : IndicatorType} = {
 
 
 @Component({
-  selector: 'app-processing-status-indicator',
-  templateUrl: './processing-status-indicator.component.html',
-  styleUrls: ['./processing-status-indicator.component.scss']
+    selector: 'app-processing-status-indicator',
+    templateUrl: './processing-status-indicator.component.html',
+    styleUrls: ['./processing-status-indicator.component.scss'],
+    standalone: false
 })
 export class ProcessingStatusIndicatorComponent implements OnInit, OnChanges {
   IndicatorType = IndicatorType;

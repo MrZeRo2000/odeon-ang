@@ -3,9 +3,10 @@ import {BaseFormComponent} from "../../base/base-form.component";
 import {ImportStats} from "../../../model/user-import";
 
 @Component({
-  selector: 'app-dvproducts-import-result-form',
-  templateUrl: './user-import-result-form.component.html',
-  styleUrls: ['./user-import-result-form.component.scss']
+    selector: 'app-dvproducts-import-result-form',
+    templateUrl: './user-import-result-form.component.html',
+    styleUrls: ['./user-import-result-form.component.scss'],
+    standalone: false
 })
 export class UserImportResultFormComponent extends BaseFormComponent {
 

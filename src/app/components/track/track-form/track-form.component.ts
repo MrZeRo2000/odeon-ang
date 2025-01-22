@@ -19,9 +19,10 @@ import {Observable, pairwise, startWith, tap} from "rxjs";
 import {Parser} from "../utils/parser";
 
 @Component({
-  selector: 'app-track-form',
-  templateUrl: './track-form.component.html',
-  styleUrls: ['./track-form.component.scss'],
+    selector: 'app-track-form',
+    templateUrl: './track-form.component.html',
+    styleUrls: ['./track-form.component.scss'],
+    standalone: false
 })
 export class TrackFormComponent extends BaseCrudFormComponent<Track> implements OnChanges, OnInit {
   DV_TYPES = DV_TYPES;

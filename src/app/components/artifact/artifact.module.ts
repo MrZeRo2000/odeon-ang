@@ -13,7 +13,6 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
-import {ChipsModule} from "primeng/chips";
 import {ChipModule} from "primeng/chip";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {DropdownModule} from "primeng/dropdown";
@@ -44,7 +43,6 @@ import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
     // primeng
     ButtonModule,
     RippleModule,
-    ChipsModule,
     DialogModule,
     TableModule,
     SelectButtonModule,

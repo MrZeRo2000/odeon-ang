@@ -6,9 +6,10 @@ import {DVOriginService} from "../../../service/dvorigin.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-dvorigin-form',
-  templateUrl: './dvorigin-form.component.html',
-  styleUrls: ['./dvorigin-form.component.scss']
+    selector: 'app-dvorigin-form',
+    templateUrl: './dvorigin-form.component.html',
+    styleUrls: ['./dvorigin-form.component.scss'],
+    standalone: false
 })
 export class DVOriginFormComponent extends BaseCrudFormComponent<DVOrigin> implements OnInit {
 

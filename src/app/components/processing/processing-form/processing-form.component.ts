@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, inject, OnInit} from '@angular/core';
 import {
   ProcessInfo,
   ProcessingAction,
@@ -6,7 +6,7 @@ import {
   PROCESSOR_TYPE_NAMES,
   ProcessorType
 } from "../../../model/process-info";
-import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {ProcessService} from "../../../service/process.service";
 import {BaseComponent} from "../../base/base.component";
 import {
@@ -20,12 +20,14 @@ import {ArtistService} from "../../../service/artist.service";
 import {Artist, ARTIST_TYPES} from "../../../model/artists";
 import {DateFormatter} from "../../../utils/date-utils";
 import {FormBuilder} from "@angular/forms";
+import {PrimeNG} from "primeng/config";
 
 @Component({
-  selector: 'app-processing-form',
-  templateUrl: './processing-form.component.html',
-  styleUrls: ['./processing-form.component.scss'],
-  providers: [ConfirmationService]
+    selector: 'app-processing-form',
+    templateUrl: './processing-form.component.html',
+    styleUrls: ['./processing-form.component.scss'],
+    providers: [ConfirmationService],
+    standalone: false
 })
 export class ProcessingFormComponent extends BaseComponent implements OnInit, AfterViewInit {
   readonly treeValues = [
@@ -284,10 +286,11 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
     ),
   );
 
+  private primengConfig = inject(PrimeNG);
+
   constructor(
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
-    private primengConfig: PrimeNGConfig,
     private messageService: MessageService,
     private processService: ProcessService,
     private artistService: ArtistService
@@ -296,7 +299,7 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
   }
 
   ngOnInit(): void {
-    this.primengConfig.ripple = true;
+    this.primengConfig.ripple.set(true);
   }
 
   ngAfterViewInit(): void {

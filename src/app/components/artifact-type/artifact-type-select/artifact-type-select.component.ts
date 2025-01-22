@@ -5,17 +5,18 @@ import {tap} from "rxjs";
 
 
 @Component({
-  selector: 'app-artifact-type-select',
-  templateUrl: './artifact-type-select.component.html',
-  styleUrl: './artifact-type-select.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi:true,
-      useExisting: ArtifactTypeSelectComponent
-    },
-  ]
+    selector: 'app-artifact-type-select',
+    templateUrl: './artifact-type-select.component.html',
+    styleUrl: './artifact-type-select.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: ArtifactTypeSelectComponent
+        },
+    ],
+    standalone: false
 })
 export class ArtifactTypeSelectComponent implements ControlValueAccessor {
   readonly ARTIFACT_TYPE_GROUPS_MUSIC = [ARTIFACT_TYPE_GROUPS[0]]

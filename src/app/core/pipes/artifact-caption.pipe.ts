@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {Artifact} from "../../model/artifacts";
 
 @Pipe({
-  name: 'artifactCaption'
+    name: 'artifactCaption',
+    standalone: false
 })
 export class ArtifactCaptionPipe implements PipeTransform {
 

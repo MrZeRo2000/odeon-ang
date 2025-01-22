@@ -10,6 +10,7 @@ import {ButtonModule} from "primeng/button";
 import {DataSourceModule} from "../../data-source/data-source.module";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {ProgressSpinnerOverlayComponent} from "./progress-spinner-overlay/progress-spinner-overlay.component";
+import {TooltipModule} from "primeng/tooltip";
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import {ProgressSpinnerOverlayComponent} from "./progress-spinner-overlay/progre
     TagModule,
     ButtonModule,
     ProgressSpinnerModule,
+    TooltipModule,
     // custom
     DataSourceModule,
   ],

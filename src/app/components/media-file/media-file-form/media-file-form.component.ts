@@ -22,9 +22,10 @@ import {
 import {TextInterface} from "../../../model/common";
 
 @Component({
-  selector: 'app-media-file-form',
-  templateUrl: './media-file-form.component.html',
-  styleUrls: ['./media-file-form.component.scss']
+    selector: 'app-media-file-form',
+    templateUrl: './media-file-form.component.html',
+    styleUrls: ['./media-file-form.component.scss'],
+    standalone: false
 })
 export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> implements OnChanges {
 

@@ -35,7 +35,6 @@
               (completeMethod)="searchFrontInfos($event)"
               id="frontInfo"
               formControlName="frontInfo"
-              [multiple]="false"
               [dropdown]="true"
               appendTo="body"
             >
@@ -44,13 +43,13 @@
 
           <div class="field mb-0">
             <label for="notes">Notes</label>
-            <textarea id="notes" [rows]="2" pInputTextarea formControlName="notes" style="resize: none"></textarea>
+            <textarea id="notes" [rows]="2" pTextarea formControlName="notes" style="resize: none"></textarea>
           </div>
 
         </div>
         <div class="col-7 mt-2 flex flex-column">
           <div class="flex flex-grow-1">
-            <textarea pInputTextarea id="description" formControlName="description" style="resize: none"></textarea>
+            <textarea pTextarea id="description" formControlName="description" style="resize: none"></textarea>
           </div>
           <div class="flex mt-2">
             <button

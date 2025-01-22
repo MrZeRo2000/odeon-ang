@@ -12,6 +12,7 @@ import {RippleModule} from "primeng/ripple";
 import {TextViewDialogComponent} from "./components/text-view-dialog/text-view-dialog.component";
 import {DialogModule} from "primeng/dialog";
 import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog.component";
+import {ButtonModule} from "primeng/button";
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog
     CommonModule,
     ProgressBarModule, // for loading
     DialogModule, // for text view dialog
+    ButtonModule,
     ConfirmDialogModule, // for confirm dialog
     RippleModule,
   ]

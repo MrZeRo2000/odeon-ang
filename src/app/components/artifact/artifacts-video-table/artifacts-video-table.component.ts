@@ -21,9 +21,10 @@ interface FilterControlsConfig
 }
 
 @Component({
-  selector: 'app-artifacts-video-table',
-  templateUrl: './artifacts-video-table.component.html',
-  styleUrls: ['./artifacts-video-table.component.scss']
+    selector: 'app-artifacts-video-table',
+    templateUrl: './artifacts-video-table.component.html',
+    styleUrls: ['./artifacts-video-table.component.scss'],
+    standalone: false
 })
 export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-video-table-filter-form";

@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +17,9 @@ import {LayoutModule} from "./components/layout/layout.module";
 import {ToastModule} from "primeng/toast";
 import {AppInfoService} from "./components/layout/app-info.service";
 import {Observable} from "rxjs";
+import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
+import {providePrimeNG} from "primeng/config";
+import Aura from '@primeng/themes/aura';
 
 
 @NgModule({
@@ -45,12 +48,16 @@ import {Observable} from "rxjs";
     MessageService,
     ConfirmationService,
     DecimalPipe,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      deps: [AppInfoService],
-      multi: true
-    }
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: Aura
+      }
+    }),
+    provideAppInitializer(() => {
+        const initializerFn = (initializeApp)(inject(AppInfoService));
+        return initializerFn();
+      })
   ],
 })
 export class AppModule { }

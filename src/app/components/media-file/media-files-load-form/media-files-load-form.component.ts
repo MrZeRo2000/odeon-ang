@@ -6,9 +6,10 @@ import {catchError, of, startWith, Subject, switchMap, tap} from "rxjs";
 import {MediaFileService} from "../../../service/media-file.service";
 
 @Component({
-  selector: 'app-media-files-load-form',
-  templateUrl: './media-files-load-form.component.html',
-  styleUrl: './media-files-load-form.component.scss'
+    selector: 'app-media-files-load-form',
+    templateUrl: './media-files-load-form.component.html',
+    styleUrl: './media-files-load-form.component.scss',
+    standalone: false
 })
 export class MediaFilesLoadFormComponent extends BaseFormComponent implements OnInit {
   @Input()

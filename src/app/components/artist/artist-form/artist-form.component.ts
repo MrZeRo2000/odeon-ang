@@ -8,9 +8,10 @@ import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {filterString} from "../../../utils/search-utils";
 
 @Component({
-  selector: 'app-artist-form',
-  templateUrl: './artist-form.component.html',
-  styleUrls: ['./artist-form.component.scss']
+    selector: 'app-artist-form',
+    templateUrl: './artist-form.component.html',
+    styleUrls: ['./artist-form.component.scss'],
+    standalone: false
 })
 export class ArtistFormComponent extends BaseCrudFormComponent<Artist> implements OnInit {
   artistTypes =  ARTIST_TYPES;

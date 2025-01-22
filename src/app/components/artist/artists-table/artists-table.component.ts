@@ -1,17 +1,19 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import {ArtistService} from "../../../service/artist.service";
 import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
-import {ConfirmationService, FilterService, MessageService, PrimeNGConfig, SelectItem} from "primeng/api";
+import {ConfirmationService, FilterService, MessageService, SelectItem} from "primeng/api";
 import {Biography} from "../../../model/biography";
 import {Artist} from "../../../model/artists";
 import {CRUDResult} from "../../../model/crud";
 import {Router} from "@angular/router";
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
+import {PrimeNG} from "primeng/config";
 
 @Component({
-  selector: 'app-artists-table',
-  templateUrl: './artists-table.component.html',
-  styleUrls: ['./artists-table.component.scss']
+    selector: 'app-artists-table',
+    templateUrl: './artists-table.component.html',
+    styleUrls: ['./artists-table.component.scss'],
+    standalone: false
 })
 export class ArtistsTableComponent extends BaseCrudTableComponent<Artist, Artist> implements OnInit, AfterViewInit {
 
@@ -48,11 +50,12 @@ export class ArtistsTableComponent extends BaseCrudTableComponent<Artist, Artist
   @ViewChild('dtcp', { static: false})
   private tableCaptionElement?: ElementRef;
 
+  private primengConfig = inject(PrimeNG);
+
   constructor(
     private router: Router,
     private filterService: FilterService,
     confirmationService: ConfirmationService,
-    private primengConfig: PrimeNGConfig,
     messageService: MessageService,
     private artistService: ArtistService
   ) {

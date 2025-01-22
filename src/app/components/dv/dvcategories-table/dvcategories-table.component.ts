@@ -7,9 +7,10 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {DVCategoryService} from "../../../service/dvcategory.service";
 
 @Component({
-  selector: 'app-dvcategory-table',
-  templateUrl: './dvcategories-table.component.html',
-  styleUrls: ['./dvcategories-table.component.scss']
+    selector: 'app-dvcategory-table',
+    templateUrl: './dvcategories-table.component.html',
+    styleUrls: ['./dvcategories-table.component.scss'],
+    standalone: false
 })
 export class DVCategoriesTableComponent extends BaseCrudTableComponent<DVCategory, DVCategory> implements OnInit {
 

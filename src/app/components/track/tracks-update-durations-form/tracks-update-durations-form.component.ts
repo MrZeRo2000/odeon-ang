@@ -12,9 +12,10 @@ import {textToArray} from "../../../utils/form-utils";
 import {DatePipe} from "@angular/common";
 
 @Component({
-  selector: 'app-tracks-update-durations-form',
-  templateUrl: './tracks-update-durations-form.component.html',
-  styleUrl: './tracks-update-durations-form.component.scss'
+    selector: 'app-tracks-update-durations-form',
+    templateUrl: './tracks-update-durations-form.component.html',
+    styleUrl: './tracks-update-durations-form.component.scss',
+    standalone: false
 })
 export class TracksUpdateDurationsFormComponent extends BaseFormComponent {
   @Input()

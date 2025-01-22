@@ -14,9 +14,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {artifactNavigation, mediaFileNavigation} from "../../artifact/utils/navigation";
 
 @Component({
-  selector: 'app-tracks-all-table',
-  templateUrl: './tracks-all-table.component.html',
-  styleUrl: './tracks-all-table.component.scss'
+    selector: 'app-tracks-all-table',
+    templateUrl: './tracks-all-table.component.html',
+    styleUrl: './tracks-all-table.component.scss',
+    standalone: false
 })
 export class TracksAllTableComponent extends BaseTableComponent<Track> {
   private static readonly SESSION_KEY = "tracks-all-table-filter-form";

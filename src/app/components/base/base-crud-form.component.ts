@@ -5,7 +5,8 @@ import {MessageService} from "primeng/api";
 import {BaseFormComponent} from "./base-form.component";
 
 @Component({
-  template: ``
+    template: ``,
+    standalone: false
 })
 export abstract class BaseCrudFormComponent<T extends { id?: number}> extends BaseFormComponent {
   @Input()

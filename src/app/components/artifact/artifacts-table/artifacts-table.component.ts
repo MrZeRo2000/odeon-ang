@@ -40,9 +40,10 @@ interface FilterControlsConfigValue
 }
 
 @Component({
-  selector: 'app-artifacts-table',
-  templateUrl: './artifacts-table.component.html',
-  styleUrls: ['./artifacts-table.component.scss']
+    selector: 'app-artifacts-table',
+    templateUrl: './artifacts-table.component.html',
+    styleUrls: ['./artifacts-table.component.scss'],
+    standalone: false
 })
 export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-table-filter-form";

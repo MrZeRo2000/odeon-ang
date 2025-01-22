@@ -25,9 +25,9 @@ import {
   TracksUpdateDurationsFormComponent
 } from "./tracks-update-durations-form/tracks-update-durations-form.component";
 import {TracksImportFormComponent} from "./tracks-import-form/tracks-import-form.component";
-import {InputTextareaModule} from "primeng/inputtextarea";
 import {TracksAllTableComponent} from "./tracks-all-table/tracks-all-table.component";
 import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
+import {TextareaModule} from "primeng/textarea";
 
 
 @NgModule({
@@ -64,7 +64,7 @@ import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
         AutoCompleteModule,
         MultiSelectModule,
         ConfirmPopupModule,
-        InputTextareaModule,
+        TextareaModule,
         // custom modules
         CoreModule,
         DVModule,

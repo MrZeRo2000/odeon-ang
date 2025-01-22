@@ -15,9 +15,8 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {ChipModule} from "primeng/chip";
 import {TagModule} from "primeng/tag";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
-import {ChipsModule} from "primeng/chips";
-import {InputTextareaModule} from "primeng/inputtextarea";
 import {RippleModule} from "primeng/ripple";
+import {TextareaModule} from "primeng/textarea";
 
 
 
@@ -41,8 +40,7 @@ import {RippleModule} from "primeng/ripple";
     FormsModule,
     // primeng
     ChipModule,
-    ChipsModule,
-    InputTextareaModule,
+    TextareaModule,
     RippleModule,
     TagModule,
     ButtonModule,

@@ -21,9 +21,10 @@ enum ImportAction {
 }
 
 @Component({
-  selector: 'app-dvproducts-import-form',
-  templateUrl: './dvproducts-import-form.component.html',
-  styleUrls: ['./dvproducts-import-form.component.scss']
+    selector: 'app-dvproducts-import-form',
+    templateUrl: './dvproducts-import-form.component.html',
+    styleUrls: ['./dvproducts-import-form.component.scss'],
+    standalone: false
 })
 export class DVProductsImportFormComponent extends BaseFormComponent implements OnInit {
   ImportAction = ImportAction

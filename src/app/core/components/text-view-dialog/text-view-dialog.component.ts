@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
-  selector: 'app-text-view-dialog',
-  templateUrl: './text-view-dialog.component.html',
-  styleUrls: ['./text-view-dialog.component.scss']
+    selector: 'app-text-view-dialog',
+    templateUrl: './text-view-dialog.component.html',
+    styleUrls: ['./text-view-dialog.component.scss'],
+    standalone: false
 })
 export class TextViewDialogComponent {
 

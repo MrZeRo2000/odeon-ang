@@ -29,9 +29,10 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-tracks-table',
-  templateUrl: './tracks-table.component.html',
-  styleUrls: ['./tracks-table.component.scss']
+    selector: 'app-tracks-table',
+    templateUrl: './tracks-table.component.html',
+    styleUrls: ['./tracks-table.component.scss'],
+    standalone: false
 })
 export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, MediaFile[], IdName[], IdTitle[]]> implements OnInit {
   sumByKey = sumByKey;

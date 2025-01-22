@@ -27,9 +27,10 @@ import {IdTitleOriginalTitle, TextInterface} from "../../../model/common";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-dvproducts-table',
-  templateUrl: './dvproducts-table.component.html',
-  styleUrls: ['./dvproducts-table.component.scss']
+    selector: 'app-dvproducts-table',
+    templateUrl: './dvproducts-table.component.html',
+    styleUrls: ['./dvproducts-table.component.scss'],
+    standalone: false
 })
 export class DVProductsTableComponent
   extends BaseCrudTableComponent<DVProduct, [DVProduct, Array<DVOrigin>, Array<DVCategory>, Array<IdTitleOriginalTitle>]>

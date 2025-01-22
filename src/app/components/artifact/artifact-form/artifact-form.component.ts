@@ -14,9 +14,10 @@ import {catchError, of, Subject, switchMap, tap} from "rxjs";
 import {MediaFile} from "../../../model/media-file";
 
 @Component({
-  selector: 'app-artifact-form',
-  templateUrl: './artifact-form.component.html',
-  styleUrls: ['./artifact-form.component.scss']
+    selector: 'app-artifact-form',
+    templateUrl: './artifact-form.component.html',
+    styleUrls: ['./artifact-form.component.scss'],
+    standalone: false
 })
 export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> implements OnInit {
 

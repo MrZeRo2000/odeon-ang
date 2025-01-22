@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {PROCESSING_STATUS_NAMES, ProcessingStatus} from "../../model/process-info";
 
 @Pipe({
-  name: 'processingStatusName'
+    name: 'processingStatusName',
+    standalone: false
 })
 export class ProcessingStatusNamePipe implements PipeTransform {
 

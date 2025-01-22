@@ -5,7 +5,7 @@
       ({{appInfo.version}})
     </span>
     <span *ngIf="comparisonResult === ComparisonResult.CR_MINOR_DIFFERENCE">
-      <p-tag severity="warning" value={{appInfo.version}}></p-tag>
+      <p-tag severity="warn" value={{appInfo.version}}></p-tag>
     </span>
     <span *ngIf="comparisonResult === ComparisonResult.CR_MAJOR_DIFFERENCE">
       <p-tag severity="danger" value={{appInfo.version}}></p-tag>

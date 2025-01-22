@@ -7,9 +7,10 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {DVOriginService} from "../../../service/dvorigin.service";
 
 @Component({
-  selector: 'app-dvorigins-table',
-  templateUrl: './dvorigins-table.component.html',
-  styleUrls: ['./dvorigins-table.component.scss']
+    selector: 'app-dvorigins-table',
+    templateUrl: './dvorigins-table.component.html',
+    styleUrls: ['./dvorigins-table.component.scss'],
+    standalone: false
 })
 export class DVOriginsTableComponent extends BaseCrudTableComponent<DVOrigin, DVOrigin> implements OnInit {
 

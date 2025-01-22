@@ -111,7 +111,7 @@
         <td>{{item.id}}</td>
         <td>{{item.artistName}}</td>
         <td>
-          <p-tag value="N/A" *ngIf="!item.genre" severity="warning" [rounded]="true"></p-tag>
+          <p-tag value="N/A" *ngIf="!item.genre" severity="warn" [rounded]="true"></p-tag>
           <p-tag value="{{item.genre}}" *ngIf="item.genre" [rounded]="true"></p-tag>
         </td>
         <td>

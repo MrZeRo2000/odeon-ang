@@ -9,8 +9,6 @@ import {DVProductsTableComponent} from "./dvproducts-table/dvproducts-table.comp
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CoreModule} from "../../core/core.module";
 import {ChipModule} from "primeng/chip";
-import {ChipsModule} from "primeng/chips";
-import {InputTextareaModule} from "primeng/inputtextarea";
 import {RippleModule} from "primeng/ripple";
 import {TagModule} from "primeng/tag";
 import {ButtonModule} from "primeng/button";
@@ -26,6 +24,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {TooltipModule} from "primeng/tooltip";
 import {DVProductsImportFormComponent} from "./dvproducts-import-form/dvproducts-import-form.component";
 import {TabViewModule} from "primeng/tabview";
+import {InputTextModule} from "primeng/inputtext";
 
 
 @NgModule({
@@ -53,8 +52,7 @@ import {TabViewModule} from "primeng/tabview";
     FormsModule,
     // primeng
     ChipModule,
-    ChipsModule,
-    InputTextareaModule,
+    InputTextModule,
     RippleModule,
     TagModule,
     ButtonModule,

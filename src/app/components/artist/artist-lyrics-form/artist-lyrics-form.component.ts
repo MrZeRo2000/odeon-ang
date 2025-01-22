@@ -8,9 +8,10 @@ import {IdName} from "../../../model/common";
 import {filterIdName} from "../../../utils/search-utils";
 
 @Component({
-  selector: 'app-artist-lyrics-form',
-  templateUrl: './artist-lyrics-form.component.html',
-  styleUrls: ['./artist-lyrics-form.component.scss']
+    selector: 'app-artist-lyrics-form',
+    templateUrl: './artist-lyrics-form.component.html',
+    styleUrls: ['./artist-lyrics-form.component.scss'],
+    standalone: false
 })
 export class ArtistLyricsFormComponent extends BaseCrudFormComponent<ArtistLyricsEditItem> implements OnChanges {
 

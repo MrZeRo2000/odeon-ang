@@ -7,9 +7,10 @@ import {DatabaseBackupInfo} from "../../../model/database-backup-info";
 import {DateFormatter} from "../../../utils/date-utils";
 
 @Component({
-  selector: 'app-database-backup',
-  templateUrl: './database-backup.component.html',
-  styleUrls: ['./database-backup.component.scss']
+    selector: 'app-database-backup',
+    templateUrl: './database-backup.component.html',
+    styleUrls: ['./database-backup.component.scss'],
+    standalone: false
 })
 export class DatabaseBackupComponent {
 

@@ -6,9 +6,10 @@ import {MessageService} from "primeng/api";
 import {compareVersions, ComparisonResult} from "../../../utils/version-comparator";
 
 @Component({
-  selector: 'app-app-info',
-  templateUrl: './app-info.component.html',
-  styleUrls: ['./app-info.component.scss']
+    selector: 'app-app-info',
+    templateUrl: './app-info.component.html',
+    styleUrls: ['./app-info.component.scss'],
+    standalone: false
 })
 export class AppInfoComponent implements OnInit {
   version: string = packageJson.version;

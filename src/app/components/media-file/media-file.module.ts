@@ -14,7 +14,6 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {CoreModule} from "../../core/core.module";
 import {InputTextModule} from "primeng/inputtext";
-import {InputTextareaModule} from "primeng/inputtextarea";
 import {DropdownModule} from "primeng/dropdown";
 import {TooltipModule} from "primeng/tooltip";
 import {MediaFilesLoadFormComponent} from "./media-files-load-form/media-files-load-form.component";
@@ -49,7 +48,6 @@ import {ListboxModule} from "primeng/listbox";
         ListboxModule,
         // custom modules
         CoreModule,
-        InputTextareaModule,
         DropdownModule,
         TooltipModule,
     ]

@@ -13,9 +13,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {artifactNavigation} from "../utils/navigation";
 
 @Component({
-  selector: 'app-artifacts-all-table',
-  templateUrl: './artifacts-all-table.component.html',
-  styleUrl: './artifacts-all-table.component.scss'
+    selector: 'app-artifacts-all-table',
+    templateUrl: './artifacts-all-table.component.html',
+    styleUrl: './artifacts-all-table.component.scss',
+    standalone: false
 })
 export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-all-table-filter-form";

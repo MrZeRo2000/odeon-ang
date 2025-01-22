@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {PROCESSOR_TYPE_NAMES, ProcessorType} from "../../model/process-info";
 
 @Pipe({
-  name: 'processorTypeName'
+    name: 'processorTypeName',
+    standalone: false
 })
 export class ProcessorTypeNamePipe implements PipeTransform {
 

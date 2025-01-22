@@ -14,9 +14,10 @@ export interface NameInterface {
 }
 
 @Component({
-  selector: 'app-artist-lyrics-table',
-  templateUrl: './artist-lyrics-table.component.html',
-  styleUrls: ['./artist-lyrics-table.component.scss']
+    selector: 'app-artist-lyrics-table',
+    templateUrl: './artist-lyrics-table.component.html',
+    styleUrls: ['./artist-lyrics-table.component.scss'],
+    standalone: false
 })
 export class ArtistLyricsTableComponent extends BaseCrudTableComponent<ArtistLyricsTableItem, [ArtistLyricsEditItem, IdName[]]> implements OnInit {
   private artistId?: number;
