@@ -19,7 +19,7 @@ import {AppInfoService} from "./components/layout/app-info.service";
 import {Observable} from "rxjs";
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 import {providePrimeNG} from "primeng/config";
-import Aura from '@primeng/themes/aura';
+import {OdeonPreset} from "./primeng.preset";
 
 
 @NgModule({
@@ -51,7 +51,7 @@ import Aura from '@primeng/themes/aura';
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Aura
+        preset: OdeonPreset
       }
     }),
     provideAppInitializer(() => {

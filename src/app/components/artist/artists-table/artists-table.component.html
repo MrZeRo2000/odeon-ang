@@ -19,6 +19,7 @@
 
   <p-table #dt
            styleClass="p-datatable-sm"
+           size="small"
            [value]="artistTable"
            [rows]="10"
            [paginator]="true"
@@ -112,12 +113,12 @@
         <td>{{item.artistName}}</td>
         <td>
           <p-tag value="N/A" *ngIf="!item.genre" severity="warn" [rounded]="true"></p-tag>
-          <p-tag value="{{item.genre}}" *ngIf="item.genre" [rounded]="true"></p-tag>
+          <p-tag value="{{item.genre}}" *ngIf="item.genre" severity="info" [rounded]="true"></p-tag>
         </td>
         <td>
           <div class="flex flex-wrap gap-1" *ngIf="item.styles">
             <div *ngFor="let style of item.styles">
-              <p-chip label="{{style}}" styleClass="flex align-items-center text-xs" *ngIf="style"></p-chip>
+              <p-chip label="{{style}}" styleClass="flex align-items-center text-xs p-2" *ngIf="style"></p-chip>
             </div>
           </div>
         </td>
