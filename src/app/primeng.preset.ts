@@ -17,6 +17,10 @@ export const OdeonPreset = definePreset(Material, {
       900: '{sky.900}',
       950: '{sky.950}'
     },
+    formField: {
+      paddingX: "0.75rem",
+      paddingY: "0.5rem",
+    },
     colorScheme: {
       light: {
         text: {
@@ -27,7 +31,7 @@ export const OdeonPreset = definePreset(Material, {
         },
         content: {
           borderColor: "{surface.200}"
-        }
+        },
       },
       dark: {
         text: {
@@ -43,6 +47,20 @@ export const OdeonPreset = definePreset(Material, {
     }
   },
   components: {
+    button: {
+      root: {
+        iconOnlyWidth: "2.25rem"
+      },
+      colorScheme: {
+        light: {
+          outlined: {
+            secondary: {
+              borderColor: "{surface.400}",
+            }
+          }
+        }
+      }
+    },
     menubar: {
       colorScheme: {
         light: {

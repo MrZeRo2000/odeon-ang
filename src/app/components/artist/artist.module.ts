@@ -17,6 +17,9 @@ import {TagModule} from "primeng/tag";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {RippleModule} from "primeng/ripple";
 import {TextareaModule} from "primeng/textarea";
+import {InputTextModule} from "primeng/inputtext";
+import {IconFieldModule} from "primeng/iconfield";
+import {InputIconModule} from "primeng/inputicon";
 
 
 
@@ -41,6 +44,9 @@ import {TextareaModule} from "primeng/textarea";
     // primeng
     ChipModule,
     TextareaModule,
+    InputTextModule,
+    IconFieldModule,
+    InputIconModule,
     RippleModule,
     TagModule,
     ButtonModule,
