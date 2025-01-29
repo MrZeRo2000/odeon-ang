@@ -4,16 +4,23 @@
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <div class="grid">
-        <div class="col">
+        <p-fluid class="col">
           <div class="field">
             <label for="name">Name</label>
-            <input type="text" pInputText id="name" formControlName="artistName" required autofocus
+            <input type="text" pInputText id="name" formControlName="artistName" required
                      [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['artistName'].errors}"
               />
           </div>
 
           <div class="field">
-            <p-selectButton [options]="artistTypes" optionLabel="name" optionValue="code" [multiple]="false" [allowEmpty]="false" formControlName="artistType"></p-selectButton>
+            <p-selectButton
+              [options]="artistTypes"
+              optionLabel="name"
+              optionValue="code"
+              [multiple]="false"
+              [allowEmpty]="false"
+              formControlName="artistType"
+            ></p-selectButton>
           </div>
 
           <div class="field">
@@ -43,11 +50,12 @@
             </p-autoComplete>
           </div>
           <div>
-            <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['artistName'].errors ? 'visible' : 'hidden'}" >Name is required.</small>
-            <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['genre'].errors ? 'visible' : 'hidden'}" >Genre is required.</small>
+            <p-message severity="error" variant="simple" size="small" [ngStyle]="{'visibility': submitted && editForm.controls['artistName'].errors ? 'visible' : 'hidden'}" >Name is required.</p-message>
+            <p-message severity="error" variant="simple" size="small" [ngStyle]="{'visibility': submitted && editForm.controls['genre'].errors ? 'visible' : 'hidden'}" >Genre is required.</p-message>
           </div>
-        </div>
-        <div class="col">
+        </p-fluid>
+
+        <p-fluid class="col">
           <div class="field">
             <label for="biography">Biography</label>
             <textarea id="biography" pTextarea rows="20" cols="20" formControlName="biography"></textarea>
@@ -60,7 +68,7 @@
             icon="pi pi-window-maximize"
             (click)="previewBiography()">
           </button>
-        </div>
+        </p-fluid>
       </div>
     </form>
   </ng-template>

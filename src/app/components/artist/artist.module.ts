@@ -20,6 +20,9 @@ import {TextareaModule} from "primeng/textarea";
 import {InputTextModule} from "primeng/inputtext";
 import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
+import {FluidModule} from "primeng/fluid";
+import {AutoFocusModule} from "primeng/autofocus";
+import {MessageModule} from "primeng/message";
 
 
 
@@ -45,6 +48,9 @@ import {InputIconModule} from "primeng/inputicon";
     ChipModule,
     TextareaModule,
     InputTextModule,
+    FluidModule,
+    AutoFocusModule,
+    MessageModule,
     IconFieldModule,
     InputIconModule,
     RippleModule,

@@ -47,7 +47,7 @@ export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> imple
       return this.mediaFileService.getTable(v).pipe(
         switchMap(v => {return of(
           v.reduce<MediaFile>((p: MediaFile, c:MediaFile) => {
-            return {size: p.size + c.size?? 0, duration: p.duration + c.duration?? 0} as MediaFile
+            return {size: p.size + (c.size ?? 0), duration: p.duration + (c.duration ?? 0)} as MediaFile
           }, {size: 0, duration: 0} as MediaFile)
         )}),
         catchError(() => {
