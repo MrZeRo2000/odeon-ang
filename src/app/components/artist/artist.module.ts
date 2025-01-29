@@ -23,6 +23,7 @@ import {InputIconModule} from "primeng/inputicon";
 import {FluidModule} from "primeng/fluid";
 import {AutoFocusModule} from "primeng/autofocus";
 import {MessageModule} from "primeng/message";
+import {ToggleButtonModule} from "primeng/togglebutton";
 
 
 
@@ -51,6 +52,7 @@ import {MessageModule} from "primeng/message";
     FluidModule,
     AutoFocusModule,
     MessageModule,
+    ToggleButtonModule,
     IconFieldModule,
     InputIconModule,
     RippleModule,
