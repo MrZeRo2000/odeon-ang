@@ -1,13 +1,13 @@
 <p-confirmPopup key="styles"></p-confirmPopup>
 
-<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Artist Edit">
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Artist Edit" (onShow)="onShow()">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <div class="grid">
         <p-fluid class="col">
           <div class="field">
             <label for="name">Name</label>
-            <input type="text" pInputText id="name" formControlName="artistName" required
+            <input #autofocused type="text" pInputText id="name" formControlName="artistName" required
                      [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['artistName'].errors}"
               />
           </div>

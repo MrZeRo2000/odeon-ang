@@ -4,7 +4,7 @@
     pButton
     pRipple
     icon="pi pi-plus"
-    class="p-button-rounded p-button-success p-button-outlined"
+    class="p-button-rounded p-button-primary p-button-outlined"
     [ngClass]="crudActions.indexOf(CRUDAction.EA_DELETE) !==0 || crudActions.indexOf(CRUDAction.EA_UPDATE) !==0 ? 'mr-1' : ''"
     (click)="crudEvent.emit({action: CRUDAction.EA_CREATE, data: undefined})">
   </button>
@@ -13,7 +13,7 @@
     pButton
     pRipple
     icon="pi pi-pencil"
-    class="p-button-rounded p-button-outlined p-button-success"
+    class="p-button-rounded p-button-outlined p-button-primary"
     [ngClass]="crudActions.indexOf(CRUDAction.EA_DELETE) !== 0 ? 'mr-1' : ''"
     (click)="crudEvent.emit({action: CRUDAction.EA_UPDATE, data})">
   </button>

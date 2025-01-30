@@ -21,10 +21,8 @@ import {InputTextModule} from "primeng/inputtext";
 import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
 import {FluidModule} from "primeng/fluid";
-import {AutoFocusModule} from "primeng/autofocus";
 import {MessageModule} from "primeng/message";
 import {ToggleButtonModule} from "primeng/togglebutton";
-
 
 
 @NgModule({
@@ -50,7 +48,6 @@ import {ToggleButtonModule} from "primeng/togglebutton";
     TextareaModule,
     InputTextModule,
     FluidModule,
-    AutoFocusModule,
     MessageModule,
     ToggleButtonModule,
     IconFieldModule,

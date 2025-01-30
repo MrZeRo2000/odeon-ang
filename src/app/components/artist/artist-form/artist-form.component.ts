@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Artist, ARTIST_TYPES} from "../../../model/artists";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ENTER} from "@angular/cdk/keycodes";
@@ -14,6 +14,8 @@ import {filterString} from "../../../utils/search-utils";
     standalone: false
 })
 export class ArtistFormComponent extends BaseCrudFormComponent<Artist> implements OnInit {
+  @ViewChild('autofocused', { static: false}) autoFocused?: ElementRef;
+
   artistTypes =  ARTIST_TYPES;
 
   editForm: FormGroup = this.fb.group({
@@ -52,8 +54,14 @@ export class ArtistFormComponent extends BaseCrudFormComponent<Artist> implement
       genre: this.editItem?.genre?? '',
       styles: this.editItem?.styles?? []
     })
-
   }
+
+  onShow() {
+    setTimeout(() => {
+      this.autoFocused?.nativeElement?.focus();
+    }, 200)
+  }
+
   override validate(): boolean {
     return this.editForm.valid;
   }
