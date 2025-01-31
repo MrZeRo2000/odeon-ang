@@ -7,10 +7,8 @@
 </ng-template>
 
 <div *ngIf="filteredArtifacts$ | async as artifactsTable; else loadingOrError">
-
-
   <p-table #dt
-           styleClass="p-datatable-sm"
+           size="small"
            [value]="artifactsTable"
            [rows]="10"
            [paginator]="true"
@@ -37,31 +35,57 @@
           (crudEvent)="crudEvent($event)"
         ></app-crud-panel>
 
+
         <form [formGroup]="filterForm" *ngIf="!this.routedArtifactId" class="flex align-items-center white-space-nowrap ml-2">
-            <p-selectButton class="mr-1" [options]="ARTIST_TYPES" optionLabel="name" optionValue="code" [multiple]="false" [allowEmpty]="false" formControlName="artistType"></p-selectButton>
-            <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="true" [allowEmpty]="false" formControlName="artifactTypes"></p-selectButton>
+            <p-selectButton
+              [options]="ARTIST_TYPES"
+              optionLabel="name"
+              optionValue="code"
+              [multiple]="false"
+              [allowEmpty]="false"
+              formControlName="artistType"
+              class="mr-1"
+            ></p-selectButton>
+            <p-selectButton
+              [options]="ARTIFACT_TYPES"
+              optionLabel="name"
+              optionValue="code"
+              [multiple]="true"
+              [allowEmpty]="true"
+              formControlName="artifactTypes"
+            ></p-selectButton>
         </form>
 
         <button pButton type="button" label="Tracks" icon="pi pi-list" iconPos="left"
                 class="ml-4 p-button-outlined p-button-secondary"
                 *ngIf="selectedItem"
                 (click)="onTracksButton()"
-        >
-        </button>
+        ></button>
 
         <button pButton type="button" label="Media&nbsp;files" icon="pi pi-file" iconPos="left"
                 class="ml-1 p-button-outlined p-button-secondary"
                 *ngIf="selectedItem"
                 (click)="onMediaFilesButton()"
-        >
-        </button>
+        ></button>
 
         <div class="flex justify-content-end flex-grow-1">
           <span class="p-input-icon-left flex align-items-center">
-            <i class="pi pi-search"></i>
-            <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;" placeholder="Search keyword" />
+            <p-iconfield iconPosition="left" class="ml-auto">
+                <p-inputicon>
+                    <i class="pi pi-search"></i>
+                </p-inputicon>
+                <input
+                  pInputText
+                  type="text"
+                  [value]="globalFilterValue"
+                  (input)="dt.filterGlobal($any($event.target).value, 'contains');
+                   selectedItem=undefined;"
+                  placeholder="Search keyword"
+                />
+            </p-iconfield>
           </span>
         </div>
+
       </div>
     </ng-template>
 

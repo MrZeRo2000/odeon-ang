@@ -19,6 +19,9 @@ import {DropdownModule} from "primeng/dropdown";
 import {TagModule} from "primeng/tag";
 import {ArtifactsAllTableComponent} from "./artifacts-all-table/artifacts-all-table.component";
 import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
+import {IconField} from "primeng/iconfield";
+import {InputIcon} from "primeng/inputicon";
+import {InputText} from "primeng/inputtext";
 
 
 @NgModule({
@@ -36,25 +39,28 @@ import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
     ArtifactsVideoTableComponent,
     ArtifactsAllTableComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    // primeng
-    ButtonModule,
-    RippleModule,
-    DialogModule,
-    TableModule,
-    SelectButtonModule,
-    AutoCompleteModule,
-    MultiSelectModule,
-    CoreModule,
-    ChipModule,
-    ConfirmPopupModule,
-    DropdownModule,
-    TagModule,
-    // custom modules
-    ArtifactTypeModule,
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        // primeng
+        ButtonModule,
+        RippleModule,
+        DialogModule,
+        TableModule,
+        SelectButtonModule,
+        AutoCompleteModule,
+        MultiSelectModule,
+        CoreModule,
+        ChipModule,
+        ConfirmPopupModule,
+        DropdownModule,
+        TagModule,
+        // custom modules
+        ArtifactTypeModule,
+        IconField,
+        InputIcon,
+        InputText,
+    ]
 })
 export class ArtifactModule { }
