@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {ArtistLyricsEditItem} from "../../../model/artist-lyrics";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
@@ -14,6 +14,7 @@ import {filterIdName} from "../../../utils/search-utils";
     standalone: false
 })
 export class ArtistLyricsFormComponent extends BaseCrudFormComponent<ArtistLyricsEditItem> implements OnChanges {
+  @ViewChild('autofocused', { static: false}) autoFocused!: any;
 
   @Input()
   artistTable: IdName[] = [];
@@ -46,6 +47,12 @@ export class ArtistLyricsFormComponent extends BaseCrudFormComponent<ArtistLyric
         })
       }
     }
+  }
+
+  onShow() {
+    setTimeout(() => {
+      this.autoFocused?.el.nativeElement.querySelector('input').focus();
+    }, 200)
   }
 
   override validate(): boolean {

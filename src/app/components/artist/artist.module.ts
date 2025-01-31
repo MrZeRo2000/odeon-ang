@@ -23,6 +23,7 @@ import {InputIconModule} from "primeng/inputicon";
 import {FluidModule} from "primeng/fluid";
 import {MessageModule} from "primeng/message";
 import {ToggleButtonModule} from "primeng/togglebutton";
+import {AutoFocusModule} from "primeng/autofocus";
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import {ToggleButtonModule} from "primeng/togglebutton";
     AutoCompleteModule,
     MultiSelectModule,
     ConfirmPopupModule,
+    AutoFocusModule,
     // custom modules
     CoreModule,
   ]
