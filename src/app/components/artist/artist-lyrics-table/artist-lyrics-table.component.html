@@ -21,19 +21,38 @@
 
   <div class="grid">
     <div class="col-12 md:col-10 lg:col-8">
-      <p-table #dt styleClass="p-datatable-sm" responsiveLayout="scroll" [value]="data[0]"
-               [rows]="10" [paginator]="true"
+      <p-table #dt
+               styleClass="p-datatable-sm"
+               size="small"
+               responsiveLayout="scroll"
+               [value]="data[0]"
+               [rows]="10"
+               [paginator]="true"
+               [showCurrentPageReport]="true"
+               [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
                dataKey="id"
-               stateStorage="session" stateKey="artist-lyrics-table-session" [globalFilterFields]="['artistName', 'title']"
+               stateStorage="session"
+               stateKey="artist-lyrics-table-session"
+               [globalFilterFields]="['artistName', 'title']"
                (onFilter)="onFilter($event)">
         <ng-template pTemplate="caption">
           <div class="flex">
             <div class="flex align-items-center justify-content-between text-xl mr-2">Lyrics</div>
-            <div class="flex align-self-center app-crud-panel-small"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
+            <div class="flex align-self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
             <div class="flex flex-1 justify-content-end">
               <span class="p-input-icon-left flex align-items-center">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+                <p-iconfield iconPosition="left" class="ml-auto">
+                    <p-inputicon>
+                        <i class="pi pi-search"></i>
+                    </p-inputicon>
+                    <input
+                      pInputText
+                      type="text"
+                      [value]="globalFilterValue"
+                      (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                      placeholder="Search keyword"
+                    />
+                </p-iconfield>
               </span>
             </div>
           </div>
@@ -41,34 +60,31 @@
 
         <ng-template pTemplate="header">
           <tr>
-            <th style="width:30%">Artist name</th>
-            <th style="width:70%">Title</th>
+            <th style="width:30%">
+              <div class="flex items-center align-items-center">
+                Artist name
+                <p-columnFilter field="artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect
+                      [ngModel]="value"
+                      [options]="data[1]"
+                      optionLabel="name"
+                      optionValue="name"
+                      placeholder="All"
+                      (onChange)="filter($event.value)"
+                      display="chip">
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+              </div>
+            </th>
+            <th style="width:70%">
+              <div class="flex items-center align-items-center">
+                Title
+                <p-columnFilter type="text" field="title" class="ml-2"></p-columnFilter>
+              </div>
+            </th>
             <th style="width:0"></th>
-          </tr>
-          <tr>
-            <th>
-              <!--
-              <p-columnFilter type="text" field="artistName"></p-columnFilter>
-              -->
-              <p-columnFilter field="artistName" matchMode="in" [showMenu]="false">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [ngModel]="value" [options]="data[1]" optionLabel="name" optionValue="name" placeholder="All" (onChange)="filter($event.value)" display="chip">
-                    <ng-template let-option pTemplate="item">
-                      <div class="p-multiselect-option">
-                        <span class="ml-1">{{option.name}}</span>
-                      </div>
-                    </ng-template>
-                  </p-multiSelect>
-                </ng-template>
-              </p-columnFilter>
-
-            </th>
-            <th>
-              <p-columnFilter type="text" field="title"></p-columnFilter>
-            </th>
-            <th>
-
-            </th>
           </tr>
         </ng-template>
 
