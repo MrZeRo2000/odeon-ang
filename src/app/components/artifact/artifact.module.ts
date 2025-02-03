@@ -22,6 +22,7 @@ import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
 import {IconField} from "primeng/iconfield";
 import {InputIcon} from "primeng/inputicon";
 import {InputText} from "primeng/inputtext";
+import {FluidModule} from "primeng/fluid";
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import {InputText} from "primeng/inputtext";
         ConfirmPopupModule,
         DropdownModule,
         TagModule,
+        FluidModule,
         // custom modules
         ArtifactTypeModule,
         IconField,

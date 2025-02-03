@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {
   ARTIFACT_MUSIC_TYPES,
   ArtifactConfigItem, getArtifactConfig, Artifact
@@ -20,6 +20,7 @@ import {MediaFile} from "../../../model/media-file";
     standalone: false
 })
 export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> implements OnInit {
+  @ViewChild('autofocused', { static: false}) autoFocused!: any;
 
   readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES;
 
@@ -116,6 +117,12 @@ export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> imple
       size: this.editItem?.size?? '',
     })
 
+  }
+
+  onShow() {
+    setTimeout(() => {
+      this.autoFocused?.el.nativeElement.querySelector('input').focus();
+    }, 200)
   }
 
   override validate(): boolean {

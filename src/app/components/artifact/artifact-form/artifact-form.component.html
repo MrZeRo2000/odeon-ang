@@ -1,94 +1,95 @@
-<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Artifact Edit">
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Artifact Edit" (onShow)="onShow()">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
-      <div class="field" *ngIf="isSelectableArtifactTypeId(editForm.value['artifactTypeId'])">
-        <p-selectButton
-          [options]="ARTIFACT_TYPES"
-          optionLabel="name"
-          optionValue="code"
-          [multiple]="false"
-          [allowEmpty]="false"
-          formControlName="artifactTypeId">
-        </p-selectButton>
-      </div>
+      <p-fluid>
+        <div class="field" *ngIf="isSelectableArtifactTypeId(editForm.value['artifactTypeId'])">
+          <p-selectButton
+            [options]="ARTIFACT_TYPES"
+            optionLabel="name"
+            optionValue="code"
+            [multiple]="false"
+            [allowEmpty]="false"
+            formControlName="artifactTypeId">
+          </p-selectButton>
+        </div>
 
-      <div class="field" *ngIf="artifactTypeConfig?.hasArtist">
-        <label for="artistId">Artist</label>
-        <p-autoComplete
-          [suggestions]="filteredArtists"
-          (completeMethod)="searchArtists($event)"
-          id="artistId"
-          formControlName="artistId"
-          dataKey="id"
-          optionLabel="name"
-          [multiple]="false"
-          [dropdown]="true"
-          [forceSelection]="true"
-          [autofocus]="true"
-        >
-        </p-autoComplete>
-      </div>
+        <div class="field" *ngIf="artifactTypeConfig?.hasArtist">
+          <label for="artistId">Artist</label>
+          <p-autoComplete #autofocused
+            [suggestions]="filteredArtists"
+            (completeMethod)="searchArtists($event)"
+            id="artistId"
+            formControlName="artistId"
+            dataKey="id"
+            optionLabel="name"
+            [multiple]="false"
+            [dropdown]="true"
+            [forceSelection]="true"
+          >
+          </p-autoComplete>
+        </div>
 
-      <div class="field" *ngIf="artifactTypeConfig?.hasPerformerArtist">
-        <label for="performerArtistId">Performer Artist</label>
-        <p-autoComplete
-          [suggestions]="filteredPerformerArtists"
-          (completeMethod)="searchPerformerArtists($event)"
-          id="performerArtistId"
-          formControlName="performerArtistId"
-          dataKey="id"
-          optionLabel="name"
-          [multiple]="false"
-          [dropdown]="true"
-          [forceSelection]="true"
-        >
-        </p-autoComplete>
-      </div>
+        <div class="field" *ngIf="artifactTypeConfig?.hasPerformerArtist">
+          <label for="performerArtistId">Performer Artist</label>
+          <p-autoComplete
+            [suggestions]="filteredPerformerArtists"
+            (completeMethod)="searchPerformerArtists($event)"
+            id="performerArtistId"
+            formControlName="performerArtistId"
+            dataKey="id"
+            optionLabel="name"
+            [multiple]="false"
+            [dropdown]="true"
+            [forceSelection]="true"
+          >
+          </p-autoComplete>
+        </div>
 
-      <div class="field">
-        <label for="title">Title</label>
-        <input type="text" pInputText id="title" formControlName="title" required
-               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
-               [autofocus]="!artifactTypeConfig?.hasArtist"
-        />
-      </div>
-
-      <div class="field" *ngIf="artifactTypeConfig?.hasYear">
-        <label for="year">Year</label>
-        <input type="number" pInputText id="year" formControlName="year"
-               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['year'].errors}"
-        />
-      </div>
-
-      <div class="flex column-gap-2">
-        <div class="flex-1 field">
-          <label for="duration">
-            Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})
-            <span *ngIf="this.editItem?.id" (click)="onUpdateSizeDuration($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
-            <!--
-            <p-button icon="pi pi-refresh" [text]="true" styleClass="p-button-text p-0 m-0"></p-button>
-            -->
-          </label>
-          <input type="number" pInputText id="duration" formControlName="duration"
-                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
+        <div class="field">
+          <label for="title">Title</label>
+          <input type="text" pInputText id="title" formControlName="title" required
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
+                 [autofocus]="!artifactTypeConfig?.hasArtist"
           />
         </div>
-        <div class="flex-1 field">
-          <label for="size">
-            Size ({{this.editForm.value.size | fileSize}})
-            <span *ngIf="this.editItem?.id" (click)="onUpdateSizeDuration($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
-          </label>
-          <input type="number" pInputText id="size" formControlName="size"
-                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['size'].errors}"
+
+        <div class="field" *ngIf="artifactTypeConfig?.hasYear">
+          <label for="year">Year</label>
+          <input type="number" pInputText id="year" formControlName="year"
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['year'].errors}"
           />
         </div>
-      </div>
 
-      <div>
-        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors ? 'visible' : 'hidden'}" >Title is required.</small>
-        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['artistId'].errors ? 'visible' : 'hidden'}" >Artist is required.</small>
-      </div>
+        <div class="flex column-gap-2">
+          <div class="flex-1 field">
+            <label for="duration">
+              Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})
+              <span *ngIf="this.editItem?.id" (click)="onUpdateSizeDuration($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
+              <!--
+              <p-button icon="pi pi-refresh" [text]="true" styleClass="p-button-text p-0 m-0"></p-button>
+              -->
+            </label>
+            <input type="number" pInputText id="duration" formControlName="duration"
+                   [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
+            />
+          </div>
+          <div class="flex-1 field">
+            <label for="size">
+              Size ({{this.editForm.value.size | fileSize}})
+              <span *ngIf="this.editItem?.id" (click)="onUpdateSizeDuration($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
+            </label>
+            <input type="number" pInputText id="size" formControlName="size"
+                   [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['size'].errors}"
+            />
+          </div>
+        </div>
 
+        <div>
+          <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors ? 'visible' : 'hidden'}" >Title is required.</small>
+          <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['artistId'].errors ? 'visible' : 'hidden'}" >Artist is required.</small>
+        </div>
+
+      </p-fluid>
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
