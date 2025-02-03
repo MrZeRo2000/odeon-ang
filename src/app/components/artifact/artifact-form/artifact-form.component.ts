@@ -21,6 +21,7 @@ import {MediaFile} from "../../../model/media-file";
 })
 export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> implements OnInit {
   @ViewChild('autofocused', { static: false}) autoFocused!: any;
+  @ViewChild('autofocusednoartist', { static: false}) autoFocusedNoArtist!: any;
 
   readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES;
 
@@ -121,7 +122,11 @@ export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> imple
 
   onShow() {
     setTimeout(() => {
-      this.autoFocused?.el.nativeElement.querySelector('input').focus();
+      if (this.artifactTypeConfig?.hasArtist) {
+        this.autoFocused?.el.nativeElement.querySelector('input').focus();
+      } else {
+        this.autoFocusedNoArtist.nativeElement.focus();
+      }
     }, 200)
   }
 

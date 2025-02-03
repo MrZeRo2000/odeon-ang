@@ -47,9 +47,13 @@
 
         <div class="field">
           <label for="title">Title</label>
-          <input type="text" pInputText id="title" formControlName="title" required
+          <input #autofocusednoartist
+                 type="text"
+                 pInputText
+                 id="title"
+                 formControlName="title"
+                 required
                  [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
-                 [autofocus]="!artifactTypeConfig?.hasArtist"
           />
         </div>
 
