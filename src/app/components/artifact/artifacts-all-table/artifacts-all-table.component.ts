@@ -48,12 +48,12 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
     startWith({}),
     tap(() => {
       const value = this.filterForm.value
-      //console.log(`Writing to ${ArtifactsAllTableComponent.SESSION_KEY}: ${JSON.stringify(value)}`);
       sessionStorage.setItem(ArtifactsAllTableComponent.SESSION_KEY, JSON.stringify(value))
     }),
     switchMap(() => merge(
       of(undefined),
-      iif(() => (this.filterForm.value.artifactTypeIds?.length == 0) && (this.filterForm.value.artistIds?.length == 0),
+      iif(() => (this.filterForm.value.artifactTypeIds?.length == 0) &&
+          ((this.filterForm.value.artistIds || []).length == 0),
         of([]),
         this.artifactTable$(
           this.filterForm.value.artifactTypeIds == undefined ? null : this.filterForm.value.artifactTypeIds,

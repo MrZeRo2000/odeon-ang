@@ -27,9 +27,6 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
   readonly ARTIFACT_VIDEO_TYPE_CODES = this.ARTIFACT_VIDEO_TYPES.map(v => v.code)
   readonly ARTIFACT_MUSIC_VIDEO_TYPE_CODES = this.ARTIFACT_MUSIC_TYPE_CODES.concat(this.ARTIFACT_VIDEO_TYPE_CODES)
 
-  musicGroupValue: number | null = null
-  videoGroupValue: number | null = null
-
   formGroup = this.fb.group({
     artifactTypeMusic: [[] as number[]],
     artifactTypeVideo: [[] as number[]],
@@ -37,23 +34,15 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
 
   formGroupChange$ = this.formGroup.valueChanges.pipe(
     tap(v => {
-      const newMusicGroupValue = v?.artifactTypeMusic?.length === this.ARTIFACT_MUSIC_TYPES.length ?
-        this.ARTIFACT_TYPE_GROUPS_MUSIC[0].code : null;
-      if (newMusicGroupValue != this.musicGroupValue) {
-        this.musicGroupValue = newMusicGroupValue
-      }
-      const newVideoGroupValue = v?.artifactTypeVideo?.length === this.ARTIFACT_VIDEO_TYPES.length ?
-        this.ARTIFACT_TYPE_GROUPS_VIDEO[0].code : null;
-      if (newVideoGroupValue != this.videoGroupValue) {
-        this.videoGroupValue = newVideoGroupValue
-      }
-    }),
-    tap(v => {
+      console.debug(`formGroupChange: ${JSON.stringify(v)}`)
       this.markAsTouched()
       let value = (v?.artifactTypeMusic || []).concat(v?.artifactTypeVideo || [])
+      /*
       if (value.length === 0) {
         value = this.ARTIFACT_MUSIC_VIDEO_TYPE_CODES
       }
+
+       */
       this.onChange(value)
     }),
   )
@@ -88,10 +77,6 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
       artifactTypeMusic: musicValue,
       artifactTypeVideo: videoValue
     })
-    this.musicGroupValue = musicValue.length === this.ARTIFACT_MUSIC_TYPES.length ?
-      this.ARTIFACT_TYPE_GROUPS_MUSIC[0].code : null;
-    this.videoGroupValue = videoValue.length === this.ARTIFACT_VIDEO_TYPES.length ?
-      this.ARTIFACT_TYPE_GROUPS_VIDEO[0].code : null;
   }
 
   markAsTouched() {
@@ -101,14 +86,32 @@ export class ArtifactTypeSelectComponent implements ControlValueAccessor {
     }
   }
 
-  groupMusicClick(): void {
-    const value= this.musicGroupValue ? this.ARTIFACT_MUSIC_TYPES.map(t => t.code) : []
-    this.formGroup.controls.artifactTypeMusic.setValue(value);
+  groupMusicClick(event: any): void {
+    event.preventDefault();
+    const oldValue = this.formGroup.controls.artifactTypeMusic.value || [];
+
+    let newValue: number[] = [];
+    if (oldValue.length < this.ARTIFACT_MUSIC_TYPE_CODES.length) {
+      newValue = this.ARTIFACT_MUSIC_TYPE_CODES
+    }
+
+    if (newValue.length != oldValue.length)  {
+      this.formGroup.controls.artifactTypeMusic.setValue(newValue);
+    }
   }
 
-  groupVideoClick(): void {
-    const value= this.videoGroupValue ? this.ARTIFACT_VIDEO_TYPES.map(t => t.code) : []
-    this.formGroup.controls.artifactTypeVideo.setValue(value);
+  groupVideoClick(event: any): void {
+    event.preventDefault();
+    const oldValue = this.formGroup.controls.artifactTypeVideo.value || [];
+
+    let newValue: number[] = [];
+    if (oldValue.length < this.ARTIFACT_VIDEO_TYPE_CODES.length) {
+      newValue = this.ARTIFACT_VIDEO_TYPE_CODES
+    }
+
+    if (newValue.length != oldValue.length)  {
+      this.formGroup.controls.artifactTypeVideo.setValue(newValue);
+    }
   }
 }
 

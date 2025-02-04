@@ -55,7 +55,7 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
       of(undefined),
       iif(
         () => (this.filterForm.value.artifactTypeIds?.length == 0) &&
-              (this.filterForm.value.artistIds?.length == 0),
+          ((this.filterForm.value.artistIds || []).length == 0),
         of([]),
         this.trackTable$(
           this.filterForm.value.artifactTypeIds == undefined ? null : this.filterForm.value.artifactTypeIds,

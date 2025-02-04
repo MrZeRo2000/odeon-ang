@@ -1,19 +1,12 @@
 <form [formGroup]="formGroup">
   <div class="flex flex-row">
-    <div class="flex flex-column">
-      <div class="p-fluid">
-        <p-selectButton
-          [options]="ARTIFACT_TYPE_GROUPS_MUSIC"
-          optionLabel="name"
-          optionValue="code"
-          [allowEmpty]="true"
-          id="artifactTypeGroupMusic"
-          [(ngModel)]="musicGroupValue"
-          [ngModelOptions]="{standalone: true}"
-          (onOptionClick)="groupMusicClick()"
-        >
-        </p-selectButton>
-      </div>
+    <p-fluid class="flex flex-column mr-1">
+      <p-button
+        variant="outlined"
+        severity="secondary"
+        [label]="ARTIFACT_TYPE_GROUPS_MUSIC[0].name"
+        (onClick)="groupMusicClick($event)"
+      ></p-button>
       <p-selectButton
         [options]="ARTIFACT_MUSIC_TYPES"
         optionLabel="name"
@@ -24,21 +17,14 @@
         formControlName="artifactTypeMusic"
       >
       </p-selectButton>
-    </div>
-    <div class="flex flex-column">
-      <div class="p-fluid">
-        <p-selectButton
-          [options]="ARTIFACT_TYPE_GROUPS_VIDEO"
-          optionLabel="name"
-          optionValue="code"
-          [allowEmpty]="true"
-          id="artifactTypeGroupVideo"
-          [(ngModel)]="videoGroupValue"
-          [ngModelOptions]="{standalone: true}"
-          (onOptionClick)="groupVideoClick()"
-        >
-        </p-selectButton>
-      </div>
+    </p-fluid>
+    <p-fluid class="flex flex-column">
+      <p-button
+        variant="outlined"
+        severity="secondary"
+        [label]="ARTIFACT_TYPE_GROUPS_VIDEO[0].name"
+        (onClick)="groupVideoClick($event)"
+      ></p-button>
       <p-selectButton
         [options]="ARTIFACT_VIDEO_TYPES"
         optionLabel="name"
@@ -47,9 +33,8 @@
         [multiple]="true"
         id="artifactTypeVideo"
         formControlName="artifactTypeVideo"
-      >
-      </p-selectButton>
-    </div>
+      ></p-selectButton>
+    </p-fluid>
   </div>
 </form>
 
