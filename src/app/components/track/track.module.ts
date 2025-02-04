@@ -30,6 +30,8 @@ import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
 import {TextareaModule} from "primeng/textarea";
 import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
+import {FluidModule} from "primeng/fluid";
+import {MessageModule} from "primeng/message";
 
 
 @NgModule({
@@ -69,6 +71,8 @@ import {InputIconModule} from "primeng/inputicon";
         TextareaModule,
         IconFieldModule,
         InputIconModule,
+        FluidModule,
+        MessageModule,
         // custom modules
         CoreModule,
         DVModule,

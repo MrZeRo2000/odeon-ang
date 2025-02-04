@@ -9,7 +9,7 @@
 <div *ngIf="data$ | async as data; else loadingOrError">
 
   <p-table #dt
-    styleClass="p-datatable-sm"
+    size="small"
     responsiveLayout="scroll"
     [columns]="cols"
     [value]="data[0]"
@@ -22,7 +22,9 @@
           <div *ngIf="this.artifactId"><span class="text-primary">{{data[1] | artifactCaption}}</span>&nbsp;Tracks</div>
           <div *ngIf="this.dvProductId">Product&nbsp;<span class="text-primary">{{data[0][0].dvProduct?.title}}</span>&nbsp;Tracks</div>
         </div>
-        <div class="flex align-items-center app-crud-panel-small" *ngIf="this.artifactId"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
+        <div class="flex align-items-center app-crud-panel" *ngIf="this.artifactId">
+          <app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+        </div>
         <div class="flex align-items-center justify-content-end flex-grow-1">
           <p-button
             icon="pi pi-angle-up"
@@ -65,8 +67,16 @@
             *ngIf="isArtifactVideoWithProducts || isArtifactTypeVideoMusic"
           ></p-button>
           <span class="p-input-icon-left flex align-items-center">
-            <i class="pi pi-search"></i>
-            <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;" placeholder="Search keyword" />
+            <p-iconfield iconPosition="left" class="ml-auto">
+              <p-inputicon>
+                  <i class="pi pi-search"></i>
+              </p-inputicon>
+              <input
+                pInputText
+                type="text"
+                (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;"
+                placeholder="Search keyword" />
+            </p-iconfield>
           </span>
         </div>
       </div>
