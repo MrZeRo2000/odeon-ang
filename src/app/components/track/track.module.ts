@@ -28,6 +28,8 @@ import {TracksImportFormComponent} from "./tracks-import-form/tracks-import-form
 import {TracksAllTableComponent} from "./tracks-all-table/tracks-all-table.component";
 import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
 import {TextareaModule} from "primeng/textarea";
+import {IconField} from "primeng/iconfield";
+import {InputIcon} from "primeng/inputicon";
 
 
 @NgModule({
@@ -70,6 +72,8 @@ import {TextareaModule} from "primeng/textarea";
         DVModule,
         UserImportModule,
         ArtifactTypeModule,
+        IconField,
+        InputIcon,
     ],
   providers: [
     DatePipe,
