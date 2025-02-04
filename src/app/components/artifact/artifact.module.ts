@@ -19,9 +19,9 @@ import {DropdownModule} from "primeng/dropdown";
 import {TagModule} from "primeng/tag";
 import {ArtifactsAllTableComponent} from "./artifacts-all-table/artifacts-all-table.component";
 import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
-import {IconField} from "primeng/iconfield";
-import {InputIcon} from "primeng/inputicon";
-import {InputText} from "primeng/inputtext";
+import {IconFieldModule} from "primeng/iconfield";
+import {InputIconModule} from "primeng/inputicon";
+import {InputTextModule} from "primeng/inputtext";
 import {FluidModule} from "primeng/fluid";
 
 
@@ -58,11 +58,11 @@ import {FluidModule} from "primeng/fluid";
         DropdownModule,
         TagModule,
         FluidModule,
+        InputTextModule,
+        IconFieldModule,
+        InputIconModule,
         // custom modules
         ArtifactTypeModule,
-        IconField,
-        InputIcon,
-        InputText,
     ]
 })
 export class ArtifactModule { }

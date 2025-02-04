@@ -28,8 +28,8 @@ import {TracksImportFormComponent} from "./tracks-import-form/tracks-import-form
 import {TracksAllTableComponent} from "./tracks-all-table/tracks-all-table.component";
 import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
 import {TextareaModule} from "primeng/textarea";
-import {IconField} from "primeng/iconfield";
-import {InputIcon} from "primeng/inputicon";
+import {IconFieldModule} from "primeng/iconfield";
+import {InputIconModule} from "primeng/inputicon";
 
 
 @NgModule({
@@ -67,13 +67,13 @@ import {InputIcon} from "primeng/inputicon";
         MultiSelectModule,
         ConfirmPopupModule,
         TextareaModule,
+        IconFieldModule,
+        InputIconModule,
         // custom modules
         CoreModule,
         DVModule,
         UserImportModule,
         ArtifactTypeModule,
-        IconField,
-        InputIcon,
     ],
   providers: [
     DatePipe,
