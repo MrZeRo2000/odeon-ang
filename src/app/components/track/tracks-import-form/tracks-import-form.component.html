@@ -1,45 +1,47 @@
-<p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" styleClass="p-fluid" header="Import Tracks">
+<p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" header="Import Tracks" (onShow)="onShow()">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
-      <div class="field mt-2">
-        <label for="mediaFile">Media File</label>
-        <p-dropdown
-          formControlName="mediaFile"
-          id="mediaFile"
-          [options]="mediaFiles"
-          optionLabel="name"
-          optionValue="id"
-          appendTo="body"
-          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['mediaFile'].errors}"
-        ></p-dropdown>
-      </div>
+      <p-fluid>
+        <div class="field mt-2">
+          <label for="mediaFile">Media File</label>
+          <p-dropdown
+            #autofocused
+            formControlName="mediaFile"
+            id="mediaFile"
+            [options]="mediaFiles"
+            optionLabel="name"
+            optionValue="id"
+            appendTo="body"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['mediaFile'].errors}"
+          ></p-dropdown>
+        </div>
+      </p-fluid>
 
       <div class="grid">
         <div class="field col">
-          <label for="dvType">Video Type</label>
-          <p-dropdown
-            formControlName="dvType"
-            id="dvType"
-            [options]="DV_TYPES"
-            optionLabel="name"
-            optionValue="id"
-            appendTo="body"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['dvType'].errors}"
-          ></p-dropdown>
+            <label for="dvType">Video Type</label>
+            <p-select
+              formControlName="dvType"
+              id="dvType"
+              [options]="DV_TYPES"
+              optionLabel="name"
+              optionValue="id"
+              appendTo="body"
+              [editable]="false"
+              class="w-full"
+              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['dvType'].errors}"
+            ></p-select>
         </div>
 
         <div class="field col">
-          <label for="num">Track #</label>
-          <p-dropdown
-            formControlName="num"
-            id="num"
-            [options]="NUM_OPTIONS"
-            optionLabel="name"
-            optionValue="id"
-            appendTo="body"
-            [editable]="true"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['num'].errors}"
-          ></p-dropdown>
+            <label for="num">Track #</label>
+            <p-inputNumber
+              formControlName="num"
+              id="num"
+              class="w-full"
+              [format]="false"
+              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['num'].errors}"
+            ></p-inputNumber>
         </div>
       </div>
       <div class="grid">
@@ -58,6 +60,7 @@
             formControlName="titles"
             style="resize: none"
             rows="5"
+            class="w-full"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['titles'].errors}"
           ></textarea>
         </div>
@@ -71,6 +74,7 @@
             formControlName="chapters"
             style="resize: none"
             rows="5"
+            class="w-full"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['chapters'].errors}"
           ></textarea>
         </div>
@@ -89,6 +93,7 @@
             formControlName="artists"
             style="resize: none"
             rows="5"
+            class="w-full"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['artists'].errors}"
           ></textarea>
         </div>

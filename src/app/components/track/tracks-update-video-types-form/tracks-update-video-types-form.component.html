@@ -1,10 +1,11 @@
-<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Update Video Types">
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Update Video Types" (onShow)="onShow()">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <p-fluid>
         <div class="field">
           <label for="dvType">Video Type</label>
           <p-dropdown
+            #autofocused
             id="dvType"
             [options]="DV_TYPES"
             optionLabel="name"

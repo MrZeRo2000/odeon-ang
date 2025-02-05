@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {BaseFormComponent} from "../../base/base-form.component";
 import {Artifact} from "../../../model/artifacts";
 import {FormBuilder, Validators} from "@angular/forms";
@@ -16,6 +16,8 @@ import {DV_TYPES, DVType} from "../../../model/dvtype";
 })
 
 export class TracksUpdateVideoTypesFormComponent extends BaseFormComponent {
+  @ViewChild('autofocused', { static: false}) autoFocused!: any;
+
   DV_TYPES = DV_TYPES;
 
   @Input()
@@ -53,6 +55,12 @@ export class TracksUpdateVideoTypesFormComponent extends BaseFormComponent {
     private trackService: TrackService,
   ) {
     super();
+  }
+
+  onShow() {
+    setTimeout(() => {
+      this.autoFocused?.el.nativeElement.querySelector('span').focus();
+    }, 200)
   }
 
   private getFormData(): TrackDVTypeUserUpdate {

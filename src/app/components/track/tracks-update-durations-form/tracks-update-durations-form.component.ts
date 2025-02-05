@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {BaseFormComponent} from "../../base/base-form.component";
 import {Artifact} from "../../../model/artifacts";
 import {MediaFile} from "../../../model/media-file";
@@ -18,6 +18,8 @@ import {DatePipe} from "@angular/common";
     standalone: false
 })
 export class TracksUpdateDurationsFormComponent extends BaseFormComponent {
+  @ViewChild('autofocused', { static: false}) autoFocused!: any;
+
   @Input()
   public artifact?: Artifact;
 
@@ -77,6 +79,12 @@ export class TracksUpdateDurationsFormComponent extends BaseFormComponent {
     private datePipe: DatePipe,
   ) {
     super();
+  }
+
+  onShow() {
+    setTimeout(() => {
+      this.autoFocused?.el.nativeElement.querySelector('span').focus();
+    }, 200)
   }
 
   getChapters(value: string): Array<string> {

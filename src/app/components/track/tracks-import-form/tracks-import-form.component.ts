@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {BaseFormComponent} from "../../base/base-form.component";
 import {MediaFile} from "../../../model/media-file";
 import {DV_TYPES, DVType} from "../../../model/dvtype";
@@ -18,6 +18,8 @@ import {textToArray} from "../../../utils/form-utils";
     standalone: false
 })
 export class TracksImportFormComponent extends BaseFormComponent implements OnInit {
+  @ViewChild('autofocused', { static: false}) autoFocused!: any;
+
   textToArray = textToArray
 
   DV_TYPES = DV_TYPES;
@@ -84,6 +86,12 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
     })
 
     this.editFormData$ = this.editForm.valueChanges;
+  }
+
+  onShow() {
+    setTimeout(() => {
+      this.autoFocused?.el.nativeElement.querySelector('span').focus();
+    }, 200)
   }
 
   private getFormData(): TrackUserImport {

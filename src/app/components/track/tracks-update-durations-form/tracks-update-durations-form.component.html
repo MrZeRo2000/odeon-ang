@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Update Durations">
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Update Durations" (onShow)="onShow()">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <p-fluid>
@@ -7,6 +7,7 @@
             Media File<span *ngIf="editFormData$ | async as editFormData">&nbsp; {{getMediaFileDuration(editFormData.mediaFile) * 1000 | date:'HH:mm:ss':'GMT'}}</span>
           </label>
           <p-dropdown
+            #autofocused
             formControlName="mediaFile"
             id="mediaFile"
             [options]="mediaFiles"

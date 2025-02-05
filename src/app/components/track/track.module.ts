@@ -32,6 +32,7 @@ import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
 import {FluidModule} from "primeng/fluid";
 import {MessageModule} from "primeng/message";
+import {SelectModule} from "primeng/select";
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import {MessageModule} from "primeng/message";
         InputIconModule,
         FluidModule,
         MessageModule,
-        // custom modules
+        SelectModule,
+      // custom modules
         CoreModule,
         DVModule,
         UserImportModule,
