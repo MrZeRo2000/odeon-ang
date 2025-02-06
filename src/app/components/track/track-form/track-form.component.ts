@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {getTrackConfig, Track, TrackConfigItem} from "../../../model/track";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
@@ -25,6 +25,8 @@ import {Parser} from "../utils/parser";
     standalone: false
 })
 export class TrackFormComponent extends BaseCrudFormComponent<Track> implements OnChanges, OnInit {
+  @ViewChild('autofocused', { static: false}) autoFocused!: ElementRef;
+
   DV_TYPES = DV_TYPES;
 
   @Input()
@@ -53,9 +55,9 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
   filteredPerformerArtists: Array<IdName> = [];
   filteredDvProducts: Array<IdTitle> = [];
 
-  editForm: FormGroup = this.fb.group({});
+  editForm!: FormGroup;
 
-  editFormData$: Observable<any> = this.editForm.valueChanges;
+  editFormData$!: Observable<any>;
 
   constructor(
     private fb: FormBuilder,
@@ -136,6 +138,12 @@ export class TrackFormComponent extends BaseCrudFormComponent<Track> implements 
         }
       })
     );
+  }
+
+  onShow() {
+    setTimeout(() => {
+      this.autoFocused?.nativeElement.focus();
+    }, 200)
   }
 
   updateFormDuration(ids: Array<number>): void {
