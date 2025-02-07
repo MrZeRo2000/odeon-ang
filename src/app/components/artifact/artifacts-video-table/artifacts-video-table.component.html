@@ -9,7 +9,7 @@
 <div *ngIf="filteredArtifacts$ | async as artifactsVideoTable; else loadingOrError">
 
   <p-table #dt
-           styleClass="p-datatable-sm"
+           size="small"
            [value]="artifactsVideoTable"
            [rows]="10"
            [paginator]="true"
