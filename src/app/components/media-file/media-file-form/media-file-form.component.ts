@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {MediaFile} from "../../../model/media-file";
 import {
@@ -28,6 +28,7 @@ import {TextInterface} from "../../../model/common";
     standalone: false
 })
 export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> implements OnChanges {
+  @ViewChild('autofocused', { static: false}) autoFocused!: any;
 
   @Input()
   isVideo: boolean = false;
@@ -76,6 +77,12 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
     protected mediaFileService: MediaFileService,
   ) {
     super(messageService, mediaFileService)
+  }
+
+  onShow() {
+    setTimeout(() => {
+      this.autoFocused?.el.nativeElement.querySelector('input').focus();
+    }, 200)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -167,6 +174,10 @@ export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> imp
     if (this.editItem?.artifactId && this.editForm.value.name) {
       this.mediaFileAttributesSubject.next({artifactId: this.editItem?.artifactId, name: this.editForm.value.name} as MediaFile)
     }
+  }
+
+  searchMediaFile(): void {
+
   }
 
   protected readonly JSON = JSON;

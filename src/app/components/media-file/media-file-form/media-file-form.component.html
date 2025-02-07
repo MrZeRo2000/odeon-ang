@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Media file Edit">
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Media file Edit" (onShow)="onShow()">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
 
@@ -7,6 +7,7 @@
           Name&nbsp;<span *ngIf="this.editItem?.artifactId && this.editForm.value.name" (click)="onUpdateMediaFileAttributes($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
         </label>
         <p-dropdown
+          #autofocused
           id="name"
           [options]="mediaFileNames"
           [editable]="true"
@@ -14,8 +15,8 @@
           optionValue="text"
           formControlName="name"
           [required]="true"
-          [autofocus]="true"
           appendTo="body"
+          class="w-full"
           [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['name'].errors}"
         ></p-dropdown>
 
@@ -23,30 +24,51 @@
 
       <div class="field">
         <label for="format">Format</label>
-        <input type="text" pInputText id="format" formControlName="format" required
-               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['format'].errors}"
+        <input
+          type="text"
+          pInputText
+          id="format"
+          formControlName="format"
+          required
+          class="w-full"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['format'].errors}"
         />
       </div>
 
       <div class="grid">
         <div class="col field">
           <label for="size">Size ({{this.editForm.value.size | fileSize}})</label>
-          <input type="number" pInputText id="size" formControlName="size"
-                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['size'].errors}"
+          <input
+            type="number"
+            pInputText
+            id="size"
+            formControlName="size"
+            class="w-full"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['size'].errors}"
           />
         </div>
 
         <div class="col field">
           <label for="bitrate">Bitrate</label>
-          <input type="number" pInputText id="bitrate" formControlName="bitrate"
-                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['bitrate'].errors}"
+          <input
+            type="number"
+            pInputText
+            id="bitrate"
+            formControlName="bitrate"
+            class="w-full"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['bitrate'].errors}"
           />
         </div>
 
         <div class="col field">
           <label for="duration">Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})</label>
-          <input type="number" pInputText id="duration" formControlName="duration"
-                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
+          <input
+            type="number"
+            pInputText
+            id="duration"
+            formControlName="duration"
+            class="w-full"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
           />
         </div>
       </div>
@@ -54,15 +76,25 @@
       <div class="grid" *ngIf="isVideo">
         <div class="col field">
           <label for="width">Width</label>
-          <input type="number" pInputText id="width" formControlName="width"
-                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['width'].errors}"
+          <input
+            type="number"
+            pInputText
+            id="width"
+            formControlName="width"
+            class="w-full"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['width'].errors}"
           />
         </div>
 
         <div class="col field">
           <label for="height">Height</label>
-          <input type="number" pInputText id="height" formControlName="height"
-                 [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['height'].errors}"
+          <input
+            type="number"
+            pInputText
+            id="height"
+            formControlName="height"
+            class="w-full"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['height'].errors}"
           />
         </div>
       </div>
@@ -75,6 +107,7 @@
           formControlName="extra"
           style="resize: none"
           rows="5"
+          class="w-full"
           [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['extra'].errors}"
         ></textarea>
         <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['extra'].errors ? 'visible' : 'hidden'}">

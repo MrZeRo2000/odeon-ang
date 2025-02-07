@@ -18,6 +18,9 @@ import {DropdownModule} from "primeng/dropdown";
 import {TooltipModule} from "primeng/tooltip";
 import {MediaFilesLoadFormComponent} from "./media-files-load-form/media-files-load-form.component";
 import {ListboxModule} from "primeng/listbox";
+import {TextareaModule} from "primeng/textarea";
+import {FluidModule} from "primeng/fluid";
+import {SelectModule} from "primeng/select";
 
 @NgModule({
   declarations: [
@@ -46,6 +49,9 @@ import {ListboxModule} from "primeng/listbox";
         ConfirmPopupModule,
         InputTextModule,
         ListboxModule,
+        TextareaModule,
+        SelectModule,
+        FluidModule,
         // custom modules
         CoreModule,
         DropdownModule,
