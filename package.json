@@ -1,7 +1,7 @@
 {
   "name": "odeon-ang",
   "version": "0.5.9.1",
-  "backend_version": "0.14.9",
+  "backend_version": "0.14.10",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
