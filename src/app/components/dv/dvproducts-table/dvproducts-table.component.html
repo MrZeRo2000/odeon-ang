@@ -31,7 +31,7 @@
   </div>
 
   <p-table #dt
-           styleClass="p-datatable-sm"
+           size="small"
            [value]="table"
            dataKey="id"
            stateStorage="session"
@@ -57,10 +57,10 @@
         </form>
 
         <div class="flex flex-nowrap align-items-center text-sm">
-          Rows:&nbsp;<p-chip styleClass="text-xs" label="{{dt.processedData.length}}"></p-chip>
+          Rows:&nbsp;<p-chip styleClass="text-xs p-2" label="{{dt.processedData.length}}"></p-chip>
         </div>
 
-        <div class="flex justify-content-end flex-grow-1">
+        <div class="flex justify-content-end align-items-center flex-grow-1">
           <p-button
             icon="pi pi-file-import"
             styleClass="p-button-secondary p-button-text mr-2"
@@ -69,8 +69,17 @@
             (onClick)="showImportDVProducts($event)"
           ></p-button>
           <span class="p-input-icon-left flex align-items-center">
-            <i class="pi pi-search"></i>
-            <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;" placeholder="Search keyword" />
+            <p-iconfield iconPosition="left" class="ml-auto">
+              <p-inputicon>
+                  <i class="pi pi-search"></i>
+              </p-inputicon>
+              <input
+                pInputText
+                type="text"
+                [value]="globalFilterValue"
+                (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;"
+                placeholder="Search keyword" />
+            </p-iconfield>
           </span>
         </div>
       </div>
@@ -145,7 +154,7 @@
         <td>
           <div class="flex flex-wrap gap-1" *ngIf="item.dvCategories">
             <div *ngFor="let category of item.dvCategories">
-              <p-chip label="{{category.name}}" styleClass="flex align-items-center text-xs" *ngIf="category"></p-chip>
+              <p-chip label="{{category.name}}" styleClass="flex align-items-center text-xs p-2" *ngIf="category"></p-chip>
             </div>
           </div>
         </td>
