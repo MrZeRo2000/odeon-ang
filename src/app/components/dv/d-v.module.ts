@@ -25,6 +25,8 @@ import {TooltipModule} from "primeng/tooltip";
 import {DVProductsImportFormComponent} from "./dvproducts-import-form/dvproducts-import-form.component";
 import {TabViewModule} from "primeng/tabview";
 import {InputTextModule} from "primeng/inputtext";
+import {IconField} from "primeng/iconfield";
+import {InputIcon} from "primeng/inputicon";
 
 
 @NgModule({
@@ -66,6 +68,8 @@ import {InputTextModule} from "primeng/inputtext";
     DropdownModule,
     TooltipModule,
     TabViewModule,
+    IconField,
+    InputIcon,
     // custom modules
     CoreModule,
     UserImportModule,

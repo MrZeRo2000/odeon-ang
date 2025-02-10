@@ -10,7 +10,7 @@
 <div #dtc *ngIf="table$ | async as table; else loadingOrError">
 
   <p-table #dt
-           styleClass="p-datatable-sm"
+           size="small"
            [value]="table"
            dataKey="id"
            [scrollable]="true"
@@ -25,8 +25,18 @@
         </div>
         <div class="flex justify-content-end flex-grow-1">
             <span class="p-input-icon-left flex align-items-center">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" [value]="globalFilterValue" (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;" placeholder="Search keyword" />
+              <p-iconfield iconPosition="left" class="ml-auto">
+                <p-inputicon>
+                    <i class="pi pi-search"></i>
+                </p-inputicon>
+
+                <input
+                  pInputText
+                  type="text"
+                  [value]="globalFilterValue"
+                  (input)="dt.filterGlobal($any($event.target).value, 'contains');selectedItem=undefined;"
+                  placeholder="Search keyword" />
+              </p-iconfield>
             </span>
         </div>
       </div>
