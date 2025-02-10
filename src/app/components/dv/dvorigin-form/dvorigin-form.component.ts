@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {DVOrigin} from "../../../model/dv-product";
 import {MessageService} from "primeng/api";
@@ -12,6 +12,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
     standalone: false
 })
 export class DVOriginFormComponent extends BaseCrudFormComponent<DVOrigin> implements OnInit {
+  @ViewChild('autofocused', { static: false}) autoFocused?: ElementRef;
 
   editForm: FormGroup = this.fb.group({
     name: ['', Validators.required]
@@ -28,6 +29,12 @@ export class DVOriginFormComponent extends BaseCrudFormComponent<DVOrigin> imple
     this.editForm.setValue({
       name: this.editItem?.name || ''
     })
+  }
+
+  onShow() {
+    setTimeout(() => {
+      this.autoFocused?.nativeElement?.focus();
+    }, 200)
   }
 
   override validate(): boolean {

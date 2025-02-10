@@ -1,11 +1,17 @@
-<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Origin Edit">
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Origin Edit" (onShow)="onShow()">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <div class="field">
         <label for="name">Name</label>
-        <input type="text" pInputText id="name" formControlName="name" required
-               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['name'].errors}"
-               [autofocus]="true"
+        <input
+          #autofocused
+          type="text"
+          pInputText
+          id="name"
+          formControlName="name"
+          required
+          class="w-full"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['name'].errors}"
         />
       </div>
 
