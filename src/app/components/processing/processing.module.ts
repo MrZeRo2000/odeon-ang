@@ -10,6 +10,7 @@ import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {DropdownModule} from "primeng/dropdown";
 import {ReactiveFormsModule} from "@angular/forms";
+import {PanelModule} from "primeng/panel";
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     ButtonModule,
     RippleModule,
     DropdownModule,
+    PanelModule,
     //
     CoreModule,
   ]

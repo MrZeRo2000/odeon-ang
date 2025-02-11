@@ -38,39 +38,43 @@
       </ng-container>
     </div>
     <div class="lg:col-9 md:col-12 col-12" *ngIf="pi.processingStatus">
-      <div class="p-panel p-component">
-        <div class="p-panel-header flex"
-             [ngClass]="pi.processingStatus === SUCCESS_STATUS ? 'bg-success': pi.processingStatus === FAILURE_STATUS ? 'bg-failure': ''">
-          <div class="flex align-items-center justify-content-start p-panel-title h-3rem" style="order:0"
-               [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : ''"
-          >{{pi.processorType | processorTypeName}}</div>
-          <div class="flex align-items-center flex-grow-1 mr-1">
-            <div *ngIf="pi.processingEvent && pi.processingStatus !== SUCCESS_STATUS" class="text-sm font-light ml-2"
-                 [ngClass]="pi.processingStatus === FAILURE_STATUS ? 'text-white' : 'text-primary'">
-              <div *ngIf="pi.processingEvent">
-                {{pi.processingEvent.updateDateTime | date:'dd.MM.YYYY HH:mm:ss'}}
-              </div>
-              <div *ngIf="pi.processingEvent" class="text-overflow-ellipsis">
-                {{pi.processingEvent.message}}
+      <p-panel [toggleable]="false">
+        <ng-template #header>
+          <div class="flex w-full p-2"
+               [ngClass]="pi.processingStatus === SUCCESS_STATUS ? 'bg-success': pi.processingStatus === FAILURE_STATUS ? 'bg-failure': ''">
+            <div class="flex align-items-center justify-content-start p-panel-title h-3rem" style="order:0"
+                 [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : ''"
+            >{{pi.processorType | processorTypeName}}</div>
+            <div class="flex align-items-center flex-grow-1 mr-1">
+              <div *ngIf="pi.processingEvent && pi.processingStatus !== SUCCESS_STATUS" class="text-sm font-light ml-2"
+                   [ngClass]="pi.processingStatus === FAILURE_STATUS ? 'text-white' : 'text-primary'">
+                <div *ngIf="pi.processingEvent">
+                  {{pi.processingEvent.updateDateTime | date:'dd.MM.YYYY HH:mm:ss'}}
+                </div>
+                <div *ngIf="pi.processingEvent" class="text-overflow-ellipsis">
+                  {{pi.processingEvent.message}}
+                </div>
               </div>
             </div>
+            <div class="flex align-items-center" *ngIf="pi.processingStatus !== PROGRESS_STATUS">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-refresh"
+                class="p-button-rounded p-button-outlined"
+                [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : 'p-button-secondary'"
+                (click)="onRefreshButton($event, pi)"
+              >
+              </button>
+            </div>
           </div>
-          <div class="flex align-items-center" *ngIf="pi.processingStatus !== PROGRESS_STATUS">
-            <button
-              pButton
-              pRipple
-              icon="pi pi-refresh"
-              class="p-button-rounded p-button-outlined"
-              [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : 'p-button-secondary'"
-              (click)="onRefreshButton($event, pi)"
-            >
-            </button>
-          </div>
+        </ng-template>
 
-        </div>
-
-        <div class="p-panel-content">
-          <p-table [value]="pi.processDetails || []" styleClass="p-datatable-sm" responsiveLayout="scroll">
+          <p-table
+            [value]="pi.processDetails || []"
+            size="small"
+            responsiveLayout="scroll"
+          >
             <ng-template pTemplate="header">
               <tr>
                 <th style="width:auto">Time</th>
@@ -105,8 +109,7 @@
               </tr>
             </ng-template>
           </p-table>
-        </div>
-      </div>
+      </p-panel>
     </div>
   </div>
 </ng-container>

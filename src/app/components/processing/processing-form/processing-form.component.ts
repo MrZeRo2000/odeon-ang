@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {
   ProcessInfo,
   ProcessingAction,
@@ -26,6 +26,7 @@ import {PrimeNG} from "primeng/config";
     selector: 'app-processing-form',
     templateUrl: './processing-form.component.html',
     styleUrls: ['./processing-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     providers: [ConfirmationService],
     standalone: false
 })
