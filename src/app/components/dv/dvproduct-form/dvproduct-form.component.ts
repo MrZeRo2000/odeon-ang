@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {DVCategory, DVOrigin, DVProduct} from "../../../model/dv-product";
 import {MessageService} from "primeng/api";
@@ -14,6 +14,8 @@ import {IdTitleOriginalTitle} from "../../../model/common";
     standalone: false
 })
 export class DVProductFormComponent extends BaseCrudFormComponent<DVProduct> implements OnInit {
+  @ViewChild('autofocused', { static: false}) autoFocused?: ElementRef;
+
   @Input()
   dvOrigins: Array<DVOrigin> = [];
 
@@ -77,6 +79,12 @@ export class DVProductFormComponent extends BaseCrudFormComponent<DVProduct> imp
     // maps
     this.titles = new Map(this.dvProductsTable.map(v => {return [v.title, v.id]}));
     this.originalTitles = new Map(this.dvProductsTable.map(v => {return [v.originalTitle, v.id]}));
+  }
+
+  onShow() {
+    setTimeout(() => {
+      this.autoFocused?.nativeElement?.focus();
+    }, 200)
   }
 
   uniqueValidator(mappingFn: (() => Map<string, number>)): ValidatorFn {

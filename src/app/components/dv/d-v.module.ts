@@ -27,6 +27,8 @@ import {TabViewModule} from "primeng/tabview";
 import {InputTextModule} from "primeng/inputtext";
 import {IconField} from "primeng/iconfield";
 import {InputIcon} from "primeng/inputicon";
+import {FluidModule} from "primeng/fluid";
+import {TextareaModule} from "primeng/textarea";
 
 
 @NgModule({
@@ -70,6 +72,8 @@ import {InputIcon} from "primeng/inputicon";
     TabViewModule,
     IconField,
     InputIcon,
+    FluidModule,
+    TextareaModule,
     // custom modules
     CoreModule,
     UserImportModule,
