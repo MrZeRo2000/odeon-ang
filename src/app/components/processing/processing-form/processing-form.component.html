@@ -42,7 +42,7 @@
         <ng-template #header>
           <div class="flex w-full p-2"
                [ngClass]="pi.processingStatus === SUCCESS_STATUS ? 'bg-success': pi.processingStatus === FAILURE_STATUS ? 'bg-failure': ''">
-            <div class="flex align-items-center justify-content-start p-panel-title h-3rem" style="order:0"
+            <div class="flex align-items-center justify-content-start p-panel-title h-3rem ml-2" style="order:0"
                  [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : ''"
             >{{pi.processorType | processorTypeName}}</div>
             <div class="flex align-items-center flex-grow-1 mr-1">
