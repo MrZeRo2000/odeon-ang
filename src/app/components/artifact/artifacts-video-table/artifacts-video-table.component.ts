@@ -69,8 +69,6 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     startWith(this.filterForm.value),
     tap(v => {
       sessionStorage.setItem(ArtifactsVideoTableComponent.SESSION_KEY, JSON.stringify(v))
-    }),
-    tap(v => {
       this.isArtifactTypeVideoMusic = isArtifactTypeVideoMusic(v.artifactType!)
       this.first = 0
     }),

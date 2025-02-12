@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseTableComponent} from "../../base/base-table-component";
 import {Track} from "../../../model/track";
 import {IdName} from "../../../model/common";
@@ -21,6 +21,9 @@ import {artifactNavigation, mediaFileNavigation} from "../../artifact/utils/navi
 })
 export class TracksAllTableComponent extends BaseTableComponent<Track> {
   private static readonly SESSION_KEY = "tracks-all-table-filter-form";
+  readonly TABLE_SESSION_KEY = 'tracks-all-table-session';
+
+  private firstFilterFormChange = true;
 
   filterForm = this.fb.group({
     artifactTypeIds: [[] as number[]],
@@ -48,8 +51,20 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
   filteredTrackTable$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
     tap(() => {
+      console.log('Filter change')
       const value = this.filterForm.value
       sessionStorage.setItem(TracksAllTableComponent.SESSION_KEY, JSON.stringify(value))
+      if (this.firstFilterFormChange) {
+        this.firstFilterFormChange = false;
+      } else {
+        console.log('Not first filter')
+        if (sessionStorage.getItem(this.TABLE_SESSION_KEY)) {
+          const tableSession = JSON.parse(sessionStorage.getItem(this.TABLE_SESSION_KEY)!)
+          tableSession.first = 0;
+          sessionStorage.setItem(this.TABLE_SESSION_KEY, JSON.stringify(tableSession));
+          console.log(`Changing table session to ${JSON.stringify(tableSession)}`)
+        }
+      }
     }),
     switchMap(() => merge(
       of(undefined),
@@ -112,6 +127,16 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
 
   onFilter(event: any): void {
     this.globalFilterValue = event.filters?.global?.value || '';
+  }
+
+  onStateSave(event: any): void {
+    event.first = this.first;
+    sessionStorage.setItem(this.TABLE_SESSION_KEY, JSON.stringify(event));
+    console.log(`Saving state: ${JSON.stringify(event)}`)
+  }
+
+  onStateRestore(event: any): void {
+    console.log(`Restoring state: ${JSON.stringify(event)}`)
   }
 
   onMediaFileClick(event: MouseEvent, item: Track): void {

@@ -7,7 +7,7 @@
 <div *ngIf="filteredTrackTable$ | async as table; else loadingOrError">
 
   <p-table #dt
-           styleClass="p-datatable-sm"
+           size="small"
            [value]="table"
            [rows]="10"
            [paginator]="true"
@@ -16,9 +16,11 @@
            [(first)]="first"
            dataKey="id"
            stateStorage="session"
-           stateKey="tracks-all-table-session"
+           [stateKey]="TABLE_SESSION_KEY"
            [globalFilterFields]="['artist.artistName', 'title']"
            (onFilter)="onFilter($event)"
+           (onStateSave)="onStateSave($event)"
+           (onStateRestore)="onStateRestore($event)"
            selectionMode="single"
            [(selection)]="selectedItem"
            sortField=""
