@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {
-  ARTIFACT_TYPE_VIDEO, ARTIFACT_VIDEO_TYPE_MUSIC,
   ARTIFACT_VIDEO_TYPES,
   Artifact, isArtifactTypeVideoMusic
 } from "../../../model/artifacts";
@@ -28,12 +27,8 @@ interface FilterControlsConfig
 })
 export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-video-table-filter-form";
-  ARTIFACT_VIDEO_TYPE_MUSIC = ARTIFACT_VIDEO_TYPE_MUSIC;
-
-  readonly ARTIFACT_TYPE_VIDEO = ARTIFACT_TYPE_VIDEO;
 
   readonly ARTIFACT_VIDEO_TYPES = ARTIFACT_VIDEO_TYPES;
-
   readonly ARTIST_TYPE_CODE_ARTIST = ARTIST_TYPE_CODE_ARTIST;
 
   routedArtifactId?: number;
@@ -42,16 +37,6 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
   isArtifactTypeVideoMusic = true;
 
   filterForm = this.fb.group(this.getControlsConfig());
-
-  filterData$ = this.filterForm.valueChanges.pipe(
-    startWith(this.filterForm.value),
-    tap(v =>
-      console.log(`filter data got value: ${JSON.stringify(v)}, real filter value: ${JSON.stringify(this.filterForm.value)}`)),
-    tap(() => {
-      this.isArtifactTypeVideoMusic = isArtifactTypeVideoMusic(this.filterForm.value.artifactType!)
-      this.first = 0
-    })
-  );
 
   artifactTable$ = (v: any) => this.artifactService.getTable(ARTIST_TYPE_CODE_ARTIST, [v.artifactType]).pipe(
     tap(v => `getting table with ${v}`),
@@ -84,6 +69,10 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     startWith(this.filterForm.value),
     tap(v => {
       sessionStorage.setItem(ArtifactsVideoTableComponent.SESSION_KEY, JSON.stringify(v))
+    }),
+    tap(v => {
+      this.isArtifactTypeVideoMusic = isArtifactTypeVideoMusic(v.artifactType!)
+      this.first = 0
     }),
     switchMap(
       v => iif(
