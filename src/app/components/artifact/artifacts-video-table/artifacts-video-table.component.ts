@@ -87,10 +87,12 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
       this.selectedItem = undefined;
       // console.log(`Filtered artifacts: ${JSON.stringify(v)}`)
       this.filterTags = [... new Set(v.map(v => (v as Artifact).tags || []).flat())].sort().map(v => {return {label: v, value: v} as SelectItem});
+      this.filterArtists = [... new Set(v.map(v => {return (v as Artifact).artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem});
     })
   );
 
   filterTags: Array<SelectItem<string>> = [];
+  filterArtists: SelectItem[] = [];
 
   displayUpdateTagsForm = false
 

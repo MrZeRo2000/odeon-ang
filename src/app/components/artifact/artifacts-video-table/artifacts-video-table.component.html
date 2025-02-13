@@ -84,7 +84,27 @@
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="id" style="width:0">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
+        <!--
         <th pSortableColumn="artist.artistName" style="width:20%" *ngIf="isArtifactTypeVideoMusic">Artist Name&nbsp;<p-sortIcon field="artist.artistName"></p-sortIcon></th>
+        -->
+        <th pSortableColumn="artist.artistName" style="width:20%; white-space: nowrap" *ngIf="isArtifactTypeVideoMusic">
+          <div class="flex justify-content-between align-items-center">
+            Artist Name&nbsp;
+            <p-sortIcon field="artist.artistName"></p-sortIcon>
+            <p-columnFilter field="artist.artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [ngModel]="value" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)">
+                  <ng-template let-option pTemplate="item">
+                    <div class="inline-block vertical-align-middle">
+                      <span>{{ option.label }}</span>
+                    </div>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+
         <th pSortableColumn="title">Title&nbsp;<p-sortIcon field="title"></p-sortIcon></th>
         <th style="width:0" *ngIf="isArtifactTypeVideoMusic">Year</th>
         <th style="width:0; text-align: center">Duration</th>
