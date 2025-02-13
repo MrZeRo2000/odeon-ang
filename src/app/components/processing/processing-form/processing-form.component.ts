@@ -21,6 +21,7 @@ import {Artist, ARTIST_TYPES} from "../../../model/artists";
 import {DateFormatter} from "../../../utils/date-utils";
 import {FormBuilder} from "@angular/forms";
 import {PrimeNG} from "primeng/config";
+import {TimeDifferencePipe} from "../../../core/pipes/time-difference.pipe";
 
 @Component({
     selector: 'app-processing-form',
@@ -294,7 +295,8 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private processService: ProcessService,
-    private artistService: ArtistService
+    private artistService: ArtistService,
+    private timeDifferencePipe: TimeDifferencePipe
   ) {
     super();
   }
@@ -357,4 +359,15 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
   }
 
   protected readonly JSON = JSON;
+
+  getProcessDuration(pi: ProcessInfo): string | null {
+    if (pi.processDetails && (pi.processDetails.length > 0)) {
+      const endDate = pi.processingStatus === this.PROGRESS_STATUS ?
+        new Date() :
+        pi.processDetails[pi.processDetails.length - 1].updateDateTime
+      return this.timeDifferencePipe.transform(pi.processDetails[0].updateDateTime, endDate)
+    } else {
+      return null
+    }
+  }
 }

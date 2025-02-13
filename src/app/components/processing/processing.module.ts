@@ -22,19 +22,19 @@ import {PanelModule} from "primeng/panel";
     ProcessingStatusIndicatorComponent,
     ProcessingFormComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    // primeng
-    TableModule,
-    TreeModule,
-    ProgressBarModule,
-    ButtonModule,
-    RippleModule,
-    DropdownModule,
-    PanelModule,
-    //
-    CoreModule,
-  ]
+    imports: [
+      CommonModule,
+      ReactiveFormsModule,
+      // primeng
+      TableModule,
+      TreeModule,
+      ProgressBarModule,
+      ButtonModule,
+      RippleModule,
+      DropdownModule,
+      PanelModule,
+      //
+      CoreModule,
+    ]
 })
 export class ProcessingModule { }

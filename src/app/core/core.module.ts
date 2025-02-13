@@ -13,6 +13,7 @@ import {TextViewDialogComponent} from "./components/text-view-dialog/text-view-d
 import {DialogModule} from "primeng/dialog";
 import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog.component";
 import {ButtonModule} from "primeng/button";
+import {TimeDifferencePipe} from "./pipes/time-difference.pipe";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {ButtonModule} from "primeng/button";
     FileSizePipe,
     ProcessingStatusNamePipe,
     ProcessorTypeNamePipe,
+    TimeDifferencePipe,
     // components
     CrudPanelComponent,
     LoadingComponent,
@@ -34,11 +36,15 @@ import {ButtonModule} from "primeng/button";
     FileSizePipe,
     ProcessingStatusNamePipe,
     ProcessorTypeNamePipe,
+    TimeDifferencePipe,
     // components
     CrudPanelComponent,
     LoadingComponent,
     ConfirmDialogComponent,
     TextViewDialogComponent,
+  ],
+  providers: [
+    TimeDifferencePipe,
   ],
   imports: [
     CommonModule,
@@ -47,6 +53,6 @@ import {ButtonModule} from "primeng/button";
     ButtonModule,
     ConfirmDialogModule, // for confirm dialog
     RippleModule,
-  ]
+  ],
 })
 export class CoreModule { }

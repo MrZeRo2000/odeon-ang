@@ -7,6 +7,7 @@ import {MessageService} from "primeng/api";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ToastModule} from "primeng/toast";
 import {ConfirmDialogComponent} from "../../../core/components/confirm-dialog/confirm-dialog.component";
+import {CoreModule} from "../../../core/core.module";
 
 describe('ProcessingComponent', () => {
   let component: ProcessingFormComponent;
@@ -22,10 +23,11 @@ describe('ProcessingComponent', () => {
         TreeModule,
         ConfirmDialogModule,
         ToastModule,
-        DataSourceModule
+        DataSourceModule,
+        CoreModule,
       ],
       providers: [
-        MessageService
+        MessageService,
       ]
     })
     .compileComponents();
