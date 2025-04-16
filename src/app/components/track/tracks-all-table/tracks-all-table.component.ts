@@ -16,7 +16,7 @@ import {artifactNavigation, mediaFileNavigation} from "../../artifact/utils/navi
 @Component({
     selector: 'app-tracks-all-table',
     templateUrl: './tracks-all-table.component.html',
-    styleUrl: './tracks-all-table.component.scss',
+    styleUrl: './tracks-all-table.component.css',
     standalone: false
 })
 export class TracksAllTableComponent extends BaseTableComponent<Track> {

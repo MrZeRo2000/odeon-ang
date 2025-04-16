@@ -13,7 +13,7 @@ import {sumByKey} from "../../../utils/calc-utils";
 @Component({
     selector: 'app-media-files-table',
     templateUrl: './media-files-table.component.html',
-    styleUrls: ['./media-files-table.component.scss'],
+    styleUrls: ['./media-files-table.component.css'],
     standalone: false
 })
 export class MediaFilesTableComponent extends BaseCrudTableComponent<MediaFile, MediaFile> implements OnInit {

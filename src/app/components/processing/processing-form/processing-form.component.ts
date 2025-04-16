@@ -26,7 +26,7 @@ import {TimeDifferencePipe} from "../../../core/pipes/time-difference.pipe";
 @Component({
     selector: 'app-processing-form',
     templateUrl: './processing-form.component.html',
-    styleUrls: ['./processing-form.component.scss'],
+    styleUrls: ['./processing-form.component.css'],
     encapsulation: ViewEncapsulation.None,
     providers: [ConfirmationService],
     standalone: false

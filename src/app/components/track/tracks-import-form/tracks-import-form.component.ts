@@ -14,7 +14,7 @@ import {textToArray} from "../../../utils/form-utils";
 @Component({
     selector: 'app-tracks-import-form',
     templateUrl: './tracks-import-form.component.html',
-    styleUrls: ['./tracks-import-form.component.scss'],
+    styleUrls: ['./tracks-import-form.component.css'],
     standalone: false
 })
 export class TracksImportFormComponent extends BaseFormComponent implements OnInit {

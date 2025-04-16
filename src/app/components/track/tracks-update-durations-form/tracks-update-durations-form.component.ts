@@ -14,7 +14,7 @@ import {DatePipe} from "@angular/common";
 @Component({
     selector: 'app-tracks-update-durations-form',
     templateUrl: './tracks-update-durations-form.component.html',
-    styleUrl: './tracks-update-durations-form.component.scss',
+    styleUrl: './tracks-update-durations-form.component.css',
     standalone: false
 })
 export class TracksUpdateDurationsFormComponent extends BaseFormComponent {

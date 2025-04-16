@@ -11,7 +11,7 @@ import {DV_TYPES, DVType} from "../../../model/dvtype";
 @Component({
     selector: 'app-tracks-update-video-types-form',
     templateUrl: './tracks-update-video-types-form.component.html',
-    styleUrl: './tracks-update-video-types-form.component.scss',
+    styleUrl: './tracks-update-video-types-form.component.css',
     standalone: false
 })
 

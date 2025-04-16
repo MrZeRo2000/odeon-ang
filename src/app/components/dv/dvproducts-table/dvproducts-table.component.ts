@@ -29,7 +29,7 @@ import {Router} from "@angular/router";
 @Component({
     selector: 'app-dvproducts-table',
     templateUrl: './dvproducts-table.component.html',
-    styleUrls: ['./dvproducts-table.component.scss'],
+    styleUrls: ['./dvproducts-table.component.css'],
     standalone: false
 })
 export class DVProductsTableComponent

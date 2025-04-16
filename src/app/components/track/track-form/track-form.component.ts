@@ -21,7 +21,7 @@ import {Parser} from "../utils/parser";
 @Component({
     selector: 'app-track-form',
     templateUrl: './track-form.component.html',
-    styleUrls: ['./track-form.component.scss'],
+    styleUrls: ['./track-form.component.css'],
     standalone: false
 })
 export class TrackFormComponent extends BaseCrudFormComponent<Track> implements OnChanges, OnInit {

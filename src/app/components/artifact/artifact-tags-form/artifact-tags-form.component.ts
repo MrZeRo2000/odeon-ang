@@ -11,7 +11,7 @@ import {ENTER} from "@angular/cdk/keycodes";
 @Component({
     selector: 'app-artifact-tags-form',
     templateUrl: './artifact-tags-form.component.html',
-    styleUrl: './artifact-tags-form.component.scss',
+    styleUrl: './artifact-tags-form.component.css',
     standalone: false
 })
 export class ArtifactTagsFormComponent extends BaseCrudFormComponent<Artifact> implements OnInit {

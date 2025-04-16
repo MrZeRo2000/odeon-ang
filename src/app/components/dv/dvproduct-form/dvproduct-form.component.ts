@@ -10,7 +10,7 @@ import {IdTitleOriginalTitle} from "../../../model/common";
 @Component({
     selector: 'app-dvproduct-form',
     templateUrl: './dvproduct-form.component.html',
-    styleUrls: ['./dvproduct-form.component.scss'],
+    styleUrls: ['./dvproduct-form.component.css'],
     standalone: false
 })
 export class DVProductFormComponent extends BaseCrudFormComponent<DVProduct> implements OnInit {

@@ -9,7 +9,7 @@ import {DVCategoryService} from "../../../service/dvcategory.service";
 @Component({
     selector: 'app-dvcategory-table',
     templateUrl: './dvcategories-table.component.html',
-    styleUrls: ['./dvcategories-table.component.scss'],
+    styleUrls: ['./dvcategories-table.component.css'],
     standalone: false
 })
 export class DVCategoriesTableComponent extends BaseCrudTableComponent<DVCategory, DVCategory> implements OnInit {

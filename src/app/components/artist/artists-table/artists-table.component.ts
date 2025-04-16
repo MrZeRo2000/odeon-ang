@@ -12,7 +12,7 @@ import {PrimeNG} from "primeng/config";
 @Component({
     selector: 'app-artists-table',
     templateUrl: './artists-table.component.html',
-    styleUrls: ['./artists-table.component.scss'],
+    styleUrls: ['./artists-table.component.css'],
     standalone: false
 })
 export class ArtistsTableComponent extends BaseCrudTableComponent<Artist, Artist> implements OnInit, AfterViewInit {

@@ -15,7 +15,7 @@ import {artifactNavigation} from "../utils/navigation";
 @Component({
     selector: 'app-artifacts-all-table',
     templateUrl: './artifacts-all-table.component.html',
-    styleUrl: './artifacts-all-table.component.scss',
+    styleUrl: './artifacts-all-table.component.css',
     standalone: false
 })
 export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> implements OnInit {

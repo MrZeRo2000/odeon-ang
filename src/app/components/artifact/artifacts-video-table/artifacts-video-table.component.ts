@@ -22,7 +22,7 @@ interface FilterControlsConfig
 @Component({
     selector: 'app-artifacts-video-table',
     templateUrl: './artifacts-video-table.component.html',
-    styleUrls: ['./artifacts-video-table.component.scss'],
+    styleUrls: ['./artifacts-video-table.component.css'],
     standalone: false
 })
 export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {

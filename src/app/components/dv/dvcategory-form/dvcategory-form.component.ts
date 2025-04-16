@@ -8,7 +8,7 @@ import {DVCategoryService} from "../../../service/dvcategory.service";
 @Component({
     selector: 'app-dvcategory-form',
     templateUrl: './dvcategory-form.component.html',
-    styleUrls: ['./dvcategory-form.component.scss'],
+    styleUrls: ['./dvcategory-form.component.css'],
     standalone: false
 })
 export class DVCategoryFormComponent extends BaseCrudFormComponent<DVCategory> implements OnInit {

@@ -9,7 +9,7 @@ import {DateFormatter} from "../../../utils/date-utils";
 @Component({
     selector: 'app-database-backup',
     templateUrl: './database-backup.component.html',
-    styleUrls: ['./database-backup.component.scss'],
+    styleUrls: ['./database-backup.component.css'],
     standalone: false
 })
 export class DatabaseBackupComponent {

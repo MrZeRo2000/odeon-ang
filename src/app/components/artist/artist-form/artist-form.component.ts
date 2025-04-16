@@ -10,7 +10,7 @@ import {filterString} from "../../../utils/search-utils";
 @Component({
     selector: 'app-artist-form',
     templateUrl: './artist-form.component.html',
-    styleUrls: ['./artist-form.component.scss'],
+    styleUrls: ['./artist-form.component.css'],
     standalone: false
 })
 export class ArtistFormComponent extends BaseCrudFormComponent<Artist> implements OnInit {

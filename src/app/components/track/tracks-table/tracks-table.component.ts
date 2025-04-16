@@ -31,7 +31,7 @@ interface Column {
 @Component({
     selector: 'app-tracks-table',
     templateUrl: './tracks-table.component.html',
-    styleUrls: ['./tracks-table.component.scss'],
+    styleUrls: ['./tracks-table.component.css'],
     standalone: false
 })
 export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, MediaFile[], IdName[], IdTitle[]]> implements OnInit {

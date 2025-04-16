@@ -16,7 +16,7 @@ import {MediaFile} from "../../../model/media-file";
 @Component({
     selector: 'app-artifact-form',
     templateUrl: './artifact-form.component.html',
-    styleUrls: ['./artifact-form.component.scss'],
+    styleUrls: ['./artifact-form.component.css'],
     standalone: false
 })
 export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> implements OnInit {

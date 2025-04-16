@@ -7,7 +7,7 @@ import {tap} from "rxjs";
 @Component({
     selector: 'app-artifact-type-select',
     templateUrl: './artifact-type-select.component.html',
-    styleUrl: './artifact-type-select.component.scss',
+    styleUrl: './artifact-type-select.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {

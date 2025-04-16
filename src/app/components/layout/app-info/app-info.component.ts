@@ -8,7 +8,7 @@ import {compareVersions, ComparisonResult} from "../../../utils/version-comparat
 @Component({
     selector: 'app-app-info',
     templateUrl: './app-info.component.html',
-    styleUrls: ['./app-info.component.scss'],
+    styleUrls: ['./app-info.component.css'],
     standalone: false
 })
 export class AppInfoComponent implements OnInit {

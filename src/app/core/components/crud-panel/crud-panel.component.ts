@@ -4,7 +4,7 @@ import {CRUDAction, CRUDOperation} from "../../../model/crud";
 @Component({
     selector: 'app-crud-panel',
     templateUrl: './crud-panel.component.html',
-    styleUrls: ['./crud-panel.component.scss'],
+    styleUrls: ['./crud-panel.component.css'],
     standalone: false
 })
 export class CrudPanelComponent implements OnInit {

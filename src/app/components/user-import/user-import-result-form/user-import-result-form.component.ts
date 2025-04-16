@@ -5,7 +5,7 @@ import {ImportStats} from "../../../model/user-import";
 @Component({
     selector: 'app-dvproducts-import-result-form',
     templateUrl: './user-import-result-form.component.html',
-    styleUrls: ['./user-import-result-form.component.scss'],
+    styleUrls: ['./user-import-result-form.component.css'],
     standalone: false
 })
 export class UserImportResultFormComponent extends BaseFormComponent {

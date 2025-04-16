@@ -42,7 +42,7 @@ interface FilterControlsConfigValue
 @Component({
     selector: 'app-artifacts-table',
     templateUrl: './artifacts-table.component.html',
-    styleUrls: ['./artifacts-table.component.scss'],
+    styleUrls: ['./artifacts-table.component.css'],
     standalone: false
 })
 export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
