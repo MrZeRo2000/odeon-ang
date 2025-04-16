@@ -3,16 +3,16 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Artist Edit" (onShow)="onShow()">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
-      <div class="grid">
-        <p-fluid class="col">
-          <div class="field">
+      <div class="grid grid-cols-2 gap-4">
+        <p-fluid>
+          <div class="mb-4">
             <label for="name">Name</label>
             <input #autofocused type="text" pInputText id="name" formControlName="artistName" required
                      [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['artistName'].errors}"
               />
           </div>
 
-          <div class="field flex justify-content-center">
+          <div class="field flex justify-center">
             <p-selectButton
               [options]="artistTypes"
               optionLabel="name"
@@ -23,7 +23,7 @@
             ></p-selectButton>
           </div>
 
-          <div class="field">
+          <div class="mb-4">
             <label for="genre">Genre</label>
             <p-autoComplete
               [suggestions]="filteredGenres"
@@ -36,7 +36,7 @@
             >
             </p-autoComplete>
           </div>
-          <div class="field">
+          <div class="mb-4">
             <label for="styles">Styles</label>
             <p-autoComplete
               [suggestions]="filteredStyles"
@@ -55,8 +55,8 @@
           </div>
         </p-fluid>
 
-        <p-fluid class="col">
-          <div class="field">
+        <p-fluid>
+          <div class="mb-4">
             <label for="biography">Biography</label>
             <textarea id="biography" pTextarea rows="20" cols="20" formControlName="biography"></textarea>
           </div>
