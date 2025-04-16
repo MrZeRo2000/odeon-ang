@@ -37,28 +37,28 @@
     <ng-template pTemplate="caption">
       <div #dtcp class="flex">
         <div class="flex items-center justify-between text-xl mr-2">Artists</div>
-        <div class="flex align-self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
+        <div class="flex self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
 
         <button pButton type="button" label="Artifacts" icon="pi pi-building" iconPos="left"
-                class="ml-2 p-button-outlined p-button-secondary p-2"
+                class="ml-2 p-button-outlined p-button-secondary !p-2"
                 *ngIf="selectedItem"
                 (click)="onArtifactsButton($event)"
         ></button>
 
         <button pButton type="button" label="Tracks" icon="pi pi-list" iconPos="left"
-                class="ml-2 p-button-outlined p-button-secondary p-2"
+                class="ml-2 p-button-outlined p-button-secondary !p-2"
                 *ngIf="selectedItem"
                 (click)="onTracksButton($event)"
         ></button>
 
-        <div class="flex justify-content-end flex-grow-1">
-          <div class="flex align-items-center mr-2">
-            <p-columnFilter type="boolean" field="isGenre" display="menu" class="flex align-items-center mr-1"></p-columnFilter>Genre exists
+        <div class="flex justify-end flex-grow-1">
+          <div class="flex items-center mr-2">
+            <p-columnFilter type="boolean" field="isGenre" display="menu" class="flex items-center mr-1"></p-columnFilter>Genre exists
           </div>
-          <div class="flex align-items-center mr-2">
-            <p-columnFilter type="boolean" field="isDetail" display="menu" class="flex align-items-center mr-1"></p-columnFilter>Info exists
+          <div class="flex items-center mr-2">
+            <p-columnFilter type="boolean" field="isDetail" display="menu" class="flex items-center mr-1"></p-columnFilter>Info exists
           </div>
-          <span class="p-input-icon-left flex align-items-center">
+          <span class="p-input-icon-left flex items-center">
             <p-iconfield iconPosition="left" class="ml-auto">
                 <p-inputicon>
                     <i class="pi pi-search"></i>
@@ -82,7 +82,7 @@
         <th style="width:0">Id</th>
         <th>Name</th>
         <th style="width:0">
-          <div class="flex justify-content-center align-items-center">
+          <div class="flex justify-center items-center">
             Genre
             <p-columnFilter field="genre" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -98,18 +98,20 @@
           </div>
         </th>
         <th style="width:50%">
-          Styles
-          <p-columnFilter field="styles" matchMode="filter_styles" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-              <p-multiSelect [ngModel]="value" [options]="filterStyles" placeholder="Any" (onChange)="filter($event.value)">
-                <ng-template let-option pTemplate="item">
-                  <div class="inline-block vertical-align-middle">
-                    <span class="ml-1 mt-1">{{ option.label }}</span>
-                  </div>
-                </ng-template>
-              </p-multiSelect>
-            </ng-template>
-          </p-columnFilter>
+          <div class="flex justify-start items-center">
+            Styles
+            <p-columnFilter field="styles" matchMode="filter_styles" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [ngModel]="value" [options]="filterStyles" placeholder="Any" (onChange)="filter($event.value)">
+                  <ng-template let-option pTemplate="item">
+                    <div class="inline-block vertical-align-middle">
+                      <span class="ml-1 mt-1">{{ option.label }}</span>
+                    </div>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </div>
         </th>
         <th style="width:0">Info</th>
         <th style="width:0">Lyrics</th>
@@ -128,17 +130,17 @@
         <td>
           <div class="flex flex-wrap gap-1" *ngIf="item.styles">
             <div *ngFor="let style of item.styles">
-              <p-chip label="{{style}}" styleClass="flex align-items-center text-xs p-2" *ngIf="style"></p-chip>
+              <p-chip label="{{style}}" styleClass="flex items-center text-xs !p-2" *ngIf="style"></p-chip>
             </div>
           </div>
         </td>
         <td>
-          <div class="flex justify-content-center app-crud-panel-small" *ngIf="item.detailId">
+          <div class="flex justify-center app-crud-panel-small" *ngIf="item.detailId">
             <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayArtistDetail(item)"></button>
           </div>
         </td>
         <td>
-          <div class="flex justify-content-center app-crud-panel-small" *ngIf="item.hasLyrics">
+          <div class="flex justify-center app-crud-panel-small" *ngIf="item.hasLyrics">
             <button pButton pRipple icon="pi pi-book" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayLyrics(item)"></button>
           </div>
         </td>
