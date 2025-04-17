@@ -2,7 +2,7 @@
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <p-fluid>
-        <div class="field">
+        <div class="mb-4">
           <label for="artistId">Artist</label>
           <p-autoComplete #autofocused
             [suggestions]="filteredArtists"
@@ -18,16 +18,16 @@
           </p-autoComplete>
         </div>
 
-        <div class="field">
+        <div class="mb-4">
           <label for="title">Title</label>
           <input type="text" pInputText id="title" formControlName="title" required
                  [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
           />
         </div>
 
-        <div class="field">
+        <div class="mb-4">
           <label for="text">Text</label>
-          <textarea pTextarea rows="20" cols="20" id="text" formControlName="text" required
+          <textarea pTextarea rows="16" cols="20" id="text" formControlName="text" required
                     [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['text'].errors}">
           </textarea>
         </div>

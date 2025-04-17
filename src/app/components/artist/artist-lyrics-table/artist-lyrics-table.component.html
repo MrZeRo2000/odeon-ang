@@ -19,8 +19,8 @@
     </app-text-view-dialog>
   </div>
 
-  <div class="grid">
-    <div class="col-12 md:col-10 lg:col-8">
+  <div class="grid grid-cols-12">
+      <div class="col-span-12 md:col-span-10 lg:col-span-8">
       <p-table #dt
                styleClass="p-datatable-sm"
                size="small"
@@ -37,10 +37,10 @@
                (onFilter)="onFilter($event)">
         <ng-template pTemplate="caption">
           <div class="flex">
-            <div class="flex align-items-center justify-content-between text-xl mr-2">Lyrics</div>
-            <div class="flex align-self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
-            <div class="flex flex-1 justify-content-end">
-              <span class="p-input-icon-left flex align-items-center">
+            <div class="flex items-center justify-between text-xl mr-2">Lyrics</div>
+            <div class="flex self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
+            <div class="flex flex-1 justify-end">
+              <span class="p-input-icon-left flex items-center">
                 <p-iconfield iconPosition="left" class="ml-auto">
                     <p-inputicon>
                         <i class="pi pi-search"></i>
@@ -61,7 +61,7 @@
         <ng-template pTemplate="header">
           <tr>
             <th style="width:30%">
-              <div class="flex items-center align-items-center">
+              <div class="flex items-center">
                 Artist name
                 <p-columnFilter field="artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -79,7 +79,7 @@
               </div>
             </th>
             <th style="width:70%">
-              <div class="flex items-center align-items-center">
+              <div class="flex items-center">
                 Title
                 <p-columnFilter type="text" field="title" class="ml-2"></p-columnFilter>
               </div>
@@ -91,7 +91,9 @@
         <ng-template pTemplate="body" let-item>
           <tr>
             <td>{{item.artistName}}</td>
-            <td><a href="#" (click)="displayLyrics($event, item)"> {{item.title}}</a></td>
+            <td>
+              <p-button label="{{item.title}}" [link]="true" (click)="displayLyrics($event, item)" styleClass="!p-0 !m-0"/>
+            </td>
             <td>
               <div class="app-crud-panel-small">
                 <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
