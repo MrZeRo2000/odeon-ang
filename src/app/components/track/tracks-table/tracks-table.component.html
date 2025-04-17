@@ -18,14 +18,14 @@
   >
     <ng-template pTemplate="caption">
       <div class="flex">
-        <div class="flex align-items-center justify-content-between text-xl mr-2">
+        <div class="flex items-center justify-between text-xl mr-2">
           <div *ngIf="this.artifactId"><span class="text-primary">{{data[1] | artifactCaption}}</span>&nbsp;Tracks</div>
           <div *ngIf="this.dvProductId">Product&nbsp;<span class="text-primary">{{data[0][0].dvProduct?.title}}</span>&nbsp;Tracks</div>
         </div>
-        <div class="flex align-items-center app-crud-panel" *ngIf="this.artifactId">
+        <div class="flex items-center app-crud-panel" *ngIf="this.artifactId">
           <app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
         </div>
-        <div class="flex align-items-center justify-content-end flex-grow-1">
+        <div class="flex items-center justify-end flex-grow-1">
           <p-button
             icon="pi pi-angle-up"
             styleClass="mr-2"
@@ -66,7 +66,7 @@
             (onClick)="showImportTracks($event)"
             *ngIf="isArtifactVideoWithProducts || isArtifactTypeVideoMusic"
           ></p-button>
-          <span class="p-input-icon-left flex align-items-center">
+          <span class="p-input-icon-left flex items-center">
             <p-iconfield iconPosition="left" class="ml-auto">
               <p-inputicon>
                   <i class="pi pi-search"></i>
@@ -129,12 +129,12 @@
         <td style="text-align: right; white-space: nowrap"><div *ngIf="item.size">{{item.size | fileSize}}</div></td>
         <td style="text-align: right">{{item.bitRate}}</td>
         <td>
-          <div class="flex flex-column text-sm">
+          <div class="flex flex-col text-sm">
             <div *ngFor="let mediaFile of item.mediaFiles">{{mediaFile.name}}</div>
           </div>
         </td>
         <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactVideoWithProducts">
-          <div class="flex justify-content-center app-crud-panel-small" *ngIf="item.dvProduct">
+          <div class="flex justify-center app-crud-panel-small" *ngIf="item.dvProduct">
             <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayProduct(item)"></button>
           </div>
         </td>

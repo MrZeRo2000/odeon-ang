@@ -2,7 +2,7 @@
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <p-fluid>
-        <div class="field">
+        <div class="mb-4">
           <label for="mediaFile">
             Media File<span *ngIf="editFormData$ | async as editFormData">&nbsp; {{getMediaFileDuration(editFormData.mediaFile) * 1000 | date:'HH:mm:ss':'GMT'}}</span>
           </label>
@@ -18,7 +18,7 @@
           ></p-dropdown>
         </div>
 
-        <div class="field">
+        <div class="mb-4">
           <label for="chapters">
             Chapters
             <span

@@ -2,7 +2,7 @@
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <p-fluid>
-        <div class="field mt-2">
+        <div class="mb-4 mt-2">
           <label for="mediaFile">Media File</label>
           <p-dropdown
             #autofocused
@@ -17,8 +17,8 @@
         </div>
       </p-fluid>
 
-      <div class="grid">
-        <div class="field col">
+      <div class="grid grid-cols-2 gap-2">
+        <div class="mb-4">
             <label for="dvType">Video Type</label>
             <p-select
               formControlName="dvType"
@@ -33,7 +33,7 @@
             ></p-select>
         </div>
 
-        <div class="field col">
+        <div class="mb-4">
             <label for="num">Track #</label>
             <p-inputNumber
               formControlName="num"
@@ -44,8 +44,8 @@
             ></p-inputNumber>
         </div>
       </div>
-      <div class="grid">
-        <div class="field col">
+      <div class="grid grid-cols-2 gap-2">
+        <div class="mb-4">
           <label for="titles">
             Titles
             <span *ngIf="editFormData$ | async as editFormData">
@@ -64,7 +64,7 @@
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['titles'].errors}"
           ></textarea>
         </div>
-        <div class="field col" *ngIf="isArtifactTypeVideoWithProducts">
+        <div class="mb-4" *ngIf="isArtifactTypeVideoWithProducts">
           <label for="chapters">
             Chapters
           </label>
@@ -78,7 +78,7 @@
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['chapters'].errors}"
           ></textarea>
         </div>
-        <div class="field col" *ngIf="isArtifactTypeVideoMusic">
+        <div class="mb-4" *ngIf="isArtifactTypeVideoMusic">
           <label for="chapters">
             Artists
             <span *ngIf="editFormData$ | async as editFormData">
