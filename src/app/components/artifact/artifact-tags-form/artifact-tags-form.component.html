@@ -1,9 +1,9 @@
 <p-confirmPopup key="tags"></p-confirmPopup>
 
-<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Artifac Tags">
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Artifact Tags">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
-      <div class="field">
+      <p-fluid class="mb-4">
         <label for="tags">Tags</label>
         <p-autoComplete
           [suggestions]="filteredTags"
@@ -16,7 +16,7 @@
           appendTo="body"
         >
         </p-autoComplete>
-      </div>
+      </p-fluid>
     </form>
   </ng-template>
 
