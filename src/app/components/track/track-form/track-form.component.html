@@ -1,8 +1,8 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Track Edit" (onShow)="onShow()">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
-        <div class="grid">
-          <div class="field col-12 mb-0">
+        <p-fluid class="grid grid-cols-2 gap-4">
+          <div class="col-span-2 mb-2">
             <label for="title">Title</label>
             <input
               #autofocused
@@ -16,7 +16,7 @@
             />
           </div>
 
-          <div class="field col-6 mb-0" *ngIf="artifactTypeConfig?.hasDiskNum">
+          <div class="mb-2" *ngIf="artifactTypeConfig?.hasDiskNum">
             <label for="diskNum">Disk #</label>
             <p-inputNumber
               [format]="false"
@@ -32,7 +32,7 @@
             </p-inputNumber>
           </div>
 
-          <div class="field mb-0" [ngClass]="artifactTypeConfig?.hasDiskNum ? 'col-6' : 'col-12'">
+          <div class="mb-2" [ngClass]="artifactTypeConfig?.hasDiskNum ? '' : 'col-span-2'">
             <label for="num">Track #</label>
             <p-inputNumber
               [format]="false"
@@ -47,8 +47,8 @@
             </p-inputNumber>
           </div>
 
-          <div class="field mb-0" [ngClass]="artifactTypeConfig?.hasDvType ? 'col-6' : 'col-12'">
-            <label for="duration">
+          <div class="mb-2" [ngClass]="artifactTypeConfig?.hasDvType ? '' : 'col-span-2'">
+            <label for="duration" class="block">
               Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})
               <span
                 *ngIf="this.editForm.value['mediaFileIds'].length > 0"
@@ -67,7 +67,7 @@
             ></p-inputNumber>
           </div>
 
-          <div class="field col-6 mb-0" *ngIf="artifactTypeConfig?.hasDvType">
+          <div class="mb-2" *ngIf="artifactTypeConfig?.hasDvType">
             <label for="dvType">Video Type</label>
             <p-dropdown
               id="dvType"
@@ -80,7 +80,7 @@
             ></p-dropdown>
           </div>
 
-          <div class="field col-6 mb-0" [ngClass]="artifactTypeConfig?.hasPerformerArtist ? 'col-6' : 'col-12'" *ngIf="artifactTypeConfig?.hasArtist">
+          <div class="mb-2" [ngClass]="artifactTypeConfig?.hasPerformerArtist ? '' : 'col-span-2'" *ngIf="artifactTypeConfig?.hasArtist">
             <label for="artistId">Artist</label>
             <p-autoComplete
               [suggestions]="filteredArtists"
@@ -97,7 +97,7 @@
             ></p-autoComplete>
           </div>
 
-          <div class="field col-6 mb-0" *ngIf="artifactTypeConfig?.hasPerformerArtist">
+          <div class="mb-2" *ngIf="artifactTypeConfig?.hasPerformerArtist">
             <label for="performerArtistId">Performer Artist</label>
             <p-autoComplete
               [suggestions]="filteredPerformerArtists"
@@ -114,7 +114,7 @@
             ></p-autoComplete>
           </div>
 
-          <div class="field col-12 mb-0">
+          <div class="col-span-2 mb-2">
             <label for="mediaFileIds">Media files</label>
             <p-multiSelect
               [options]="mediaFileTable"
@@ -127,7 +127,7 @@
             ></p-multiSelect>
           </div>
 
-          <div class="field col-12" *ngIf="artifactTypeConfig?.hasProducts">
+          <div class="col-span-2 mb-2" *ngIf="artifactTypeConfig?.hasProducts">
             <label for="dvProductId">Product</label>
             <p-autoComplete
               [suggestions]="filteredDvProducts"
@@ -146,7 +146,7 @@
             >
             </p-autoComplete>
           </div>
-        </div>
+        </p-fluid>
 
 
     </form>
