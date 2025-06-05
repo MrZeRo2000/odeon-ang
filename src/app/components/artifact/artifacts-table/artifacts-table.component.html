@@ -22,6 +22,7 @@
            (onFilter)="onFilter($event)"
            selectionMode="single"
            [(selection)]="selectedItem"
+           sortMode="multiple"
            sortField=""
   >
 
@@ -111,7 +112,7 @@
         </th>
         <th pSortableColumn="title">Title&nbsp;<p-sortIcon field="title"></p-sortIcon></th>
         <th style="width:20%" *ngIf="getArtistType() == 'C'">Performer Artist Name</th>
-        <th style="width:0">Year</th>
+        <th pSortableColumn="year" style="width:6em">Year&nbsp;<p-sortIcon field="year"></p-sortIcon></th>
         <th style="width:0; text-align: center">Duration</th>
         <th style="width:0; text-align: center">Size</th>
         <th style="width:0; text-align: center">Type</th>
