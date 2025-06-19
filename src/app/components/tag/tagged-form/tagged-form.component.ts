@@ -2,8 +2,10 @@ import {Component, Input} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {Tagged} from "../../../model/tag";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {MessageService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {TaggedService} from "../../../service/tagged.service";
+import {filterString} from "../../../utils/search-utils";
+import {ENTER} from "@angular/cdk/keycodes";
 
 @Component({
   selector: 'app-tagged-form',
@@ -20,10 +22,13 @@ export class TaggedFormComponent extends BaseCrudFormComponent<Tagged> {
     tags: [[]]
   });
 
+  filteredTags: Array<string> = [];
+
   constructor(
     private fb: FormBuilder,
     override messageService: MessageService,
     taggedService: TaggedService,
+    private confirmationService: ConfirmationService,
   ) {
     super(messageService, taggedService);
   }
@@ -36,6 +41,38 @@ export class TaggedFormComponent extends BaseCrudFormComponent<Tagged> {
   }
 
   override createSavedItem(): Tagged {
-      throw new Error('Method not implemented.');
+    return {
+      id: this.editItem?.id,
+      tags: this.editForm.value.tags
+    } as Tagged
   }
+
+  searchTags(event: any): void {
+    this.filteredTags = filterString(this.tags, event.query);
+  }
+
+  tagsKeyUp(event: any): void {
+    if (
+      (event.keyCode == ENTER) &&
+      !!event.target.value &&
+      this.editForm.value.tags.indexOf(event.target.value) === -1
+    ) {
+      console.log(`Selected ${event.target.value}`);
+      const value = event.target.value;
+
+      this.confirmationService.confirm({
+        key: "tags",
+        target: event.target,
+        message: `Are you sure that you want to add ${value }?`,
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.filteredTags.push(value);
+          this.editForm.value.tags.push(value);
+          event.target.value = '';
+          event.target.focus();
+        }
+      });
+    }
+  }
+
 }
