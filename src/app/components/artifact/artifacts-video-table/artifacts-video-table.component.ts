@@ -131,7 +131,7 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     messageService: MessageService,
     confirmationService: ConfirmationService,
     private artistService: ArtistService,
-    private artifactService: ArtifactService
+    private artifactService: ArtifactService,
   ) {
     super(
       messageService,

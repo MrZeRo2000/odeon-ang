@@ -69,6 +69,13 @@
                 (click)="onMediaFilesButton()"
         ></button>
 
+        <button pButton type="button" label="Tags" icon="pi pi-tags" iconPos="left"
+                class="ml-1 p-button-outlined p-button-secondary !p-2"
+                *ngIf="selectedItem"
+                (click)="onTagsButton($event)"
+        >
+        </button>
+
         <div class="flex justify-end flex-grow-1 ml-2">
           <span class="p-input-icon-left flex items-center">
             <p-iconfield iconPosition="left" class="ml-auto">

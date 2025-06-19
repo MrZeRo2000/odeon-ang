@@ -15,7 +15,7 @@ import {
   Observable,
   of,
   pairwise,
-  startWith,
+  startWith, Subject,
   switchMap,
   tap
 } from "rxjs";
@@ -26,6 +26,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {IdName} from "../../../model/common";
 import {SelectItem} from "primeng/api/selectitem";
+import {TaggedService} from "../../../service/tagged.service";
+import {Tagged} from "../../../model/tag";
 
 interface FilterControlsConfig
 {
@@ -119,6 +121,28 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
 
   filterArtists: SelectItem[] = [];
 
+  displayUpdateTagsForm = false
+
+  private updateTagsSubject = new Subject<Artifact>()
+
+  updateTagsAction$ = this.updateTagsSubject.asObservable().pipe(
+    switchMap(() => forkJoin([
+      this.getTags().pipe(
+        switchMap(v => of({
+            id: this.selectedItem!.id!,
+            tagResourceName: 'artifact',
+            tags: v
+          } as Tagged)
+        )
+      ),
+      of(this.selectedItem!)
+    ])),
+    tap(() => {
+      console.log('Got some tags, or no error')
+      this.displayUpdateTagsForm = true
+    })
+  )
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -126,7 +150,8 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
     messageService: MessageService,
     confirmationService: ConfirmationService,
     private artistService: ArtistService,
-    private artifactService: ArtifactService
+    private artifactService: ArtifactService,
+    private taggedService: TaggedService,
   ) {
     super(
       messageService,
@@ -214,6 +239,10 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
     this.router.navigate([`/media-files/${this.selectedItem?.id}`]);
   }
 
+  onTagsButton(event: any): void {
+    event.preventDefault();
+  }
+
   getArtifact(id: number): Observable<Artifact> {
     return this.artifactService.get(id).pipe(
       catchError(err => {
@@ -236,6 +265,20 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
           detail: `Error getting artists: ${err.error?.message || err.message}`
         });
         return of([]);
+      })
+    )
+  }
+
+  getTags(): Observable<Array<string>> {
+    return this.taggedService.getTable().pipe(
+      switchMap(v => of(v.map(v => v.name))),
+      catchError(err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error getting tags: ${err.error?.message || err.message}`
+        });
+        throw err;
       })
     )
   }

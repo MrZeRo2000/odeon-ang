@@ -20,6 +20,7 @@ import {Observable} from "rxjs";
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 import {providePrimeNG} from "primeng/config";
 import {OdeonPreset} from "./primeng.preset";
+import {TaggedModule} from "./components/tag/tagged.module";
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import {OdeonPreset} from "./primeng.preset";
     MediaFileModule,
     ProcessingModule,
     TrackModule,
+    TaggedModule,
   ],
   bootstrap: [AppComponent],
   providers: [
