@@ -2,7 +2,8 @@ export enum CRUDAction {
   EA_CREATE,
   EA_READ,
   EA_UPDATE,
-  EA_DELETE
+  EA_DELETE,
+  EA_TAGS
 }
 
 export interface CRUDOperation<T> {

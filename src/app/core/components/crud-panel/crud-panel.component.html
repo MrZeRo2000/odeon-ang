@@ -9,6 +9,15 @@
     (click)="crudEvent.emit({action: CRUDAction.EA_CREATE, data: undefined})">
   </button>
   <button
+    *ngIf="crudActions.indexOf(CRUDAction.EA_TAGS) !== -1"
+    pButton
+    pRipple
+    icon="pi pi-tags"
+    class="p-button-rounded p-button-outlined p-button-warn"
+    [ngClass]="crudActions.indexOf(CRUDAction.EA_UPDATE) !== 0 ? 'mr-1' : ''"
+    (click)="crudEvent.emit({action: CRUDAction.EA_TAGS, data})">
+  </button>
+  <button
     *ngIf="crudActions.indexOf(CRUDAction.EA_UPDATE) !== -1"
     pButton
     pRipple
