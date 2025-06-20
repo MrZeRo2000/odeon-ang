@@ -23,6 +23,7 @@ import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
 import {InputTextModule} from "primeng/inputtext";
 import {FluidModule} from "primeng/fluid";
+import {TaggedModule} from "../tag/tagged.module";
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import {FluidModule} from "primeng/fluid";
         InputIconModule,
         // custom modules
         ArtifactTypeModule,
+        TaggedModule,
     ]
 })
 export class ArtifactModule { }

@@ -27,7 +27,7 @@ export class TaggedFormComponent extends BaseCrudFormComponent<Tagged> {
   constructor(
     private fb: FormBuilder,
     override messageService: MessageService,
-    taggedService: TaggedService,
+    private taggedService: TaggedService,
     private confirmationService: ConfirmationService,
   ) {
     super(messageService, taggedService);
@@ -41,6 +41,7 @@ export class TaggedFormComponent extends BaseCrudFormComponent<Tagged> {
   }
 
   override createSavedItem(): Tagged {
+    this.taggedService.taggedResourceName = this.editItem?.tagResourceName!;
     return {
       id: this.editItem?.id,
       tags: this.editForm.value.tags

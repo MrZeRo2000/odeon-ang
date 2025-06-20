@@ -19,7 +19,7 @@ import {
   switchMap,
   tap
 } from "rxjs";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmationService, FilterService, MessageService} from "primeng/api";
 import {CRUDResult} from "../../../model/crud";
 import {ArtistService} from "../../../service/artist.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -113,13 +113,14 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
       )
     ),
     tap(v => {
-      this.filterArtists = [... new Set(v.map(v => {return (v as Artifact).artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem});
-      console.log('End of filteredArtifacts')
       this.selectedItem = undefined;
+      this.filterArtists = [... new Set(v.map(v => {return (v as Artifact).artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem});
+      this.filterTags = [... new Set(v.map(v => (v as Artifact).tags || []).flat())].sort().map(v => {return {label: v, value: v} as SelectItem})
     })
   )
 
   filterArtists: SelectItem[] = [];
+  filterTags: Array<SelectItem<string>> = [];
 
   displayUpdateTagsForm = false
 
@@ -127,15 +128,12 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
 
   updateTagsAction$ = this.updateTagsSubject.asObservable().pipe(
     switchMap(() => forkJoin([
-      this.getTags().pipe(
-        switchMap(v => of({
-            id: this.selectedItem!.id!,
-            tagResourceName: 'artifact',
-            tags: v
-          } as Tagged)
-        )
-      ),
-      of(this.selectedItem!)
+      this.getTags(),
+      of({
+        id: this.selectedItem!.id!,
+        tagResourceName: 'artifact',
+        tags: this.selectedItem!.tags
+      } as Tagged)
     ])),
     tap(() => {
       console.log('Got some tags, or no error')
@@ -147,6 +145,7 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    private filterService: FilterService,
     messageService: MessageService,
     confirmationService: ConfirmationService,
     private artistService: ArtistService,
@@ -225,6 +224,22 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
     if (this.routedArtifactTypeId) {
       this.filterForm.setValue(this.getControlsConfigValue())
     }
+
+    this.filterService.register(
+      'filter_tags',
+      (value: any, filter: any): boolean => {
+        console.log(`Filter: Value: ${JSON.stringify(value)}, filter: ${JSON.stringify(filter)}`)
+        if (filter === undefined || filter === null || filter.length === 0) {
+          return true;
+        }
+
+        if (value === undefined || value === null) {
+          return false;
+        }
+
+        return (value as string[]).filter(v => filter.indexOf(v) !== -1).length > 0;
+      }
+    )
   }
 
   onFilter(event: any): void {
@@ -240,7 +255,8 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
   }
 
   onTagsButton(event: any): void {
-    event.preventDefault();
+    event.preventDefault()
+    this.updateTagsSubject.next(this.selectedItem!)
   }
 
   getArtifact(id: number): Observable<Artifact> {
@@ -281,5 +297,10 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
         throw err;
       })
     )
+  }
+
+  savedUpdateTags(): void {
+    this.displayUpdateTagsForm = false;
+    this.loadData();
   }
 }

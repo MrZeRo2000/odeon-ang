@@ -124,6 +124,20 @@
         <th style="width:0; text-align: center">Size</th>
         <th style="width:0; text-align: center">Type</th>
         <th pSortableColumn="insertDateTime" style="width:0; text-align: center; white-space: nowrap">Inserted&nbsp;<p-sortIcon field="insertDateTime"></p-sortIcon></th>
+        <th style="width:0; text-align: center; white-space: nowrap">
+          Tags
+          <p-columnFilter field="tags" matchMode="filter_tags" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect [ngModel]="value" [options]="filterTags" placeholder="Any" (onChange)="filter($event.value)">
+                <ng-template let-option pTemplate="item">
+                  <div class="inline-block align-middle">
+                    <span class="ml-1 mt-1">{{ option.label }}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
         <th style="width:0"></th>
       </tr>
     </ng-template>
@@ -144,6 +158,13 @@
         <td>{{item.artifactType.name}}</td>
         <td><div class="whitespace-nowrap"><small>{{item.insertDateTime | date:'dd.MM.YYYY HH:mm:ss'}}</small></div></td>
         <td>
+          <div class="flex flex-wrap gap-1" *ngIf="item.tags">
+            <div *ngFor="let tag of item.tags">
+              <p-chip label="{{tag}}" styleClass="flex items-center text-xs yellow-chip !p-1 border border-gray-400"  *ngIf="tag"></p-chip>
+            </div>
+          </div>
+        </td>
+        <td>
           <app-crud-panel class="app-crud-panel-small" [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
         </td>
       </tr>
@@ -155,6 +176,10 @@
 
   <ng-container *ngIf="editAction$ | async as artifactEdit">
     <app-artifact-form *ngIf="displayForm" [(display)]="displayForm" [artists]="artifactEdit[0]" [editItem]="artifactEdit[1]" [artistTypeCode]="this.filterForm.value['artistType']!" (onSavedItem)="savedEditData($event)"></app-artifact-form>
+  </ng-container>
+
+  <ng-container *ngIf="updateTagsAction$ | async as tagsEditItem">
+    <app-tagged-form *ngIf="displayUpdateTagsForm" [(display)]="displayUpdateTagsForm" [tags]="tagsEditItem[0]"  [editItem]="tagsEditItem[1]" (onSavedItem)="savedUpdateTags()"></app-tagged-form>
   </ng-container>
 
 </div>
