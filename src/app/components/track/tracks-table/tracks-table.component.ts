@@ -353,4 +353,5 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
     ]
     return uniqueData.reduce((a, b) => a + b, 0)
   }
+
 }

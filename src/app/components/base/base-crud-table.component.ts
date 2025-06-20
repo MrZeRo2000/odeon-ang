@@ -54,6 +54,8 @@ export abstract class BaseCrudTableComponent<T extends {id?: number}, E> extends
     map(v => v.data as E)
   );
 
+  protected tagsSubject: Subject<T> = new Subject();
+
   protected constructor(
     messagesService: MessageService,
     protected confirmationService: ConfirmationService,
@@ -103,5 +105,4 @@ export abstract class BaseCrudTableComponent<T extends {id?: number}, E> extends
       this.editSubject.next(event.data)
     }
   }
-
 }

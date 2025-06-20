@@ -140,8 +140,15 @@
         </td>
         <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactTypeVideo">{{item.dvType.name}}</td>
         <td *ngIf="this.artifactId">
-          <div class="app-crud-panel-small">
-            <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_TAGS, CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+          <div class="flex flex-row app-crud-panel-small">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-tags"
+              class="p-button-rounded p-button-outlined p-button-warn"
+              ngClass="mr-1">
+            </button>
+            <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
           </div>
         </td>
       </tr>
