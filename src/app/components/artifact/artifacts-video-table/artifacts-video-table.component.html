@@ -161,8 +161,8 @@
     <app-artifact-form *ngIf="displayForm" [(display)]="displayForm" [artists]="artifactEdit[0]" [editItem]="artifactEdit[1]" [artistTypeCode]="ARTIST_TYPE_CODE_ARTIST" (onSavedItem)="savedEditData($event)"></app-artifact-form>
   </ng-container>
 
-  <ng-container *ngIf="updateTagsAction$ | async as artifactTagsEdit">
-    <app-artifact-tags-form *ngIf="displayUpdateTagsForm" [(display)]="displayUpdateTagsForm" [editItem]="artifactTagsEdit" [artifacts]="artifactsVideoTable" (onSavedItem)="savedUpdateTags()"></app-artifact-tags-form>
+  <ng-container *ngIf="updateTagsAction$ | async as tagsEditItem">
+    <app-tagged-form *ngIf="displayUpdateTagsForm" [(display)]="displayUpdateTagsForm" [tags]="tagsEditItem[0]"  [editItem]="tagsEditItem[1]" (onSavedItem)="savedUpdateTags()"></app-tagged-form>
   </ng-container>
 
 </div>

@@ -13,6 +13,8 @@ import {ArtifactService} from "../../../service/artifact.service";
 import {CRUDResult} from "../../../model/crud";
 import {catchError, forkJoin, iif, map, Observable, of, startWith, Subject, switchMap, tap} from "rxjs";
 import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
+import {TaggedService} from "../../../service/tagged.service";
+import {Tagged} from "../../../model/tag";
 
 interface FilterControlsConfig
 {
@@ -99,6 +101,14 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
   private updateTagsSubject = new Subject<Artifact>()
 
   updateTagsAction$ = this.updateTagsSubject.asObservable().pipe(
+    switchMap(() => forkJoin([
+      this.getTags(),
+      of({
+        id: this.selectedItem!.id!,
+        tagResourceName: 'artifact',
+        tags: this.selectedItem!.tags
+      } as Tagged)
+    ])),
     tap(() => {
       this.displayUpdateTagsForm = true
     })
@@ -132,6 +142,7 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     confirmationService: ConfirmationService,
     private artistService: ArtistService,
     private artifactService: ArtifactService,
+    private taggedService: TaggedService,
   ) {
     super(
       messageService,
@@ -234,6 +245,20 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     } else {
       return of([]);
     }
+  }
+
+  getTags(): Observable<Array<string>> {
+    return this.taggedService.getTable().pipe(
+      switchMap(v => of(v.map(v => v.name))),
+      catchError(err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error getting tags: ${err.error?.message || err.message}`
+        });
+        throw err;
+      })
+    )
   }
 
   savedUpdateTags(): void {

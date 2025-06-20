@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ArtifactFormComponent} from "./artifact-form/artifact-form.component";
-import {ArtifactTagsFormComponent} from "./artifact-tags-form/artifact-tags-form.component";
 import {ArtifactsTableComponent} from "./artifacts-table/artifacts-table.component";
 import {ArtifactsVideoTableComponent} from "./artifacts-video-table/artifacts-video-table.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -29,14 +28,12 @@ import {TaggedModule} from "../tag/tagged.module";
 @NgModule({
   declarations: [
     ArtifactFormComponent,
-    ArtifactTagsFormComponent,
     ArtifactsTableComponent,
     ArtifactsVideoTableComponent,
     ArtifactsAllTableComponent,
   ],
   exports: [
     ArtifactFormComponent,
-    ArtifactTagsFormComponent,
     ArtifactsTableComponent,
     ArtifactsVideoTableComponent,
     ArtifactsAllTableComponent,
