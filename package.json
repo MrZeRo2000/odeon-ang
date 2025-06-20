@@ -1,7 +1,7 @@
 {
   "name": "odeon-ang",
-  "version": "0.6.2",
-  "backend_version": "0.14.10",
+  "version": "0.6.3",
+  "backend_version": "0.14.12",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --no-hmr",
