@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Artifact} from "../../../model/artifacts";
 import {BaseTableComponent} from "../../base/base-table-component";
-import {MessageService} from "primeng/api";
+import {FilterService, MessageService} from "primeng/api";
 import {FormBuilder} from "@angular/forms";
 import {catchError, iif, merge, Observable, of, startWith, switchMap, tap} from "rxjs";
 import {ArtifactService} from "../../../service/artifact.service";
@@ -11,6 +11,7 @@ import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 import {ArtistService} from "../../../service/artist.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {artifactNavigation} from "../utils/navigation";
+import {getFilterArtists, getFilterTags, registerFilterService} from "../utils/filter";
 
 @Component({
     selector: 'app-artifacts-all-table',
@@ -38,10 +39,6 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
         });
         return of([] as Artifact[]);
       }),
-      tap(v => this.filterArtists =
-        [... new Set(v.map(v => {return v.artist?.artistName as string}))]
-          .sort()
-          .map(v => {return {label: v, value: v} as SelectItem}))
   );
 
   filteredArtifactTable$ = this.filterForm.valueChanges.pipe(
@@ -60,9 +57,14 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
           this.filterForm.value.artistIds == undefined ? null : this.filterForm.value.artistIds.map(v => v.id))
       )
     )),
+    tap(v => {
+      this.filterArtists = getFilterArtists(v as Array<Artifact>);
+      this.filterTags = getFilterTags(v as Array<Artifact>)
+    })
   )
 
   filterArtists: SelectItem[] = [];
+  filterTags: Array<SelectItem<string>> = [];
 
   artistsTable$: Observable<Array<IdName>> =
     this.artistService.getIdNameTable(ARTIST_TYPE_CODE_ARTIST).pipe(
@@ -84,6 +86,7 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
     private route: ActivatedRoute,
     messageService: MessageService,
     private fb: FormBuilder,
+    private filterService: FilterService,
     private artifactService: ArtifactService,
     private artistService: ArtistService,
   ) {
@@ -108,6 +111,8 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
     const value = {artifactTypeIds: artifactTypeIds || [], artistIds: artistIds || []}
     console.log(`Setting value: ${JSON.stringify(value)}`)
     this.filterForm.setValue(value)
+
+    registerFilterService(this.filterService);
   }
 
   onFilter(event: any): void {

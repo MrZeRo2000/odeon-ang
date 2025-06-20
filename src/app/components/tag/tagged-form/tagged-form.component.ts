@@ -14,6 +14,8 @@ import {ENTER} from "@angular/cdk/keycodes";
   standalone: false
 })
 export class TaggedFormComponent extends BaseCrudFormComponent<Tagged> {
+  @Input()
+  tagResourceName: string = ""
 
   @Input()
   tags: Array<string> = []
@@ -41,7 +43,7 @@ export class TaggedFormComponent extends BaseCrudFormComponent<Tagged> {
   }
 
   override createSavedItem(): Tagged {
-    this.taggedService.taggedResourceName = this.editItem?.tagResourceName!;
+    this.taggedService.taggedResourceName = this.tagResourceName;
     return {
       id: this.editItem?.id,
       tags: this.editForm.value.tags

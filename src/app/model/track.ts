@@ -21,6 +21,7 @@ export interface Track {
   bitRate?: number;
   mediaFiles: MediaFile[];
   dvProduct?: DVProduct;
+  tags?: Array<string>;
 }
 
 export interface TrackConfigItem extends EditConfigItem {

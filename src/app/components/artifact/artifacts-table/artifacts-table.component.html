@@ -179,7 +179,7 @@
   </ng-container>
 
   <ng-container *ngIf="updateTagsAction$ | async as tagsEditItem">
-    <app-tagged-form *ngIf="displayUpdateTagsForm" [(display)]="displayUpdateTagsForm" [tags]="tagsEditItem[0]"  [editItem]="tagsEditItem[1]" (onSavedItem)="savedUpdateTags()"></app-tagged-form>
+    <app-tagged-form *ngIf="displayUpdateTagsForm" [(display)]="displayUpdateTagsForm" [tags]="tagsEditItem[0]"  [editItem]="tagsEditItem[1]" tagResourceName="artifact" (onSavedItem)="savedUpdateTags()"></app-tagged-form>
   </ng-container>
 
 </div>

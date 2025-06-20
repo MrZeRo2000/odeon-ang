@@ -28,6 +28,7 @@ import {IdName} from "../../../model/common";
 import {SelectItem} from "primeng/api/selectitem";
 import {TaggedService} from "../../../service/tagged.service";
 import {Tagged} from "../../../model/tag";
+import {getFilterArtists, getFilterTags, registerFilterService} from "../utils/filter";
 
 interface FilterControlsConfig
 {
@@ -114,8 +115,8 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
     ),
     tap(v => {
       this.selectedItem = undefined;
-      this.filterArtists = [... new Set(v.map(v => {return (v as Artifact).artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem});
-      this.filterTags = [... new Set(v.map(v => (v as Artifact).tags || []).flat())].sort().map(v => {return {label: v, value: v} as SelectItem})
+      this.filterArtists = getFilterArtists(v as Array<Artifact>);
+      this.filterTags = getFilterTags(v as Array<Artifact>)
     })
   )
 
@@ -131,7 +132,6 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
       this.getTags(),
       of({
         id: this.selectedItem!.id!,
-        tagResourceName: 'artifact',
         tags: this.selectedItem!.tags
       } as Tagged)
     ])),
@@ -225,21 +225,7 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
       this.filterForm.setValue(this.getControlsConfigValue())
     }
 
-    this.filterService.register(
-      'filter_tags',
-      (value: any, filter: any): boolean => {
-        console.log(`Filter: Value: ${JSON.stringify(value)}, filter: ${JSON.stringify(filter)}`)
-        if (filter === undefined || filter === null || filter.length === 0) {
-          return true;
-        }
-
-        if (value === undefined || value === null) {
-          return false;
-        }
-
-        return (value as string[]).filter(v => filter.indexOf(v) !== -1).length > 0;
-      }
-    )
+    registerFilterService(this.filterService);
   }
 
   onFilter(event: any): void {

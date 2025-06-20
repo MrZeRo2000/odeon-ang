@@ -15,6 +15,7 @@ import {catchError, forkJoin, iif, map, Observable, of, startWith, Subject, swit
 import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 import {TaggedService} from "../../../service/tagged.service";
 import {Tagged} from "../../../model/tag";
+import {getFilterArtists, getFilterTags, registerFilterService} from "../utils/filter";
 
 interface FilterControlsConfig
 {
@@ -87,9 +88,8 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     ),
     tap(v => {
       this.selectedItem = undefined;
-      // console.log(`Filtered artifacts: ${JSON.stringify(v)}`)
-      this.filterTags = [... new Set(v.map(v => (v as Artifact).tags || []).flat())].sort().map(v => {return {label: v, value: v} as SelectItem});
-      this.filterArtists = [... new Set(v.map(v => {return (v as Artifact).artist?.artistName as string}))].sort().map(v => {return {label: v, value: v} as SelectItem});
+      this.filterArtists = getFilterArtists(v as Array<Artifact>);
+      this.filterTags = getFilterTags(v as Array<Artifact>)
     })
   );
 
@@ -105,7 +105,6 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
       this.getTags(),
       of({
         id: this.selectedItem!.id!,
-        tagResourceName: 'artifact',
         tags: this.selectedItem!.tags
       } as Tagged)
     ])),
@@ -163,21 +162,7 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
       this.filterForm.patchValue({artifactType: this.routedArtifactTypeId})
     }
 
-    this.filterService.register(
-      'filter_tags',
-      (value: any, filter: any): boolean => {
-        console.log(`Filter: Value: ${JSON.stringify(value)}, filter: ${JSON.stringify(filter)}`)
-        if (filter === undefined || filter === null || filter.length === 0) {
-          return true;
-        }
-
-        if (value === undefined || value === null) {
-          return false;
-        }
-
-        return (value as string[]).filter(v => filter.indexOf(v) !== -1).length > 0;
-      }
-    )
+    registerFilterService(this.filterService);
   }
 
   onFilter(event: any): void {
