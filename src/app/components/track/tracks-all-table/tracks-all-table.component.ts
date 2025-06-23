@@ -1,17 +1,18 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {BaseTableComponent} from "../../base/base-table-component";
 import {Track} from "../../../model/track";
 import {IdName} from "../../../model/common";
-import {MessageService} from "primeng/api";
+import {FilterService, MessageService} from "primeng/api";
 import {FormBuilder} from "@angular/forms";
 import {ArtistService} from "../../../service/artist.service";
 import {catchError, iif, merge, Observable, of, startWith, switchMap, tap} from "rxjs";
-import {Artifact} from "../../../model/artifacts";
 import {SelectItem} from "primeng/api/selectitem";
 import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 import {TrackService} from "../../../service/track.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {artifactNavigation, mediaFileNavigation} from "../../artifact/utils/navigation";
+import {getFilterArtists, getFilterTags, registerFilterService} from "../../artifact/utils/filter";
+import {Table} from "primeng/table";
 
 @Component({
     selector: 'app-tracks-all-table',
@@ -22,6 +23,8 @@ import {artifactNavigation, mediaFileNavigation} from "../../artifact/utils/navi
 export class TracksAllTableComponent extends BaseTableComponent<Track> {
   private static readonly SESSION_KEY = "tracks-all-table-filter-form";
   readonly TABLE_SESSION_KEY = 'tracks-all-table-session';
+
+  @ViewChild('dt') table: Table | undefined;
 
   private firstFilterFormChange = true;
 
@@ -40,17 +43,14 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
           summary: 'Error',
           detail: `Error reading artifacts`
         });
-        return of([] as Artifact[]);
-      }),
-      tap(v => this.filterArtists =
-        [... new Set(v.map(v => {return v.artist?.artistName as string}))]
-          .sort()
-          .map(v => {return {label: v, value: v} as SelectItem}))
+        return of([] as Track[]);
+      })
     );
 
   filteredTrackTable$ = this.filterForm.valueChanges.pipe(
     startWith(this.filterForm.value),
     tap(() => {
+      this.table?.filter('', 'tags', 'filter_tags');
       console.log('Filter change')
       const value = this.filterForm.value
       sessionStorage.setItem(TracksAllTableComponent.SESSION_KEY, JSON.stringify(value))
@@ -61,6 +61,7 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
         if (sessionStorage.getItem(this.TABLE_SESSION_KEY)) {
           const tableSession = JSON.parse(sessionStorage.getItem(this.TABLE_SESSION_KEY)!)
           tableSession.first = 0;
+          delete tableSession.filters['tags'];
           sessionStorage.setItem(this.TABLE_SESSION_KEY, JSON.stringify(tableSession));
           console.log(`Changing table session to ${JSON.stringify(tableSession)}`)
         }
@@ -70,15 +71,22 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
       of(undefined),
       iif(
         () => (this.filterForm.value.artifactTypeIds?.length == 0),
-        of([]),
+        of([] as Array<Track>),
         this.trackTable$(
           this.filterForm.value.artifactTypeIds == undefined ? null : this.filterForm.value.artifactTypeIds,
           this.filterForm.value.artistIds == undefined ? null : this.filterForm.value.artistIds.map(v => v.id))
-        )
+        ).pipe(
+        tap(v => {
+          this.filterArtists = getFilterArtists(v);
+          this.filterTags = getFilterTags(v)
+          this.hasTags = v.flatMap(v => v.tags).length > 0
+        })
+      )
     ))
   )
 
   filterArtists: SelectItem[] = [];
+  filterTags: Array<SelectItem<string>> = [];
 
   artistsTable$: Observable<Array<IdName>> =
     this.artistService.getIdNameTable(ARTIST_TYPE_CODE_ARTIST).pipe(
@@ -92,6 +100,8 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
       })
     )
 
+  hasTags = false
+
   protected loadData(): void { }
 
   constructor(
@@ -99,6 +109,7 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
     private route: ActivatedRoute,
     messageService: MessageService,
     private fb: FormBuilder,
+    private filterService: FilterService,
     private trackService: TrackService,
     private artistService: ArtistService,
   ) {
@@ -123,6 +134,8 @@ export class TracksAllTableComponent extends BaseTableComponent<Track> {
     const value = {artifactTypeIds: artifactTypeIds || [], artistIds: artistIds || []}
     console.log(`Setting value: ${JSON.stringify(value)}`)
     this.filterForm.setValue(value)
+
+    registerFilterService(this.filterService);
   }
 
   onFilter(event: any): void {

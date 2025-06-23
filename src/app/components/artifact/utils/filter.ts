@@ -3,8 +3,8 @@ import {SelectItem} from "primeng/api/selectitem";
 import {FilterService} from "primeng/api";
 import {Track} from "../../../model/track";
 
-export function getFilterArtists(v: Array<Artifact>): Array<SelectItem> {
-  return [... new Set(v?.map(v => {return (v as Artifact).artist?.artistName as string}))]
+export function getFilterArtists(v: Array<Artifact | Track>): Array<SelectItem> {
+  return [... new Set(v?.map(v => {return v.artist?.artistName as string}))]
     .sort()
     .map(v => {return {label: v, value: v} as SelectItem})
 }
