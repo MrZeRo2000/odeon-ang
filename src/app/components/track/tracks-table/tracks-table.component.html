@@ -97,6 +97,7 @@
         <th style="width:30%">File name</th>
         <th style="width:0" *ngIf="isArtifactVideoWithProducts">Product</th>
         <th style="width:0; white-space: nowrap" *ngIf="isArtifactTypeVideo">Video Type</th>
+        <th style="width:0; text-align: center; white-space: nowrap" *ngIf="this.hasTags">Tags</th>
         <th style="width:0" *ngIf="this.artifactId">
           <p-button
             styleClass="mr-2"
@@ -112,7 +113,7 @@
       <tr>
         <th [colSpan]="1 + (this.dvProductId ? 1 : 0) + (isArtifactTypeMusic ? 1 : 0) + (isArtifactTypeVideoMusic ? 1 : 0) + 2 + (data[1].artist?.artistType === 'C' ? 2 : 0)">Rows: {{dt.processedData.length}}</th>
         <th>{{sumByKey(dt.processedData, 'duration')  * 1000 | date:'HH:mm:ss':'GMT'}}</th>
-        <th [colSpan]="3 + (isArtifactTypeVideo ? 2 : 0) + (this.artifactId ? 1 : 0)">{{sumTrackSize(dt.processedData) | fileSize}}</th>
+        <th [colSpan]="4 + (isArtifactTypeVideo ? 2 : 0) + (this.artifactId ? 1 : 0)">{{sumTrackSize(dt.processedData) | fileSize}}</th>
       </tr>
     </ng-template>
 
@@ -139,6 +140,13 @@
           </div>
         </td>
         <td style="text-align: center; white-space: nowrap" *ngIf="isArtifactTypeVideo">{{item.dvType.name}}</td>
+        <td *ngIf="this.hasTags">
+          <div class="flex flex-wrap gap-1 justify-center" *ngIf="item.tags">
+            <div *ngFor="let tag of item.tags" >
+              <p-chip label="{{tag}}" styleClass="text-xs yellow-chip !p-1 border border-gray-400 whitespace-nowrap"  *ngIf="tag"></p-chip>
+            </div>
+          </div>
+        </td>
         <td *ngIf="this.artifactId">
           <div class="flex flex-row app-crud-panel-small">
             <button
@@ -146,7 +154,9 @@
               pRipple
               icon="pi pi-tags"
               class="p-button-rounded p-button-outlined p-button-warn"
-              ngClass="mr-1">
+              ngClass="mr-1"
+              (click)="onTagsButton($event, item)"
+            >
             </button>
             <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
           </div>
@@ -216,6 +226,10 @@
       (onImport)="onUpdateDurations()"
     >
     </app-tracks-update-durations-form>
+  </ng-container>
+
+  <ng-container *ngIf="updateTagsAction$ | async as tagsEditItem">
+    <app-tagged-form *ngIf="displayUpdateTagsForm" [(display)]="displayUpdateTagsForm" [tags]="tagsEditItem[0]"  [editItem]="tagsEditItem[1]" tagResourceName="track" (onSavedItem)="savedUpdateTags()"></app-tagged-form>
   </ng-container>
 
 </div>

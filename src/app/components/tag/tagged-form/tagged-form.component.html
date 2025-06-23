@@ -1,10 +1,9 @@
 <p-confirmPopup key="tags"></p-confirmPopup>
 
-<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Artifact Tags">
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Tags">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <p-fluid class="mb-4">
-        <label for="tags">Tags</label>
         <p-autoComplete
           [suggestions]="filteredTags"
           (completeMethod)="searchTags($event)"

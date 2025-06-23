@@ -33,6 +33,8 @@ import {InputIconModule} from "primeng/inputicon";
 import {FluidModule} from "primeng/fluid";
 import {MessageModule} from "primeng/message";
 import {SelectModule} from "primeng/select";
+import {TaggedModule} from "../tag/tagged.module";
+import {Chip} from "primeng/chip";
 
 
 @NgModule({
@@ -52,35 +54,37 @@ import {SelectModule} from "primeng/select";
     TracksUpdateDurationsFormComponent,
     TracksUpdateVideoTypesFormComponent,
   ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        // primeng
-        RippleModule,
-        ButtonModule,
-        DialogModule,
-        TableModule,
-        SelectButtonModule,
-        DropdownModule,
-        InputNumberModule,
-        InputTextModule,
-        TooltipModule,
-        AutoCompleteModule,
-        MultiSelectModule,
-        ConfirmPopupModule,
-        TextareaModule,
-        IconFieldModule,
-        InputIconModule,
-        FluidModule,
-        MessageModule,
-        SelectModule,
-      // custom modules
-        CoreModule,
-        DVModule,
-        UserImportModule,
-        ArtifactTypeModule,
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    // primeng
+    RippleModule,
+    ButtonModule,
+    DialogModule,
+    TableModule,
+    SelectButtonModule,
+    DropdownModule,
+    InputNumberModule,
+    InputTextModule,
+    TooltipModule,
+    AutoCompleteModule,
+    MultiSelectModule,
+    ConfirmPopupModule,
+    TextareaModule,
+    IconFieldModule,
+    InputIconModule,
+    FluidModule,
+    MessageModule,
+    SelectModule,
+    // custom modules
+    CoreModule,
+    DVModule,
+    UserImportModule,
+    ArtifactTypeModule,
+    TaggedModule,
+    Chip,
+  ],
   providers: [
     DatePipe,
   ]

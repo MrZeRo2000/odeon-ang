@@ -22,6 +22,8 @@ import {DVProductService} from "../../../service/dvproduct.service";
 import {MediaFile} from "../../../model/media-file";
 import {DVProduct} from "../../../model/dv-product";
 import {sumByKey} from "../../../utils/calc-utils";
+import {Tagged} from "../../../model/tag";
+import {TaggedService} from "../../../service/tagged.service";
 
 interface Column {
   field: string;
@@ -46,6 +48,7 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
   isArtifactTypeVideo = false;
   isArtifactTypeVideoMusic = false;
   isArtifactVideoWithProducts = false;
+  hasTags = false;
 
   readonly cols: Column[] = [
     { field: 'id', header: 'Id' },
@@ -152,6 +155,24 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
     })
   );
 
+  displayUpdateTagsForm = false
+
+  private updateTagsSubject = new Subject<Track>();
+
+  updateTagsAction$ = this.updateTagsSubject.asObservable().pipe(
+    switchMap(t => forkJoin([
+      this.taggedService.getTags(this.messageService),
+      of({
+        id: t.id!,
+        tags: t.tags
+      } as Tagged)
+    ])),
+    tap(() => {
+      console.log('Got some tags, or no error')
+      this.displayUpdateTagsForm = true
+    })
+  )
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -163,6 +184,7 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
     private mediaFileService: MediaFileService,
     private artistService: ArtistService,
     private dvProductService: DVProductService,
+    private taggedService: TaggedService,
   ) {
     super(
       messageService,
@@ -225,14 +247,15 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
   }
 
   private getData(): Observable<[Track[], Artifact]> {
+    let data;
     if (this.artifactId) {
-      return forkJoin([
+      data = forkJoin([
           this.getTable(this.artifactId),
           this.getArtifact(this.artifactId),
         ]
       )
     } else if (this.dvProductId) {
-      return this.getTableByProductId(this.dvProductId).pipe(
+      data = this.getTableByProductId(this.dvProductId).pipe(
         switchMap(v => {
           return forkJoin([
             of(v),
@@ -242,8 +265,13 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
         })
       )
     } else {
-      return forkJoin([of([]), of({} as Artifact)])
+      data = forkJoin([of([]), of({} as Artifact)])
     }
+    return data.pipe(
+      tap(v => {
+        this.hasTags = v[0].flatMap(v => v.tags).length > 0
+      })
+    )
   }
 
   private getTable(id: number): Observable<Array<Track>> {
@@ -345,6 +373,11 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
       {queryParams: {artifactId: item.artifact?.id, artifactTypeId: artifact.artifactType?.id}})
   }
 
+  onTagsButton(event: any, data: Track): void {
+    event.preventDefault()
+    this.updateTagsSubject.next(data)
+  }
+
   sumTrackSize(data: Track[]): number {
     const uniqueData = [...
       new Map(data.map(
@@ -354,4 +387,8 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
     return uniqueData.reduce((a, b) => a + b, 0)
   }
 
+  savedUpdateTags(): void {
+    this.displayUpdateTagsForm = false;
+    this.loadData();
+  }
 }

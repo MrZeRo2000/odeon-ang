@@ -102,7 +102,7 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
 
   updateTagsAction$ = this.updateTagsSubject.asObservable().pipe(
     switchMap(() => forkJoin([
-      this.getTags(),
+      this.taggedService.getTags(this.messageService),
       of({
         id: this.selectedItem!.id!,
         tags: this.selectedItem!.tags
@@ -230,20 +230,6 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     } else {
       return of([]);
     }
-  }
-
-  getTags(): Observable<Array<string>> {
-    return this.taggedService.getTable().pipe(
-      switchMap(v => of(v.map(v => v.name))),
-      catchError(err => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `Error getting tags: ${err.error?.message || err.message}`
-        });
-        throw err;
-      })
-    )
   }
 
   savedUpdateTags(): void {
