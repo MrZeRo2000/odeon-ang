@@ -96,7 +96,7 @@
         <th>Title</th>
         <th style="width:0">Year</th>
         <th style="width:0; text-align: center">Duration</th>
-        <th style="width:0; text-align: center; white-space: nowrap">
+        <th style="width:0; text-align: center; white-space: nowrap"  *ngIf="hasTags">
           Tags
           <p-columnFilter field="tags" matchMode="filter_tags" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -124,7 +124,7 @@
         <td>
           <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
         </td>
-        <td>
+        <td *ngIf="hasTags">
           <div class="flex flex-wrap gap-1" *ngIf="item.tags">
             <div *ngFor="let tag of item.tags">
               <p-chip label="{{tag}}" styleClass="flex items-center text-xs yellow-chip !p-1 border border-gray-400"  *ngIf="tag"></p-chip>

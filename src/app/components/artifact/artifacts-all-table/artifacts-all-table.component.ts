@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Artifact} from "../../../model/artifacts";
 import {BaseTableComponent} from "../../base/base-table-component";
 import {FilterService, MessageService} from "primeng/api";
@@ -12,6 +12,7 @@ import {ArtistService} from "../../../service/artist.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {artifactNavigation} from "../utils/navigation";
 import {getFilterArtists, getFilterTags, registerFilterService} from "../utils/filter";
+import {Table} from "primeng/table";
 
 @Component({
     selector: 'app-artifacts-all-table',
@@ -21,6 +22,8 @@ import {getFilterArtists, getFilterTags, registerFilterService} from "../utils/f
 })
 export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-all-table-filter-form";
+
+  @ViewChild('dt') table: Table | undefined;
 
   filterForm = this.fb.group({
     artifactTypeIds: [[] as number[]],
@@ -44,22 +47,25 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
   filteredArtifactTable$ = this.filterForm.valueChanges.pipe(
     startWith({}),
     tap(() => {
+      this.table?.filter('', 'tags', 'filter_tags');
       const value = this.filterForm.value
       sessionStorage.setItem(ArtifactsAllTableComponent.SESSION_KEY, JSON.stringify(value))
     }),
     switchMap(() => merge(
-      of(undefined),
+      of([] as Array<Artifact>),
       iif(() => (this.filterForm.value.artifactTypeIds?.length == 0) &&
           ((this.filterForm.value.artistIds || []).length == 0),
-        of([]),
+        of([] as Array<Artifact>),
         this.artifactTable$(
           this.filterForm.value.artifactTypeIds == undefined ? null : this.filterForm.value.artifactTypeIds,
           this.filterForm.value.artistIds == undefined ? null : this.filterForm.value.artistIds.map(v => v.id))
       )
     )),
     tap(v => {
-      this.filterArtists = getFilterArtists(v as Array<Artifact>);
-      this.filterTags = getFilterTags(v as Array<Artifact>)
+      const va = v as Array<Artifact>
+      this.filterArtists = getFilterArtists(va);
+      this.filterTags = getFilterTags(va)
+      this.hasTags = (va).flatMap(v => v.tags).length > 0
     })
   )
 
@@ -77,6 +83,8 @@ export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> imp
         return of([]);
       })
     )
+
+  hasTags = false
 
   protected loadData(): void {
   }
