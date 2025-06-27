@@ -133,14 +133,14 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
     })
   )
 
-  displayUpdateVideoTypesForm = false;
+  displayUpdateSelectedVideoTypesForm = false;
 
-  private updateVideoTypesSubject = new Subject<void>();
+  private updateSelectedVideoTypesSubject = new Subject<void>();
 
-  updateVideoTypes$ = this.updateVideoTypesSubject.asObservable().pipe(
+  updateSelectedVideoTypes$ = this.updateSelectedVideoTypesSubject.asObservable().pipe(
     tap(() => {
-      this.displayUpdateVideoTypesForm = true
-      console.log(`updateVideoTypes$ event: ${this.displayUpdateVideoTypesForm}`);
+      this.displayUpdateSelectedVideoTypesForm = true
+      console.log(`updateVideoTypes$ event: ${this.displayUpdateSelectedVideoTypesForm}`);
     })
   )
 
@@ -211,8 +211,8 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
     this.loadData();
   }
 
-  onUpdateVideoTypes(): void {
-    this.displayUpdateVideoTypesForm = false;
+  onUpdateSelectedVideoTypes(): void {
+    this.displayUpdateSelectedVideoTypesForm = false;
     this.loadData();
   }
 
@@ -355,7 +355,7 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
 
   showUpdateDVTypes(event: any): void {
     event.preventDefault();
-    this.updateVideoTypesSubject.next();
+    this.updateSelectedVideoTypesSubject.next();
   }
 
   showUpdateTags(event: any): void {

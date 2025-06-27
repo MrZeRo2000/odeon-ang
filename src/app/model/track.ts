@@ -32,8 +32,9 @@ export interface TrackConfigItem extends EditConfigItem {
   hasProducts: boolean,
 }
 
-export interface TrackDVTypeUserUpdate {
+export interface TrackSelectedDVTypeUserUpdate {
   artifact: Artifact,
+  trackIds: Array<number>,
   dvType: DVType
 }
 

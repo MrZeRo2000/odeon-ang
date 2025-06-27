@@ -19,8 +19,8 @@ import {DropdownModule} from "primeng/dropdown";
 import {InputNumberModule} from "primeng/inputnumber";
 import {TooltipModule} from "primeng/tooltip";
 import {
-  TracksUpdateVideoTypesFormComponent
-} from "./tracks-update-video-types-form/tracks-update-video-types-form.component";
+  TracksUpdateSelectedVideoTypesFormComponent
+} from "./tracks-update-selected-video-types-form/tracks-update-selected-video-types-form.component";
 import {
   TracksUpdateDurationsFormComponent
 } from "./tracks-update-durations-form/tracks-update-durations-form.component";
@@ -44,7 +44,7 @@ import {Chip} from "primeng/chip";
     TracksAllTableComponent,
     TracksImportFormComponent,
     TracksUpdateDurationsFormComponent,
-    TracksUpdateVideoTypesFormComponent,
+    TracksUpdateSelectedVideoTypesFormComponent,
   ],
   exports: [
     TrackFormComponent,
@@ -52,7 +52,7 @@ import {Chip} from "primeng/chip";
     TracksAllTableComponent,
     TracksImportFormComponent,
     TracksUpdateDurationsFormComponent,
-    TracksUpdateVideoTypesFormComponent,
+    TracksUpdateSelectedVideoTypesFormComponent,
   ],
   imports: [
     CommonModule,

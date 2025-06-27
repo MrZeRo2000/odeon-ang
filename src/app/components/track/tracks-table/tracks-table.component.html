@@ -220,13 +220,14 @@
     </app-tracks-import-form>
   </ng-container>
 
-  <ng-container *ngIf="updateVideoTypes$ | async"></ng-container>
+  <ng-container *ngIf="updateSelectedVideoTypes$ | async"></ng-container>
 
-  <app-tracks-update-video-types-form
-    *ngIf="displayUpdateVideoTypesForm"
-    [(display)]="displayUpdateVideoTypesForm"
+  <app-tracks-update-selected-video-types-form
+    *ngIf="displayUpdateSelectedVideoTypesForm"
+    [(display)]="displayUpdateSelectedVideoTypesForm"
     [artifact]="data[1]"
-    (onImport)="onUpdateVideoTypes()"
+    [tracks]="selectedItems"
+    (onImport)="onUpdateSelectedVideoTypes()"
   />
 
 
