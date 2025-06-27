@@ -50,6 +50,8 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
   isArtifactVideoWithProducts = false;
   hasTags = false;
 
+  selectedItems: Array<Track> = [];
+
   readonly cols: Column[] = [
     { field: 'id', header: 'Id' },
     { field: 'artifact.title', header: 'Artifact' },
@@ -356,6 +358,10 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
     this.updateVideoTypesSubject.next();
   }
 
+  showUpdateTags(event: any): void {
+    event.preventDefault();
+  }
+
   showUpdateDurations(event: any): void {
     event.preventDefault();
     this.updateDurationsSubject.next();
@@ -390,5 +396,10 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
   savedUpdateTags(): void {
     this.displayUpdateTagsForm = false;
     this.loadData();
+  }
+
+  onTableSelectionChange(event: Array<Track>) {
+    console.log(`Selection: ${JSON.stringify(event)}`)
+    this.selectedItems = event
   }
 }

@@ -15,6 +15,7 @@
     [value]="data[0]"
     dataKey="id"
     [globalFilterFields]="['title']"
+    (selectionChange)="onTableSelectionChange($event)"
   >
     <ng-template pTemplate="caption">
       <div class="flex">
@@ -47,14 +48,24 @@
             *ngIf="isArtifactTypeVideo"
           ></p-button>
           <p-button
-            icon="pi pi-tag"
+            icon="pi pi-video"
             styleClass="mr-2"
             [text]="true"
             severity="secondary"
             pTooltip="Update video types"
             tooltipPosition="left"
             (onClick)="showUpdateDVTypes($event)"
-            *ngIf="isArtifactTypeVideo"
+            *ngIf="isArtifactTypeVideo && (selectedItems.length > 0)"
+          ></p-button>
+          <p-button
+            icon="pi pi-tags"
+            styleClass="mr-2"
+            [text]="true"
+            severity="secondary"
+            pTooltip="Update tags"
+            tooltipPosition="left"
+            (onClick)="showUpdateTags($event)"
+            *ngIf="isArtifactTypeVideo && (selectedItems.length > 0)"
           ></p-button>
           <p-button
             icon="pi pi-file-import"
@@ -84,6 +95,7 @@
 
     <ng-template pTemplate="header">
       <tr>
+        <th style="width: 4rem" *ngIf="isArtifactTypeVideoMusic"><p-tableHeaderCheckbox /></th>
         <th style="width:0">Id</th>
         <th style="width:0" *ngIf="this.dvProductId">Artifact</th>
         <th style="width:0" *ngIf="isArtifactTypeMusic">Disk #</th>
@@ -119,6 +131,7 @@
 
     <ng-template pTemplate="body" let-item>
       <tr>
+        <td *ngIf="isArtifactTypeVideoMusic"><p-tableCheckbox [value]="item" /></td>
         <td>{{item.id}}</td>
         <td style="white-space: nowrap" *ngIf="this.dvProductId"><a href="#" (click)="onArtifactClick($event, item, data[1])">{{item.artifact.title}}</a></td>
         <td *ngIf="isArtifactTypeMusic">{{item.diskNum}}</td>
