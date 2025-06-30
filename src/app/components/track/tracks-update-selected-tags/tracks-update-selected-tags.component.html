@@ -1,0 +1,28 @@
+<p-confirmPopup key="tags"></p-confirmPopup>
+
+<p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Tags">
+  <ng-template pTemplate="content">
+    <form [formGroup]="editForm">
+      <p-fluid class="mb-4">
+        <p-autoComplete
+          #autofocused
+          [suggestions]="filteredTags"
+          (completeMethod)="searchTags($event)"
+          id="tags"
+          formControlName="tags"
+          [multiple]="true"
+          class="mt-2"
+          (onKeyUp)="tagsKeyUp($event)"
+          appendTo="body"
+        >
+        </p-autoComplete>
+      </p-fluid>
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Update" icon="pi pi-play" class="p-button-text" (click)="this.execute()"></button>
+  </ng-template>
+</p-dialog>
+
+<ng-container *ngIf="update$ | async"></ng-container>

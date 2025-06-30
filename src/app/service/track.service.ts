@@ -4,7 +4,7 @@ import {
   RowsAffected,
   Track,
   TrackDurationsUserUpdate,
-  TrackSelectedDVTypeUserUpdate
+  TrackSelectedDVTypeUserUpdate, TrackSelectedTagsUserUpdate
 } from "../model/track";
 import {RestDataSourceService} from "../data-source/rest-data-source.service";
 import {CRUDService} from "./crud.service";
@@ -41,8 +41,13 @@ export class TrackService extends CRUDService<Track>{
   resetTrackNumbers(artifactId: number): Observable<RowsAffected> {
     return this.restDataSource.postResponseData<RowsAffected>(`track/reset-track-numbers/${artifactId}`, null);
   }
+
   updateSelectedVideoTypes(selectedVideoTypes: TrackSelectedDVTypeUserUpdate): Observable<RowsAffected> {
     return this.restDataSource.postResponseData<RowsAffected>(`track/update-selected-track-video-types`, selectedVideoTypes);
+  }
+
+  updateSelectedTags(selectedTags: TrackSelectedTagsUserUpdate): Observable<RowsAffected> {
+    return this.restDataSource.postResponseData<RowsAffected>(`track/update-selected-track-tags`, selectedTags);
   }
 
   updateTrackDurations(trackDurations: TrackDurationsUserUpdate): Observable<RowsAffected> {

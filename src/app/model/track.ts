@@ -38,6 +38,12 @@ export interface TrackSelectedDVTypeUserUpdate {
   dvType: DVType
 }
 
+export interface TrackSelectedTagsUserUpdate {
+  artifact: Artifact,
+  trackIds: Array<number>,
+  tags: Array<string>
+}
+
 export interface TrackDurationsUserUpdate {
   artifact: Artifact,
   mediaFile: MediaFile,
