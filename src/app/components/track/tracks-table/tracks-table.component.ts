@@ -175,6 +175,21 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
     })
   )
 
+  displayUpdateSelectedTagsForm = false
+
+  private updateSelectedTagsSubject = new Subject<void>();
+
+  updateSelectedTags$ = this.updateSelectedTagsSubject.asObservable().pipe(
+    switchMap(() =>
+      this.taggedService.getTags(this.messageService)
+    ),
+    tap(() => {
+      console.log('Got some tags for update selected tags form, or no error')
+      this.displayUpdateSelectedTagsForm = true
+    })
+  )
+
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -213,6 +228,11 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
 
   onUpdateSelectedVideoTypes(): void {
     this.displayUpdateSelectedVideoTypesForm = false;
+    this.loadData();
+  }
+
+  onUpdateSelectedTags(): void {
+    this.displayUpdateSelectedTagsForm = false;
     this.loadData();
   }
 
@@ -360,6 +380,7 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
 
   showUpdateTags(event: any): void {
     event.preventDefault();
+    this.updateSelectedTagsSubject.next();
   }
 
   showUpdateDurations(event: any): void {

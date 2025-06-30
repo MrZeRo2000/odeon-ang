@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TracksUpdateSelectedTagsComponent } from './tracks-update-selected-tags.component';
+import { TracksUpdateSelectedTagsFormComponent } from './tracks-update-selected-tags-form.component';
 
 describe('TracksUpdateSelectedTagsComponent', () => {
-  let component: TracksUpdateSelectedTagsComponent;
-  let fixture: ComponentFixture<TracksUpdateSelectedTagsComponent>;
+  let component: TracksUpdateSelectedTagsFormComponent;
+  let fixture: ComponentFixture<TracksUpdateSelectedTagsFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TracksUpdateSelectedTagsComponent]
+      imports: [TracksUpdateSelectedTagsFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TracksUpdateSelectedTagsComponent);
+    fixture = TestBed.createComponent(TracksUpdateSelectedTagsFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

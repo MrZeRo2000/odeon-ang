@@ -35,7 +35,7 @@ import {MessageModule} from "primeng/message";
 import {SelectModule} from "primeng/select";
 import {TaggedModule} from "../tag/tagged.module";
 import {Chip} from "primeng/chip";
-import {TracksUpdateSelectedTagsComponent} from "./tracks-update-selected-tags/tracks-update-selected-tags.component";
+import {TracksUpdateSelectedTagsFormComponent} from "./tracks-update-selected-tags-form/tracks-update-selected-tags-form.component";
 
 
 @NgModule({
@@ -46,7 +46,7 @@ import {TracksUpdateSelectedTagsComponent} from "./tracks-update-selected-tags/t
     TracksImportFormComponent,
     TracksUpdateDurationsFormComponent,
     TracksUpdateSelectedVideoTypesFormComponent,
-    TracksUpdateSelectedTagsComponent,
+    TracksUpdateSelectedTagsFormComponent,
   ],
   exports: [
     TrackFormComponent,
@@ -55,7 +55,7 @@ import {TracksUpdateSelectedTagsComponent} from "./tracks-update-selected-tags/t
     TracksImportFormComponent,
     TracksUpdateDurationsFormComponent,
     TracksUpdateSelectedVideoTypesFormComponent,
-    TracksUpdateSelectedTagsComponent,
+    TracksUpdateSelectedTagsFormComponent,
   ],
   imports: [
     CommonModule,

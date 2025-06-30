@@ -10,12 +10,12 @@ import {filterString} from "../../../utils/search-utils";
 import {ENTER} from "@angular/cdk/keycodes";
 
 @Component({
-  selector: 'app-tracks-update-selected-tags',
-  templateUrl: './tracks-update-selected-tags.component.html',
-  styleUrl: './tracks-update-selected-tags.component.css',
+  selector: 'app-tracks-update-selected-tags-form',
+  templateUrl: './tracks-update-selected-tags-form.component.html',
+  styleUrl: './tracks-update-selected-tags-form.component.css',
   standalone: false
 })
-export class TracksUpdateSelectedTagsComponent extends BaseFormComponent {
+export class TracksUpdateSelectedTagsFormComponent extends BaseFormComponent {
   @ViewChild('autofocused', { static: false}) autoFocused!: any;
 
   @Input()
