@@ -6,6 +6,7 @@
       <p-fluid class="mb-4">
         <p-autoComplete
           #autofocused
+          [dropdown]="true"
           [suggestions]="filteredTags"
           (completeMethod)="searchTags($event)"
           id="tags"

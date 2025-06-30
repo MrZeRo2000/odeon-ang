@@ -5,6 +5,7 @@
     <form [formGroup]="editForm">
       <p-fluid class="mb-4">
         <p-autoComplete
+          [dropdown]="true"
           [suggestions]="filteredTags"
           (completeMethod)="searchTags($event)"
           id="tags"
