@@ -1,12 +1,4 @@
 export enum ProcessorType {
-  ARTISTS_IMPORTER,
-  CLASSICS_IMPORTER,
-  DV_MUSIC_IMPORTER,
-  DV_MOVIES_IMPORTER,
-  DV_PRODUCT_IMPORTER,
-  MP3_UPDATE_ATTRIBUTES_IMPORTER,
-  LA_UPDATE_ATTRIBUTES_IMPORTER,
-
   CLASSICS_VALIDATOR,
 
   MP3_LOADER,
@@ -28,12 +20,6 @@ export enum ProcessorType {
 }
 
 export const PROCESSOR_TYPE_NAMES : {[processorType: number] : string} = {
-  [ProcessorType.ARTISTS_IMPORTER]: "Artists Import",
-  [ProcessorType.DV_PRODUCT_IMPORTER]: "Video Product Import",
-  [ProcessorType.MP3_UPDATE_ATTRIBUTES_IMPORTER]: "MP3 update attributes importer",
-  [ProcessorType.LA_UPDATE_ATTRIBUTES_IMPORTER]: "LA update attributes importer",
-
-  [ProcessorType.CLASSICS_IMPORTER]: "Classics Import",
   [ProcessorType.CLASSICS_VALIDATOR]: "Classics Validate",
 
   [ProcessorType.MP3_LOADER]: "MP3 Load",
@@ -41,12 +27,10 @@ export const PROCESSOR_TYPE_NAMES : {[processorType: number] : string} = {
   [ProcessorType.LA_LOADER]: "LA Load",
   [ProcessorType.LA_VALIDATOR]: "LA Validate",
 
-  [ProcessorType.DV_MUSIC_IMPORTER]: "Video Music Import",
   [ProcessorType.DV_MUSIC_LOADER]: "Video Music Load",
   [ProcessorType.DV_MUSIC_VALIDATOR]: "Video Music Validate",
   [ProcessorType.DV_MUSIC_MEDIA_LOADER]: "Video Music Media Load",
 
-  [ProcessorType.DV_MOVIES_IMPORTER]: "Movies Import",
   [ProcessorType.DV_MOVIES_LOADER]: "Movies Load",
   [ProcessorType.DV_MOVIES_VALIDATOR]: "Movies Validate",
   [ProcessorType.DV_MOVIES_MEDIA_LOADER]: "Movies Media Load",

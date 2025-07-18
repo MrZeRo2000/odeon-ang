@@ -34,42 +34,6 @@ import {TimeDifferencePipe} from "../../../core/pipes/time-difference.pipe";
 export class ProcessingFormComponent extends BaseComponent implements OnInit, AfterViewInit {
   readonly treeValues = [
     {
-      label: "Import",
-      selectable: true,
-      children: [
-        {
-          label: "Artists",
-          data: ProcessorType.ARTISTS_IMPORTER,
-          leaf: true
-        },
-        {
-          label: "Classics",
-          data: ProcessorType.CLASSICS_IMPORTER,
-          leaf: true
-        },
-        {
-          label: "Video Music",
-          data: ProcessorType.DV_MUSIC_IMPORTER,
-          leaf: true
-        },
-        {
-          label: "Movies",
-          data: ProcessorType.DV_MOVIES_IMPORTER,
-          leaf: true
-        },
-        {
-          label: "MP3 Update Attributes",
-          data: ProcessorType.MP3_UPDATE_ATTRIBUTES_IMPORTER,
-          leaf: true
-        },
-        {
-          label: "LA Update Attributes",
-          data: ProcessorType.LA_UPDATE_ATTRIBUTES_IMPORTER,
-          leaf: true
-        }
-      ]
-    },
-    {
       label: "Classics",
       children: [
         {
