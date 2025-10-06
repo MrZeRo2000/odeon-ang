@@ -2,11 +2,14 @@
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <p-fluid>
-        <div class="mb-4" *ngIf="mediaFileNames | async as mediaFileNames">
-          <label for="name">
-            Name&nbsp;<span *ngIf="this.editItem?.artifactId && this.editForm.value.name" (click)="onUpdateMediaFileAttributes($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
+        @if (mediaFileNames | async; as mediaFileNames) {
+          <div class="mb-4">
+            <label for="name">
+              Name&nbsp;@if (this.editItem?.artifactId && this.editForm.value.name) {
+              <span (click)="onUpdateMediaFileAttributes($event)" class="cursor-pointer"><i class="pi pi-refresh"></i></span>
+            }
           </label>
-          <p-dropdown
+          <p-select
             #autofocused
             id="name"
             [options]="mediaFileNames"
@@ -18,63 +21,64 @@
             appendTo="body"
             class="w-full"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['name'].errors}"
-          ></p-dropdown>
-
+          ></p-select>
         </div>
-      </p-fluid>
+      }
+    </p-fluid>
 
-      <div class="mb-4">
-        <label for="format">Format</label>
-        <input
-          type="text"
-          pInputText
-          id="format"
-          formControlName="format"
-          required
-          class="w-full"
-          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['format'].errors}"
+    <div class="mb-4">
+      <label for="format">Format</label>
+      <input
+        type="text"
+        pInputText
+        id="format"
+        formControlName="format"
+        required
+        class="w-full"
+        [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['format'].errors}"
         />
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 mb-4">
+      <div>
+        <label for="size">Size ({{this.editForm.value.size | fileSize}})</label>
+        <input
+          type="number"
+          pInputText
+          id="size"
+          formControlName="size"
+          class="w-full"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['size'].errors}"
+          />
       </div>
 
-      <div class="grid grid-cols-3 gap-4 mb-4">
-        <div>
-          <label for="size">Size ({{this.editForm.value.size | fileSize}})</label>
-          <input
-            type="number"
-            pInputText
-            id="size"
-            formControlName="size"
-            class="w-full"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['size'].errors}"
+      <div>
+        <label for="bitrate">Bitrate</label>
+        <input
+          type="number"
+          pInputText
+          id="bitrate"
+          formControlName="bitrate"
+          class="w-full"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['bitrate'].errors}"
           />
-        </div>
-
-        <div>
-          <label for="bitrate">Bitrate</label>
-          <input
-            type="number"
-            pInputText
-            id="bitrate"
-            formControlName="bitrate"
-            class="w-full"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['bitrate'].errors}"
-          />
-        </div>
-
-        <div>
-          <label for="duration">Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})</label>
-          <input
-            type="number"
-            pInputText
-            id="duration"
-            formControlName="duration"
-            class="w-full"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
-          />
-        </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-4 mb-4" *ngIf="isVideo">
+      <div>
+        <label for="duration">Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})</label>
+        <input
+          type="number"
+          pInputText
+          id="duration"
+          formControlName="duration"
+          class="w-full"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
+          />
+      </div>
+    </div>
+
+    @if (isVideo) {
+      <div class="grid grid-cols-2 gap-4 mb-4">
         <div>
           <label for="width">Width</label>
           <input
@@ -84,9 +88,8 @@
             formControlName="width"
             class="w-full"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['width'].errors}"
-          />
+            />
         </div>
-
         <div>
           <label for="height">Height</label>
           <input
@@ -96,11 +99,13 @@
             formControlName="height"
             class="w-full"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['height'].errors}"
-          />
+            />
         </div>
       </div>
+    }
 
-      <div class="mb-4" *ngIf="isVideo">
+    @if (isVideo) {
+      <div class="mb-4">
         <label for="extra">Extra</label>
         <textarea
           pTextarea
@@ -115,15 +120,18 @@
           {{editForm.controls['extra'].errors?.['extra']}} &nbsp;
         </small>
       </div>
-    </form>
+    }
+  </form>
 
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
-  </ng-template>
+</ng-template>
+<ng-template pTemplate="footer">
+  <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+  <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+</ng-template>
 
-  <ng-container *ngIf="saveAction$ | async as saver"></ng-container>
-  <ng-container *ngIf="mediaFileAttributesAction$ | async"></ng-container>
+@if (saveAction$ | async; as saver) {
+}
+@if (mediaFileAttributesAction$ | async) {
+}
 
 </p-dialog>

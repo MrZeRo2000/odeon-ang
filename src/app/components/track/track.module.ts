@@ -15,7 +15,6 @@ import {InputTextModule} from "primeng/inputtext";
 import {CoreModule} from "../../core/core.module";
 import {UserImportModule} from "../user-import/user-import.module";
 import {DVModule} from "../dv/d-v.module";
-import {DropdownModule} from "primeng/dropdown";
 import {InputNumberModule} from "primeng/inputnumber";
 import {TooltipModule} from "primeng/tooltip";
 import {
@@ -36,6 +35,7 @@ import {SelectModule} from "primeng/select";
 import {TaggedModule} from "../tag/tagged.module";
 import {Chip} from "primeng/chip";
 import {TracksUpdateSelectedTagsFormComponent} from "./tracks-update-selected-tags-form/tracks-update-selected-tags-form.component";
+import {ConfirmationService} from "primeng/api";
 
 
 @NgModule({
@@ -67,7 +67,6 @@ import {TracksUpdateSelectedTagsFormComponent} from "./tracks-update-selected-ta
     DialogModule,
     TableModule,
     SelectButtonModule,
-    DropdownModule,
     InputNumberModule,
     InputTextModule,
     TooltipModule,

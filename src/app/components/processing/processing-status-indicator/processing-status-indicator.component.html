@@ -1,4 +1,12 @@
-<div pButton icon="pi pi-times-circle" class="p-button-danger p-button-text" style="cursor: auto;" *ngIf="indicatorType === IndicatorType.IT_ERROR"></div>
-<div pButton icon="pi pi-check-circle" class="p-button-success p-button-text" style="cursor: auto;" *ngIf="indicatorType === IndicatorType.IT_SUCCESS"></div>
-<div pButton icon="pi pi-exclamation-circle" class="p-button-warning p-button-text" style="cursor: auto;" *ngIf="indicatorType === IndicatorType.IT_WARNING"></div>
-<div pButton icon="pi pi-info-circle" class="p-button p-button-text" style="cursor: auto;" *ngIf="indicatorType === IndicatorType.IT_INFO"></div>
+@if (indicatorType === IndicatorType.IT_ERROR) {
+  <div pButton icon="pi pi-times-circle" class="p-button-danger p-button-text" style="cursor: auto;"></div>
+}
+@if (indicatorType === IndicatorType.IT_SUCCESS) {
+  <div pButton icon="pi pi-check-circle" class="p-button-success p-button-text" style="cursor: auto;"></div>
+}
+@if (indicatorType === IndicatorType.IT_WARNING) {
+  <div pButton icon="pi pi-exclamation-circle" class="p-button-warning p-button-text" style="cursor: auto;"></div>
+}
+@if (indicatorType === IndicatorType.IT_INFO) {
+  <div pButton icon="pi pi-info-circle" class="p-button p-button-text" style="cursor: auto;"></div>
+}

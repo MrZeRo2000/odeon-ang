@@ -12,7 +12,7 @@
           required
           class="w-full"
           [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['name'].errors}"
-        />
+          />
       </div>
 
       <div>
@@ -26,7 +26,8 @@
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
   </ng-template>
 
-  <ng-container *ngIf="saveAction$ | async as saver"></ng-container>
+  @if (saveAction$ | async; as saver) {
+  }
 
 </p-dialog>
 

@@ -1,94 +1,117 @@
 <app-confirm-dialog></app-confirm-dialog>
 
-<ng-template #loadingOrError>
-  <ng-container *ngIf="!errorObject">
-    <app-loading></app-loading>
-  </ng-container>
-</ng-template>
 
-<div *ngIf="data$ | async as data; else loadingOrError">
-  <div class="w-full md:w-5/6 lg:w-2/3">
-    <p-table
-      #dt
-      size="small"
-      responsiveLayout="scroll"
-      [value]="data[0]"
-      dataKey="id">
-      <ng-template pTemplate="caption">
-        <div class="flex">
-          <div class="flex items-center justify-between text-xl mr-2">
-            <span class="text-primary">{{data[1] | artifactCaption}} Media files</span>
-          </div>
-          <div class="flex items-center app-crud-panel-small" *ngIf="!this.trackId"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
-          <div class="flex items-center justify-end flex-grow-1" *ngIf="!this.trackId">
-            <p-button
-              icon="pi pi-download"
-              styleClass="mr-2"
-              [text]="true"
-              severity="secondary"
-              pTooltip="Load media files"
-              tooltipPosition="left"
-              (onClick)="loadMediaFiles($event)"
-            ></p-button>
-          </div>
-        </div>
-      </ng-template>
-
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="width:0">Id</th>
-          <th style="width:100%">File name</th>
-          <th style="width:0">Format</th>
-          <th style="width:0">Duration</th>
-          <th style="width:0">Size</th>
-          <th style="width:0">Bitrate</th>
-          <th *ngIf="isArtifactTypeVideo" style="width:0">Width</th>
-          <th *ngIf="isArtifactTypeVideo" style="width:0">Height</th>
-          <th *ngIf="isArtifactTypeVideo" style="width:0">Extra</th>
-          <th style="width:0" *ngIf="!this.trackId"></th>
-        </tr>
-        <tr>
-          <th colspan="3">Rows: {{dt.processedData.length}}</th>
-          <th>{{sumByKey(dt.processedData, 'duration')  * 1000 | date:'HH:mm:ss':'GMT'}}</th>
-          <th [colSpan]="isArtifactTypeVideo ? 6 : 3">{{sumByKey(dt.processedData, 'size') | fileSize}}</th>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-item>
-        <tr>
-          <td>{{item.id}}</td>
-          <td>{{item.name}}</td>
-          <td>{{item.format}}</td>
-          <td>{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</td>
-          <td style="text-align: right; white-space: nowrap"><div *ngIf="item.size">{{item.size | fileSize}}</div></td>
-          <td style="text-align: right">{{item.bitrate}}</td>
-          <td *ngIf="isArtifactTypeVideo" style="text-align: center">{{item.width}}</td>
-          <td *ngIf="isArtifactTypeVideo" style="text-align: center">{{item.height}}</td>
-          <td *ngIf="isArtifactTypeVideo" style="text-align: center"><i *ngIf="item.hasExtra" class="pi pi-check"></i></td>
-          <td *ngIf="!this.trackId">
-            <div class="app-crud-panel-small">
-              <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+@if (data$ | async; as data) {
+  <div>
+    <div class="w-full md:w-5/6 lg:w-2/3">
+      <p-table
+        #dt
+        size="small"
+        responsiveLayout="scroll"
+        [value]="data[0]"
+        dataKey="id">
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <div class="flex items-center justify-between text-xl mr-2">
+              <span class="text-primary">{{data[1] | artifactCaption}} Media files</span>
             </div>
-          </td>
-        </tr>
-      </ng-template>
-
-    </p-table>
-
-    <ng-container *ngIf="deleteAction$ | async"></ng-container>
-
-    <ng-container *ngIf="editAction$ | async as editItem">
-      <app-media-file-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editItem" [isVideo]="isArtifactTypeVideo" (onSavedItem)="savedEditData($event)"></app-media-file-form>
-    </ng-container>
-
-    <ng-container *ngIf="mediaFilesLoad$ | async as data">
-      <app-media-files-load-form
-        *ngIf="displayMediaFilesLoadForm"
-        [(display)]="displayMediaFilesLoadForm"
-        [artifactId]="this.artifactId!"
-        [mediaFileNames]="data"
-        (onExecute)="onLoadMediaFiles()"
-      />
-    </ng-container>
+            @if (!this.trackId) {
+              <div class="flex items-center app-crud-panel-small"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
+            }
+            @if (!this.trackId) {
+              <div class="flex items-center justify-end flex-grow-1">
+                <p-button
+                  icon="pi pi-download"
+                  styleClass="mr-2"
+                  [text]="true"
+                  severity="secondary"
+                  pTooltip="Load media files"
+                  tooltipPosition="left"
+                  (onClick)="loadMediaFiles($event)"
+                ></p-button>
+              </div>
+            }
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:0">Id</th>
+            <th style="width:100%">File name</th>
+            <th style="width:0">Format</th>
+            <th style="width:0">Duration</th>
+            <th style="width:0">Size</th>
+            <th style="width:0">Bitrate</th>
+            @if (isArtifactTypeVideo) {
+              <th style="width:0">Width</th>
+            }
+            @if (isArtifactTypeVideo) {
+              <th style="width:0">Height</th>
+            }
+            @if (isArtifactTypeVideo) {
+              <th style="width:0">Extra</th>
+            }
+            @if (!this.trackId) {
+              <th style="width:0"></th>
+            }
+          </tr>
+          <tr>
+            <th colspan="3">Rows: {{dt.processedData.length}}</th>
+            <th>{{sumByKey(dt.processedData, 'duration')  * 1000 | date:'HH:mm:ss':'GMT'}}</th>
+            <th [colSpan]="isArtifactTypeVideo ? 6 : 3">{{sumByKey(dt.processedData, 'size') | fileSize}}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.format}}</td>
+            <td>{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</td>
+            <td style="text-align: right; white-space: nowrap">@if (item.size) {
+              <div>{{item.size | fileSize}}</div>
+            }</td>
+            <td style="text-align: right">{{item.bitrate}}</td>
+            @if (isArtifactTypeVideo) {
+              <td style="text-align: center">{{item.width}}</td>
+            }
+            @if (isArtifactTypeVideo) {
+              <td style="text-align: center">{{item.height}}</td>
+            }
+            @if (isArtifactTypeVideo) {
+              <td style="text-align: center">@if (item.hasExtra) {
+                <i class="pi pi-check"></i>
+              }</td>
+            }
+            @if (!this.trackId) {
+              <td>
+                <div class="app-crud-panel-small">
+                  <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+                </div>
+              </td>
+            }
+          </tr>
+        </ng-template>
+      </p-table>
+      @if (deleteAction$ | async) {
+      }
+      @if (editAction$ | async; as editItem) {
+        @if (displayForm) {
+          <app-media-file-form [(display)]="displayForm" [editItem]="editItem" [isVideo]="isArtifactTypeVideo" (onSavedItem)="savedEditData($event)"></app-media-file-form>
+        }
+      }
+      @if (mediaFilesLoad$ | async; as data) {
+        @if (displayMediaFilesLoadForm) {
+          <app-media-files-load-form
+            [(display)]="displayMediaFilesLoadForm"
+            [artifactId]="this.artifactId!"
+            [mediaFileNames]="data"
+            (onExecute)="onLoadMediaFiles()"
+            />
+        }
+      }
+    </div>
   </div>
-</div>
+} @else {
+  @if (!errorObject) {
+    <app-loading></app-loading>
+  }
+}

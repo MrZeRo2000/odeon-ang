@@ -4,62 +4,71 @@
       <p-fluid>
         <div class="mb-4">
           <label for="mediaFile">
-            Media File<span *ngIf="editFormData$ | async as editFormData">&nbsp; {{getMediaFileDuration(editFormData.mediaFile) * 1000 | date:'HH:mm:ss':'GMT'}}</span>
-          </label>
-          <p-dropdown
-            #autofocused
-            formControlName="mediaFile"
-            id="mediaFile"
-            [options]="mediaFiles"
-            optionLabel="name"
-            optionValue="id"
-            appendTo="body"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['mediaFile'].errors}"
-          ></p-dropdown>
-        </div>
+            Media File@if (editFormData$ | async; as editFormData) {
+            <span>&nbsp; {{getMediaFileDuration(editFormData.mediaFile) * 1000 | date:'HH:mm:ss':'GMT'}}</span>
+          }
+        </label>
+        <p-select
+          #autofocused
+          formControlName="mediaFile"
+          id="mediaFile"
+          [options]="mediaFiles"
+          optionLabel="name"
+          optionValue="id"
+          appendTo="body"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['mediaFile'].errors}"
+        ></p-select>
+      </div>
 
-        <div class="mb-4">
-          <label for="chapters">
-            Chapters
+      <div class="mb-4">
+        <label for="chapters">
+          Chapters
+          @if (this.editForm.value.mediaFile) {
             <span
-              *ngIf="this.editForm.value.mediaFile"
               class="cursor-pointer mr-2"
               (click)="onUpdateChaptersFromMediaFile($event, this.editForm.value.mediaFile)"
               pTooltip="Update chapters from file"
-            >
+              >
               <i class="pi pi-download"></i>
             </span>
-            <span *ngIf="editFormData$ | async as editFormData">
-              <span *ngIf="this.editForm.value.mediaFile && getChapters(editFormData.chapters || '').length > 0">
-                <span
-                  class="cursor-pointer"
-                  pTooltip="Convert durations to chapters"
-                  (click)="onConvertDurationsToChapters($event, this.editForm.value.mediaFile, getChapters(editFormData.chapters || ''))"
-                >
-                  <i class="pi pi-refresh"></i>
+          }
+          @if (editFormData$ | async; as editFormData) {
+            <span>
+              @if (this.editForm.value.mediaFile && getChapters(editFormData.chapters || '').length > 0) {
+                <span>
+                  <span
+                    class="cursor-pointer"
+                    pTooltip="Convert durations to chapters"
+                    (click)="onConvertDurationsToChapters($event, this.editForm.value.mediaFile, getChapters(editFormData.chapters || ''))"
+                    >
+                    <i class="pi pi-refresh"></i>
+                  </span>
+                  ({{getChapters(editFormData.chapters || "").length}} lines)
                 </span>
-                ({{getChapters(editFormData.chapters || "").length}} lines)
-              </span>
+              }
             </span>
-          </label>
-          <textarea
-            pTextarea
-            id="chapters"
-            formControlName="chapters"
-            style="resize: none"
-            [autoResize]="true"
-            rows="10"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['chapters'].errors}"
-          ></textarea>
-        </div>
-      </p-fluid>
-    </form>
-  </ng-template>
+          }
+        </label>
+        <textarea
+          pTextarea
+          id="chapters"
+          formControlName="chapters"
+          style="resize: none"
+          [autoResize]="true"
+          rows="10"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['chapters'].errors}"
+        ></textarea>
+      </div>
+    </p-fluid>
+  </form>
+</ng-template>
 
-  <ng-template pTemplate="footer">
-    <button pButton pRipple label="Update" icon="pi pi-play" class="p-button-text" (click)="this.execute()"></button>
-  </ng-template>
+<ng-template pTemplate="footer">
+  <button pButton pRipple label="Update" icon="pi pi-play" class="p-button-text" (click)="this.execute()"></button>
+</ng-template>
 </p-dialog>
 
-<ng-container *ngIf="update$ | async"></ng-container>
-<ng-container *ngIf="updateChapters$ | async"></ng-container>
+@if (update$ | async) {
+}
+@if (updateChapters$ | async) {
+}

@@ -1,67 +1,62 @@
 <app-confirm-dialog></app-confirm-dialog>
 
-<ng-template #loadingOrError>
-  <ng-container *ngIf="!errorObject">
-    <app-loading></app-loading>
-  </ng-container>
-</ng-template>
 
-<div #dtc *ngIf="data$ | async as artistTable; else loadingOrError">
-
-  <div *ngIf="artistDetail$ | async as artistDetail">
-    <app-text-view-dialog
-      *ngIf="!!artistDetail.biography"
-      [(display)]="displayArtistInfo"
-      [header]="displayArtistName"
-      [htmlText]="artistDetail.biography">
-    </app-text-view-dialog>
-  </div>
-
-  <p-table #dt
-           size="small"
-           [value]="artistTable"
-           [rows]="10"
-           [paginator]="true"
-           [showCurrentPageReport]="true"
-           [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
-           [(first)]="first"
-           dataKey="id"
-           stateStorage="session"
-           stateKey="artist-table-session"
-           [globalFilterFields]="['artistName']"
-           (onFilter)="onFilter($event)"
-           selectionMode="single"
-           [(selection)]="selectedItem"
-  >
-
-    <ng-template pTemplate="caption">
-      <div #dtcp class="flex">
-        <div class="flex items-center justify-between text-xl mr-2">Artists</div>
-        <div class="flex self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
-
-        <button pButton type="button" label="Artifacts" icon="pi pi-building" iconPos="left"
-                class="ml-2 p-button-outlined p-button-secondary !p-2"
-                *ngIf="selectedItem"
-                (click)="onArtifactsButton($event)"
-        ></button>
-
-        <button pButton type="button" label="Tracks" icon="pi pi-list" iconPos="left"
-                class="ml-2 p-button-outlined p-button-secondary !p-2"
-                *ngIf="selectedItem"
-                (click)="onTracksButton($event)"
-        ></button>
-
-        <div class="flex justify-end flex-grow-1">
-          <div class="flex items-center mr-2">
-            <p-columnFilter type="boolean" field="isGenre" display="menu" class="flex items-center mr-1"></p-columnFilter>Genre exists
-          </div>
-          <div class="flex items-center mr-2">
-            <p-columnFilter type="boolean" field="isDetail" display="menu" class="flex items-center mr-1"></p-columnFilter>Info exists
-          </div>
-          <span class="p-input-icon-left flex items-center">
-            <p-iconfield iconPosition="left" class="ml-auto">
+@if (data$ | async; as artistTable) {
+  <div #dtc>
+    @if (artistDetail$ | async; as artistDetail) {
+      <div>
+        @if (!!artistDetail.biography) {
+          <app-text-view-dialog
+            [(display)]="displayArtistInfo"
+            [header]="displayArtistName"
+            [htmlText]="artistDetail.biography">
+          </app-text-view-dialog>
+        }
+      </div>
+    }
+    <p-table #dt
+      size="small"
+      [value]="artistTable"
+      [rows]="10"
+      [paginator]="true"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
+      [(first)]="first"
+      dataKey="id"
+      stateStorage="session"
+      stateKey="artist-table-session"
+      [globalFilterFields]="['artistName']"
+      (onFilter)="onFilter($event)"
+      selectionMode="single"
+      [(selection)]="selectedItem"
+      >
+      <ng-template pTemplate="caption">
+        <div #dtcp class="flex">
+          <div class="flex items-center justify-between text-xl mr-2">Artists</div>
+          <div class="flex self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
+          @if (selectedItem) {
+            <button pButton type="button" label="Artifacts" icon="pi pi-building" iconPos="left"
+              class="ml-2 p-button-outlined p-button-secondary !p-2"
+              (click)="onArtifactsButton($event)"
+            ></button>
+          }
+          @if (selectedItem) {
+            <button pButton type="button" label="Tracks" icon="pi pi-list" iconPos="left"
+              class="ml-2 p-button-outlined p-button-secondary !p-2"
+              (click)="onTracksButton($event)"
+            ></button>
+          }
+          <div class="flex justify-end flex-grow-1">
+            <div class="flex items-center mr-2">
+              <p-columnFilter type="boolean" field="isGenre" display="menu" class="flex items-center mr-1"></p-columnFilter>Genre exists
+            </div>
+            <div class="flex items-center mr-2">
+              <p-columnFilter type="boolean" field="isDetail" display="menu" class="flex items-center mr-1"></p-columnFilter>Info exists
+            </div>
+            <span class="p-input-icon-left flex items-center">
+              <p-iconfield iconPosition="left" class="ml-auto">
                 <p-inputicon>
-                    <i class="pi pi-search"></i>
+                  <i class="pi pi-search"></i>
                 </p-inputicon>
                 <input
                   pInputText
@@ -69,94 +64,109 @@
                   [value]="globalFilterValue"
                   (input)="dt.filterGlobal($any($event.target).value, 'contains')"
                   placeholder="Search keyword"
-                />
-            </p-iconfield>
-          </span>
+                  />
+              </p-iconfield>
+            </span>
+          </div>
         </div>
-
-      </div>
-    </ng-template>
-
-    <ng-template pTemplate="header">
-      <tr>
-        <th style="width:0">Id</th>
-        <th>Name</th>
-        <th style="width:0">
-          <div class="flex justify-center items-center">
-            Genre
-            <p-columnFilter field="genre" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [ngModel]="value" [options]="filterGenres" placeholder="Any" (onChange)="filter($event.value)">
-                  <ng-template let-option pTemplate="item">
-                    <div class="inline-block vertical-align-middle">
-                      <span class="ml-1 mt-1">{{ option.label }}</span>
-                    </div>
-                  </ng-template>
-                </p-multiSelect>
-              </ng-template>
-            </p-columnFilter>
-          </div>
-        </th>
-        <th style="width:50%">
-          <div class="flex justify-start items-center">
-            Styles
-            <p-columnFilter field="styles" matchMode="filter_styles" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [ngModel]="value" [options]="filterStyles" placeholder="Any" (onChange)="filter($event.value)">
-                  <ng-template let-option pTemplate="item">
-                    <div class="inline-block vertical-align-middle">
-                      <span class="ml-1 mt-1">{{ option.label }}</span>
-                    </div>
-                  </ng-template>
-                </p-multiSelect>
-              </ng-template>
-            </p-columnFilter>
-          </div>
-        </th>
-        <th style="width:0">Info</th>
-        <th style="width:0">Lyrics</th>
-        <th style="width:0"></th>
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-item>
-      <tr [pSelectableRow]="item">
-        <td>{{item.id}}</td>
-        <td>{{item.artistName}}</td>
-        <td>
-          <p-tag value="N/A" *ngIf="!item.genre" severity="warn" [rounded]="true"></p-tag>
-          <p-tag value="{{item.genre}}" *ngIf="item.genre" severity="info" [rounded]="true"></p-tag>
-        </td>
-        <td>
-          <div class="flex flex-wrap gap-1" *ngIf="item.styles">
-            <div *ngFor="let style of item.styles">
-              <p-chip label="{{style}}" styleClass="flex items-center text-xs !p-2" *ngIf="style"></p-chip>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width:0">Id</th>
+          <th>Name</th>
+          <th style="width:0">
+            <div class="flex justify-center items-center">
+              Genre
+              <p-columnFilter field="genre" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [ngModel]="value" [options]="filterGenres" placeholder="Any" (onChange)="filter($event.value)">
+                    <ng-template let-option pTemplate="item">
+                      <div class="inline-block vertical-align-middle">
+                        <span class="ml-1 mt-1">{{ option.label }}</span>
+                      </div>
+                    </ng-template>
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
             </div>
-          </div>
-        </td>
-        <td>
-          <div class="flex justify-center app-crud-panel-small" *ngIf="item.detailId">
-            <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayArtistDetail(item)"></button>
-          </div>
-        </td>
-        <td>
-          <div class="flex justify-center app-crud-panel-small" *ngIf="item.hasLyrics">
-            <button pButton pRipple icon="pi pi-book" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayLyrics(item)"></button>
-          </div>
-        </td>
-        <td>
-          <app-crud-panel class="app-crud-panel-small" [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
-        </td>
-      </tr>
-    </ng-template>
-
-  </p-table>
-
-  <ng-container *ngIf="deleteAction$ | async"></ng-container>
-
-  <ng-container *ngIf="editAction$ | async as editItem">
-    <app-artist-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editItem" [artistTable]="artistTable" (onSavedItem)="savedEditData($event)"></app-artist-form>
-  </ng-container>
-
-</div>
+          </th>
+          <th style="width:50%">
+            <div class="flex justify-start items-center">
+              Styles
+              <p-columnFilter field="styles" matchMode="filter_styles" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [ngModel]="value" [options]="filterStyles" placeholder="Any" (onChange)="filter($event.value)">
+                    <ng-template let-option pTemplate="item">
+                      <div class="inline-block vertical-align-middle">
+                        <span class="ml-1 mt-1">{{ option.label }}</span>
+                      </div>
+                    </ng-template>
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+            </div>
+          </th>
+          <th style="width:0">Info</th>
+          <th style="width:0">Lyrics</th>
+          <th style="width:0"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr [pSelectableRow]="item">
+          <td>{{item.id}}</td>
+          <td>{{item.artistName}}</td>
+          <td>
+            @if (!item.genre) {
+              <p-tag value="N/A" severity="warn" [rounded]="true"></p-tag>
+            }
+            @if (item.genre) {
+              <p-tag value="{{item.genre}}" severity="info" [rounded]="true"></p-tag>
+            }
+          </td>
+          <td>
+            @if (item.styles) {
+              <div class="flex flex-wrap gap-1">
+                @for (style of item.styles; track style) {
+                  <div>
+                    @if (style) {
+                      <p-chip label="{{style}}" styleClass="flex items-center text-xs !p-2"></p-chip>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          </td>
+          <td>
+            @if (item.detailId) {
+              <div class="flex justify-center app-crud-panel-small">
+                <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayArtistDetail(item)"></button>
+              </div>
+            }
+          </td>
+          <td>
+            @if (item.hasLyrics) {
+              <div class="flex justify-center app-crud-panel-small">
+                <button pButton pRipple icon="pi pi-book" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayLyrics(item)"></button>
+              </div>
+            }
+          </td>
+          <td>
+            <app-crud-panel class="app-crud-panel-small" [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    @if (deleteAction$ | async) {
+    }
+    @if (editAction$ | async; as editItem) {
+      @if (displayForm) {
+        <app-artist-form [(display)]="displayForm" [editItem]="editItem" [artistTable]="artistTable" (onSavedItem)="savedEditData($event)"></app-artist-form>
+      }
+    }
+  </div>
+} @else {
+  @if (!errorObject) {
+    <app-loading></app-loading>
+  }
+}
 

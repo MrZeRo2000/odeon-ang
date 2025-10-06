@@ -1,64 +1,59 @@
-<ng-template #loadingOrError>
-  <ng-container *ngIf="!errorObject">
-    <app-loading></app-loading>
-  </ng-container>
-</ng-template>
 
-<div *ngIf="filteredTrackTable$ | async as table; else loadingOrError">
 
-  <p-table #dt
-           size="small"
-           [value]="table"
-           [rows]="10"
-           [paginator]="true"
-           [showCurrentPageReport]="true"
-           [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
-           [(first)]="first"
-           dataKey="id"
-           stateStorage="session"
-           [stateKey]="TABLE_SESSION_KEY"
-           [globalFilterFields]="['artist.artistName', 'title']"
-           (onFilter)="onFilter($event)"
-           (onStateSave)="onStateSave($event)"
-           (onStateRestore)="onStateRestore($event)"
-           selectionMode="single"
-           [(selection)]="selectedItem"
-           sortField=""
-  >
-    <ng-template pTemplate="caption">
-      <div class="flex">
-        <div class="flex items-center justify-between text-xl mr-2">All tracks</div>
-
-        <form [formGroup]="filterForm" class="flex whitespace-nowrap ml-2 flex-grow-1">
-          <app-artifact-type-select
-            class="flex"
-            formControlName="artifactTypeIds"
-          ></app-artifact-type-select>
-          <div
-            class="flex flex-col flex-grow-1 items-start justify-end mr-2 ml-2"
-            *ngIf="artistsTable$ | async as artistsTable"
-          >
-            <label for="artistIds" class="mb-2">Artists</label>
-            <span style="width: 100%">
-              <p-multiSelect
-                id="artistIds"
-                formControlName="artistIds"
-                dataKey="id"
-                optionLabel="name"
-                [options]="artistsTable"
-                [showClear]="true"
-                [style]="{'min-width':'100%'}"
-              >
-              </p-multiSelect>
+@if (filteredTrackTable$ | async; as table) {
+  <div>
+    <p-table #dt
+      size="small"
+      [value]="table"
+      [rows]="10"
+      [paginator]="true"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
+      [(first)]="first"
+      dataKey="id"
+      stateStorage="session"
+      [stateKey]="TABLE_SESSION_KEY"
+      [globalFilterFields]="['artist.artistName', 'title']"
+      (onFilter)="onFilter($event)"
+      (onStateSave)="onStateSave($event)"
+      (onStateRestore)="onStateRestore($event)"
+      selectionMode="single"
+      [(selection)]="selectedItem"
+      sortField=""
+      >
+      <ng-template pTemplate="caption">
+        <div class="flex">
+          <div class="flex items-center justify-between text-xl mr-2">All tracks</div>
+          <form [formGroup]="filterForm" class="flex whitespace-nowrap ml-2 flex-grow-1">
+            <app-artifact-type-select
+              class="flex"
+              formControlName="artifactTypeIds"
+            ></app-artifact-type-select>
+            @if (artistsTable$ | async; as artistsTable) {
+              <div
+                class="flex flex-col flex-grow-1 items-start justify-end mr-2 ml-2"
+                >
+                <label for="artistIds" class="mb-2">Artists</label>
+                <span style="width: 100%">
+                  <p-multiSelect
+                    id="artistIds"
+                    formControlName="artistIds"
+                    dataKey="id"
+                    optionLabel="name"
+                    [options]="artistsTable"
+                    [showClear]="true"
+                    [style]="{'min-width':'100%'}"
+                    >
+                  </p-multiSelect>
                 </span>
-          </div>
-        </form>
-
-        <div class="flex justify-end items-end">
-          <span class="flex items-center">
-            <p-iconfield iconPosition="left" class="ml-auto">
+              </div>
+            }
+          </form>
+          <div class="flex justify-end items-end">
+            <span class="flex items-center">
+              <p-iconfield iconPosition="left" class="ml-auto">
                 <p-inputicon>
-                    <i class="pi pi-search"></i>
+                  <i class="pi pi-search"></i>
                 </p-inputicon>
                 <input
                   pInputText
@@ -66,91 +61,104 @@
                   [value]="globalFilterValue"
                   (input)="dt.filterGlobal($any($event.target).value, 'contains')"
                   placeholder="Search keyword" />
-              </p-iconfield>
-          </span>
-        </div>
-      </div>
-    </ng-template>
-
-    <ng-template pTemplate="header">
-      <tr>
-        <th pSortableColumn="id" style="width:5%; white-space: nowrap">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
-        <th style="width:5%">Type</th>
-        <th pSortableColumn="artist.artistName" style="width:15%; white-space: nowrap">
-          <div class="flex justify-between items-center">
-            Artist Name&nbsp;
-            <p-sortIcon field="artist.artistName"></p-sortIcon>
-            <p-columnFilter field="artist.artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
-              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [ngModel]="value" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)">
-                  <ng-template let-option pTemplate="item">
-                    <div class="inline-block align-middle">
-                      <span>{{ option.label }}</span>
-                    </div>
-                  </ng-template>
-                </p-multiSelect>
-              </ng-template>
-            </p-columnFilter>
-          </div>
-        </th>
-        <th style="width:20%; white-space: nowrap">Artifact</th>
-        <th>Title</th>
-        <th style="width:0; text-align: center">Duration</th>
-        <th style="width:0; text-align: center; white-space: nowrap" *ngIf="hasTags">
-          Tags
-          <p-columnFilter field="tags" matchMode="filter_tags" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-              <p-multiSelect [ngModel]="value" [options]="filterTags" placeholder="Any" (onChange)="filter($event.value)">
-                <ng-template let-option pTemplate="item">
-                  <div class="inline-block align-middle">
-                    <span class="ml-1 mt-1">{{ option.label }}</span>
-                  </div>
-                </ng-template>
-              </p-multiSelect>
-            </ng-template>
-          </p-columnFilter>
-        </th>
-        <th style="width:0"></th>
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-item>
-      <tr [pSelectableRow]="item">
-        <td>{{item.id}}</td>
-        <td>{{item.artifactType.name}}</td>
-        <td>{{item.artist?.artistName}}</td>
-        <td style="width:20%; white-space: nowrap">{{item.artifact.title}}</td>
-        <td>{{item.title}}</td>
-        <td>
-          <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
-        </td>
-        <td *ngIf="hasTags">
-          <div class="flex flex-wrap gap-1" *ngIf="item.tags">
-            <div *ngFor="let tag of item.tags">
-              <p-chip label="{{tag}}" styleClass="flex items-center text-xs yellow-chip !p-1 border border-gray-400"  *ngIf="tag"></p-chip>
+                </p-iconfield>
+              </span>
             </div>
           </div>
-        </td>
-        <td class="flex app-crud-panel-small">
-          <button
-            pButton
-            icon="pi pi-info-circle"
-            [rounded]="true"
-            [text]="true"
-            severity="secondary"
-            (click)="onMediaFileClick($event, item)"
-          ></button>
-          <button
-            pButton
-            icon="pi pi-arrow-circle-right"
-            [rounded]="true"
-            [text]="true"
-            severity="secondary"
-            (click)="onDetailClick($event, item)"
-          ></button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="id" style="width:5%; white-space: nowrap">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
+            <th style="width:5%">Type</th>
+            <th pSortableColumn="artist.artistName" style="width:15%; white-space: nowrap">
+              <div class="flex justify-between items-center">
+                Artist Name&nbsp;
+                <p-sortIcon field="artist.artistName"></p-sortIcon>
+                <p-columnFilter field="artist.artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [ngModel]="value" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)">
+                      <ng-template let-option pTemplate="item">
+                        <div class="inline-block align-middle">
+                          <span>{{ option.label }}</span>
+                        </div>
+                      </ng-template>
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+              </div>
+            </th>
+            <th style="width:20%; white-space: nowrap">Artifact</th>
+            <th>Title</th>
+            <th style="width:0; text-align: center">Duration</th>
+            @if (hasTags) {
+              <th style="width:0; text-align: center; white-space: nowrap">
+                Tags
+                <p-columnFilter field="tags" matchMode="filter_tags" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [ngModel]="value" [options]="filterTags" placeholder="Any" (onChange)="filter($event.value)">
+                      <ng-template let-option pTemplate="item">
+                        <div class="inline-block align-middle">
+                          <span class="ml-1 mt-1">{{ option.label }}</span>
+                        </div>
+                      </ng-template>
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+              </th>
+            }
+            <th style="width:0"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr [pSelectableRow]="item">
+            <td>{{item.id}}</td>
+            <td>{{item.artifactType.name}}</td>
+            <td>{{item.artist?.artistName}}</td>
+            <td style="width:20%; white-space: nowrap">{{item.artifact.title}}</td>
+            <td>{{item.title}}</td>
+            <td>
+              <div style="text-align: right">{{item.duration * 1000 | date:'HH:mm:ss':'GMT'}}</div>
+            </td>
+            @if (hasTags) {
+              <td>
+                @if (item.tags) {
+                  <div class="flex flex-wrap gap-1">
+                    @for (tag of item.tags; track tag) {
+                      <div>
+                        @if (tag) {
+                          <p-chip label="{{tag}}" styleClass="flex items-center text-xs yellow-chip !p-1 border border-gray-400" ></p-chip>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              </td>
+            }
+            <td class="flex app-crud-panel-small">
+              <button
+                pButton
+                icon="pi pi-info-circle"
+                [rounded]="true"
+                [text]="true"
+                severity="secondary"
+                (click)="onMediaFileClick($event, item)"
+              ></button>
+              <button
+                pButton
+                icon="pi pi-arrow-circle-right"
+                [rounded]="true"
+                [text]="true"
+                severity="secondary"
+                (click)="onDetailClick($event, item)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  } @else {
+    @if (!errorObject) {
+      <app-loading></app-loading>
+    }
+  }
 

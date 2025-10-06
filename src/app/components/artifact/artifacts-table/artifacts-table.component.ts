@@ -19,13 +19,12 @@ import {
   switchMap,
   tap
 } from "rxjs";
-import {ConfirmationService, FilterService, MessageService} from "primeng/api";
+import {ConfirmationService, FilterService, MessageService, SelectItem} from "primeng/api";
 import {CRUDResult} from "../../../model/crud";
 import {ArtistService} from "../../../service/artist.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {IdName} from "../../../model/common";
-import {SelectItem} from "primeng/api/selectitem";
 import {TaggedService} from "../../../service/tagged.service";
 import {Tagged} from "../../../model/tag";
 import {getFilterArtists, getFilterTags, registerFilterService} from "../utils/filter";

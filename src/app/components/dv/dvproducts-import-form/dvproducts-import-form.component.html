@@ -4,15 +4,15 @@
     <form [formGroup]="editForm">
       <div class="field mt-2">
         <label for="dvOrigin">Origin</label>
-        <p-dropdown
+        <p-select
           formControlName="dvOrigin"
           id="dvOrigin"
           appendTo="body"
           [options]="dvOrigins"
           dataKey="id"
           optionLabel="name"
-        >
-        </p-dropdown>
+          >
+        </p-select>
       </div>
 
       <div class="field">
@@ -25,7 +25,7 @@
           appendTo="body"
           [multiple]="false"
           [dropdown]="true"
-        >
+          >
         </p-autoComplete>
       </div>
 
@@ -38,42 +38,47 @@
           appendTo="body"
           optionLabel="name"
           display="chip"
-        >
+          >
         </p-multiSelect>
       </div>
 
-      <p-tabView>
-        <p-tabPanel header="Titles">
-      <textarea
-        pTextarea
-        id="titles"
-        formControlName="titles"
-        style="resize: none"
-        rows="10"
-      >
-      </textarea>
-        </p-tabPanel>
-        <p-tabPanel header="Original Titles">
-      <textarea
-        pTextarea
-        id="originalTitles"
-        formControlName="originalTitles"
-        style="resize: none"
-        rows="10"
-      >
-      </textarea>
-        </p-tabPanel>
-        <p-tabPanel header="Years">
-      <textarea
-        pTextarea
-        id="years"
-        formControlName="years"
-        style="resize: none"
-        rows="10"
-      >
-      </textarea>
-        </p-tabPanel>
-      </p-tabView>
+      <p-tabs [(value)]="activeTab">
+        <p-tablist>
+          <p-tab value="titles">Titles</p-tab>
+          <p-tab value="originalTitles">Original Titles</p-tab>
+          <p-tab value="years">Years</p-tab>
+        </p-tablist>
+
+        <p-tabpanels>
+          <p-tabpanel value="titles">
+            <textarea
+              pTextarea
+              id="titles"
+              formControlName="titles"
+              style="resize: none"
+              rows="10">
+            </textarea>
+          </p-tabpanel>
+          <p-tabpanel value="originalTitles">
+            <textarea
+              pTextarea
+              id="originalTitles"
+              formControlName="originalTitles"
+              style="resize: none"
+              rows="10">
+            </textarea>
+          </p-tabpanel>
+          <p-tabpanel value="years">
+            <textarea
+              pTextarea
+              id="years"
+              formControlName="years"
+              style="resize: none"
+              rows="10">
+            </textarea>
+          </p-tabpanel>
+        </p-tabpanels>
+      </p-tabs>
     </form>
   </ng-template>
 
@@ -83,11 +88,12 @@
   </ng-template>
 </p-dialog>
 
-<ng-container *ngIf="action$ | async as importStats">
-  <app-dvproducts-import-result-form
-    *ngIf="displayImportResult"
-    [(display)]="displayImportResult"
-    [importStats]="importStats"
-  >
-  </app-dvproducts-import-result-form>
-</ng-container>
+@if (action$ | async; as importStats) {
+  @if (displayImportResult) {
+    <app-dvproducts-import-result-form
+      [(display)]="displayImportResult"
+      [importStats]="importStats"
+      >
+    </app-dvproducts-import-result-form>
+  }
+}

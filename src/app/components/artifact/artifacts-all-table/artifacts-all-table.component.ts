@@ -1,11 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Artifact} from "../../../model/artifacts";
 import {BaseTableComponent} from "../../base/base-table-component";
-import {FilterService, MessageService} from "primeng/api";
+import {FilterService, MessageService, SelectItem} from "primeng/api";
 import {FormBuilder} from "@angular/forms";
 import {catchError, iif, merge, Observable, of, startWith, switchMap, tap} from "rxjs";
 import {ArtifactService} from "../../../service/artifact.service";
-import {SelectItem} from "primeng/api/selectitem";
 import {IdName} from "../../../model/common";
 import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 import {ArtistService} from "../../../service/artist.service";

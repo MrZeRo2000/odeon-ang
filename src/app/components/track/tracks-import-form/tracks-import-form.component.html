@@ -4,7 +4,7 @@
       <p-fluid>
         <div class="mb-4">
           <label for="mediaFile">Media File</label>
-          <p-dropdown
+          <p-select
             #autofocused
             formControlName="mediaFile"
             id="mediaFile"
@@ -13,46 +13,50 @@
             optionValue="id"
             appendTo="body"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['mediaFile'].errors}"
-          ></p-dropdown>
+          ></p-select>
         </div>
       </p-fluid>
 
       <div class="grid grid-cols-2 gap-4">
         <div class="mb-2">
-            <label for="dvType">Video Type</label>
-            <p-select
-              formControlName="dvType"
-              id="dvType"
-              [options]="DV_TYPES"
-              optionLabel="name"
-              optionValue="id"
-              appendTo="body"
-              [editable]="false"
-              class="w-full"
-              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['dvType'].errors}"
-            ></p-select>
+          <label for="dvType">Video Type</label>
+          <p-select
+            formControlName="dvType"
+            id="dvType"
+            [options]="DV_TYPES"
+            optionLabel="name"
+            optionValue="id"
+            appendTo="body"
+            [editable]="false"
+            class="w-full"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['dvType'].errors}"
+          ></p-select>
         </div>
 
         <div class="mb-2">
-            <label for="num">Track #</label>
-            <p-inputNumber
-              formControlName="num"
-              id="num"
-              class="w-full"
-              [format]="false"
-              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['num'].errors}"
-            ></p-inputNumber>
+          <label for="num">Track #</label>
+          <p-inputNumber
+            formControlName="num"
+            id="num"
+            class="w-full"
+            [format]="false"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['num'].errors}"
+          ></p-inputNumber>
         </div>
       </div>
       <div class="grid grid-cols-2 gap-4">
         <div class="mb-4">
           <label for="titles">
             Titles
-            <span *ngIf="editFormData$ | async as editFormData">
-              <span *ngIf="textToArray(editFormData.titles).length > 0">
-                ({{textToArray(editFormData.titles).length}} lines)
+            @if (editFormData$ | async; as editFormData) {
+              <span>
+                @if (textToArray(editFormData.titles).length > 0) {
+                  <span>
+                    ({{textToArray(editFormData.titles).length}} lines)
+                  </span>
+                }
               </span>
-            </span>
+            }
           </label>
           <textarea
             pTextarea
@@ -64,39 +68,47 @@
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['titles'].errors}"
           ></textarea>
         </div>
-        <div class="mb-4" *ngIf="isArtifactTypeVideoWithProducts">
-          <label for="chapters">
-            Chapters
-          </label>
-          <textarea
-            pTextarea
-            id="chapters"
-            formControlName="chapters"
-            style="resize: none"
-            rows="5"
-            class="w-full"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['chapters'].errors}"
-          ></textarea>
-        </div>
-        <div class="mb-2" *ngIf="isArtifactTypeVideoMusic">
-          <label for="chapters">
-            Artists
-            <span *ngIf="editFormData$ | async as editFormData">
-              <span *ngIf="textToArray(editFormData.artists).length > 0">
-                ({{textToArray(editFormData.artists).length}} lines)
-              </span>
-            </span>
-          </label>
-          <textarea
-            pTextarea
-            id="artists"
-            formControlName="artists"
-            style="resize: none"
-            rows="5"
-            class="w-full"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['artists'].errors}"
-          ></textarea>
-        </div>
+        @if (isArtifactTypeVideoWithProducts) {
+          <div class="mb-4">
+            <label for="chapters">
+              Chapters
+            </label>
+            <textarea
+              pTextarea
+              id="chapters"
+              formControlName="chapters"
+              style="resize: none"
+              rows="5"
+              class="w-full"
+              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['chapters'].errors}"
+            ></textarea>
+          </div>
+        }
+        @if (isArtifactTypeVideoMusic) {
+          <div class="mb-2">
+            <label for="chapters">
+              Artists
+              @if (editFormData$ | async; as editFormData) {
+                <span>
+                  @if (textToArray(editFormData.artists).length > 0) {
+                    <span>
+                      ({{textToArray(editFormData.artists).length}} lines)
+                    </span>
+                  }
+                </span>
+              }
+            </label>
+            <textarea
+              pTextarea
+              id="artists"
+              formControlName="artists"
+              style="resize: none"
+              rows="5"
+              class="w-full"
+              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['artists'].errors}"
+            ></textarea>
+          </div>
+        }
       </div>
     </form>
   </ng-template>
@@ -106,5 +118,5 @@
   </ng-template>
 </p-dialog>
 
-<ng-container *ngIf="import$ | async as importStats">
-</ng-container>
+@if (import$ | async; as importStats) {
+}

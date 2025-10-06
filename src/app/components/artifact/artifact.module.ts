@@ -14,7 +14,6 @@ import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {ChipModule} from "primeng/chip";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
-import {DropdownModule} from "primeng/dropdown";
 import {TagModule} from "primeng/tag";
 import {ArtifactsAllTableComponent} from "./artifacts-all-table/artifacts-all-table.component";
 import {ArtifactTypeModule} from "../artifact-type/artifact-type.module";
@@ -23,6 +22,7 @@ import {InputIconModule} from "primeng/inputicon";
 import {InputTextModule} from "primeng/inputtext";
 import {FluidModule} from "primeng/fluid";
 import {TaggedModule} from "../tag/tagged.module";
+import {SelectModule} from "primeng/select";
 
 
 @NgModule({
@@ -53,7 +53,7 @@ import {TaggedModule} from "../tag/tagged.module";
         CoreModule,
         ChipModule,
         ConfirmPopupModule,
-        DropdownModule,
+        SelectModule,
         TagModule,
         FluidModule,
         InputTextModule,

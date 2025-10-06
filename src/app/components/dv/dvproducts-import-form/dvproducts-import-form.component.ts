@@ -44,6 +44,8 @@ export class DVProductsImportFormComponent extends BaseFormComponent implements 
   @Output()
   public onImport: EventEmitter<void> = new EventEmitter();
 
+  activeTab: string = 'titles';
+
   editForm: FormGroup = this.fb.group({
     dvOrigin: ['', Validators.required],
     frontInfo: [''],

@@ -1,7 +1,11 @@
 <p-dialog [header]="header" [(visible)]="displayProp" [modal]="true" [position]="dialogPosition" [style]="dialogStyle"
-          [draggable]="false" [resizable]="false">
-  <p *ngIf="htmlText" class="m-0" [innerHTML]=htmlText></p>
-  <pre *ngIf="text">{{text}}</pre>
+  [draggable]="false" [resizable]="false">
+  @if (htmlText) {
+    <p class="m-0" [innerHTML]=htmlText></p>
+  }
+  @if (text) {
+    <pre>{{text}}</pre>
+  }
   <ng-template pTemplate="footer">
     <p-button icon="pi pi-check" (click)="displayProp=false" label="Ok" styleClass="p-button-text"></p-button>
   </ng-template>

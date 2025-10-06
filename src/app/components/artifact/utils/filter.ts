@@ -1,6 +1,5 @@
 import {Artifact} from "../../../model/artifacts";
-import {SelectItem} from "primeng/api/selectitem";
-import {FilterService} from "primeng/api";
+import {FilterService, SelectItem} from "primeng/api";
 import {Track} from "../../../model/track";
 
 export function getFilterArtists(v: Array<Artifact | Track>): Array<SelectItem> {

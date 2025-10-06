@@ -11,20 +11,23 @@
         [checkbox]="true"
         [filter]="true"
         [listStyle]="{'max-height': '220px'}" />
-    </form>
-  </ng-template>
+      </form>
+    </ng-template>
 
-  <ng-template pTemplate="footer" *ngIf="editFormData$ | async as editFormData">
-    <button
-      pButton
-      pRipple
-      label="Load"
-      icon="pi pi-play"
-      class="p-button-text"
-      [disabled]="!editFormData.selectedMediaFileNames || editFormData.selectedMediaFileNames.length === 0"
-      (click)="this.execute($event, editFormData.selectedMediaFileNames)"
-    ></button>
-  </ng-template>
-</p-dialog>
+    @if (editFormData$ | async; as editFormData) {
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          pRipple
+          label="Load"
+          icon="pi pi-play"
+          class="p-button-text"
+          [disabled]="!editFormData.selectedMediaFileNames || editFormData.selectedMediaFileNames.length === 0"
+          (click)="this.execute($event, editFormData.selectedMediaFileNames)"
+        ></button>
+      </ng-template>
+    }
+  </p-dialog>
 
-<ng-container *ngIf="execute$ | async"></ng-container>
+  @if (execute$ | async) {
+  }

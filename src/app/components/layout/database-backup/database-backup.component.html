@@ -1,15 +1,19 @@
-<app-progress-spinner-overlay *ngIf="displayProgress"></app-progress-spinner-overlay>
+@if (displayProgress) {
+  <app-progress-spinner-overlay></app-progress-spinner-overlay>
+}
 
-<div *ngIf="databaseBackupInfo$ | async as databaseBackupInfo">
-  <p-button
-    icon="pi pi-file-export"
-    [text]="true"
-    severity="secondary"
-    [pTooltip]="getBackupTooltipText(databaseBackupInfo)"
-    tooltipPosition="left"
-    (onClick)="backupSubject.next(undefined)"
-  >
-  </p-button>
-
-  <ng-container *ngIf="backupAction$ | async"></ng-container>
-</div>
+@if (databaseBackupInfo$ | async; as databaseBackupInfo) {
+  <div>
+    <p-button
+      icon="pi pi-file-export"
+      [text]="true"
+      severity="secondary"
+      [pTooltip]="getBackupTooltipText(databaseBackupInfo)"
+      tooltipPosition="left"
+      (onClick)="backupSubject.next(undefined)"
+      >
+    </p-button>
+    @if (backupAction$ | async) {
+    }
+  </div>
+}

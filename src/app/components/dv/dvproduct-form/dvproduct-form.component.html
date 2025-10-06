@@ -5,13 +5,13 @@
         <div class="col-5">
 
           <div class="field mt-2">
-            <p-dropdown
+            <p-select
               formControlName="dvOrigin"
               [options]="dvOrigins"
               dataKey="id"
               optionLabel="name"
               class="w-full"
-            ></p-dropdown>
+            ></p-select>
           </div>
 
           <div class="field">
@@ -25,7 +25,7 @@
               required
               class="w-full"
               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
-            />
+              />
           </div>
 
           <div class="field">
@@ -37,7 +37,7 @@
               formControlName="originalTitle"
               class="w-full"
               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['originalTitle'].errors}"
-            />
+              />
           </div>
 
           <div class="field">
@@ -99,7 +99,7 @@
               [ngClass]="{'p-button-outlined': !editForm.value.description}"
               icon="pi pi-window-maximize"
               (click)="previewDescription()"
-            >
+              >
             </button>
           </div>
         </div>
@@ -115,7 +115,7 @@
           display="chip"
           appendTo="body"
           class="w-full"
-        >
+          >
         </p-multiSelect>
       </div>
 
@@ -131,14 +131,16 @@
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
   </ng-template>
 
-  <ng-container *ngIf="saveAction$ | async as saver"></ng-container>
+  @if (saveAction$ | async; as saver) {
+  }
 
-  <app-text-view-dialog
-    *ngIf="!!editForm.value.description"
-    [(display)]="displayDescription"
-    header="Description"
-    [htmlText]="String(editForm.value.description)">
-  </app-text-view-dialog>
+  @if (!!editForm.value.description) {
+    <app-text-view-dialog
+      [(display)]="displayDescription"
+      header="Description"
+      [htmlText]="String(editForm.value.description)">
+    </app-text-view-dialog>
+  }
 
 
 </p-dialog>

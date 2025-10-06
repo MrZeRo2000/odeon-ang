@@ -4,7 +4,7 @@
       <p-fluid>
         <div class="mb-4">
           <label for="dvType">Video Type</label>
-          <p-dropdown
+          <p-select
             #autofocused
             id="dvType"
             [options]="DV_TYPES"
@@ -13,7 +13,7 @@
             formControlName="dvTypeId"
             appendTo="body"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['dvTypeId'].errors}"
-          ></p-dropdown>
+          ></p-select>
         </div>
       </p-fluid>
     </form>
@@ -24,5 +24,6 @@
   </ng-template>
 </p-dialog>
 
-<ng-container *ngIf="update$ | async"></ng-container>
+@if (update$ | async) {
+}
 

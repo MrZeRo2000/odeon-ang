@@ -20,15 +20,15 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {UserImportModule} from "../user-import/user-import.module";
 import {InputNumberModule} from "primeng/inputnumber";
-import {DropdownModule} from "primeng/dropdown";
 import {TooltipModule} from "primeng/tooltip";
 import {DVProductsImportFormComponent} from "./dvproducts-import-form/dvproducts-import-form.component";
-import {TabViewModule} from "primeng/tabview";
 import {InputTextModule} from "primeng/inputtext";
 import {IconField} from "primeng/iconfield";
 import {InputIcon} from "primeng/inputicon";
 import {FluidModule} from "primeng/fluid";
 import {TextareaModule} from "primeng/textarea";
+import {SelectModule} from "primeng/select";
+import {TabsModule} from "primeng/tabs";
 
 
 @NgModule({
@@ -67,9 +67,9 @@ import {TextareaModule} from "primeng/textarea";
     MultiSelectModule,
     ConfirmPopupModule,
     InputNumberModule,
-    DropdownModule,
+    SelectModule,
     TooltipModule,
-    TabViewModule,
+    TabsModule,
     IconField,
     InputIcon,
     FluidModule,

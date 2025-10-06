@@ -8,9 +8,9 @@ import {TreeModule} from "primeng/tree";
 import {CoreModule} from "../../core/core.module";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
-import {DropdownModule} from "primeng/dropdown";
 import {ReactiveFormsModule} from "@angular/forms";
 import {PanelModule} from "primeng/panel";
+import {SelectModule} from "primeng/select";
 
 
 @NgModule({
@@ -31,7 +31,7 @@ import {PanelModule} from "primeng/panel";
       ProgressBarModule,
       ButtonModule,
       RippleModule,
-      DropdownModule,
+      SelectModule,
       PanelModule,
       //
       CoreModule,

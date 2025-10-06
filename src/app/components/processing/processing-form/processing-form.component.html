@@ -1,120 +1,143 @@
 <app-confirm-dialog></app-confirm-dialog>
 
-<ng-container *ngIf="dateSelection$ | async as dateSelection">
-  <div class="grid grid-cols-12" *ngIf="processInfo$ | async as pi">
-    <div [ngClass]="pi.processingStatus ? 'lg:col-span-3 md:col-span-12 col-span-12' : 'col-span-12'">
-      <p-tree [value]="treeValues" selectionMode="single"
-              (onNodeSelect)="nodeSelect($event, pi.processingStatus)">
-      </p-tree>
-      <ng-container *ngIf="pi.processingStatus !== PROGRESS_STATUS">
-        <div *ngIf="table$ | async as t" class="field mt-2">
-          <form [formGroup]="dateForm">
-            <p-dropdown
-              placeholder="Select a Date"
-              [options]="t"
-              optionValue="id"
-              optionLabel="updateDateTime"
-              [showClear]="true"
-              [style]="{'minWidth':'100%'}"
-              [virtualScroll]="true"
-              [virtualScrollItemSize]="38"
-              [lazy]="true"
-              (onLazyLoad)="onLazyLoad($event)"
-              formControlName="selectedDate"
-            >
-              <ng-template let-item pTemplate="item">
-                <div class="flex items-center gap-2">
-                  <div class="flex">{{ item.updateDateTime }}</div>
-                  <span
-                    class="rounded-full w-4 h-4 flex items-center justify-center"
-                    [ngClass]="item.processingStatus === SUCCESS_STATUS ? 'bg-success': item.processingStatus === FAILURE_STATUS ? 'bg-failure': ''"
-                    *ngIf="item.processingStatus === SUCCESS_STATUS || item.processingStatus === FAILURE_STATUS"
-                  >&nbsp;</span>
-                </div>
-              </ng-template>
-            </p-dropdown>
-          </form>
-        </div>
-      </ng-container>
-    </div>
-    <div class="lg:col-span-9 md:col-span-12 col-span-12" *ngIf="pi.processingStatus">
-      <p-panel [toggleable]="false">
-        <ng-template #header>
-          <div class="flex w-full p-2"
-               [ngClass]="pi.processingStatus === SUCCESS_STATUS ? 'bg-success': pi.processingStatus === FAILURE_STATUS ? 'bg-failure': ''">
-            <div class="flex items-center justify-start p-panel-title h-[3rem] ml-2" style="order:0"
-                 [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : ''"
-            >{{pi.processorType | processorTypeName}}</div>
-            <div class="flex items-center flex-grow-1 mr-1">
-              <div *ngIf="pi.processingEvent && pi.processingStatus !== SUCCESS_STATUS" class="text-sm font-light ml-2"
-                   [ngClass]="pi.processingStatus === FAILURE_STATUS ? 'text-white' : 'text-primary'">
-                <div *ngIf="pi.processingEvent">
-                  {{pi.processingEvent.updateDateTime | date:'dd.MM.YYYY HH:mm:ss'}}
-                </div>
-                <div *ngIf="pi.processingEvent" class="text-overflow-ellipsis">
-                  {{pi.processingEvent.message}}
-                </div>
-              </div>
+@if (dateSelection$ | async; as dateSelection) {
+  @if (processInfo$ | async; as pi) {
+    <div class="grid grid-cols-12">
+      <div [ngClass]="pi.processingStatus ? 'lg:col-span-3 md:col-span-12 col-span-12' : 'col-span-12'">
+        <p-tree [value]="treeValues" selectionMode="single"
+          (onNodeSelect)="nodeSelect($event, pi.processingStatus)">
+        </p-tree>
+        @if (pi.processingStatus !== PROGRESS_STATUS) {
+          @if (table$ | async; as t) {
+            <div class="field mt-2">
+              <form [formGroup]="dateForm">
+                <p-select
+                  placeholder="Select a Date"
+                  [options]="t"
+                  optionValue="id"
+                  optionLabel="updateDateTime"
+                  [showClear]="true"
+                  [style]="{'minWidth':'100%'}"
+                  [virtualScroll]="true"
+                  [virtualScrollItemSize]="38"
+                  [lazy]="true"
+                  (onLazyLoad)="onLazyLoad($event)"
+                  formControlName="selectedDate"
+                  >
+                  <ng-template let-item pTemplate="item">
+                    <div class="flex items-center gap-2">
+                      <div class="flex">{{ item.updateDateTime }}</div>
+                      @if (item.processingStatus === SUCCESS_STATUS || item.processingStatus === FAILURE_STATUS) {
+                        <span
+                          class="rounded-full w-4 h-4 flex items-center justify-center"
+                          [ngClass]="item.processingStatus === SUCCESS_STATUS ? 'bg-success': item.processingStatus === FAILURE_STATUS ? 'bg-failure': ''"
+                        >&nbsp;</span>
+                      }
+                    </div>
+                  </ng-template>
+                </p-select>
+              </form>
             </div>
-            <div
-              class="flex items-center mr-2"
-              [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : ''"
-            >
-              {{getProcessDuration(pi)}}
-            </div>
-            <div class="flex items-center mr-2" *ngIf="pi.processingStatus !== PROGRESS_STATUS">
-              <button
-                pButton
-                icon="pi pi-refresh"
-                [rounded]="true"
-                [outlined]="true"
-                [severity]="pi.processingStatus === SUCCESS_STATUS ? 'success' : pi.processingStatus === FAILURE_STATUS ? 'danger': 'info'"
-                [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : 'p-button-secondary'"
-                (click)="onRefreshButton($event, pi)"
-              >
-              </button>
-            </div>
-          </div>
-        </ng-template>
-        <p-table
-          [value]="pi.processDetails || []"
-          size="small"
-          responsiveLayout="scroll">
-          <ng-template pTemplate="header">
-            <tr>
-              <th style="width:auto">Time</th>
-              <th style="width:100%">Info</th>
-              <th style="width:auto">Rows</th>
-              <th style="width:auto">Status</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-processDetail>
-            <tr>
-              <td class="whitespace-nowrap">{{processDetail.updateDateTime | date:'dd.MM.YYYY HH:mm:ss'}}</td>
-              <td>
-                  <div class="flex flex-col">
-                    {{processDetail.message}}
-                    <span *ngIf="processDetail.processingAction?.actionType === 'ADD_ARTIST'">
-                    <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined ml-2" (click)="resolveActionAddArtist(processDetail.processingAction)"></button>
-                    </span>
+          }
+        }
+      </div>
+      @if (pi.processingStatus) {
+        <div class="lg:col-span-9 md:col-span-12 col-span-12">
+          <p-panel [toggleable]="false">
+            <ng-template #header>
+              <div class="flex w-full p-2"
+                [ngClass]="pi.processingStatus === SUCCESS_STATUS ? 'bg-success': pi.processingStatus === FAILURE_STATUS ? 'bg-failure': ''">
+                <div class="flex items-center justify-start p-panel-title h-[3rem] ml-2" style="order:0"
+                  [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : ''"
+                >{{pi.processorType | processorTypeName}}</div>
+                <div class="flex items-center flex-grow-1 mr-1">
+                  @if (pi.processingEvent && pi.processingStatus !== SUCCESS_STATUS) {
+                    <div class="text-sm font-light ml-2"
+                      [ngClass]="pi.processingStatus === FAILURE_STATUS ? 'text-white' : 'text-primary'">
+                      @if (pi.processingEvent) {
+                        <div>
+                          {{pi.processingEvent.updateDateTime | date:'dd.MM.YYYY HH:mm:ss'}}
+                        </div>
+                      }
+                      @if (pi.processingEvent) {
+                        <div class="text-overflow-ellipsis">
+                          {{pi.processingEvent.message}}
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+                <div
+                  class="flex items-center mr-2"
+                  [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : ''"
+                  >
+                  {{getProcessDuration(pi)}}
+                </div>
+                @if (pi.processingStatus !== PROGRESS_STATUS) {
+                  <div class="flex items-center mr-2">
+                    <button
+                      pButton
+                      icon="pi pi-refresh"
+                      [rounded]="true"
+                      [outlined]="true"
+                      [severity]="pi.processingStatus === SUCCESS_STATUS ? 'success' : pi.processingStatus === FAILURE_STATUS ? 'danger': 'info'"
+                      [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : 'p-button-secondary'"
+                      (click)="onRefreshButton($event, pi)"
+                      >
+                    </button>
                   </div>
-                  <div class="flex flex-col ml-4" *ngIf="processDetail?.items?.length > 0">
-                    <ul class="list-inside text-sm">
-                      <li *ngFor="let item of processDetail.items">{{item}}</li>
-                    </ul>
-                </div>
-              </td>
-              <td>{{processDetail.rows}}</td>
-              <td><app-processing-status-indicator processingStatus="{{processDetail.status}}"></app-processing-status-indicator></td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="footer">
-            <tr class="p-rowgroup-footer" *ngIf="pi.processingStatus === PROGRESS_STATUS">
-              <td colspan="3"><p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar></td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </p-panel>
+                }
+              </div>
+            </ng-template>
+            <p-table
+              [value]="pi.processDetails || []"
+              size="small"
+              responsiveLayout="scroll">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width:auto">Time</th>
+                  <th style="width:100%">Info</th>
+                  <th style="width:auto">Rows</th>
+                  <th style="width:auto">Status</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-processDetail>
+                <tr>
+                  <td class="whitespace-nowrap">{{processDetail.updateDateTime | date:'dd.MM.YYYY HH:mm:ss'}}</td>
+                  <td>
+                    <div class="flex flex-col">
+                      {{processDetail.message}}
+                      @if (processDetail.processingAction?.actionType === 'ADD_ARTIST') {
+                        <span>
+                          <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined ml-2" (click)="resolveActionAddArtist(processDetail.processingAction)"></button>
+                        </span>
+                      }
+                    </div>
+                    @if (processDetail?.items?.length > 0) {
+                      <div class="flex flex-col ml-4">
+                        <ul class="list-inside text-sm">
+                          @for (item of processDetail.items; track item) {
+                            <li>{{item}}</li>
+                          }
+                        </ul>
+                      </div>
+                    }
+                  </td>
+                  <td>{{processDetail.rows}}</td>
+                  <td><app-processing-status-indicator processingStatus="{{processDetail.status}}"></app-processing-status-indicator></td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="footer">
+                @if (pi.processingStatus === PROGRESS_STATUS) {
+                  <tr class="p-rowgroup-footer">
+                    <td colspan="3"><p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar></td>
+                  </tr>
+                }
+              </ng-template>
+            </p-table>
+          </p-panel>
+        </div>
+      }
     </div>
-  </div>
-</ng-container>
+  }
+}

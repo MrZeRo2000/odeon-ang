@@ -1,49 +1,46 @@
 <app-confirm-dialog></app-confirm-dialog>
 
-<ng-template #loadingOrError>
-  <ng-container *ngIf="!errorObject">
-    <app-loading></app-loading>
-  </ng-container>
-</ng-template>
 
-<div *ngIf="data$ | async as data; else loadingOrError">
-
-  <div *ngIf="artistLyricsText$ | async as artistLyricsText">
-    <app-text-view-dialog
-      *ngIf="!!artistLyricsText.text"
-      [(display)]="displayArtistLyricsText"
-      dialogPosition="right"
-      [header]="artistLyricsText.title"
-      [text]="artistLyricsText.text"
-    >
-    </app-text-view-dialog>
-  </div>
-
-  <div class="grid grid-cols-12">
+@if (data$ | async; as data) {
+  <div>
+    @if (artistLyricsText$ | async; as artistLyricsText) {
+      <div>
+        @if (!!artistLyricsText.text) {
+          <app-text-view-dialog
+            [(display)]="displayArtistLyricsText"
+            dialogPosition="right"
+            [header]="artistLyricsText.title"
+            [text]="artistLyricsText.text"
+            >
+          </app-text-view-dialog>
+        }
+      </div>
+    }
+    <div class="grid grid-cols-12">
       <div class="col-span-12 md:col-span-10 lg:col-span-8">
-      <p-table #dt
-               styleClass="p-datatable-sm"
-               size="small"
-               responsiveLayout="scroll"
-               [value]="data[0]"
-               [rows]="10"
-               [paginator]="true"
-               [showCurrentPageReport]="true"
-               [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
-               dataKey="id"
-               stateStorage="session"
-               stateKey="artist-lyrics-table-session"
-               [globalFilterFields]="['artistName', 'title']"
-               (onFilter)="onFilter($event)">
-        <ng-template pTemplate="caption">
-          <div class="flex">
-            <div class="flex items-center justify-between text-xl mr-2">Lyrics</div>
-            <div class="flex self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
-            <div class="flex flex-1 justify-end">
-              <span class="p-input-icon-left flex items-center">
-                <p-iconfield iconPosition="left" class="ml-auto">
+        <p-table #dt
+          styleClass="p-datatable-sm"
+          size="small"
+          responsiveLayout="scroll"
+          [value]="data[0]"
+          [rows]="10"
+          [paginator]="true"
+          [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
+          dataKey="id"
+          stateStorage="session"
+          stateKey="artist-lyrics-table-session"
+          [globalFilterFields]="['artistName', 'title']"
+          (onFilter)="onFilter($event)">
+          <ng-template pTemplate="caption">
+            <div class="flex">
+              <div class="flex items-center justify-between text-xl mr-2">Lyrics</div>
+              <div class="flex self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
+              <div class="flex flex-1 justify-end">
+                <span class="p-input-icon-left flex items-center">
+                  <p-iconfield iconPosition="left" class="ml-auto">
                     <p-inputicon>
-                        <i class="pi pi-search"></i>
+                      <i class="pi pi-search"></i>
                     </p-inputicon>
                     <input
                       pInputText
@@ -51,67 +48,67 @@
                       [value]="globalFilterValue"
                       (input)="dt.filterGlobal($any($event.target).value, 'contains')"
                       placeholder="Search keyword"
-                    />
-                </p-iconfield>
-              </span>
+                      />
+                  </p-iconfield>
+                </span>
+              </div>
             </div>
-          </div>
-        </ng-template>
-
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="width:30%">
-              <div class="flex items-center">
-                Artist name
-                <p-columnFilter field="artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-multiSelect
-                      [ngModel]="value"
-                      [options]="data[1]"
-                      optionLabel="name"
-                      optionValue="name"
-                      placeholder="All"
-                      (onChange)="filter($event.value)"
-                      display="chip">
-                    </p-multiSelect>
-                  </ng-template>
-                </p-columnFilter>
-              </div>
-            </th>
-            <th style="width:70%">
-              <div class="flex items-center">
-                Title
-                <p-columnFilter type="text" field="title" class="ml-2"></p-columnFilter>
-              </div>
-            </th>
-            <th style="width:0"></th>
-          </tr>
-        </ng-template>
-
-        <ng-template pTemplate="body" let-item>
-          <tr>
-            <td>{{item.artistName}}</td>
-            <td>
-              <p-button label="{{item.title}}" [link]="true" (click)="displayLyrics($event, item)" styleClass="!p-0 !m-0"/>
-            </td>
-            <td>
-              <div class="app-crud-panel-small">
-                <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-
-      </p-table>
-
-      <ng-container *ngIf="deleteAction$ | async"></ng-container>
-
-      <ng-container *ngIf="editAction$ | async as editItem">
-        <app-artist-lyrics-form *ngIf="displayForm" [(display)]="displayForm" [editItem]="editItem[0]" [artistTable]="editItem[1]" (onSavedItem)="savedEditData($event)"></app-artist-lyrics-form>
-      </ng-container>
-
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width:30%">
+                <div class="flex items-center">
+                  Artist name
+                  <p-columnFilter field="artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect
+                        [ngModel]="value"
+                        [options]="data[1]"
+                        optionLabel="name"
+                        optionValue="name"
+                        placeholder="All"
+                        (onChange)="filter($event.value)"
+                        display="chip">
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+              </th>
+              <th style="width:70%">
+                <div class="flex items-center">
+                  Title
+                  <p-columnFilter type="text" field="title" class="ml-2"></p-columnFilter>
+                </div>
+              </th>
+              <th style="width:0"></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td>{{item.artistName}}</td>
+              <td>
+                <p-button label="{{item.title}}" [link]="true" (click)="displayLyrics($event, item)" styleClass="!p-0 !m-0"/>
+              </td>
+              <td>
+                <div class="app-crud-panel-small">
+                  <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        @if (deleteAction$ | async) {
+        }
+        @if (editAction$ | async; as editItem) {
+          @if (displayForm) {
+            <app-artist-lyrics-form [(display)]="displayForm" [editItem]="editItem[0]" [artistTable]="editItem[1]" (onSavedItem)="savedEditData($event)"></app-artist-lyrics-form>
+          }
+        }
+      </div>
     </div>
   </div>
-
-
-</div>
+} @else {
+  @if (!errorObject) {
+    <app-loading></app-loading>
+  }
+}

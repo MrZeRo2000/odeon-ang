@@ -1,4 +1,4 @@
-<p-confirmPopup key="tags"></p-confirmPopup>
+<p-confirmpopup key="tags"></p-confirmpopup>
 
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid" header="Tags">
   <ng-template pTemplate="content">
@@ -14,7 +14,7 @@
           class="mt-2"
           (onKeyUp)="tagsKeyUp($event)"
           appendTo="body"
-        >
+          >
         </p-autoComplete>
       </p-fluid>
     </form>
@@ -25,6 +25,7 @@
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
   </ng-template>
 
-  <ng-container *ngIf="saveAction$ | async "></ng-container>
+  @if (saveAction$ | async ) {
+  }
 
 </p-dialog>

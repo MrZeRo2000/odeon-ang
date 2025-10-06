@@ -14,7 +14,6 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {CoreModule} from "../../core/core.module";
 import {InputTextModule} from "primeng/inputtext";
-import {DropdownModule} from "primeng/dropdown";
 import {TooltipModule} from "primeng/tooltip";
 import {MediaFilesLoadFormComponent} from "./media-files-load-form/media-files-load-form.component";
 import {ListboxModule} from "primeng/listbox";
@@ -54,7 +53,6 @@ import {SelectModule} from "primeng/select";
         FluidModule,
         // custom modules
         CoreModule,
-        DropdownModule,
         TooltipModule,
     ]
 })

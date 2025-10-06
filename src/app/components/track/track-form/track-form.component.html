@@ -1,22 +1,23 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Track Edit" (onShow)="onShow()">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
-        <p-fluid class="grid grid-cols-2 gap-4">
-          <div class="col-span-2 mb-2">
-            <label for="title">Title</label>
-            <input
-              #autofocused
-              pInputText
-              type="text"
-              id="title"
-              formControlName="title"
-              required
-              class="w-full"
-              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
+      <p-fluid class="grid grid-cols-2 gap-4">
+        <div class="col-span-2 mb-2">
+          <label for="title">Title</label>
+          <input
+            #autofocused
+            pInputText
+            type="text"
+            id="title"
+            formControlName="title"
+            required
+            class="w-full"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
             />
-          </div>
+        </div>
 
-          <div class="mb-2" *ngIf="artifactTypeConfig?.hasDiskNum">
+        @if (artifactTypeConfig?.hasDiskNum) {
+          <div class="mb-2">
             <label for="diskNum">Disk #</label>
             <p-inputNumber
               [format]="false"
@@ -28,48 +29,51 @@
               formControlName="diskNum"
               class="w-full"
               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['diskNum'].errors}"
-            >
+              >
             </p-inputNumber>
           </div>
+        }
 
-          <div class="mb-2" [ngClass]="artifactTypeConfig?.hasDiskNum ? '' : 'col-span-2'">
-            <label for="num">Track #</label>
-            <p-inputNumber
-              [format]="false"
-              [showButtons]="true"
-              inputId="num"
-              [min]="1"
-              [max]="99"
-              id="num"
-              formControlName="num"
-              class="w-full"
-              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['num'].errors}">
-            </p-inputNumber>
-          </div>
+        <div class="mb-2" [ngClass]="artifactTypeConfig?.hasDiskNum ? '' : 'col-span-2'">
+          <label for="num">Track #</label>
+          <p-inputNumber
+            [format]="false"
+            [showButtons]="true"
+            inputId="num"
+            [min]="1"
+            [max]="99"
+            id="num"
+            formControlName="num"
+            class="w-full"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['num'].errors}">
+          </p-inputNumber>
+        </div>
 
-          <div class="mb-2" [ngClass]="artifactTypeConfig?.hasDvType ? '' : 'col-span-2'">
-            <label for="duration" class="block">
-              Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})
+        <div class="mb-2" [ngClass]="artifactTypeConfig?.hasDvType ? '' : 'col-span-2'">
+          <label for="duration" class="block">
+            Duration ({{this.editForm.value.duration * 1000 | date:'HH:mm:ss':'GMT'}})
+            @if (this.editForm.value['mediaFileIds'].length > 0) {
               <span
-                *ngIf="this.editForm.value['mediaFileIds'].length > 0"
                 (click)="onUpdateDuration($event)"
                 class="cursor-pointer">
                 <i class="pi pi-refresh"></i>
               </span>
-            </label>
-            <p-inputNumber
-              [format]="false"
-              [showButtons]="true"
-              id="duration"
-              formControlName="duration"
-              class="w-full"
-              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
-            ></p-inputNumber>
-          </div>
+            }
+          </label>
+          <p-inputNumber
+            [format]="false"
+            [showButtons]="true"
+            id="duration"
+            formControlName="duration"
+            class="w-full"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
+          ></p-inputNumber>
+        </div>
 
-          <div class="mb-2" *ngIf="artifactTypeConfig?.hasDvType">
+        @if (artifactTypeConfig?.hasDvType) {
+          <div class="mb-2">
             <label for="dvType">Video Type</label>
-            <p-dropdown
+            <p-select
               id="dvType"
               [options]="DV_TYPES"
               optionLabel="name"
@@ -77,10 +81,12 @@
               formControlName="dvTypeId"
               class="w-full"
               appendTo="body"
-            ></p-dropdown>
+            ></p-select>
           </div>
+        }
 
-          <div class="mb-2" [ngClass]="artifactTypeConfig?.hasPerformerArtist ? '' : 'col-span-2'" *ngIf="artifactTypeConfig?.hasArtist">
+        @if (artifactTypeConfig?.hasArtist) {
+          <div class="mb-2" [ngClass]="artifactTypeConfig?.hasPerformerArtist ? '' : 'col-span-2'">
             <label for="artistId">Artist</label>
             <p-autoComplete
               [suggestions]="filteredArtists"
@@ -96,8 +102,10 @@
               appendTo="body"
             ></p-autoComplete>
           </div>
+        }
 
-          <div class="mb-2" *ngIf="artifactTypeConfig?.hasPerformerArtist">
+        @if (artifactTypeConfig?.hasPerformerArtist) {
+          <div class="mb-2">
             <label for="performerArtistId">Performer Artist</label>
             <p-autoComplete
               [suggestions]="filteredPerformerArtists"
@@ -113,21 +121,23 @@
               appendTo="body"
             ></p-autoComplete>
           </div>
+        }
 
+        <div class="col-span-2 mb-2">
+          <label for="mediaFileIds">Media files</label>
+          <p-multiSelect
+            [options]="mediaFileTable"
+            optionLabel="name"
+            optionValue="id"
+            id="mediaFileIds"
+            formControlName="mediaFileIds"
+            class="w-full"
+            appendTo="body"
+          ></p-multiSelect>
+        </div>
+
+        @if (artifactTypeConfig?.hasProducts) {
           <div class="col-span-2 mb-2">
-            <label for="mediaFileIds">Media files</label>
-            <p-multiSelect
-              [options]="mediaFileTable"
-              optionLabel="name"
-              optionValue="id"
-              id="mediaFileIds"
-              formControlName="mediaFileIds"
-              class="w-full"
-              appendTo="body"
-            ></p-multiSelect>
-          </div>
-
-          <div class="col-span-2 mb-2" *ngIf="artifactTypeConfig?.hasProducts">
             <label for="dvProductId">Product</label>
             <p-autoComplete
               [suggestions]="filteredDvProducts"
@@ -143,10 +153,11 @@
               (onClear)="editForm.patchValue({dvProduct: null})"
               class="w-full"
               appendTo="body"
-            >
+              >
             </p-autoComplete>
           </div>
-        </p-fluid>
+        }
+      </p-fluid>
 
 
     </form>
@@ -156,8 +167,10 @@
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
   </ng-template>
 
-  <ng-container *ngIf="saveAction$ | async as saver"></ng-container>
-  <ng-container *ngIf="editFormData$ | async as _"></ng-container>
+  @if (saveAction$ | async; as saver) {
+  }
+  @if (editFormData$ | async; as _) {
+  }
 
 </p-dialog>
 

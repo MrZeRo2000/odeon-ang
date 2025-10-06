@@ -1,4 +1,4 @@
-<p-confirmPopup key="styles"></p-confirmPopup>
+<p-confirmpopup key="styles"></p-confirmpopup>
 
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Artist Edit" (onShow)="onShow()">
   <ng-template pTemplate="content">
@@ -8,7 +8,7 @@
           <div class="mb-4">
             <label for="name">Name</label>
             <input #autofocused type="text" pInputText id="name" formControlName="artistName" required
-                     [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['artistName'].errors}"
+              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['artistName'].errors}"
               />
           </div>
 
@@ -33,7 +33,7 @@
               formControlName="genre"
               class="mt-2"
               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['genre'].errors}"
-            >
+              >
             </p-autoComplete>
           </div>
           <div class="mb-4">
@@ -46,7 +46,7 @@
               [multiple]="true"
               class="mt-2"
               (onKeyUp)="stylesKeyUp($event)"
-            >
+              >
             </p-autoComplete>
           </div>
           <div>
@@ -77,13 +77,15 @@
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
   </ng-template>
 
-  <ng-container *ngIf="saveAction$ | async as saver"></ng-container>
+  @if (saveAction$ | async; as saver) {
+  }
 
-  <app-text-view-dialog
-      *ngIf="!!editForm.value['biography']"
-    [(display)]="displayBiography"
-    [header]="editForm.value['artistName']?? ''"
-    [htmlText]="editForm.value['biography']">
-  </app-text-view-dialog>
+  @if (!!editForm.value['biography']) {
+    <app-text-view-dialog
+      [(display)]="displayBiography"
+      [header]="editForm.value['artistName']?? ''"
+      [htmlText]="editForm.value['biography']">
+    </app-text-view-dialog>
+  }
 
 </p-dialog>
