@@ -45,17 +45,17 @@
       >
       <ng-template pTemplate="caption">
         <div #caption class="flex">
-          <div class="flex align-items-center justify-content-between text-xl mr-2">Products</div>
-          <app-crud-panel class="flex align-items-center app-crud-panel-small" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+          <div class="flex items-center justify-between text-xl mr-2">Products</div>
+          <app-crud-panel class="flex items-center app-crud-panel-small" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
           <form [formGroup]="filterForm">
-            <div class="flex white-space-nowrap ml-2">
+            <div class="flex whitespace-nowrap ml-2">
               <p-selectButton class="mr-1" [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="false" [allowEmpty]="false" formControlName="artifactTypeId"></p-selectButton>
             </div>
           </form>
-          <div class="flex flex-nowrap align-items-center text-sm">
-            Rows:&nbsp;<p-chip styleClass="text-xs p-2" label="{{dt.processedData.length}}"></p-chip>
+          <div class="flex flex-nowrap items-center text-sm">
+            Rows:&nbsp;<p-chip class="text-xs !p-2" label="{{dt.processedData.length}}"></p-chip>
           </div>
-          <div class="flex justify-content-end align-items-center flex-grow-1">
+          <div class="flex justify-end items-center grow-1">
             <p-button
               icon="pi pi-file-import"
               styleClass="p-button-secondary p-button-text mr-2"
@@ -63,7 +63,7 @@
               tooltipPosition="left"
               (onClick)="showImportDVProducts($event)"
             ></p-button>
-            <span class="p-input-icon-left flex align-items-center">
+            <span class="p-input-icon-left flex items-center">
               <p-iconfield iconPosition="left" class="ml-auto">
                 <p-inputicon>
                   <i class="pi pi-search"></i>
@@ -83,13 +83,13 @@
         <tr>
           <th pSortableColumn="id" style="width:0; white-space: nowrap">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
           <th style="width:0">
-            <div class="flex align-items-center">
+            <div class="flex items-center">
               Origin
               <p-columnFilter field="dvOrigin.name" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                   <p-multiSelect [ngModel]="value" [options]="dvOriginNames" placeholder="Any" (onChange)="filter($event.value)">
                     <ng-template let-option pTemplate="item">
-                      <div class="inline-block vertical-align-middle">
+                      <div class="inline-block align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
@@ -102,13 +102,13 @@
           <th pSortableColumn="originalTitle" style="white-space: nowrap">Original Title&nbsp;<p-sortIcon field="originalTitle"></p-sortIcon></th>
           <th>Front Info</th>
           <th style="width:15rem">
-            <div class="flex align-items-center">
+            <div class="flex items-center">
               Category
               <p-columnFilter field="dvCategories" matchMode="filter_categories" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                   <p-multiSelect [ngModel]="value" [options]="dvCategoryNames" placeholder="Any" (onChange)="filter($event.value)">
                     <ng-template let-option pTemplate="item">
-                      <div class="inline-block vertical-align-middle">
+                      <div class="inline-block align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
@@ -118,14 +118,14 @@
             </div>
           </th>
           <th style="width:0">
-            <div class="flex align-items-center">
+            <div class="flex items-center">
               Year
               <p-columnFilter type="numeric" field="year" display="menu"></p-columnFilter>
             </div>
           </th>
           <th style="width:0">Notes</th>
           <th style="width:0">
-            <div  class="flex flex-nowrap align-items-center justify-content-center">
+            <div  class="flex flex-nowrap items-center justify-center">
               Tracks
               <p-columnFilter type="boolean" field="hasTracks" display="menu">
               </p-columnFilter>
@@ -152,7 +152,7 @@
                 @for (category of item.dvCategories; track category) {
                   <div>
                     @if (category) {
-                      <p-chip label="{{category.name}}" styleClass="flex align-items-center text-xs p-2"></p-chip>
+                      <p-chip label="{{category.name}}" class="flex items-center text-xs !p-2"></p-chip>
                     }
                   </div>
                 }
@@ -174,7 +174,7 @@
           </td>
           <td>
             @if (item.hasTracks) {
-              <div class="flex justify-content-center app-crud-panel-small">
+              <div class="flex justify-center app-crud-panel-small">
                 <button
                   pButton pRipple
                   icon="pi pi-book"
