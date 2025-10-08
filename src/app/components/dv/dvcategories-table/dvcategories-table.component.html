@@ -14,11 +14,11 @@
       <ng-template pTemplate="caption">
         <div #caption class="flex">
           <div class="flex">
-            <div class="flex align-items-center justify-content-between text-xl mr-2">Categories</div>
-            <app-crud-panel class="flex align-items-center app-crud-panel-small" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+            <div class="flex items-center justify-between text-xl mr-2">Categories</div>
+            <app-crud-panel class="flex items-center app-crud-panel-small" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
           </div>
-          <div class="flex justify-content-end flex-grow-1">
-            <span class="p-input-icon-left flex align-items-center">
+          <div class="flex justify-end flex-grow-1">
+            <span class="p-input-icon-left flex items-center">
               <p-iconfield iconPosition="left" class="ml-auto">
                 <p-inputicon>
                   <i class="pi pi-search"></i>
