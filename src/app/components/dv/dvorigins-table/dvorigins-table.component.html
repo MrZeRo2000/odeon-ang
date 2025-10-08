@@ -6,8 +6,8 @@
     <p-table [value]="table" dataKey="id">
       <ng-template pTemplate="caption">
         <div class="flex">
-          <div class="flex align-items-center justify-content-between text-xl mr-2">Origins</div>
-          <app-crud-panel class="flex align-items-center" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
+          <div class="flex items-center justify-between text-xl mr-2">Origins</div>
+          <app-crud-panel class="flex items-center" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
