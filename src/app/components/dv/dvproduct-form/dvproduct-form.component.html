@@ -1,129 +1,131 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" [header]="'Product ' + (this.formReadOnly ? 'View' : 'Edit')" (onShow)="onShow()">
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
-      <div class="grid">
-        <div class="col-5">
+      <p-fluid>
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-5">
 
-          <div class="field mt-2">
-            <p-select
-              formControlName="dvOrigin"
-              [options]="dvOrigins"
-              dataKey="id"
-              optionLabel="name"
-              class="w-full"
-            ></p-select>
+            <div class="mb-4 mt-2">
+              <p-select
+                formControlName="dvOrigin"
+                [options]="dvOrigins"
+                dataKey="id"
+                optionLabel="name"
+                class="w-full"
+              ></p-select>
+            </div>
+
+            <div class="mb-4">
+              <label for="title">Title</label>
+              <input
+                #autofocused
+                type="text"
+                pInputText
+                id="title"
+                formControlName="title"
+                required
+                class="w-full"
+                [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
+                />
+            </div>
+
+            <div class="mb-4">
+              <label for="originalTitle">Original Title</label>
+              <input
+                type="text"
+                pInputText
+                id="originalTitle"
+                formControlName="originalTitle"
+                class="w-full"
+                [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['originalTitle'].errors}"
+                />
+            </div>
+
+            <div class="mb-4">
+              <label for="year">Year</label>
+              <p-inputNumber
+                id="year"
+                mode="decimal"
+                [allowEmpty]="true"
+                [showClear]="true"
+                [useGrouping]="false"
+                formControlName="year"
+                class="w-full"
+              ></p-inputNumber>
+            </div>
+
+            <div class="mb-4">
+              <label for="frontInfo">Front Info</label>
+              <p-fluid>
+                <p-autoComplete
+                  [suggestions]="filteredFrontInfos"
+                  (completeMethod)="searchFrontInfos($event)"
+                  id="frontInfo"
+                  formControlName="frontInfo"
+                  [dropdown]="true"
+                  appendTo="body"
+                ></p-autoComplete>
+              </p-fluid>
+            </div>
+
+            <div class="mb-0">
+              <label for="notes">Notes</label>
+              <textarea
+                pTextarea
+                id="notes"
+                [rows]="2"
+                formControlName="notes"
+                class="w-full"
+                style="resize: none"
+              ></textarea>
+            </div>
+
           </div>
-
-          <div class="field">
-            <label for="title">Title</label>
-            <input
-              #autofocused
-              type="text"
-              pInputText
-              id="title"
-              formControlName="title"
-              required
-              class="w-full"
-              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['title'].errors}"
-              />
+          <div class="col-span-7 mt-2 flex flex-col">
+            <div class="flex grow-1">
+              <textarea
+                pTextarea
+                id="description"
+                formControlName="description"
+                class="w-full"
+                style="resize: none"
+              ></textarea>
+            </div>
+            <div class="flex mt-2 p-1">
+              <button
+                pButton type="button"
+                label="Preview"
+                iconPos="right"
+                class="p-button-rounded"
+                [ngClass]="{'p-button-outlined': !editForm.value.description}"
+                icon="pi pi-window-maximize"
+                (click)="previewDescription()"
+                >
+              </button>
+            </div>
           </div>
-
-          <div class="field">
-            <label for="originalTitle">Original Title</label>
-            <input
-              type="text"
-              pInputText
-              id="originalTitle"
-              formControlName="originalTitle"
-              class="w-full"
-              [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['originalTitle'].errors}"
-              />
-          </div>
-
-          <div class="field">
-            <label for="year">Year</label>
-            <p-inputNumber
-              id="year"
-              mode="decimal"
-              [allowEmpty]="true"
-              [showClear]="true"
-              [useGrouping]="false"
-              formControlName="year"
-              class="w-full"
-            ></p-inputNumber>
-          </div>
-
-          <div class="field">
-            <label for="frontInfo">Front Info</label>
-            <p-fluid>
-              <p-autoComplete
-                [suggestions]="filteredFrontInfos"
-                (completeMethod)="searchFrontInfos($event)"
-                id="frontInfo"
-                formControlName="frontInfo"
-                [dropdown]="true"
-                appendTo="body"
-              ></p-autoComplete>
-            </p-fluid>
-          </div>
-
-          <div class="field mb-0">
-            <label for="notes">Notes</label>
-            <textarea
-              pTextarea
-              id="notes"
-              [rows]="2"
-              formControlName="notes"
-              class="w-full"
-              style="resize: none"
-            ></textarea>
-          </div>
-
         </div>
-        <div class="col-7 mt-2 flex flex-column">
-          <div class="flex flex-grow-1">
-            <textarea
-              pTextarea
-              id="description"
-              formControlName="description"
-              class="w-full"
-              style="resize: none"
-            ></textarea>
-          </div>
-          <div class="flex mt-2">
-            <button
-              pButton type="button"
-              label="Preview"
-              iconPos="right"
-              class="p-button-rounded"
-              [ngClass]="{'p-button-outlined': !editForm.value.description}"
-              icon="pi pi-window-maximize"
-              (click)="previewDescription()"
-              >
-            </button>
-          </div>
+
+        <div class="mt-4">
+          <label for="categories">Categories</label>
+          <p-multiSelect
+            id="categories"
+            [options]="dvCategories"
+            formControlName="dvCategories"
+            optionLabel="name"
+            display="chip"
+            appendTo="body"
+            class="w-full"
+            >
+          </p-multiSelect>
         </div>
-      </div>
 
-      <div class="field">
-        <label for="categories">Categories</label>
-        <p-multiSelect
-          id="categories"
-          [options]="dvCategories"
-          formControlName="dvCategories"
-          optionLabel="name"
-          display="chip"
-          appendTo="body"
-          class="w-full"
-          >
-        </p-multiSelect>
-      </div>
-
-      <div>
-        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors?.['required'] ? 'visible' : 'hidden'}" >Title is required</small>
-        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors?.['unique'] ? 'visible' : 'hidden'}" >Title already exists</small>
-        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['originalTitle'].errors?.['unique'] ? 'visible' : 'hidden'}" >Original title already exists</small>
-      </div>
+        <div>
+          <p-message severity="error" variant="simple" size="small" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors?.['required'] ? 'visible' : 'hidden'}" >Title is required</p-message>
+          <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors?.['unique'] ? 'visible' : 'hidden'}" >Title already exists</small>
+          <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['originalTitle'].errors?.['unique'] ? 'visible' : 'hidden'}" >Original title already exists</small>
+        </div>
+      </p-fluid>
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
@@ -131,8 +133,7 @@
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
   </ng-template>
 
-  @if (saveAction$ | async; as saver) {
-  }
+  @if (saveAction$ | async) {}
 
   @if (!!editForm.value.description) {
     <app-text-view-dialog

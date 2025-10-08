@@ -29,6 +29,7 @@ import {FluidModule} from "primeng/fluid";
 import {TextareaModule} from "primeng/textarea";
 import {SelectModule} from "primeng/select";
 import {TabsModule} from "primeng/tabs";
+import {MessageModule} from "primeng/message";
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import {TabsModule} from "primeng/tabs";
     InputIcon,
     FluidModule,
     TextareaModule,
+    MessageModule,
     // custom modules
     CoreModule,
     UserImportModule,
