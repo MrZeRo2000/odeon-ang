@@ -3,15 +3,13 @@
     <form [formGroup]="editForm">
       <p-fluid>
         @if (isSelectableArtifactTypeId(editForm.value['artifactTypeId'])) {
-          <div class="mb-4">
-            <p-selectButton
-              [options]="ARTIFACT_TYPES"
-              optionLabel="name"
-              optionValue="code"
-              [multiple]="false"
-              [allowEmpty]="false"
-              formControlName="artifactTypeId">
-            </p-selectButton>
+          <div class="flex flex-wrap gap-4">
+            @for (item of ARTIFACT_TYPES; track item) {
+              <div class="flex items-center gap-2">
+                <p-radiobutton formControlName="artifactTypeId" name="artifactTypeId" [inputId]="item.name" [value]="item.code"></p-radiobutton>
+                <label [for]="item.name"> {{ item.name }} </label>
+              </div>
+            }
           </div>
         }
 

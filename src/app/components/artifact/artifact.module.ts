@@ -24,6 +24,7 @@ import {FluidModule} from "primeng/fluid";
 import {TaggedModule} from "../tag/tagged.module";
 import {SelectModule} from "primeng/select";
 import {MessageModule} from "primeng/message";
+import {RadioButtonModule} from "primeng/radiobutton";
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import {MessageModule} from "primeng/message";
         IconFieldModule,
         InputIconModule,
         MessageModule,
+        RadioButtonModule,
         // custom modules
         ArtifactTypeModule,
         TaggedModule,
