@@ -122,8 +122,8 @@
 
         <div>
           <p-message severity="error" variant="simple" size="small" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors?.['required'] ? 'visible' : 'hidden'}" >Title is required</p-message>
-          <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors?.['unique'] ? 'visible' : 'hidden'}" >Title already exists</small>
-          <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['originalTitle'].errors?.['unique'] ? 'visible' : 'hidden'}" >Original title already exists</small>
+          <p-message severity="error" variant="simple" size="small" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors?.['unique'] ? 'visible' : 'hidden'}" >Title already exists</p-message>
+          <p-message severity="error" variant="simple" size="small" [ngStyle]="{'visibility': submitted && editForm.controls['originalTitle'].errors?.['unique'] ? 'visible' : 'hidden'}" >Original title already exists</p-message>
         </div>
       </p-fluid>
     </form>

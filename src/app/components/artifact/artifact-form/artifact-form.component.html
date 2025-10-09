@@ -101,8 +101,8 @@
         </div>
 
         <div>
-          <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors ? 'visible' : 'hidden'}" >Title is required.</small>
-          <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['artistId'].errors ? 'visible' : 'hidden'}" >Artist is required.</small>
+          <p-message severity="error" variant="simple" size="small"  [ngStyle]="{'visibility': submitted && editForm.controls['title'].errors ? 'visible' : 'hidden'}" >Title is required.</p-message>
+          <p-message severity="error" variant="simple" size="small"  [ngStyle]="{'visibility': submitted && editForm.controls['artistId'].errors ? 'visible' : 'hidden'}" >Artist is required.</p-message>
         </div>
 
       </p-fluid>
@@ -113,10 +113,8 @@
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
   </ng-template>
 
-  @if (saveAction$ | async; as saver) {
-  }
+  @if (saveAction$ | async) {}
 
-  @if (sizeDurationAction$ | async; as sizeDuration) {
-  }
+  @if (sizeDurationAction$ | async) {}
 
 </p-dialog>

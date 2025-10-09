@@ -20,6 +20,7 @@ import {ListboxModule} from "primeng/listbox";
 import {TextareaModule} from "primeng/textarea";
 import {FluidModule} from "primeng/fluid";
 import {SelectModule} from "primeng/select";
+import {MessageModule} from "primeng/message";
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {SelectModule} from "primeng/select";
         TextareaModule,
         SelectModule,
         FluidModule,
+        MessageModule,
         // custom modules
         CoreModule,
         TooltipModule,

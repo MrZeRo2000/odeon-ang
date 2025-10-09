@@ -23,6 +23,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {FluidModule} from "primeng/fluid";
 import {TaggedModule} from "../tag/tagged.module";
 import {SelectModule} from "primeng/select";
+import {MessageModule} from "primeng/message";
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import {SelectModule} from "primeng/select";
         InputTextModule,
         IconFieldModule,
         InputIconModule,
+        MessageModule,
         // custom modules
         ArtifactTypeModule,
         TaggedModule,

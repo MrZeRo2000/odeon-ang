@@ -116,9 +116,9 @@
           class="w-full"
           [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['extra'].errors}"
         ></textarea>
-        <small class="p-error block" [ngStyle]="{'visibility': submitted && editForm.controls['extra'].errors ? 'visible' : 'hidden'}">
+        <p-message severity="error" variant="simple" size="small" [ngStyle]="{'visibility': submitted && editForm.controls['extra'].errors ? 'visible' : 'hidden'}">
           {{editForm.controls['extra'].errors?.['extra']}} &nbsp;
-        </small>
+        </p-message>
       </div>
     }
   </form>
@@ -129,9 +129,7 @@
   <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
 </ng-template>
 
-@if (saveAction$ | async; as saver) {
-}
-@if (mediaFileAttributesAction$ | async) {
-}
+@if (saveAction$ | async) {}
+@if (mediaFileAttributesAction$ | async) {}
 
 </p-dialog>
