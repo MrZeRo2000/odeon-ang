@@ -33,23 +33,23 @@
           }
           @if (!this.routedArtifactId) {
             <form [formGroup]="filterForm" class="flex items-center whitespace-nowrap ml-2">
-              <p-selectButton
-                [options]="ARTIST_TYPES"
-                optionLabel="name"
-                optionValue="code"
-                [multiple]="false"
-                [allowEmpty]="false"
-                formControlName="artistType"
-                class="mr-1"
-              ></p-selectButton>
-              <p-selectButton
-                [options]="ARTIFACT_TYPES"
-                optionLabel="name"
-                optionValue="code"
-                [multiple]="true"
-                [allowEmpty]="true"
-                formControlName="artifactTypes"
-              ></p-selectButton>
+              <div class="flex flex-wrap gap-4 mr-2">
+                @for (item of ARTIST_TYPES; track item) {
+                  <div class="flex items-center gap-2">
+                    <p-radiobutton
+                      formControlName="artistType"
+                      name="artifactTypeId"
+                      value="Large"
+                      size="large"
+                      [inputId]="item.name"
+                      [value]="item.code"></p-radiobutton>
+                    <label [for]="item.name"> {{ item.name }} </label>
+                  </div>
+                }
+              </div>
+              <div class="card flex justify-center">
+                <p-multiselect [options]="ARTIFACT_TYPES" formControlName="artifactTypes" placeholder="Select artifact types" optionLabel="name" optionValue="code" display="chip"></p-multiselect>
+              </div>
             </form>
           }
           @if (selectedItem) {
