@@ -12,7 +12,7 @@ import {ArtistService} from "../../../service/artist.service";
 import {ArtifactService} from "../../../service/artifact.service";
 import {CRUDResult} from "../../../model/crud";
 import {catchError, forkJoin, iif, map, Observable, of, startWith, Subject, switchMap, tap} from "rxjs";
-import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
+import {ARTIST_TYPE_CODE_ARTIST, ARTIST_TYPES} from "../../../model/artists";
 import {TaggedService} from "../../../service/tagged.service";
 import {Tagged} from "../../../model/tag";
 import {getFilterArtists, getFilterTags, registerFilterService} from "../utils/filter";
@@ -236,4 +236,6 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     this.displayUpdateTagsForm = false;
     this.loadData();
   }
+
+  protected readonly ARTIST_TYPES = ARTIST_TYPES;
 }

@@ -30,32 +30,43 @@
             ></app-crud-panel>
           }
           @if (!this.routedArtifactId) {
-            <form [formGroup]="filterForm">
-              <div class="flex items-center whitespace-nowrap ml-2">
-                <p-selectButton [options]="ARTIFACT_VIDEO_TYPES" optionLabel="name" optionValue="code" [multiple]="false" [allowEmpty]="false" formControlName="artifactType"></p-selectButton>
+            <form [formGroup]="filterForm" class="flex items-center whitespace-nowrap ml-2 mr-2">
+              <div class="flex whitespace-nowrap gap-4">
+                @for (item of ARTIFACT_VIDEO_TYPES; track item) {
+                  <div class="flex items-center gap-2">
+                    <p-radiobutton
+                      formControlName="artifactType"
+                      name="artifactType"
+                      value="Large"
+                      size="large"
+                      [inputId]="item.name"
+                      [value]="item.code"></p-radiobutton>
+                    <label [for]="item.name"> {{ item.name }} </label>
+                  </div>
+                }
               </div>
             </form>
           }
           @if (selectedItem) {
-            <button pButton type="button" label="Tracks" icon="pi pi-list" iconPos="left"
-              class="flex ml-4 p-button-outlined p-button-secondary !p-2"
-              (click)="onTracksButton()"
-              >
-            </button>
-          }
-          @if (selectedItem) {
-            <button pButton type="button" label="Media&nbsp;files" icon="pi pi-file" iconPos="left"
-              class="flex ml-1 p-button-outlined p-button-secondary !p-2"
-              (click)="onMediaFilesButton()"
-              >
-            </button>
-          }
-          @if (selectedItem) {
-            <button pButton type="button" label="Tags" icon="pi pi-tags" iconPos="left"
-              class="ml-1 p-button-outlined p-button-secondary !p-2"
-              (click)="onTagsButton($event)"
-              >
-            </button>
+            <div class="flex">
+              <button pButton type="button" label="Tracks" icon="pi pi-list" iconPos="left"
+                class="flex ml-4 p-button-outlined p-button-secondary !p-2"
+                (click)="onTracksButton()"
+                >
+              </button>
+
+              <button pButton type="button" label="Media&nbsp;files" icon="pi pi-file" iconPos="left"
+                class="flex ml-1 p-button-outlined p-button-secondary !p-2"
+                (click)="onMediaFilesButton()"
+                >
+              </button>
+
+              <button pButton type="button" label="Tags" icon="pi pi-tags" iconPos="left"
+                class="ml-1 p-button-outlined p-button-secondary !p-2"
+                (click)="onTagsButton($event)"
+                >
+              </button>
+            </div>
           }
           <div class="flex justify-end flex-grow-1 ml-2">
             <span class="p-input-icon-left flex items-center">
