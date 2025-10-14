@@ -6,7 +6,12 @@
           <div class="flex flex-wrap gap-4">
             @for (item of ARTIFACT_TYPES; track item) {
               <div class="flex items-center gap-2">
-                <p-radiobutton formControlName="artifactTypeId" name="artifactTypeId" [inputId]="item.name" [value]="item.code"></p-radiobutton>
+                <p-radiobutton
+                  formControlName="artifactTypeId"
+                  name="artifactTypeId"
+                  [disabled]="!!this.editItem?.id"
+                  [inputId]="item.name"
+                  [value]="item.code"></p-radiobutton>
                 <label [for]="item.name"> {{ item.name }} </label>
               </div>
             }
