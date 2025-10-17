@@ -1,0 +1,14 @@
+<p-treeselect
+  [options]="nodes"
+  [(ngModel)]="selectedNodes"
+  [metaKeySelection]="false"
+  display="chip"
+  selectionMode="multiple"
+  selectionMode="checkbox"
+  placeholder="Select artifact type"
+  fluid
+  showClear="true"
+  (onNodeSelect)="onNodeSelectionChanged($event)"
+  (onNodeUnselect)="onNodeSelectionChanged($event)"
+></p-treeselect>
+

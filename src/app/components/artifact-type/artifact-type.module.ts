@@ -5,15 +5,19 @@ import {ArtifactTypeSelectComponent} from "./artifact-type-select/artifact-type-
 import {SelectButtonModule} from "primeng/selectbutton";
 import {FluidModule} from "primeng/fluid";
 import {ButtonModule} from "primeng/button";
+import {ArtifactTypeTreeSelectComponent} from "./artifact-type-tree-select/artifact-type-tree-select.component";
+import {TreeSelectModule} from "primeng/treeselect";
 
 
 
 @NgModule({
   declarations: [
     ArtifactTypeSelectComponent,
+    ArtifactTypeTreeSelectComponent,
   ],
   exports: [
-    ArtifactTypeSelectComponent
+    ArtifactTypeSelectComponent,
+    ArtifactTypeTreeSelectComponent,
   ],
     imports: [
         ReactiveFormsModule,
@@ -22,6 +26,7 @@ import {ButtonModule} from "primeng/button";
         //primeng modules
         ButtonModule,
         SelectButtonModule,
+        TreeSelectModule,
         FluidModule,
     ]
 })

@@ -20,31 +20,33 @@
       <ng-template pTemplate="caption">
         <div class="flex">
           <div class="flex items-center justify-between text-xl mr-2">All artifacts</div>
-          <form [formGroup]="filterForm" class="flex whitespace-nowrap ml-2 flex-grow-1">
+          <form [formGroup]="filterForm" class="flex flex-row grow-1">
             <!--
             <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="true" [allowEmpty]="false" formControlName="artifactTypes"></p-selectButton>
             -->
+            <!--
             <app-artifact-type-select
               class="flex"
-              formControlName="artifactTypeIds"
+              formControlName="artifactTypeOldIds"
             ></app-artifact-type-select>
+            -->
+            <app-artifact-type-tree-select class="flex items-end grow-0"
+              formControlName="artifactTypeIds"
+            ></app-artifact-type-tree-select>
             @if (artistsTable$ | async; as artistsTable) {
-              <div
-                class="flex flex-col flex-grow-1 items-start justify-end mr-2 ml-2"
-                >
-                <label for="artistIds" class="mb-2">Artists</label>
-                <span style="width: 100%">
-                  <p-multiSelect
-                    id="artistIds"
-                    formControlName="artistIds"
-                    dataKey="id"
-                    optionLabel="name"
-                    [options]="artistsTable"
-                    [showClear]="true"
-                    [style]="{'min-width':'100%'}"
-                    >
-                  </p-multiSelect>
-                </span>
+              <div class="flex flex-col grow-1 items-start justify-end mr-2 ml-2">
+                <p-multiSelect
+                  id="artistIds"
+                  formControlName="artistIds"
+                  dataKey="id"
+                  optionLabel="name"
+                  placeholder="Artists"
+                  fluid
+                  [options]="artistsTable"
+                  [showClear]="true"
+                  [style]="{'min-width':'100%'}"
+                  >
+                </p-multiSelect>
               </div>
             }
           </form>
