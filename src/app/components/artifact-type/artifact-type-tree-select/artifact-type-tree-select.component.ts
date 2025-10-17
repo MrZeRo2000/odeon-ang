@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {TreeNodeSelectEvent} from "primeng/tree";
 import {ARTIFACT_MUSIC_TYPES, ARTIFACT_VIDEO_TYPES} from "../../../model/artifacts";
 
 @Component({
@@ -64,10 +63,9 @@ export class ArtifactTypeTreeSelectComponent implements ControlValueAccessor {
   selectedNodes: any[] = []
 
 
-  onNodeSelectionChanged(event : TreeNodeSelectEvent) {
-    console.log(`node select event: ${JSON.stringify(event.node.key)}, selected nodes: ${this.selectedNodes.length}`);
+  onNodeSelectionChanged() {
     this.markAsTouched()
-    const value = this.selectedNodes.filter(v => v.key.length > 1).map(v => parseInt(v.data))
+    const value = (this.selectedNodes || []).filter(v => v.key.length > 1).map(v => parseInt(v.data))
     this.onChange(value)
   }
 

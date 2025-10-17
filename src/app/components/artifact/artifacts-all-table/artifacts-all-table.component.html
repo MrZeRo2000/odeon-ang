@@ -21,26 +21,17 @@
         <div class="flex">
           <div class="flex items-center justify-between text-xl mr-2">All artifacts</div>
           <form [formGroup]="filterForm" class="flex flex-row grow-1">
-            <!--
-            <p-selectButton [options]="ARTIFACT_TYPES" optionLabel="name" optionValue="code" [multiple]="true" [allowEmpty]="false" formControlName="artifactTypes"></p-selectButton>
-            -->
-            <!--
-            <app-artifact-type-select
-              class="flex"
-              formControlName="artifactTypeOldIds"
-            ></app-artifact-type-select>
-            -->
-            <app-artifact-type-tree-select class="flex items-end grow-0"
+            <app-artifact-type-tree-select class="flex grow-0"
               formControlName="artifactTypeIds"
             ></app-artifact-type-tree-select>
             @if (artistsTable$ | async; as artistsTable) {
-              <div class="flex flex-col grow-1 items-start justify-end mr-2 ml-2">
+              <div class="flex grow-1 mr-2 ml-2">
                 <p-multiSelect
                   id="artistIds"
                   formControlName="artistIds"
                   dataKey="id"
                   optionLabel="name"
-                  placeholder="Artists"
+                  placeholder="Select artists"
                   fluid
                   [options]="artistsTable"
                   [showClear]="true"
@@ -50,7 +41,7 @@
               </div>
             }
           </form>
-          <div class="flex justify-end items-end">
+          <div class="flex justify-end">
             <span class="flex items-center">
               <p-iconfield iconPosition="left" class="ml-auto">
                 <p-inputicon>

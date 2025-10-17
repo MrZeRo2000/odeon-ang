@@ -8,7 +8,8 @@
   placeholder="Select artifact type"
   fluid
   showClear="true"
-  (onNodeSelect)="onNodeSelectionChanged($event)"
-  (onNodeUnselect)="onNodeSelectionChanged($event)"
+  (onNodeSelect)="onNodeSelectionChanged()"
+  (onNodeUnselect)="onNodeSelectionChanged()"
+  (onClear)="onNodeSelectionChanged()"
 ></p-treeselect>
 
