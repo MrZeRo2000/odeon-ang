@@ -30,6 +30,7 @@ import {TextareaModule} from "primeng/textarea";
 import {SelectModule} from "primeng/select";
 import {TabsModule} from "primeng/tabs";
 import {MessageModule} from "primeng/message";
+import {RadioButton} from "primeng/radiobutton";
 
 
 @NgModule({
@@ -51,34 +52,35 @@ import {MessageModule} from "primeng/message";
     DVProductsTableComponent,
     DVProductsImportFormComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    // primeng
-    ChipModule,
-    InputTextModule,
-    RippleModule,
-    TagModule,
-    ButtonModule,
-    DialogModule,
-    TableModule,
-    SelectButtonModule,
-    AutoCompleteModule,
-    MultiSelectModule,
-    ConfirmPopupModule,
-    InputNumberModule,
-    SelectModule,
-    TooltipModule,
-    TabsModule,
-    IconField,
-    InputIcon,
-    FluidModule,
-    TextareaModule,
-    MessageModule,
-    // custom modules
-    CoreModule,
-    UserImportModule,
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        // primeng
+        ChipModule,
+        InputTextModule,
+        RippleModule,
+        TagModule,
+        ButtonModule,
+        DialogModule,
+        TableModule,
+        SelectButtonModule,
+        AutoCompleteModule,
+        MultiSelectModule,
+        ConfirmPopupModule,
+        InputNumberModule,
+        SelectModule,
+        TooltipModule,
+        TabsModule,
+        IconField,
+        InputIcon,
+        FluidModule,
+        TextareaModule,
+        MessageModule,
+        // custom modules
+        CoreModule,
+        UserImportModule,
+        RadioButton,
+    ]
 })
 export class DVModule { }

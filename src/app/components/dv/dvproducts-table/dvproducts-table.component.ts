@@ -21,7 +21,7 @@ import {ConfirmationService, FilterService, MessageService, SelectItem} from "pr
 import {DVProductService} from "../../../service/dvproduct.service";
 import {DVOriginService} from "../../../service/dvorigin.service";
 import {DVCategoryService} from "../../../service/dvcategory.service";
-import {ARTIFACT_EDIT_CONFIG, CodeName} from "../../../model/artifacts";
+import {ARTIFACT_EDIT_CONFIG, ARTIFACT_VIDEO_TYPES, CodeName} from "../../../model/artifacts";
 import {FormBuilder, Validators} from "@angular/forms";
 import {IdTitleOriginalTitle, TextInterface} from "../../../model/common";
 import {Router} from "@angular/router";
@@ -278,4 +278,6 @@ export class DVProductsTableComponent
     event.preventDefault();
     this.importProductsSubject.next();
   }
+
+  protected readonly ARTIFACT_VIDEO_TYPES = ARTIFACT_VIDEO_TYPES;
 }
