@@ -17,6 +17,10 @@ export enum ProcessorType {
   DV_ANIMATION_LOADER,
   DV_ANIMATION_VALIDATOR,
   DV_ANIMATION_MEDIA_LOADER,
+
+  DV_OTHER_LOADER,
+  DV_OTHER_VALIDATOR,
+  DV_OTHER_MEDIA_LOADER,
 }
 
 export const PROCESSOR_TYPE_NAMES : {[processorType: number] : string} = {
@@ -38,6 +42,10 @@ export const PROCESSOR_TYPE_NAMES : {[processorType: number] : string} = {
   [ProcessorType.DV_ANIMATION_LOADER]: "Animation Load",
   [ProcessorType.DV_ANIMATION_VALIDATOR]: "Animation Validate",
   [ProcessorType.DV_ANIMATION_MEDIA_LOADER]: "Animation Media Load",
+
+  [ProcessorType.DV_OTHER_LOADER]: "Other Load",
+  [ProcessorType.DV_OTHER_VALIDATOR]: "Other Validate",
+  [ProcessorType.DV_OTHER_MEDIA_LOADER]: "Other Media Load",
 }
 
 export enum ProcessingStatus {

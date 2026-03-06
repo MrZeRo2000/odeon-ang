@@ -128,6 +128,26 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
         },
       ]
     },
+    {
+      label: "Other",
+      children: [
+        {
+          label: "Load",
+          data: ProcessorType.DV_OTHER_LOADER,
+          leaf: true
+        },
+        {
+          label: "Validate",
+          data: ProcessorType.DV_OTHER_VALIDATOR,
+          leaf: true
+        },
+        {
+          label: "Load Media",
+          data: ProcessorType.DV_OTHER_MEDIA_LOADER,
+          leaf: true
+        },
+      ]
+    },
   ];
 
   private action = new Subject<ProcessorType | ProcessingAction | {selectedDate: number} | undefined>();
