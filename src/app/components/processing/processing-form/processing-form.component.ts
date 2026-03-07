@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, computed, inject, OnInit, signal, ViewEncapsulation} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal, ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {
   ProcessInfo,
   ProcessingAction,
@@ -10,8 +19,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {ProcessService} from "../../../service/process.service";
 import {BaseComponent} from "../../base/base.component";
 import {
-  async,
-  catchError, finalize, map, of,
+  catchError, map, of,
   startWith,
   Subject,
   switchMap,
@@ -23,7 +31,7 @@ import {DateFormatter} from "../../../utils/date-utils";
 import {FormBuilder} from "@angular/forms";
 import {PrimeNG} from "primeng/config";
 import {TimeDifferencePipe} from "../../../core/pipes/time-difference.pipe";
-import {toSignal} from "@angular/core/rxjs-interop";
+import {Select} from "primeng/select";
 
 @Component({
     selector: 'app-processing-form',
@@ -284,6 +292,7 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
   private primengConfig = inject(PrimeNG);
 
   constructor(
+    private cd: ChangeDetectorRef,
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -293,6 +302,8 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
   ) {
     super();
   }
+
+  @ViewChild('select') select!: Select;
 
   ngOnInit(): void {
     this.primengConfig.ripple.set(true);
@@ -327,7 +338,19 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
   }
 
   onShow(event: any) {
-    console.log('onShow')
+    console.log(`onShow data`)
+    // 1. Mark for check immediately
+    this.cd.markForCheck();
+
+    // 2. Use a microtask to ensure the overlay is fully rendered
+    // then tell the scroller to refresh itself
+    setTimeout(() => {
+      if (this.select?.scroller) {
+        //this.select.scroller.scrollToIndex(0);
+        this.cd.detectChanges();           // Force Angular to update the DOM
+      }
+    }, 0);
+
     if (!this.tableRefreshed) {
       console.log('table not refreshed, refreshing')
       this.tableRefreshed = true;
@@ -365,6 +388,4 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
       return null
     }
   }
-
-  protected readonly async = async;
 }

@@ -11,15 +11,18 @@
           @if(table$ | async; as t) {
             <div class="field mt-2">
               <form [formGroup]="dateForm">
-                <p-select
+                <p-select #select
                   [placeholder]="dateSelectPlaceholder()"
                   [options]="t"
                   optionValue="id"
                   optionLabel="updateDateTime"
+                  dataKey="id"
                   [showClear]="true"
                   [loading]="dateSelectIsLoading()"
                   class="w-full"
                   (onShow)="onShow($event)"
+                  [virtualScroll]="true"
+                  [virtualScrollItemSize]="32"
                   formControlName="selectedDate"
                   >
                   <ng-template let-item pTemplate="item">
