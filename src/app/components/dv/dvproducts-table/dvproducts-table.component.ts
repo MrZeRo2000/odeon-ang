@@ -245,7 +245,7 @@ export class DVProductsTableComponent
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize() {
+  onResize(event: Event) {
     this.updateScrollHeight();
   }
 

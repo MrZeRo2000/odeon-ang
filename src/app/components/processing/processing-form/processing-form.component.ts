@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, computed, inject, OnInit, signal, ViewEncapsulation} from '@angular/core';
 import {
   ProcessInfo,
   ProcessingAction,
@@ -10,7 +10,8 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {ProcessService} from "../../../service/process.service";
 import {BaseComponent} from "../../base/base.component";
 import {
-  catchError, map, of,
+  async,
+  catchError, finalize, map, of,
   startWith,
   Subject,
   switchMap,
@@ -22,6 +23,7 @@ import {DateFormatter} from "../../../utils/date-utils";
 import {FormBuilder} from "@angular/forms";
 import {PrimeNG} from "primeng/config";
 import {TimeDifferencePipe} from "../../../core/pipes/time-difference.pipe";
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'app-processing-form',
@@ -181,8 +183,15 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
             updateDateTime: DateFormatter.formatDateTime(new Date(p.updateDateTime as string)),
             processingStatus: p.processingStatus
           } as ProcessInfo
-        }))
+        })),
+    tap((v) => {
+      console.log(`Setting loading to false, tableData: ${v.length} rows`)
+      this.dateSelectIsLoading.set(false)
+    })
   );
+
+  dateSelectIsLoading = signal(false)
+  dateSelectPlaceholder = computed(() => this.dateSelectIsLoading() ? 'Loading...' : 'Select a Date');
 
   private tableRefreshed = false;
 
@@ -317,10 +326,12 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
     }
   }
 
-  onLazyLoad(event: any) {
-    console.log('onLazyLoad')
+  onShow(event: any) {
+    console.log('onShow')
     if (!this.tableRefreshed) {
+      console.log('table not refreshed, refreshing')
       this.tableRefreshed = true;
+      this.dateSelectIsLoading.set(true)
       this.processService.refreshTable();
     }
   }
@@ -354,4 +365,6 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
       return null
     }
   }
+
+  protected readonly async = async;
 }

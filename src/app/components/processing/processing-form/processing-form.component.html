@@ -8,20 +8,18 @@
           (onNodeSelect)="nodeSelect($event, pi.processingStatus)">
         </p-tree>
         @if (pi.processingStatus !== PROGRESS_STATUS) {
-          @if (table$ | async; as t) {
+          @if(table$ | async; as t) {
             <div class="field mt-2">
               <form [formGroup]="dateForm">
                 <p-select
-                  placeholder="Select a Date"
+                  [placeholder]="dateSelectPlaceholder()"
                   [options]="t"
                   optionValue="id"
                   optionLabel="updateDateTime"
                   [showClear]="true"
-                  [style]="{'minWidth':'100%'}"
-                  [virtualScroll]="true"
-                  [virtualScrollItemSize]="38"
-                  [lazy]="true"
-                  (onLazyLoad)="onLazyLoad($event)"
+                  [loading]="dateSelectIsLoading()"
+                  class="w-full"
+                  (onShow)="onShow($event)"
                   formControlName="selectedDate"
                   >
                   <ng-template let-item pTemplate="item">
@@ -103,7 +101,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-processDetail>
                 <tr>
-                  <td class="whitespace-nowrap">{{processDetail.updateDateTime | date:'dd.MM.YYYY HH:mm:ss'}}</td>
+                  <td class="whitespace-nowrap">{{processDetail.updateDateTime | date:'dd.MM.yyyy HH:mm:ss'}}</td>
                   <td>
                     <div class="flex flex-col">
                       {{processDetail.message}}
