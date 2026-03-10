@@ -7,8 +7,9 @@ import {MessageService} from "primeng/api";
 import {UserImportService} from "../../../service/user-import.service";
 import {Artifact, isArtifactTypeVideoMusic, isArtifactTypeVideoWithProducts, } from "../../../model/artifacts";
 import {ImportStats, TrackUserImport} from "../../../model/user-import";
-import {catchError, Observable, of, Subject, switchMap, tap} from "rxjs";
+import {catchError, map, Observable, of, pairwise, startWith, Subject, switchMap, tap} from "rxjs";
 import {textToArray} from "../../../utils/form-utils";
+import {MediaFileService} from "../../../service/media-file.service";
 
 
 @Component({
@@ -62,10 +63,28 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
     )
   )
 
+  updateChaptersSubject = new Subject<number>();
+
+  updateChapters$ = this.updateChaptersSubject.asObservable().pipe(
+    switchMap(v => this.mediaFileService.get(v).pipe(
+      tap(r => {
+        const extra = JSON.parse(r.extra as string)["extra"];
+        this.editForm.patchValue({'chapters': extra.join('\n')})
+
+      }),
+      catchError(() => {
+        this.messageService.add({severity:'error', summary:'Error', detail:`Error obtaining media file chapters data`});
+        return of(undefined)
+      })
+    ))
+  )
+
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-    private userImportService: UserImportService, ) {
+    private userImportService: UserImportService,
+    private mediaFileService: MediaFileService,
+    ) {
     super();
   }
 
@@ -85,7 +104,18 @@ export class TracksImportFormComponent extends BaseFormComponent implements OnIn
       chapters: ['', this.isArtifactTypeVideoWithProducts ? Validators.required : Validators.nullValidator],
     })
 
-    this.editFormData$ = this.editForm.valueChanges;
+    this.editFormData$ = this.editForm.valueChanges.pipe(
+      startWith(this.editForm.value),
+      pairwise(),
+      tap(([prev, curr]) => {
+        console.log(`Changed: ${prev.mediaFile} -> ${curr.mediaFile}`);
+        if (!!curr && (prev.mediaFile !== curr.mediaFile)) {
+          console.log(`Time to update: ${prev.mediaFile} - ${curr.mediaFile}`);
+          this.updateChaptersSubject.next(curr.mediaFile);
+        }
+      }),
+      map(([, curr]) => curr)
+    );
   }
 
   onShow() {
