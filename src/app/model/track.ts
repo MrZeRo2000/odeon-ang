@@ -147,6 +147,18 @@ const TRACK_EDIT_CONFIG: Array<TrackConfigItem> = [
     hasDiskNum: false,
     hasProducts: false,
   },
+  {
+    code: 205,
+    name: 'Animation',
+    artistType: "A",
+    isMusic: false,
+    isVideo: true,
+    hasArtist: false,
+    hasPerformerArtist: false,
+    hasDvType: true,
+    hasDiskNum: false,
+    hasProducts: true,
+  },
 ]
 
 export interface RowsAffected {
