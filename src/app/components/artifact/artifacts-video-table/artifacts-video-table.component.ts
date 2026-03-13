@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {
   ARTIFACT_VIDEO_TYPES,
-  Artifact, isArtifactTypeVideoMusic
+  Artifact, isArtifactTypeVideoMusic, getArtifactConfig
 } from "../../../model/artifacts";
 import {IdName} from "../../../model/common";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -37,7 +37,8 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
   routedArtifactId?: number;
   routedArtifactTypeId?: number;
 
-  isArtifactTypeVideoMusic = true;
+  hasYear = true;
+  hasArtist = true;
 
   filterForm = this.fb.group(this.getControlsConfig());
 
@@ -72,7 +73,11 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     startWith(this.filterForm.value),
     tap(v => {
       sessionStorage.setItem(ArtifactsVideoTableComponent.SESSION_KEY, JSON.stringify(v))
-      this.isArtifactTypeVideoMusic = isArtifactTypeVideoMusic(v.artifactType!)
+
+      const artifactTypeConfig = getArtifactConfig(v.artifactType!);
+      this.hasYear = artifactTypeConfig.hasYear
+      this.hasArtist = artifactTypeConfig.hasArtist
+
       this.first = 0
     }),
     switchMap(

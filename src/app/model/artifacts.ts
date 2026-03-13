@@ -187,7 +187,7 @@ export const ARTIFACT_EDIT_CONFIG: Array<ArtifactConfigItem> = [
     requiresArtist: false,
     hasPerformerArtist: false,
     requiresPerformerArtist: false,
-    hasYear: false,
+    hasYear: true,
     requiresYear: false,
     hasProduct: true,
   },

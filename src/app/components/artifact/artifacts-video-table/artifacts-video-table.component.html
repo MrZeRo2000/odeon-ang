@@ -92,7 +92,7 @@
           <!--
           <th pSortableColumn="artist.artistName" style="width:20%" *ngIf="isArtifactTypeVideoMusic">Artist Name&nbsp;<p-sortIcon field="artist.artistName"></p-sortIcon></th>
           -->
-          @if (isArtifactTypeVideoMusic) {
+          @if (hasArtist) {
             <th pSortableColumn="artist.artistName" style="width:20%; white-space: nowrap">
               <div class="flex justify-between items-center">
                 Artist Name&nbsp;
@@ -112,7 +112,7 @@
             </th>
           }
           <th pSortableColumn="title">Title&nbsp;<p-sortIcon field="title"></p-sortIcon></th>
-          @if (isArtifactTypeVideoMusic) {
+          @if (hasYear) {
             <th style="width:0">Year</th>
           }
           <th style="width:0; text-align: center">Duration</th>
@@ -138,11 +138,11 @@
       <ng-template pTemplate="body" let-item>
         <tr [pSelectableRow]="item">
           <td>{{item.id}}</td>
-          @if (isArtifactTypeVideoMusic) {
+          @if (hasArtist) {
             <td>{{item.artist?.artistName}}</td>
           }
           <td>{{item.title}}</td>
-          @if (isArtifactTypeVideoMusic) {
+          @if (hasYear) {
             <td>{{item.year}}</td>
           }
           <td>

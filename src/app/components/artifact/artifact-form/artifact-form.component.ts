@@ -5,7 +5,7 @@ import {
 } from "../../../model/artifacts";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ArtifactService} from "../../../service/artifact.service";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {MessageService} from "primeng/api";
 import {IdName} from "../../../model/common";
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {filterIdName} from "../../../utils/search-utils";
@@ -89,9 +89,8 @@ export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> imple
 
   constructor(
     private fb: FormBuilder,
-    private confirmationService: ConfirmationService,
     override messageService: MessageService,
-    private artifactService: ArtifactService,
+    artifactService: ArtifactService,
     private mediaFileService: MediaFileService,
   ) { super(messageService, artifactService) }
 
