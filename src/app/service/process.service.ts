@@ -5,7 +5,7 @@ import {
   catchError, iif,
   map,
   Observable,
-  of, shareReplay,
+  of, OperatorFunction, shareReplay,
   Subject,
   switchMap,
   takeUntil,
@@ -48,6 +48,31 @@ export class ProcessService {
     return this.restDataSource.postResponseData<ProcessInfo>("process/resolve", processingAction);
   }
 
+  private fetchProcessInfo<T>(): OperatorFunction<T, ProcessInfo> {
+    return (source$) => source$.pipe(
+      switchMap(() =>
+        this.restDataSource.getResponse<ProcessInfo>("process").pipe(
+          map(response => response.body ?? { processingStatus: undefined })
+        )
+      ),
+      catchError(err => {
+        if (err.status === 404) {
+          console.error(`Got 404`);
+          return of({ processingStatus: undefined });
+        }
+        console.error(`Found error in ProcessInfo: ${err.message}`);
+        return throwError(err);
+      })
+    );
+  }
+
+  getProcessStatusCompleted(): Observable<Boolean> {
+    return of(null).pipe(
+      this.fetchProcessInfo(),
+      map(pi => pi.processingStatus !== ProcessingStatus[ProcessingStatus.IN_PROGRESS])
+    );
+  }
+
   getProcessInfo(): Observable<ProcessInfo> {
     this.initProcessingStatus();
 
@@ -55,21 +80,7 @@ export class ProcessService {
       tap(() => console.log("Before takeUntil")),
       takeUntil(this.processingStatus$),
       tap(() => console.log("Getting info")),
-      switchMap(() => {
-        return this.restDataSource.getResponse<ProcessInfo>("process").pipe(
-          map(response => response.body || {processingStatus: undefined}
-          )
-        )
-      }),
-      catchError(err => {
-        if (err.status === 404) {
-          console.error(`Got 404`);
-          return of({processingStatus: undefined});
-        } else {
-          console.error(`Found error in ProcessInfo: ${err.message}`)
-          return throwError(err);
-        }
-      }),
+      this.fetchProcessInfo(),
       tap((pi) => {
         console.log(`getProcessInfo cycle ${JSON.stringify(pi)}`);
         if (pi.processingStatus === undefined || pi.processingStatus !== ProcessingStatus[ProcessingStatus.IN_PROGRESS]) {

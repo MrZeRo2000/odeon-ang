@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import {BackupService} from "../backup.service";
-import {catchError, Observable, of, Subject, switchMap, tap} from "rxjs";
+import {catchError, EMPTY, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {Message} from "../../../model/message";
 import {MessageService} from "primeng/api";
 import {DatabaseBackupInfo} from "../../../model/database-backup-info";
 import {DateFormatter} from "../../../utils/date-utils";
+import {ProcessService} from "../../../service/process.service";
 
 @Component({
     selector: 'app-database-backup',
@@ -23,10 +24,25 @@ export class DatabaseBackupComponent {
   displayProgress = false
 
   backupAction$ = this.backupSubject.asObservable().pipe(
-    tap(() => {this.displayProgress = true}),
+    switchMap(() =>
+      this.processService.getProcessStatusCompleted().pipe(
+        switchMap(completed => {
+          if (!completed) {
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Warning',
+              detail: 'A process is already running'
+            });
+            return EMPTY;
+          }
+          return of(true);
+        })
+      )
+    ),
+    tap(() => { this.displayProgress = true }),
     switchMap(() => this.backup()),
     tap(v => {
-      this.displayProgress = false
+      this.displayProgress = false;
       if (v.message) {
         this.databaseBackupInfoSharedHandler.refreshTable();
         this.messageService.add({
@@ -43,9 +59,9 @@ export class DatabaseBackupComponent {
       }
     })
   );
-
   constructor(
     private messageService: MessageService,
+    private processService: ProcessService,
     private backupService: BackupService) {
   }
 
