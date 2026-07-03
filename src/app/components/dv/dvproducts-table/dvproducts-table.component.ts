@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {DVCategory, DVOrigin, DVProduct} from "../../../model/dv-product";
 import {CRUDResult} from "../../../model/crud";
@@ -60,14 +60,6 @@ export class DVProductsTableComponent
 
   dvOriginNames: Array<SelectItem<string>> = [];
   dvCategoryNames: Array<SelectItem<string>> = [];
-
-  @ViewChild('dtc', { static: false})
-  private tableContainerElement?: ElementRef;
-
-  @ViewChild('caption', { static: false})
-  private tableCaptionElement?: ElementRef;
-
-  scrollHeight = window.innerHeight;
 
   displayDescription = false;
 
@@ -177,9 +169,7 @@ export class DVProductsTableComponent
       return from([0, v.artifactTypeId]).pipe(
         concatMap(v => {
           if (v) {
-            return this.dvProductService.getTable(v as number).pipe(
-              tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
-            )
+            return this.dvProductService.getTable(v as number)
           } else {
             return of(null)
           }
@@ -228,25 +218,6 @@ export class DVProductsTableComponent
   onImport(): void {
     this.displayImportProducts = false;
     this.loadData();
-  }
-
-  private updateScrollHeight(): void {
-    const windowHeight = window.innerHeight;
-    const tableContainerTop = this.tableContainerElement?.nativeElement.offsetTop;
-    const tableCaptionOffset = this.tableCaptionElement?.nativeElement.parentElement.offsetHeight;
-    const containerHeight = windowHeight
-      - tableContainerTop
-      - tableCaptionOffset
-      - parseFloat(getComputedStyle(document.documentElement).fontSize) / 2;
-    if (containerHeight > 0) {
-      this.scrollHeight = containerHeight
-      console.log(`Scroll height updated to ${this.scrollHeight}`)
-    }
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.updateScrollHeight();
   }
 
   showDescription(event: any, item: DVProduct): void {

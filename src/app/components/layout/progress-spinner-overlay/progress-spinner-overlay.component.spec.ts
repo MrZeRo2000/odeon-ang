@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProgressSpinnerOverlayComponent } from './progress-spinner-overlay.component';
-import {LayoutModule} from "../layout.module";
+import { LayoutModule } from '../layout.module';
 
 describe('ProgressSpinnerOverlayComponent', () => {
   let component: ProgressSpinnerOverlayComponent;
@@ -9,10 +9,8 @@ describe('ProgressSpinnerOverlayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ProgressSpinnerOverlayComponent],
-      imports: [LayoutModule]
-    })
-    .compileComponents();
+      imports: [LayoutModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProgressSpinnerOverlayComponent);
     component = fixture.componentInstance;

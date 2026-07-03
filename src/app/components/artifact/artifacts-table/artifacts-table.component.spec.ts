@@ -1,13 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { ArtifactsTableComponent } from './artifacts-table.component';
-import { provideHttpClientTesting } from "@angular/common/http/testing";
-import {RouterTestingModule} from "@angular/router/testing";
-import {DataSourceModule} from "../../../data-source/data-source.module";
-import {ConfirmationService, MessageService} from "primeng/api";
-import {LoadingComponent} from "../../../core/components/loading/loading.component";
-import {ConfirmDialogComponent} from "../../../core/components/confirm-dialog/confirm-dialog.component";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ArtifactModule } from '../artifact.module';
+import { DataSourceModule } from '../../../data-source/data-source.module';
 
 describe('ArtifactsTableComponent', () => {
   let component: ArtifactsTableComponent;
@@ -15,26 +13,14 @@ describe('ArtifactsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [
-        LoadingComponent,
-        ConfirmDialogComponent,
-        ArtifactsTableComponent
-    ],
-    imports: [RouterTestingModule,
-        //custom
-        DataSourceModule],
-    providers: [
-        //library
+      imports: [ArtifactModule, RouterTestingModule, DataSourceModule],
+      providers: [
         ConfirmationService,
         MessageService,
-        provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-})
-    .compileComponents();
-  });
+      ],
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ArtifactsTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

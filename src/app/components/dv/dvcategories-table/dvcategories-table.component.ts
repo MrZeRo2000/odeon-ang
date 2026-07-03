@@ -1,7 +1,7 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {DVCategory} from "../../../model/dv-product";
-import {Observable, of, tap} from "rxjs";
+import {Observable, of} from "rxjs";
 import {CRUDResult} from "../../../model/crud";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {DVCategoryService} from "../../../service/dvcategory.service";
@@ -13,14 +13,6 @@ import {DVCategoryService} from "../../../service/dvcategory.service";
     standalone: false
 })
 export class DVCategoriesTableComponent extends BaseCrudTableComponent<DVCategory, DVCategory> implements OnInit {
-
-  @ViewChild('dtc', { static: false})
-  private tableContainerElement?: ElementRef;
-
-  @ViewChild('caption', { static: false})
-  private tableCaptionElement?: ElementRef;
-
-  scrollHeight = "0px";
 
   table$?: Observable<Array<DVCategory>>;
 
@@ -44,25 +36,7 @@ export class DVCategoriesTableComponent extends BaseCrudTableComponent<DVCategor
   }
 
   protected loadData(): void {
-    this.table$ = this.dvCategoryService.table$.pipe(
-      tap(() => {setTimeout(() => this.updateScrollHeight(), 0);})
-    );
+    this.table$ = this.dvCategoryService.table$;
     this.dvCategoryService.tableSharedHandler.refreshTable();
-  }
-
-  private updateScrollHeight(): void {
-    const windowHeight = window.innerHeight;
-    const tableContainerTop = this.tableContainerElement?.nativeElement.offsetTop;
-    const tableCaptionOffset = this.tableCaptionElement?.nativeElement.parentElement.offsetHeight;
-    const containerHeight = windowHeight
-      - tableContainerTop
-      - tableCaptionOffset
-      - parseFloat(getComputedStyle(document.documentElement).fontSize) / 2;
-    this.scrollHeight = `${containerHeight}px`
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.updateScrollHeight();
   }
 }

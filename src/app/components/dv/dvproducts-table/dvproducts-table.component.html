@@ -2,7 +2,7 @@
 
 
 @if (filteredTable$ | async; as table) {
-  <div #dtc>
+  <div>
     @if (showDescription$ | async; as description) {
       <div>
         @if (!!description) {
@@ -36,7 +36,7 @@
       stateStorage="session"
       stateKey="dvproducts-table-session"
       [scrollable]="true"
-      [scrollHeight]="scrollHeight + 'px'"
+      scrollHeight="calc(100vh - 10rem)"
       [virtualScroll]="true"
       [virtualScrollItemSize]="46"
       [globalFilterFields]="['title', 'originalTitle', 'frontInfo']"
@@ -44,7 +44,7 @@
       selectionMode="single" [(selection)]="selectedItem"
       >
       <ng-template pTemplate="caption">
-        <div #caption class="flex">
+        <div class="flex">
           <div class="flex items-center justify-between text-xl mr-2">Products</div>
           <app-crud-panel class="flex items-center app-crud-panel-small" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
           <form [formGroup]="filterForm" class="flex items-center whitespace-nowrap ml-2 mr-2">

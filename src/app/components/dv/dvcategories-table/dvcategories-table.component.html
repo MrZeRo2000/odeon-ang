@@ -3,16 +3,16 @@
 
 
 @if (table$ | async; as table) {
-  <div #dtc>
+  <div>
     <p-table #dt
       size="small"
       [value]="table"
       dataKey="id"
       [scrollable]="true"
-      [scrollHeight]="scrollHeight"
+      scrollHeight="calc(100vh - 10rem)"
       [globalFilterFields]="['name']">
       <ng-template pTemplate="caption">
-        <div #caption class="flex">
+        <div class="flex">
           <div class="flex">
             <div class="flex items-center justify-between text-xl mr-2">Categories</div>
             <app-crud-panel class="flex items-center app-crud-panel-small" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>

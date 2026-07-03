@@ -339,11 +339,10 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
 
   onShow(event: any) {
     console.log(`onShow data`)
-    // 1. Mark for check immediately
-    this.cd.markForCheck();
 
-    // 2. Use a microtask to ensure the overlay is fully rendered
-    // then tell the scroller to refresh itself
+    // Once the overlay is fully rendered, tell the virtual scroller to refresh
+    // itself. detectChanges is required here because this runs in a bare
+    // setTimeout, which does not notify Angular's change detection in zoneless.
     setTimeout(() => {
       if (this.select?.scroller) {
         //this.select.scroller.scrollToIndex(0);

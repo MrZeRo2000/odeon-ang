@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { TracksAllTableComponent } from './tracks-all-table.component';
-import {TrackModule} from "../track.module";
-import {RouterModule} from "@angular/router";
-import {MessageService} from "primeng/api";
-import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
-import {provideHttpClientTesting} from "@angular/common/http/testing";
-import {REST_URL_ENV} from "../../../data-source/rest-data-source.service";
+import { TrackModule } from '../track.module';
+import { DataSourceModule } from '../../../data-source/data-source.module';
 
 describe('TracksAllTableComponent', () => {
   let component: TracksAllTableComponent;
@@ -14,21 +13,13 @@ describe('TracksAllTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TracksAllTableComponent],
-      imports: [
-        RouterModule. forRoot(
-          [{path: '', component: TracksAllTableComponent}, {path: 'simple', component: TracksAllTableComponent}]
-        ),
-        TrackModule
-      ],
+      imports: [TrackModule, RouterTestingModule, DataSourceModule],
       providers: [
+        ConfirmationService,
         MessageService,
-        REST_URL_ENV,
-        provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-      ]
-    })
-    .compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TracksAllTableComponent);
     component = fixture.componentInstance;

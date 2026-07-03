@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { MediaFilesLoadFormComponent } from './media-files-load-form.component';
-import {MediaFileModule} from "../media-file.module";
-import {MessageService} from "primeng/api";
-import {REST_URL_ENV} from "../../../data-source/rest-data-source.service";
-import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
-import {provideHttpClientTesting} from "@angular/common/http/testing";
+import { MediaFileModule } from '../media-file.module';
+import { DataSourceModule } from '../../../data-source/data-source.module';
 
 describe('MediaFilesLoadFormComponent', () => {
   let component: MediaFilesLoadFormComponent;
@@ -13,16 +13,13 @@ describe('MediaFilesLoadFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MediaFilesLoadFormComponent],
-      imports: [MediaFileModule],
+      imports: [MediaFileModule, RouterTestingModule, DataSourceModule],
       providers: [
+        ConfirmationService,
         MessageService,
-        REST_URL_ENV,
-        provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-      ]
-    })
-    .compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MediaFilesLoadFormComponent);
     component = fixture.componentInstance;

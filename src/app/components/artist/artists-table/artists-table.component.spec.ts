@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { ArtistsTableComponent } from './artists-table.component';
-import {ServiceModule} from "../../../service/service.module";
-import {DataSourceModule} from "../../../data-source/data-source.module";
-import {ConfirmationService, MessageService} from "primeng/api";
-import {LoadingComponent} from "../../../core/components/loading/loading.component";
-import {ConfirmDialogComponent} from "../../../core/components/confirm-dialog/confirm-dialog.component";
+import { ArtistModule } from '../artist.module';
+import { DataSourceModule } from '../../../data-source/data-source.module';
 
 describe('ArtistsTableComponent', () => {
   let component: ArtistsTableComponent;
@@ -13,18 +13,14 @@ describe('ArtistsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        LoadingComponent,
-        ConfirmDialogComponent,
-        ArtistsTableComponent
+      imports: [ArtistModule, RouterTestingModule, DataSourceModule],
+      providers: [
+        ConfirmationService,
+        MessageService,
+        provideHttpClientTesting(),
       ],
-      providers: [ConfirmationService, MessageService],
-      imports: [DataSourceModule, ServiceModule]
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ArtistsTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
