@@ -53,8 +53,10 @@ import {TaggedModule} from "./components/tag/tagged.module";
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: OdeonPreset
-      }
+        preset: OdeonPreset,
+      },
+      // Free Community license key from https://primeui.dev/licenses/community
+      license: 'eyJpZCI6ImQ5ZTVlN2IzLTQ5MGYtNDUzMC04YzA2LTJjZmNjMzk1ZDYyNCIsInByb2R1Y3QiOiJwcmltZXVpIiwidGllciI6ImNvbW11bml0eSIsInR5cGUiOiJkZXYiLCJpYXQiOjE3ODU0MTU0MDksImV4cCI6MTgxNjk1MTQwOX0.jwDS81qcCx0WbufoXGqgRCup7lpyirRdX_1ebMWg3Slp8ZP0Ts4qp7QocMoY31MgrWkJYSszHOyRvFbxlGKxBQ',
     }),
     provideAppInitializer(() => {
         const initializerFn = (initializeApp)(inject(AppInfoService));
