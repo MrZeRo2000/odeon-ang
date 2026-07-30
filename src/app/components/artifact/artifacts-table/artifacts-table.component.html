@@ -53,23 +53,23 @@
             </form>
           }
           @if (selectedItem) {
-            <button pButton type="button" label="Tracks" icon="pi pi-list" iconPos="left"
-              class="ml-4 p-button-outlined p-button-secondary"
+            <p-button type="button" label="Tracks" icon="pi pi-list" iconPos="left"
+              styleClass="ml-4 p-button-outlined p-button-secondary"
               (click)="onTracksButton()"
-            ></button>
+            ></p-button>
           }
           @if (selectedItem) {
-            <button pButton type="button" label="Media&nbsp;files" icon="pi pi-file" iconPos="left"
-              class="ml-1 p-button-outlined p-button-secondary"
+            <p-button type="button" label="Media&nbsp;files" icon="pi pi-file" iconPos="left"
+              styleClass="ml-1 p-button-outlined p-button-secondary"
               (click)="onMediaFilesButton()"
-            ></button>
+            ></p-button>
           }
           @if (selectedItem) {
-            <button pButton type="button" label="Tags" icon="pi pi-tags" iconPos="left"
-              class="ml-1 p-button-outlined p-button-secondary !p-2"
+            <p-button type="button" label="Tags" icon="pi pi-tags" iconPos="left"
+              styleClass="ml-1 p-button-outlined p-button-secondary !p-2"
               (click)="onTagsButton($event)"
               >
-            </button>
+            </p-button>
           }
           <div class="flex justify-end flex-grow-1 ml-2">
             <span class="p-input-icon-left flex items-center">

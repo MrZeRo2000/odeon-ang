@@ -125,8 +125,8 @@
 
 </ng-template>
 <ng-template #footer>
-  <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-  <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+  <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-text" (click)="hideDialog()"></p-button>
+  <p-button label="Save" icon="pi pi-check" styleClass="p-button-text" (click)="save()"></p-button>
 </ng-template>
 
 @if (saveAction$ | async) {}

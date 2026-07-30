@@ -76,8 +76,7 @@
                 </div>
                 @if (pi.processingStatus !== PROGRESS_STATUS) {
                   <div class="flex items-center mr-2">
-                    <button
-                      pButton
+                    <p-button
                       icon="pi pi-refresh"
                       [rounded]="true"
                       [outlined]="true"
@@ -85,7 +84,7 @@
                       [ngClass]="pi.processingStatus === SUCCESS_STATUS || pi.processingStatus === FAILURE_STATUS ? 'text-white' : 'p-button-secondary'"
                       (click)="onRefreshButton($event, pi)"
                       >
-                    </button>
+                    </p-button>
                   </div>
                 }
               </div>
@@ -110,7 +109,7 @@
                       {{processDetail.message}}
                       @if (processDetail.processingAction?.actionType === 'ADD_ARTIST') {
                         <span>
-                          <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined ml-2" (click)="resolveActionAddArtist(processDetail.processingAction)"></button>
+                          <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-success p-button-outlined ml-2" (click)="resolveActionAddArtist(processDetail.processingAction)"></p-button>
                         </span>
                       }
                     </div>

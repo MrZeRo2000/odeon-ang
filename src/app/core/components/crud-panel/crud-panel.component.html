@@ -1,31 +1,25 @@
 <div class="flex">
   @if (crudActions.indexOf(CRUDAction.EA_CREATE) !== -1) {
-    <button
-      pButton
-      pRipple
+    <p-button
       icon="pi pi-plus"
-      class="p-button-rounded p-button-primary p-button-outlined"
+      styleClass="p-button-rounded p-button-primary p-button-outlined"
       [ngClass]="crudActions.indexOf(CRUDAction.EA_DELETE) !==0 || crudActions.indexOf(CRUDAction.EA_UPDATE) !==0 ? 'mr-1' : ''"
       (click)="crudEvent.emit({action: CRUDAction.EA_CREATE, data: undefined})">
-    </button>
+    </p-button>
   }
   @if (crudActions.indexOf(CRUDAction.EA_UPDATE) !== -1) {
-    <button
-      pButton
-      pRipple
+    <p-button
       icon="pi pi-pencil"
-      class="p-button-rounded p-button-outlined p-button-primary"
+      styleClass="p-button-rounded p-button-outlined p-button-primary"
       [ngClass]="crudActions.indexOf(CRUDAction.EA_DELETE) !== 0 ? 'mr-1' : ''"
       (click)="crudEvent.emit({action: CRUDAction.EA_UPDATE, data})">
-    </button>
+    </p-button>
   }
   @if (crudActions.indexOf(CRUDAction.EA_DELETE) !== -1) {
-    <button
-      pButton
-      pRipple
+    <p-button
       icon="pi pi-trash"
-      class="p-button-rounded p-button-outlined p-button-danger"
+      styleClass="p-button-rounded p-button-outlined p-button-danger"
       (click)="crudEvent.emit({action: CRUDAction.EA_DELETE, data})">
-    </button>
+    </p-button>
   }
 </div>

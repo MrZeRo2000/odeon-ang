@@ -183,7 +183,7 @@
             <td style="text-align: center; white-space: nowrap">
               @if (item.dvProduct) {
                 <div class="flex justify-center app-crud-panel-small">
-                  <button pButton pRipple icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined" (click)="displayProduct(item)"></button>
+                  <p-button icon="pi pi-info" styleClass="p-button-rounded p-button-secondary p-button-outlined" (click)="displayProduct(item)"></p-button>
                 </div>
               }
             </td>
@@ -209,15 +209,13 @@
           @if (this.artifactId) {
             <td>
               <div class="flex flex-row app-crud-panel-small">
-                <button
-                  pButton
-                  pRipple
+                <p-button
                   icon="pi pi-tags"
-                  class="p-button-rounded p-button-outlined p-button-warn"
+                  styleClass="p-button-rounded p-button-outlined p-button-warn"
                   ngClass="mr-1"
                   (click)="onTagsButton($event, item)"
                   >
-                </button>
+                </p-button>
                 <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
               </div>
             </td>
