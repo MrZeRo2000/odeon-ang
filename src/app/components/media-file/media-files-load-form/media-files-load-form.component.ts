@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BaseFormComponent} from "../../base/base-form.component";
 import {FormBuilder, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
@@ -9,7 +9,6 @@ import {MediaFileService} from "../../../service/media-file.service";
     selector: 'app-media-files-load-form',
     templateUrl: './media-files-load-form.component.html',
     styleUrl: './media-files-load-form.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class MediaFilesLoadFormComponent extends BaseFormComponent implements OnInit {

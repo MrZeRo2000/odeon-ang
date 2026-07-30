@@ -43,7 +43,7 @@
 
             <div class="mb-4">
               <label for="year">Year</label>
-              <p-inputNumber
+              <p-input-number
                 id="year"
                 mode="decimal"
                 [allowEmpty]="true"
@@ -51,20 +51,20 @@
                 [useGrouping]="false"
                 formControlName="year"
                 class="w-full"
-              ></p-inputNumber>
+              ></p-input-number>
             </div>
 
             <div class="mb-4">
               <label for="frontInfo">Front Info</label>
               <p-fluid>
-                <p-autoComplete
+                <p-auto-complete
                   [suggestions]="filteredFrontInfos"
                   (completeMethod)="searchFrontInfos($event)"
                   id="frontInfo"
                   formControlName="frontInfo"
                   [dropdown]="true"
                   appendTo="body"
-                ></p-autoComplete>
+                ></p-auto-complete>
               </p-fluid>
             </div>
 
@@ -108,7 +108,7 @@
 
         <div class="mt-4">
           <label for="categories">Categories</label>
-          <p-multiSelect
+          <p-multi-select
             id="categories"
             [options]="dvCategories"
             formControlName="dvCategories"
@@ -117,7 +117,7 @@
             appendTo="body"
             class="w-full"
             >
-          </p-multiSelect>
+          </p-multi-select>
         </div>
 
         <div>

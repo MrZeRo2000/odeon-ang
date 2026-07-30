@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {
   ARTIFACT_MUSIC_TYPES,
   ArtifactConfigItem, getArtifactConfig, Artifact
@@ -17,7 +17,6 @@ import {MediaFile} from "../../../model/media-file";
     selector: 'app-artifact-form',
     templateUrl: './artifact-form.component.html',
     styleUrls: ['./artifact-form.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ArtifactFormComponent extends BaseCrudFormComponent<Artifact> implements OnInit {

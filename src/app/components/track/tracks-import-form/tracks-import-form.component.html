@@ -35,13 +35,13 @@
 
         <div class="mb-2">
           <label for="num">Track #</label>
-          <p-inputNumber
+          <p-input-number
             formControlName="num"
             id="num"
             class="w-full"
             [format]="false"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['num'].errors}"
-          ></p-inputNumber>
+          ></p-input-number>
         </div>
       </div>
       <div class="grid grid-cols-2 gap-4">

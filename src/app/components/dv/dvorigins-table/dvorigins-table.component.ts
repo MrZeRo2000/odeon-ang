@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {DVOrigin} from "../../../model/dv-product";
 import {Observable, of} from "rxjs";
@@ -10,7 +10,6 @@ import {DVOriginService} from "../../../service/dvorigin.service";
     selector: 'app-dvorigins-table',
     templateUrl: './dvorigins-table.component.html',
     styleUrls: ['./dvorigins-table.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DVOriginsTableComponent extends BaseCrudTableComponent<DVOrigin, DVOrigin> implements OnInit {

@@ -59,9 +59,9 @@
               <th style="width:30%">
                 <div class="flex items-center">
                   Artist name
-                  <p-columnFilter field="artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <p-column-filter field="artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                      <p-multiSelect
+                      <p-multi-select
                         [ngModel]="value"
                         [options]="data[1]"
                         optionLabel="name"
@@ -69,15 +69,15 @@
                         placeholder="All"
                         (onChange)="filter($event.value)"
                         display="chip">
-                      </p-multiSelect>
+                      </p-multi-select>
                     </ng-template>
-                  </p-columnFilter>
+                  </p-column-filter>
                 </div>
               </th>
               <th style="width:70%">
                 <div class="flex items-center">
                   Title
-                  <p-columnFilter type="text" field="title" class="ml-2"></p-columnFilter>
+                  <p-column-filter type="text" field="title" class="ml-2"></p-column-filter>
                 </div>
               </th>
               <th style="width:0"></th>

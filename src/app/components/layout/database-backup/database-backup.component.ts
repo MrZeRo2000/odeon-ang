@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import {BackupService} from "../backup.service";
 import {catchError, EMPTY, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {Message} from "../../../model/message";
@@ -11,7 +11,6 @@ import {ProcessService} from "../../../service/process.service";
     selector: 'app-database-backup',
     templateUrl: './database-backup.component.html',
     styleUrls: ['./database-backup.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DatabaseBackupComponent {

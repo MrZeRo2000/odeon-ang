@@ -48,10 +48,10 @@
           }
           <div class="flex justify-end flex-grow-1">
             <div class="flex items-center mr-2">
-              <p-columnFilter type="boolean" field="isGenre" display="menu" class="flex items-center mr-1"></p-columnFilter>Genre exists
+              <p-column-filter type="boolean" field="isGenre" display="menu" class="flex items-center mr-1"></p-column-filter>Genre exists
             </div>
             <div class="flex items-center mr-2">
-              <p-columnFilter type="boolean" field="isDetail" display="menu" class="flex items-center mr-1"></p-columnFilter>Info exists
+              <p-column-filter type="boolean" field="isDetail" display="menu" class="flex items-center mr-1"></p-column-filter>Info exists
             </div>
             <span class="p-input-icon-left flex items-center">
               <p-iconfield iconPosition="left" class="ml-auto">
@@ -77,33 +77,33 @@
           <th style="width:0">
             <div class="flex justify-center items-center">
               Genre
-              <p-columnFilter field="genre" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <p-column-filter field="genre" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [ngModel]="value" [options]="filterGenres" placeholder="Any" (onChange)="filter($event.value)">
+                  <p-multi-select [ngModel]="value" [options]="filterGenres" placeholder="Any" (onChange)="filter($event.value)">
                     <ng-template let-option pTemplate="item">
                       <div class="inline-block vertical-align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
-                  </p-multiSelect>
+                  </p-multi-select>
                 </ng-template>
-              </p-columnFilter>
+              </p-column-filter>
             </div>
           </th>
           <th style="width:50%">
             <div class="flex justify-start items-center">
               Styles
-              <p-columnFilter field="styles" matchMode="filter_styles" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <p-column-filter field="styles" matchMode="filter_styles" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [ngModel]="value" [options]="filterStyles" placeholder="Any" (onChange)="filter($event.value)">
+                  <p-multi-select [ngModel]="value" [options]="filterStyles" placeholder="Any" (onChange)="filter($event.value)">
                     <ng-template let-option pTemplate="item">
                       <div class="inline-block vertical-align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
-                  </p-multiSelect>
+                  </p-multi-select>
                 </ng-template>
-              </p-columnFilter>
+              </p-column-filter>
             </div>
           </th>
           <th style="width:0">Info</th>

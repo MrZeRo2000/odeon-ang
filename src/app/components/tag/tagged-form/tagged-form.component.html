@@ -4,7 +4,7 @@
   <ng-template pTemplate="content">
     <form [formGroup]="editForm">
       <p-fluid class="mb-4">
-        <p-autoComplete
+        <p-auto-complete
           [dropdown]="true"
           [suggestions]="filteredTags"
           (completeMethod)="searchTags($event)"
@@ -15,7 +15,7 @@
           (onKeyUp)="tagsKeyUp($event)"
           appendTo="body"
           >
-        </p-autoComplete>
+        </p-auto-complete>
       </p-fluid>
     </form>
   </ng-template>

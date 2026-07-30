@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Artist, ARTIST_TYPES} from "../../../model/artists";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ENTER} from "@angular/cdk/keycodes";
@@ -11,7 +11,6 @@ import {filterString} from "../../../utils/search-utils";
     selector: 'app-artist-form',
     templateUrl: './artist-form.component.html',
     styleUrls: ['./artist-form.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ArtistFormComponent extends BaseCrudFormComponent<Artist> implements OnInit {

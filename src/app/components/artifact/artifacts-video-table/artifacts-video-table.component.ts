@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {
   ARTIFACT_VIDEO_TYPES,
@@ -26,7 +26,6 @@ interface FilterControlsConfig
     selector: 'app-artifacts-video-table',
     templateUrl: './artifacts-video-table.component.html',
     styleUrls: ['./artifacts-video-table.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
@@ -52,7 +51,7 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
         summary: 'Error',
         detail: `Error reading artifacts`
       });
-      return of([]);
+      return of([] as Artifact[]);
     })
   );
 
@@ -65,7 +64,7 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
         summary: 'Error',
         detail: `Error reading artifact row`
       });
-      return of([]);
+      return of([] as Artifact[]);
     }),
     map(v => [v])
   );
@@ -84,7 +83,7 @@ export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifac
     switchMap(
       v => iif(
         () => !v.artifactType,
-        of([]),
+        of([] as Artifact[]),
         iif(
           () => !!this.routedArtifactId,
           this.artifactRow$(this.routedArtifactId as number),

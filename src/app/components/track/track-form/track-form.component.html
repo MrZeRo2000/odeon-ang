@@ -19,7 +19,7 @@
         @if (artifactTypeConfig?.hasDiskNum) {
           <div class="mb-2">
             <label for="diskNum">Disk #</label>
-            <p-inputNumber
+            <p-input-number
               [format]="false"
               [showButtons]="true"
               inputId="diskNum"
@@ -30,13 +30,13 @@
               class="w-full"
               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['diskNum'].errors}"
               >
-            </p-inputNumber>
+            </p-input-number>
           </div>
         }
 
         <div class="mb-2" [ngClass]="artifactTypeConfig?.hasDiskNum ? '' : 'col-span-2'">
           <label for="num">Track #</label>
-          <p-inputNumber
+          <p-input-number
             [format]="false"
             [showButtons]="true"
             inputId="num"
@@ -46,7 +46,7 @@
             formControlName="num"
             class="w-full"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['num'].errors}">
-          </p-inputNumber>
+          </p-input-number>
         </div>
 
         <div class="mb-2" [ngClass]="artifactTypeConfig?.hasDvType ? '' : 'col-span-2'">
@@ -60,14 +60,14 @@
               </span>
             }
           </label>
-          <p-inputNumber
+          <p-input-number
             [format]="false"
             [showButtons]="true"
             id="duration"
             formControlName="duration"
             class="w-full"
             [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['duration'].errors}"
-          ></p-inputNumber>
+          ></p-input-number>
         </div>
 
         @if (artifactTypeConfig?.hasDvType) {
@@ -88,7 +88,7 @@
         @if (artifactTypeConfig?.hasArtist) {
           <div class="mb-2" [ngClass]="artifactTypeConfig?.hasPerformerArtist ? '' : 'col-span-2'">
             <label for="artistId">Artist</label>
-            <p-autoComplete
+            <p-auto-complete
               [suggestions]="filteredArtists"
               (completeMethod)="searchArtists($event)"
               id="artistId"
@@ -100,14 +100,14 @@
               [forceSelection]="true"
               class="w-full"
               appendTo="body"
-            ></p-autoComplete>
+            ></p-auto-complete>
           </div>
         }
 
         @if (artifactTypeConfig?.hasPerformerArtist) {
           <div class="mb-2">
             <label for="performerArtistId">Performer Artist</label>
-            <p-autoComplete
+            <p-auto-complete
               [suggestions]="filteredPerformerArtists"
               (completeMethod)="searchPerformerArtists($event)"
               id="performerArtistId"
@@ -119,13 +119,13 @@
               [forceSelection]="true"
               class="w-full"
               appendTo="body"
-            ></p-autoComplete>
+            ></p-auto-complete>
           </div>
         }
 
         <div class="col-span-2 mb-2">
           <label for="mediaFileIds">Media files</label>
-          <p-multiSelect
+          <p-multi-select
             [options]="mediaFileTable"
             optionLabel="name"
             optionValue="id"
@@ -133,13 +133,13 @@
             formControlName="mediaFileIds"
             class="w-full"
             appendTo="body"
-          ></p-multiSelect>
+          ></p-multi-select>
         </div>
 
         @if (artifactTypeConfig?.hasProducts) {
           <div class="col-span-2 mb-2">
             <label for="dvProductId">Product</label>
-            <p-autoComplete
+            <p-auto-complete
               [suggestions]="filteredDvProducts"
               (completeMethod)="searchDvProducts($event)"
               id="dvProductId"
@@ -154,7 +154,7 @@
               class="w-full"
               appendTo="body"
               >
-            </p-autoComplete>
+            </p-auto-complete>
           </div>
         }
       </p-fluid>

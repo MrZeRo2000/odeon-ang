@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BaseFormComponent} from "../../base/base-form.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {
@@ -24,7 +24,6 @@ enum ImportAction {
     selector: 'app-dvproducts-import-form',
     templateUrl: './dvproducts-import-form.component.html',
     styleUrls: ['./dvproducts-import-form.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DVProductsImportFormComponent extends BaseFormComponent implements OnInit {

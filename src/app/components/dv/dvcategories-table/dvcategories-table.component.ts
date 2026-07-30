@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {DVCategory} from "../../../model/dv-product";
 import {Observable, of} from "rxjs";
@@ -10,7 +10,6 @@ import {DVCategoryService} from "../../../service/dvcategory.service";
     selector: 'app-dvcategory-table',
     templateUrl: './dvcategories-table.component.html',
     styleUrls: ['./dvcategories-table.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DVCategoriesTableComponent extends BaseCrudTableComponent<DVCategory, DVCategory> implements OnInit {

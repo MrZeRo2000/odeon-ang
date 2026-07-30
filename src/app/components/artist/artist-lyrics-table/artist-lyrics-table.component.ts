@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {ArtistLyricsEditItem, ArtistLyricsTableItem, ArtistLyricsText} from "../../../model/artist-lyrics";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -17,7 +17,6 @@ export interface NameInterface {
     selector: 'app-artist-lyrics-table',
     templateUrl: './artist-lyrics-table.component.html',
     styleUrls: ['./artist-lyrics-table.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ArtistLyricsTableComponent extends BaseCrudTableComponent<ArtistLyricsTableItem, [ArtistLyricsEditItem, IdName[]]> implements OnInit {

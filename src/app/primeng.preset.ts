@@ -1,5 +1,5 @@
-import { definePreset } from '@primeng/themes';
-import Material from '@primeng/themes/material';
+import { definePreset } from '@primeuix/themes';
+import Material from '@primeuix/themes/material';
 
 export const OdeonPreset = definePreset(Material, {
   //Your customizations, see the following sections for examples

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Artifact} from "../../../model/artifacts";
 import {BaseTableComponent} from "../../base/base-table-component";
 import {FilterService, MessageService, SelectItem} from "primeng/api";
@@ -17,7 +17,6 @@ import {Table} from "primeng/table";
     selector: 'app-artifacts-all-table',
     templateUrl: './artifacts-all-table.component.html',
     styleUrl: './artifacts-all-table.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> implements OnInit {

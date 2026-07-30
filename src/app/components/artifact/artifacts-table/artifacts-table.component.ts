@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ArtifactService} from "../../../service/artifact.service";
 import {FormBuilder} from "@angular/forms";
 import {ARTIST_TYPES} from "../../../model/artists";
@@ -45,7 +45,6 @@ interface FilterControlsConfigValue
     selector: 'app-artifacts-table',
     templateUrl: './artifacts-table.component.html',
     styleUrls: ['./artifacts-table.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
@@ -105,7 +104,7 @@ export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [I
     switchMap(
       v => iif(
         () =>  !v.artifactTypes,
-        of([]),
+        of([] as Artifact[]),
         iif(
           () => !!this.routedArtifactId,
           this.artifactRow$(this.routedArtifactId as number),

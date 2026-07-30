@@ -21,7 +21,7 @@
         @if (artifactTypeConfig?.hasArtist) {
           <div class="mb-4">
             <label for="artistId">Artist</label>
-            <p-autoComplete #autofocused
+            <p-auto-complete #autofocused
               [suggestions]="filteredArtists"
               (completeMethod)="searchArtists($event)"
               id="artistId"
@@ -32,14 +32,14 @@
               [dropdown]="true"
               [forceSelection]="true"
               >
-            </p-autoComplete>
+            </p-auto-complete>
           </div>
         }
 
         @if (artifactTypeConfig?.hasPerformerArtist) {
           <div class="mb-4">
             <label for="performerArtistId">Performer Artist</label>
-            <p-autoComplete
+            <p-auto-complete
               [suggestions]="filteredPerformerArtists"
               (completeMethod)="searchPerformerArtists($event)"
               id="performerArtistId"
@@ -50,7 +50,7 @@
               [dropdown]="true"
               [forceSelection]="true"
               >
-            </p-autoComplete>
+            </p-auto-complete>
           </div>
         }
 

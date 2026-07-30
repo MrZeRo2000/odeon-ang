@@ -13,19 +13,19 @@
           </div>
 
           <div class="field flex justify-center">
-            <p-selectButton
+            <p-select-button
               [options]="artistTypes"
               optionLabel="name"
               optionValue="code"
               [multiple]="false"
               [allowEmpty]="false"
               formControlName="artistType"
-            ></p-selectButton>
+            ></p-select-button>
           </div>
 
           <div class="mb-4">
             <label for="genre">Genre</label>
-            <p-autoComplete
+            <p-auto-complete
               [suggestions]="filteredGenres"
               [dropdown]="true"
               (completeMethod)="searchGenres($event)"
@@ -34,11 +34,11 @@
               class="mt-2"
               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['genre'].errors}"
               >
-            </p-autoComplete>
+            </p-auto-complete>
           </div>
           <div class="mb-4">
             <label for="styles">Styles</label>
-            <p-autoComplete
+            <p-auto-complete
               [suggestions]="filteredStyles"
               (completeMethod)="searchStyles($event)"
               id="styles"
@@ -47,7 +47,7 @@
               class="mt-2"
               (onKeyUp)="stylesKeyUp($event)"
               >
-            </p-autoComplete>
+            </p-auto-complete>
           </div>
           <div>
             <p-message severity="error" variant="simple" size="small" [ngStyle]="{'visibility': submitted && editForm.controls['artistName'].errors ? 'visible' : 'hidden'}" >Name is required.</p-message>

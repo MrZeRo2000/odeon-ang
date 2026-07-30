@@ -18,7 +18,7 @@
 
         <div class="mb-4">
           <label for="frontInfo">Front Info</label>
-          <p-autoComplete
+          <p-auto-complete
             [suggestions]="filteredFrontInfos"
             (completeMethod)="searchFrontInfos($event)"
             id="frontInfo"
@@ -27,12 +27,12 @@
             [multiple]="false"
             [dropdown]="true"
             >
-          </p-autoComplete>
+          </p-auto-complete>
         </div>
 
         <div class="mb-4">
           <label for="categories">Categories</label>
-          <p-multiSelect
+          <p-multi-select
             id="categories"
             [options]="dvCategories"
             formControlName="dvCategories"
@@ -40,7 +40,7 @@
             optionLabel="name"
             display="chip"
             >
-          </p-multiSelect>
+          </p-multi-select>
         </div>
 
         <p-tabs [(value)]="activeTab">

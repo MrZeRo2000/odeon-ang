@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {getTrackConfig, Track, TrackConfigItem} from "../../../model/track";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
@@ -22,7 +22,6 @@ import {Parser} from "../utils/parser";
     selector: 'app-track-form',
     templateUrl: './track-form.component.html',
     styleUrls: ['./track-form.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TrackFormComponent extends BaseCrudFormComponent<Track> implements OnChanges, OnInit {

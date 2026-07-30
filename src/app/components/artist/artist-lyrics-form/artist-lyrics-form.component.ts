@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {ArtistLyricsEditItem} from "../../../model/artist-lyrics";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
@@ -11,7 +11,6 @@ import {filterIdName} from "../../../utils/search-utils";
     selector: 'app-artist-lyrics-form',
     templateUrl: './artist-lyrics-form.component.html',
     styleUrls: ['./artist-lyrics-form.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ArtistLyricsFormComponent extends BaseCrudFormComponent<ArtistLyricsEditItem> implements OnChanges {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {DVCategory, DVOrigin, DVProduct} from "../../../model/dv-product";
 import {CRUDResult} from "../../../model/crud";
@@ -30,7 +30,6 @@ import {Router} from "@angular/router";
     selector: 'app-dvproducts-table',
     templateUrl: './dvproducts-table.component.html',
     styleUrls: ['./dvproducts-table.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DVProductsTableComponent

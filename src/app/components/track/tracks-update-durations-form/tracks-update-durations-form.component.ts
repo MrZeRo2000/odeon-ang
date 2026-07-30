@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {BaseFormComponent} from "../../base/base-form.component";
 import {Artifact} from "../../../model/artifacts";
 import {MediaFile} from "../../../model/media-file";
@@ -15,7 +15,6 @@ import {DatePipe} from "@angular/common";
     selector: 'app-tracks-update-durations-form',
     templateUrl: './tracks-update-durations-form.component.html',
     styleUrl: './tracks-update-durations-form.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TracksUpdateDurationsFormComponent extends BaseFormComponent {

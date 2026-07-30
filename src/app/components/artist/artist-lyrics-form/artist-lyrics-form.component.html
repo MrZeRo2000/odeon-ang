@@ -4,7 +4,7 @@
       <p-fluid>
         <div class="mb-4">
           <label for="artistId">Artist</label>
-          <p-autoComplete #autofocused
+          <p-auto-complete #autofocused
             [suggestions]="filteredArtists"
             (completeMethod)="searchArtists($event)"
             id="artistId"
@@ -15,7 +15,7 @@
             [dropdown]="true"
             [forceSelection]="true"
             >
-          </p-autoComplete>
+          </p-auto-complete>
         </div>
 
         <div class="mb-4">

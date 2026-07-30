@@ -6,8 +6,7 @@ import {
   inject,
   OnInit,
   signal, ViewChild,
-  ViewEncapsulation,
-  ChangeDetectionStrategy
+  ViewEncapsulation
 } from '@angular/core';
 import {
   ProcessInfo,
@@ -40,7 +39,6 @@ import {Select} from "primeng/select";
     styleUrls: ['./processing-form.component.css'],
     encapsulation: ViewEncapsulation.None,
     providers: [ConfirmationService],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ProcessingFormComponent extends BaseComponent implements OnInit, AfterViewInit {
@@ -346,7 +344,7 @@ export class ProcessingFormComponent extends BaseComponent implements OnInit, Af
     // itself. detectChanges is required here because this runs in a bare
     // setTimeout, which does not notify Angular's change detection in zoneless.
     setTimeout(() => {
-      if (this.select?.scroller) {
+      if (this.select?.scroller()) {
         //this.select.scroller.scrollToIndex(0);
         this.cd.detectChanges();           // Force Angular to update the DOM
       }

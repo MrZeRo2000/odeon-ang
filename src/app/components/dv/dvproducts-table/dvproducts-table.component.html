@@ -92,54 +92,54 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="id" style="width:0; white-space: nowrap">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="id" style="width:0; white-space: nowrap">Id&nbsp;<p-sort-icon field="id"></p-sort-icon></th>
           <th style="width:0">
             <div class="flex items-center">
               Origin
-              <p-columnFilter field="dvOrigin.name" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <p-column-filter field="dvOrigin.name" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [ngModel]="value" [options]="dvOriginNames" placeholder="Any" (onChange)="filter($event.value)">
+                  <p-multi-select [ngModel]="value" [options]="dvOriginNames" placeholder="Any" (onChange)="filter($event.value)">
                     <ng-template let-option pTemplate="item">
                       <div class="inline-block align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
-                  </p-multiSelect>
+                  </p-multi-select>
                 </ng-template>
-              </p-columnFilter>
+              </p-column-filter>
             </div>
           </th>
-          <th pSortableColumn="title" style="white-space: nowrap">Title&nbsp;<p-sortIcon field="title"></p-sortIcon></th>
-          <th pSortableColumn="originalTitle" style="white-space: nowrap">Original Title&nbsp;<p-sortIcon field="originalTitle"></p-sortIcon></th>
+          <th pSortableColumn="title" style="white-space: nowrap">Title&nbsp;<p-sort-icon field="title"></p-sort-icon></th>
+          <th pSortableColumn="originalTitle" style="white-space: nowrap">Original Title&nbsp;<p-sort-icon field="originalTitle"></p-sort-icon></th>
           <th>Front Info</th>
           <th style="width:15rem">
             <div class="flex items-center">
               Category
-              <p-columnFilter field="dvCategories" matchMode="filter_categories" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <p-column-filter field="dvCategories" matchMode="filter_categories" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [ngModel]="value" [options]="dvCategoryNames" placeholder="Any" (onChange)="filter($event.value)">
+                  <p-multi-select [ngModel]="value" [options]="dvCategoryNames" placeholder="Any" (onChange)="filter($event.value)">
                     <ng-template let-option pTemplate="item">
                       <div class="inline-block align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
-                  </p-multiSelect>
+                  </p-multi-select>
                 </ng-template>
-              </p-columnFilter>
+              </p-column-filter>
             </div>
           </th>
           <th style="width:0">
             <div class="flex items-center">
               Year
-              <p-columnFilter type="numeric" field="year" display="menu"></p-columnFilter>
+              <p-column-filter type="numeric" field="year" display="menu"></p-column-filter>
             </div>
           </th>
           <th style="width:0">Notes</th>
           <th style="width:0">
             <div  class="flex flex-nowrap items-center justify-center">
               Tracks
-              <p-columnFilter type="boolean" field="hasTracks" display="menu">
-              </p-columnFilter>
+              <p-column-filter type="boolean" field="hasTracks" display="menu">
+              </p-column-filter>
             </div>
           </th>
           <th style="width:0"></th>

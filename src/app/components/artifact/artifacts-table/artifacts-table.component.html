@@ -92,46 +92,46 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="id" style="width:0">Id&nbsp;<p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="id" style="width:0">Id&nbsp;<p-sort-icon field="id"></p-sort-icon></th>
           <th pSortableColumn="artist.artistName" style="width:20%; white-space: nowrap">
             <div class="flex justify-between items-center">
               Artist Name&nbsp;
-              <p-sortIcon field="artist.artistName"></p-sortIcon>
-              <p-columnFilter field="artist.artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+              <p-sort-icon field="artist.artistName"></p-sort-icon>
+              <p-column-filter field="artist.artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [ngModel]="value" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)">
+                  <p-multi-select [ngModel]="value" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)">
                     <ng-template let-option pTemplate="item">
                       <div class="inline-block align-middle">
                         <span>{{ option.label }}</span>
                       </div>
                     </ng-template>
-                  </p-multiSelect>
+                  </p-multi-select>
                 </ng-template>
-              </p-columnFilter>
+              </p-column-filter>
             </div>
           </th>
-          <th pSortableColumn="title">Title&nbsp;<p-sortIcon field="title"></p-sortIcon></th>
+          <th pSortableColumn="title">Title&nbsp;<p-sort-icon field="title"></p-sort-icon></th>
           @if (getArtistType() == 'C') {
             <th style="width:20%">Performer Artist Name</th>
           }
-          <th pSortableColumn="year" style="width:6em">Year&nbsp;<p-sortIcon field="year"></p-sortIcon></th>
+          <th pSortableColumn="year" style="width:6em">Year&nbsp;<p-sort-icon field="year"></p-sort-icon></th>
           <th style="width:0; text-align: center">Duration</th>
           <th style="width:0; text-align: center">Size</th>
           <th style="width:0; text-align: center">Type</th>
-          <th pSortableColumn="insertDateTime" style="width:0; text-align: center; white-space: nowrap">Inserted&nbsp;<p-sortIcon field="insertDateTime"></p-sortIcon></th>
+          <th pSortableColumn="insertDateTime" style="width:0; text-align: center; white-space: nowrap">Inserted&nbsp;<p-sort-icon field="insertDateTime"></p-sort-icon></th>
           <th style="width:0; text-align: center; white-space: nowrap">
             Tags
-            <p-columnFilter field="tags" matchMode="filter_tags" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+            <p-column-filter field="tags" matchMode="filter_tags" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [ngModel]="value" [options]="filterTags" placeholder="Any" (onChange)="filter($event.value)">
+                <p-multi-select [ngModel]="value" [options]="filterTags" placeholder="Any" (onChange)="filter($event.value)">
                   <ng-template let-option pTemplate="item">
                     <div class="inline-block align-middle">
                       <span class="ml-1 mt-1">{{ option.label }}</span>
                     </div>
                   </ng-template>
-                </p-multiSelect>
+                </p-multi-select>
               </ng-template>
-            </p-columnFilter>
+            </p-column-filter>
           </th>
           <th style="width:0"></th>
         </tr>

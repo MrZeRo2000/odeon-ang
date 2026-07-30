@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {BaseFormComponent} from "../../base/base-form.component";
 import {MediaFile} from "../../../model/media-file";
 import {DV_TYPES, DVType} from "../../../model/dvtype";
@@ -16,7 +16,6 @@ import {MediaFileService} from "../../../service/media-file.service";
     selector: 'app-tracks-import-form',
     templateUrl: './tracks-import-form.component.html',
     styleUrls: ['./tracks-import-form.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TracksImportFormComponent extends BaseFormComponent implements OnInit {

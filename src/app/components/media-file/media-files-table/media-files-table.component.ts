@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {MediaFile} from "../../../model/media-file";
 import {CRUDResult} from "../../../model/crud";
@@ -14,7 +14,6 @@ import {sumByKey} from "../../../utils/calc-utils";
     selector: 'app-media-files-table',
     templateUrl: './media-files-table.component.html',
     styleUrls: ['./media-files-table.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class MediaFilesTableComponent extends BaseCrudTableComponent<MediaFile, MediaFile> implements OnInit {
