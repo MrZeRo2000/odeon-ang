@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ArtistService} from "../../../service/artist.service";
 import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {ConfirmationService, FilterService, MessageService, SelectItem} from "primeng/api";
@@ -13,6 +13,7 @@ import {PrimeNG} from "primeng/config";
     selector: 'app-artists-table',
     templateUrl: './artists-table.component.html',
     styleUrls: ['./artists-table.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ArtistsTableComponent extends BaseCrudTableComponent<Artist, Artist> implements OnInit, AfterViewInit {

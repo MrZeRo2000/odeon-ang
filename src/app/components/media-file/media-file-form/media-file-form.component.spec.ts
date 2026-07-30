@@ -7,7 +7,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {DialogModule} from "primeng/dialog";
 import {FormControl} from "@angular/forms";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('MediaFileFormComponent', () => {
   let component: MediaFileFormComponent;
@@ -25,7 +25,7 @@ describe('MediaFileFormComponent', () => {
         //library
         ConfirmationService,
         MessageService,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
     ]
 })

@@ -4,7 +4,7 @@ import { DatabaseBackupComponent } from './database-backup.component';
 import {MessageService} from "primeng/api";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('DatabaseBackupComponent', () => {
   let component: DatabaseBackupComponent;
@@ -20,7 +20,7 @@ describe('DatabaseBackupComponent', () => {
         DataSourceModule],
     providers: [
         MessageService,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting()
     ]
 })

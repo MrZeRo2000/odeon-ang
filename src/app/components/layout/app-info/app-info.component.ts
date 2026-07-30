@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import packageJson from '../../../../../package.json';
 import {AppInfoService} from "../app-info.service";
 import {catchError, of, share, switchMap, tap} from "rxjs";
@@ -9,6 +9,7 @@ import {compareVersions, ComparisonResult} from "../../../utils/version-comparat
     selector: 'app-app-info',
     templateUrl: './app-info.component.html',
     styleUrls: ['./app-info.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AppInfoComponent implements OnInit {

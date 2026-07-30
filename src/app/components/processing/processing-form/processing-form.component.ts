@@ -6,7 +6,8 @@ import {
   inject,
   OnInit,
   signal, ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   ProcessInfo,
@@ -39,6 +40,7 @@ import {Select} from "primeng/select";
     styleUrls: ['./processing-form.component.css'],
     encapsulation: ViewEncapsulation.None,
     providers: [ConfirmationService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ProcessingFormComponent extends BaseComponent implements OnInit, AfterViewInit {

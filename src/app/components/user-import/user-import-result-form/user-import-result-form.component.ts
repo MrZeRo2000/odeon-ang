@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {BaseFormComponent} from "../../base/base-form.component";
 import {ImportStats} from "../../../model/user-import";
 
@@ -6,6 +6,7 @@ import {ImportStats} from "../../../model/user-import";
     selector: 'app-dvproducts-import-result-form',
     templateUrl: './user-import-result-form.component.html',
     styleUrls: ['./user-import-result-form.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class UserImportResultFormComponent extends BaseFormComponent {

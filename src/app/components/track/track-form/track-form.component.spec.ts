@@ -7,7 +7,7 @@ import {ServiceModule} from "../../../service/service.module";
 import {MessageService} from "primeng/api";
 import {RouterTestingModule} from "@angular/router/testing";
 import {DialogModule} from "primeng/dialog";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('TrackFormComponent', () => {
   let component: TrackFormComponent;
@@ -24,7 +24,7 @@ describe('TrackFormComponent', () => {
         ServiceModule],
     providers: [
         MessageService,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
     ]
 })

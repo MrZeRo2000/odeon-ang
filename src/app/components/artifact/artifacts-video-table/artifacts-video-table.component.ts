@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {
   ARTIFACT_VIDEO_TYPES,
@@ -26,6 +26,7 @@ interface FilterControlsConfig
     selector: 'app-artifacts-video-table',
     templateUrl: './artifacts-video-table.component.html',
     styleUrls: ['./artifacts-video-table.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {Tagged} from "../../../model/tag";
 import {FormBuilder, FormGroup} from "@angular/forms";
@@ -11,6 +11,7 @@ import {ENTER} from "@angular/cdk/keycodes";
   selector: 'app-tagged-form',
   templateUrl: './tagged-form.component.html',
   styleUrl: './tagged-form.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class TaggedFormComponent extends BaseCrudFormComponent<Tagged> {

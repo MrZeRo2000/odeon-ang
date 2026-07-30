@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {DVOrigin} from "../../../model/dv-product";
 import {MessageService} from "primeng/api";
@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
     selector: 'app-dvorigin-form',
     templateUrl: './dvorigin-form.component.html',
     styleUrls: ['./dvorigin-form.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DVOriginFormComponent extends BaseCrudFormComponent<DVOrigin> implements OnInit {

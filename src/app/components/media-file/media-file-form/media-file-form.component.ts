@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {MediaFile} from "../../../model/media-file";
 import {
@@ -25,6 +25,7 @@ import {TextInterface} from "../../../model/common";
     selector: 'app-media-file-form',
     templateUrl: './media-file-form.component.html',
     styleUrls: ['./media-file-form.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class MediaFileFormComponent extends BaseCrudFormComponent<MediaFile> implements OnChanges {

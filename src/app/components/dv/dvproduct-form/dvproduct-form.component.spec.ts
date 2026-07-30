@@ -6,7 +6,7 @@ import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DialogModule} from "primeng/dialog";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('DVProductFormComponent', () => {
   let component: DVProductFormComponent;
@@ -25,7 +25,7 @@ describe('DVProductFormComponent', () => {
         DataSourceModule],
     providers: [
         MessageService,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
     ]
 })

@@ -6,7 +6,7 @@ import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {DatePipe} from "@angular/common";
 import {DialogModule} from "primeng/dialog";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('TracksUpdateDurationsFormComponent', () => {
   let component: TracksUpdateDurationsFormComponent;
@@ -24,7 +24,7 @@ describe('TracksUpdateDurationsFormComponent', () => {
         MessageService,
         ConfirmationService,
         DatePipe,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
     ]
 })

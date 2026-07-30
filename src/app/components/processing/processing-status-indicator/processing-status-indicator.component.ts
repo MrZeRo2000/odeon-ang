@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ChangeDetectionStrategy} from '@angular/core';
 import {ProcessingStatus} from "../../../model/process-info";
 
 enum IndicatorType {
@@ -21,6 +21,7 @@ const PROCESSING_TYPES : {[processingStatus: number] : IndicatorType} = {
     selector: 'app-processing-status-indicator',
     templateUrl: './processing-status-indicator.component.html',
     styleUrls: ['./processing-status-indicator.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ProcessingStatusIndicatorComponent implements OnInit, OnChanges {

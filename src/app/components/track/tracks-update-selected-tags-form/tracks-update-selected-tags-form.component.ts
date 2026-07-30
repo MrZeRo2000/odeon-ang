@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {BaseFormComponent} from "../../base/base-form.component";
 import {Artifact} from "../../../model/artifacts";
 import {Track, TrackSelectedTagsUserUpdate} from "../../../model/track";
@@ -13,6 +13,7 @@ import {ENTER} from "@angular/cdk/keycodes";
   selector: 'app-tracks-update-selected-tags-form',
   templateUrl: './tracks-update-selected-tags-form.component.html',
   styleUrl: './tracks-update-selected-tags-form.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class TracksUpdateSelectedTagsFormComponent extends BaseFormComponent {

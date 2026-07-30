@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {BaseFormComponent} from "../../base/base-form.component";
 import {Artifact} from "../../../model/artifacts";
 import {FormBuilder, Validators} from "@angular/forms";
@@ -12,6 +12,7 @@ import {DV_TYPES, DVType} from "../../../model/dvtype";
     selector: 'app-tracks-update-selected-video-types-form',
     templateUrl: './tracks-update-selected-video-types-form.component.html',
     styleUrl: './tracks-update-selected-video-types-form.component.css',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 

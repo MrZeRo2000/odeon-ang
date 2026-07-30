@@ -1,11 +1,12 @@
 import {catchError, of, Subject, switchMap, tap} from "rxjs";
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from "@angular/core";
 import {CRUDService} from "../../service/crud.service";
 import {MessageService} from "primeng/api";
 import {BaseFormComponent} from "./base-form.component";
 
 @Component({
     template: ``,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export abstract class BaseCrudFormComponent<T extends { id?: number}> extends BaseFormComponent {

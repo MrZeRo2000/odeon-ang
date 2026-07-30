@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {CRUDAction, CRUDOperation} from "../../../model/crud";
 
 @Component({
     selector: 'app-crud-panel',
     templateUrl: './crud-panel.component.html',
     styleUrls: ['./crud-panel.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CrudPanelComponent implements OnInit {

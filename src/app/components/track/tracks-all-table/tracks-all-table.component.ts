@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {BaseTableComponent} from "../../base/base-table-component";
 import {Track} from "../../../model/track";
 import {IdName} from "../../../model/common";
@@ -17,6 +17,7 @@ import {Table} from "primeng/table";
     selector: 'app-tracks-all-table',
     templateUrl: './tracks-all-table.component.html',
     styleUrl: './tracks-all-table.component.css',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TracksAllTableComponent extends BaseTableComponent<Track> {

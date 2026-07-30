@@ -5,7 +5,7 @@ import {MessageService} from "primeng/api";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {DialogModule} from "primeng/dialog";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('TracksUpdateVideoTypesFormComponent', () => {
   let component: TracksUpdateSelectedVideoTypesFormComponent;
@@ -24,7 +24,7 @@ describe('TracksUpdateVideoTypesFormComponent', () => {
     providers: [
         // primeng
         MessageService,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
     ]
 })

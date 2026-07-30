@@ -6,7 +6,7 @@ import {DialogModule} from "primeng/dialog";
 import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ServiceModule} from "../../../service/service.module";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from "@angular/common/http";
 import {provideHttpClientTesting} from "@angular/common/http/testing";
 
 describe('TaggedFormComponent', () => {
@@ -25,7 +25,7 @@ describe('TaggedFormComponent', () => {
       providers: [
         MessageService,
         ConfirmationService,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
       ]
     })

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, take, tap} from "rxjs";
 import {Track} from "../../../model/track";
@@ -34,6 +34,7 @@ interface Column {
     selector: 'app-tracks-table',
     templateUrl: './tracks-table.component.html',
     styleUrls: ['./tracks-table.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, MediaFile[], IdName[], IdTitle[]]> implements OnInit {

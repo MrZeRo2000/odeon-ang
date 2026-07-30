@@ -7,7 +7,7 @@ import {DataSourceModule} from "../../../data-source/data-source.module";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DialogModule} from "primeng/dialog";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('ArtistLyricsFormComponent', () => {
   let component: ArtistLyricsFormComponent;
@@ -26,7 +26,7 @@ describe('ArtistLyricsFormComponent', () => {
         //library
         ConfirmationService,
         MessageService,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
     ]
 })

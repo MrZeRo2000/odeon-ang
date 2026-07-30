@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {BaseCrudFormComponent} from "../../base/base-crud-form.component";
 import {DVCategory} from "../../../model/dv-product";
 import {MessageService} from "primeng/api";
@@ -9,6 +9,7 @@ import {DVCategoryService} from "../../../service/dvcategory.service";
     selector: 'app-dvcategory-form',
     templateUrl: './dvcategory-form.component.html',
     styleUrls: ['./dvcategory-form.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DVCategoryFormComponent extends BaseCrudFormComponent<DVCategory> implements OnInit {

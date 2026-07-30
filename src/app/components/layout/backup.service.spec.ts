@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { BackupService } from './backup.service';
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DataSourceModule} from "../../data-source/data-source.module";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('BackupService', () => {
   let service: BackupService;
@@ -11,7 +11,7 @@ describe('BackupService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
     imports: [DataSourceModule],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    providers: [provideHttpClient(withXhr(), withInterceptorsFromDi()), provideHttpClientTesting()]
 });
     service = TestBed.inject(BackupService);
   });
