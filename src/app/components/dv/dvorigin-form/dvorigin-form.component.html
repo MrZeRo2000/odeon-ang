@@ -1,5 +1,5 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Origin Edit" (onShow)="onShow()">
-  <ng-template pTemplate="content">
+  <ng-template #content>
     <form [formGroup]="editForm">
       <div class="field">
         <label for="name">Name</label>
@@ -21,7 +21,7 @@
 
     </form>
   </ng-template>
-  <ng-template pTemplate="footer">
+  <ng-template #footer>
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
   </ng-template>

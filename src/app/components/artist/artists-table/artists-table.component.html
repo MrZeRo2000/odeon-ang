@@ -1,7 +1,7 @@
 <app-confirm-dialog></app-confirm-dialog>
 
 
-@if (data$ | async; as artistTable) {
+@if (data(); as artistTable) {
   <div #dtc>
     @if (artistDetail$ | async; as artistDetail) {
       <div>
@@ -30,7 +30,7 @@
       selectionMode="single"
       [(selection)]="selectedItem"
       >
-      <ng-template pTemplate="caption">
+      <ng-template #caption>
         <div #dtcp class="flex">
           <div class="flex items-center justify-between text-xl mr-2">Artists</div>
           <div class="flex self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
@@ -70,7 +70,7 @@
           </div>
         </div>
       </ng-template>
-      <ng-template pTemplate="header">
+      <ng-template #header>
         <tr>
           <th style="width:0">Id</th>
           <th>Name</th>
@@ -78,9 +78,9 @@
             <div class="flex justify-center items-center">
               Genre
               <p-column-filter field="genre" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <ng-template #filter let-value let-filter="filterCallback">
                   <p-multi-select [ngModel]="value" [options]="filterGenres" placeholder="Any" (onChange)="filter($event.value)">
-                    <ng-template let-option pTemplate="item">
+                    <ng-template let-option #item>
                       <div class="inline-block vertical-align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
@@ -94,9 +94,9 @@
             <div class="flex justify-start items-center">
               Styles
               <p-column-filter field="styles" matchMode="filter_styles" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <ng-template #filter let-value let-filter="filterCallback">
                   <p-multi-select [ngModel]="value" [options]="filterStyles" placeholder="Any" (onChange)="filter($event.value)">
-                    <ng-template let-option pTemplate="item">
+                    <ng-template let-option #item>
                       <div class="inline-block vertical-align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
@@ -111,7 +111,7 @@
           <th style="width:0"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-item>
+      <ng-template #body let-item>
         <tr [pSelectableRow]="item">
           <td>{{item.id}}</td>
           <td>{{item.artistName}}</td>

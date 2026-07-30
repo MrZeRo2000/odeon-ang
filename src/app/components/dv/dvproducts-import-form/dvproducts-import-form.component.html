@@ -1,6 +1,6 @@
 
 <p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" styleClass="p-fluid" header="Import Products">
-  <ng-template pTemplate="content">
+  <ng-template #content>
     <form [formGroup]="editForm">
       <p-fluid>
         <div class="mb-4 mt-2">
@@ -84,7 +84,7 @@
     </form>
   </ng-template>
 
-  <ng-template pTemplate="footer">
+  <ng-template #footer>
     <button pButton pRipple label="Analyze" icon="pi pi-search" class="p-button-text" (click)="this.performAction(ImportAction.ACTION_ANALYZE)"></button>
     <button pButton pRipple label="Import" icon="pi pi-play" class="p-button-text" (click)="this.performAction(ImportAction.ACTION_EXECUTE)"></button>
   </ng-template>

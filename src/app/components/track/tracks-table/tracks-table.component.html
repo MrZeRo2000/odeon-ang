@@ -1,7 +1,7 @@
 <app-confirm-dialog></app-confirm-dialog>
 
 
-@if (data$ | async; as data) {
+@if (data(); as data) {
   <div>
     <p-table #dt
       size="small"
@@ -12,7 +12,7 @@
       [globalFilterFields]="['title']"
       (selectionChange)="onTableSelectionChange($event)"
       >
-      <ng-template pTemplate="caption">
+      <ng-template #caption>
         <div class="flex">
           <div class="flex items-center justify-between text-xl mr-2">
             @if (this.artifactId) {
@@ -98,7 +98,7 @@
           </div>
         </div>
       </ng-template>
-      <ng-template pTemplate="header">
+      <ng-template #header>
         <tr>
           <th style="width: 4rem"><p-table-header-checkbox /></th>
           <th style="width:0">Id</th>
@@ -149,7 +149,7 @@
           <th [colSpan]="4 + (isArtifactTypeVideo ? 2 : 0) + (this.artifactId ? 1 : 0)">{{sumTrackSize(dt.processedData) | fileSize}}</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-item>
+      <ng-template #body let-item>
         <tr>
           <td><p-table-checkbox [value]="item" /></td>
           <td>{{item.id}}</td>

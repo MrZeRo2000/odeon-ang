@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {toSignal} from '@angular/core/rxjs-interop';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {ArtistLyricsEditItem, ArtistLyricsTableItem, ArtistLyricsText} from "../../../model/artist-lyrics";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -24,7 +25,13 @@ export class ArtistLyricsTableComponent extends BaseCrudTableComponent<ArtistLyr
 
   displayArtistLyricsText = false;
 
-  data$?: Observable<[Array<ArtistLyricsTableItem>, NameInterface[]]>;
+  private readonly reloadData$ = new Subject<void>();
+
+  readonly data = toSignal(
+    this.reloadData$.pipe(
+      switchMap(() => this.getData())
+    )
+  );
 
   private showArtistLyricsTextAction: Subject<ArtistLyricsTableItem> = new Subject();
 
@@ -72,7 +79,7 @@ export class ArtistLyricsTableComponent extends BaseCrudTableComponent<ArtistLyr
   }
 
   protected loadData(): void {
-    this.data$ = this.getData();
+    this.reloadData$.next();
   }
 
   ngOnInit(): void {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {toSignal} from '@angular/core/rxjs-interop';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {MediaFile} from "../../../model/media-file";
 import {CRUDResult} from "../../../model/crud";
@@ -22,7 +23,13 @@ export class MediaFilesTableComponent extends BaseCrudTableComponent<MediaFile, 
   artifactId?: number;
   trackId?: number;
 
-  data$?: Observable<[MediaFile[], Artifact]>;
+  private readonly reloadData$ = new Subject<void>();
+
+  readonly data = toSignal(
+    this.reloadData$.pipe(
+      switchMap(() => this.getData())
+    )
+  );
 
   isArtifactTypeVideo = false;
 
@@ -75,7 +82,7 @@ export class MediaFilesTableComponent extends BaseCrudTableComponent<MediaFile, 
 
   protected loadData(): void {
     if (this.artifactId || this.trackId) {
-      this.data$ = this.getData();
+      this.reloadData$.next();
     }
   }
 
@@ -151,7 +158,7 @@ export class MediaFilesTableComponent extends BaseCrudTableComponent<MediaFile, 
 
   override savedEditData(event: any) {
     super.savedEditData(event);
-    this.data$ = this.getData();
+    this.reloadData$.next();
   }
 
   loadMediaFiles(event: any): void {

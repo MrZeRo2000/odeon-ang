@@ -43,7 +43,7 @@
       (onFilter)="onFilter($event)"
       selectionMode="single" [(selection)]="selectedItem"
       >
-      <ng-template pTemplate="caption">
+      <ng-template #caption>
         <div class="flex">
           <div class="flex items-center justify-between text-xl mr-2">Products</div>
           <app-crud-panel class="flex items-center app-crud-panel-small" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
@@ -90,16 +90,16 @@
           </div>
         </div>
       </ng-template>
-      <ng-template pTemplate="header">
+      <ng-template #header>
         <tr>
           <th pSortableColumn="id" style="width:0; white-space: nowrap">Id&nbsp;<p-sort-icon field="id"></p-sort-icon></th>
           <th style="width:0">
             <div class="flex items-center">
               Origin
               <p-column-filter field="dvOrigin.name" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <ng-template #filter let-value let-filter="filterCallback">
                   <p-multi-select [ngModel]="value" [options]="dvOriginNames" placeholder="Any" (onChange)="filter($event.value)">
-                    <ng-template let-option pTemplate="item">
+                    <ng-template let-option #item>
                       <div class="inline-block align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
@@ -116,9 +116,9 @@
             <div class="flex items-center">
               Category
               <p-column-filter field="dvCategories" matchMode="filter_categories" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <ng-template #filter let-value let-filter="filterCallback">
                   <p-multi-select [ngModel]="value" [options]="dvCategoryNames" placeholder="Any" (onChange)="filter($event.value)">
-                    <ng-template let-option pTemplate="item">
+                    <ng-template let-option #item>
                       <div class="inline-block align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
@@ -145,7 +145,7 @@
           <th style="width:0"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-item>
+      <ng-template #body let-item>
         <tr [pSelectableRow]="item" style="height:46px">
           <td>{{item.id}}</td>
           <td>{{item.dvOrigin.name}}</td>

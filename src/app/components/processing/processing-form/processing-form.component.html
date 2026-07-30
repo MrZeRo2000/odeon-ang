@@ -25,7 +25,7 @@
                   [virtualScrollItemSize]="32"
                   formControlName="selectedDate"
                   >
-                  <ng-template let-item pTemplate="item">
+                  <ng-template let-item #item>
                     <div class="flex items-center gap-2">
                       <div class="flex">{{ item.updateDateTime }}</div>
                       @if (item.processingStatus === SUCCESS_STATUS || item.processingStatus === FAILURE_STATUS) {
@@ -94,7 +94,7 @@
               [value]="pi.processDetails || []"
               size="small"
               responsiveLayout="scroll">
-              <ng-template pTemplate="header">
+              <ng-template #header>
                 <tr>
                   <th style="width:auto">Time</th>
                   <th style="width:100%">Info</th>
@@ -102,7 +102,7 @@
                   <th style="width:auto">Status</th>
                 </tr>
               </ng-template>
-              <ng-template pTemplate="body" let-processDetail>
+              <ng-template #body let-processDetail>
                 <tr>
                   <td class="whitespace-nowrap">{{processDetail.updateDateTime | date:'dd.MM.yyyy HH:mm:ss'}}</td>
                   <td>
@@ -128,7 +128,7 @@
                   <td><app-processing-status-indicator processingStatus="{{processDetail.status}}"></app-processing-status-indicator></td>
                 </tr>
               </ng-template>
-              <ng-template pTemplate="footer">
+              <ng-template #footer>
                 @if (pi.processingStatus === PROGRESS_STATUS) {
                   <tr class="p-rowgroup-footer">
                     <td colspan="3"><p-progress-bar mode="indeterminate" [style]="{'height': '6px'}"></p-progress-bar></td>

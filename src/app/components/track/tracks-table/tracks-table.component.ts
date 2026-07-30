@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {toSignal} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, Router} from "@angular/router";
 import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, take, tap} from "rxjs";
 import {Track} from "../../../model/track";
@@ -68,7 +69,13 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
 
   dataSize = 0;
 
-  data$?: Observable<[Track[], Artifact]>;
+  private readonly reloadData$ = new Subject<void>();
+
+  readonly data = toSignal(
+    this.reloadData$.pipe(
+      switchMap(() => this.getData())
+    )
+  );
 
   displayProductForm = false;
 
@@ -217,7 +224,7 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
 
   protected loadData(): void {
     if (this.artifactId || this.dvProductId) {
-      this.data$ = this.getData();
+      this.reloadData$.next();
     }
   }
 
@@ -352,7 +359,7 @@ export class TracksTableComponent extends BaseCrudTableComponent<Track, [Track, 
 
   override savedEditData(event: any) {
     super.savedEditData(event);
-    this.data$ = this.getData();
+    this.reloadData$.next();
   }
 
   displayProduct(item: Track) {

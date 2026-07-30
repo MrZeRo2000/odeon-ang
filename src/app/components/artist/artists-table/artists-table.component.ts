@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
+import {toSignal} from '@angular/core/rxjs-interop';
 import {ArtistService} from "../../../service/artist.service";
 import {catchError, map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {ConfirmationService, FilterService, MessageService, SelectItem} from "primeng/api";
@@ -20,10 +21,25 @@ export class ArtistsTableComponent extends BaseCrudTableComponent<Artist, Artist
   displayArtistInfo = false;
   displayArtistName: string = "";
 
-  data$? : Observable<Artist[]>;
-
   filterGenres: Array<SelectItem<string>> = [];
   filterStyles: Array<SelectItem<string>> = [];
+
+  // loadData() only triggers a reload (reloadData$.next()); the actual data$
+  // observable stays a single stable pipe for the component's lifetime, wrapped
+  // in a signal so the template updates automatically under OnPush without any
+  // markForCheck() — reassigning this field directly (as loadData() used to)
+  // doesn't itself notify OnPush when called from ngAfterViewInit/CRUD callbacks.
+  private readonly reloadData$ = new Subject<void>();
+
+  readonly data = toSignal(
+    this.reloadData$.pipe(
+      switchMap(() => this.getData()),
+      tap(v => {
+        this.filterGenres = [... new Set(v?.map(v => v.genre).filter(v => !!v))].sort().map(v => {return {label: v, value: v} as SelectItem});
+        this.filterStyles = [... new Set(v?.map(v => v.styles).flat())].sort().map(v => {return {label: v, value: v} as SelectItem});
+      })
+    )
+  );
 
   private showArtistDetailAction: Subject<number> = new Subject();
 
@@ -93,15 +109,7 @@ export class ArtistsTableComponent extends BaseCrudTableComponent<Artist, Artist
   }
 
   protected loadData(): void {
-    this.data$ = this.getData().pipe(
-      tap(v =>{
-        this.filterGenres = [... new Set(v?.map(v => v.genre).filter(v => !!v))].sort().map(v => {return {label: v, value: v} as SelectItem});
-        this.filterStyles = [... new Set(v?.map(v => v.styles).flat())].sort().map(v => {return {label: v, value: v} as SelectItem});
-      })
-      /*
-      tap(() => {setTimeout(() => this.updateScrollHeight(), 0);}),
-       */
-    );
+    this.reloadData$.next();
   }
 
   private getData(): Observable<Artist[]> {

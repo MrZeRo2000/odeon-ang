@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {toSignal} from '@angular/core/rxjs-interop';
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {DVOrigin} from "../../../model/dv-product";
 import {Observable, of} from "rxjs";
@@ -14,7 +15,7 @@ import {DVOriginService} from "../../../service/dvorigin.service";
 })
 export class DVOriginsTableComponent extends BaseCrudTableComponent<DVOrigin, DVOrigin> implements OnInit {
 
-  table$?: Observable<Array<DVOrigin>>;
+  readonly table = toSignal(this.dvOriginService.table$);
 
   constructor(
     messageService: MessageService,
@@ -36,7 +37,6 @@ export class DVOriginsTableComponent extends BaseCrudTableComponent<DVOrigin, DV
   }
 
   protected loadData(): void {
-    this.table$ = this.dvOriginService.table$;
-    this.dvOriginService.tableSharedHandler.refreshTable()
+    this.dvOriginService.tableSharedHandler.refreshTable();
   }
 }

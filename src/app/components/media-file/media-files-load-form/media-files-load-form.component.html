@@ -1,5 +1,5 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" styleClass="p-fluid" header="Load Media Files">
-  <ng-template pTemplate="content">
+  <ng-template #content>
     <form [formGroup]="editForm">
       <p-listbox
         formControlName="selectedMediaFileNames"
@@ -15,7 +15,7 @@
     </ng-template>
 
     @if (editFormData$ | async; as editFormData) {
-      <ng-template pTemplate="footer">
+      <ng-template #footer>
         <button
           pButton
           pRipple

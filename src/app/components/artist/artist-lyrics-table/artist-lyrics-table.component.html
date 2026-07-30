@@ -1,7 +1,7 @@
 <app-confirm-dialog></app-confirm-dialog>
 
 
-@if (data$ | async; as data) {
+@if (data(); as data) {
   <div>
     @if (artistLyricsText$ | async; as artistLyricsText) {
       <div>
@@ -32,7 +32,7 @@
           stateKey="artist-lyrics-table-session"
           [globalFilterFields]="['artistName', 'title']"
           (onFilter)="onFilter($event)">
-          <ng-template pTemplate="caption">
+          <ng-template #caption>
             <div class="flex">
               <div class="flex items-center justify-between text-xl mr-2">Lyrics</div>
               <div class="flex self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
@@ -54,13 +54,13 @@
               </div>
             </div>
           </ng-template>
-          <ng-template pTemplate="header">
+          <ng-template #header>
             <tr>
               <th style="width:30%">
                 <div class="flex items-center">
                   Artist name
                   <p-column-filter field="artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <ng-template #filter let-value let-filter="filterCallback">
                       <p-multi-select
                         [ngModel]="value"
                         [options]="data[1]"
@@ -83,7 +83,7 @@
               <th style="width:0"></th>
             </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-item>
+          <ng-template #body let-item>
             <tr>
               <td>{{item.artistName}}</td>
               <td>

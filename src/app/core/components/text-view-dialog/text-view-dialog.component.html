@@ -6,7 +6,7 @@
   @if (text) {
     <pre>{{text}}</pre>
   }
-  <ng-template pTemplate="footer">
+  <ng-template #footer>
     <p-button icon="pi pi-check" (click)="displayProp=false" label="Ok" styleClass="p-button-text"></p-button>
   </ng-template>
 </p-dialog>

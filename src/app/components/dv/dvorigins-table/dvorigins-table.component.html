@@ -1,23 +1,23 @@
 <app-confirm-dialog></app-confirm-dialog>
 
 
-@if (table$ | async; as table) {
+@if (table(); as table) {
   <div>
     <p-table [value]="table" dataKey="id">
-      <ng-template pTemplate="caption">
+      <ng-template #caption>
         <div class="flex">
           <div class="flex items-center justify-between text-xl mr-2">Origins</div>
           <app-crud-panel class="flex items-center" [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
         </div>
       </ng-template>
-      <ng-template pTemplate="header">
+      <ng-template #header>
         <tr>
           <th style="width:0">Id</th>
           <th>Name</th>
           <th style="width:0"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-item>
+      <ng-template #body let-item>
         <tr>
           <td>{{item.id}}</td>
           <td>{{item.name}}</td>

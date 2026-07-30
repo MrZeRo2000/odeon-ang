@@ -1,5 +1,5 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '50vw'}" [modal]="true" header="Update Video Types" (onShow)="onShow()">
-  <ng-template pTemplate="content">
+  <ng-template #content>
     <form [formGroup]="editForm">
       <p-fluid>
         <div class="mb-4">
@@ -19,7 +19,7 @@
     </form>
   </ng-template>
 
-  <ng-template pTemplate="footer">
+  <ng-template #footer>
     <button pButton pRipple label="Update" icon="pi pi-play" class="p-button-text" (click)="this.execute()"></button>
   </ng-template>
 </p-dialog>

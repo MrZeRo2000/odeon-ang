@@ -1,5 +1,5 @@
 <p-dialog [(visible)]="displayProp" [style]="{width: '70vw'}" [modal]="true" header="Import Tracks" (onShow)="onShow()">
-  <ng-template pTemplate="content">
+  <ng-template #content>
     <form [formGroup]="editForm">
       <p-fluid>
         <div class="mb-4">
@@ -113,7 +113,7 @@
     </form>
   </ng-template>
 
-  <ng-template pTemplate="footer">
+  <ng-template #footer>
     <button pButton pRipple label="Import" icon="pi pi-play" class="p-button-text" (click)="this.executeImport()"></button>
   </ng-template>
 </p-dialog>

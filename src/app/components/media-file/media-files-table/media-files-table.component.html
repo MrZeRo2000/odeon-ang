@@ -1,7 +1,7 @@
 <app-confirm-dialog></app-confirm-dialog>
 
 
-@if (data$ | async; as data) {
+@if (data(); as data) {
   <div>
     <div class="w-full md:w-5/6 lg:w-2/3">
       <p-table
@@ -10,7 +10,7 @@
         responsiveLayout="scroll"
         [value]="data[0]"
         dataKey="id">
-        <ng-template pTemplate="caption">
+        <ng-template #caption>
           <div class="flex">
             <div class="flex items-center justify-between text-xl mr-2">
               <span class="text-primary">{{data[1] | artifactCaption}} Media files</span>
@@ -33,7 +33,7 @@
             }
           </div>
         </ng-template>
-        <ng-template pTemplate="header">
+        <ng-template #header>
           <tr>
             <th style="width:0">Id</th>
             <th style="width:100%">File name</th>
@@ -60,7 +60,7 @@
             <th [colSpan]="isArtifactTypeVideo ? 6 : 3">{{sumByKey(dt.processedData, 'size') | fileSize}}</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-item>
+        <ng-template #body let-item>
           <tr>
             <td>{{item.id}}</td>
             <td>{{item.name}}</td>

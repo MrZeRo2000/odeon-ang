@@ -17,7 +17,7 @@
       (onFilter)="onFilter($event)"
       sortField=""
       >
-      <ng-template pTemplate="caption">
+      <ng-template #caption>
         <div class="flex">
           <div class="flex items-center justify-between text-xl mr-2">All artifacts</div>
           <form [formGroup]="filterForm" class="flex flex-row grow-1">
@@ -58,7 +58,7 @@
           </div>
         </div>
       </ng-template>
-      <ng-template pTemplate="header">
+      <ng-template #header>
         <tr>
           <th pSortableColumn="id" style="width:5%; white-space: nowrap">Id&nbsp;<p-sort-icon field="id"></p-sort-icon></th>
           <th style="width:5%">Type</th>
@@ -67,9 +67,9 @@
               Artist Name&nbsp;
               <p-sort-icon field="artist.artistName"></p-sort-icon>
               <p-column-filter field="artist.artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <ng-template #filter let-value let-filter="filterCallback">
                   <p-multi-select [ngModel]="value" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)">
-                    <ng-template let-option pTemplate="item">
+                    <ng-template let-option #item>
                       <div class="inline-block align-middle">
                         <span>{{ option.label }}</span>
                       </div>
@@ -86,9 +86,9 @@
             <th style="width:0; text-align: center; white-space: nowrap" >
               Tags
               <p-column-filter field="tags" matchMode="filter_tags" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <ng-template #filter let-value let-filter="filterCallback">
                   <p-multi-select [ngModel]="value" [options]="filterTags" placeholder="Any" (onChange)="filter($event.value)">
-                    <ng-template let-option pTemplate="item">
+                    <ng-template let-option #item>
                       <div class="inline-block align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
@@ -101,7 +101,7 @@
           <th style="width:0"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-item>
+      <ng-template #body let-item>
         <tr>
           <td>{{item.id}}</td>
           <td>{{item.artifactType.name}}</td>

@@ -20,7 +20,45 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+End-to-end tests live under `e2e/` and run via [Playwright](https://playwright.dev), driving a real browser against a running instance of the app (`playwright.config.ts` starts `npm start` automatically if nothing is already listening on `http://localhost:4200`).
+
+Run the full suite:
+
+```
+npm run e2e
+```
+
+Run a single spec file:
+
+```
+npx playwright test e2e/table-rendering.spec.ts
+```
+
+Run tests matching a name (`-g` / `--grep`):
+
+```
+npx playwright test -g "dvorigins table renders rows"
+```
+
+Run with the browser visible, useful while writing/debugging a test:
+
+```
+npx playwright test --headed
+```
+
+Open the interactive UI mode (step through actions, inspect the DOM at each step):
+
+```
+npx playwright test --ui
+```
+
+After a failing run, inspect the recorded trace (captured automatically for failures via `trace: 'retain-on-failure'`):
+
+```
+npx playwright show-trace test-results/<failing-test-folder>/trace.zip
+```
+
+`test-results/` and `playwright-report/` are generated output and are gitignored — don't commit them.
 
 ## Further help
 
