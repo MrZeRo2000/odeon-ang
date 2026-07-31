@@ -1,6 +1,6 @@
 {
   "name": "odeon-ang",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "backend_version": "0.15.9",
   "scripts": {
     "ng": "ng",
@@ -40,5 +40,11 @@
     "postcss": "^8.5.3",
     "typescript": "~6.0.3",
     "vitest": "^4.0.8"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "esbuild@0.28.1": true,
+    "lmdb@3.5.6": true,
+    "msgpackr-extract@3.0.4": true
   }
 }
