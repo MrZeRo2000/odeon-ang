@@ -114,7 +114,7 @@
   </ng-template>
 
   <ng-template #footer>
-    <p-button label="Import" icon="pi pi-play" styleClass="p-button-text" (click)="this.executeImport()"></p-button>
+    <button pButton type="button" [text]="true" (click)="this.executeImport()"><i class="pi pi-play"></i>Import</button>
   </ng-template>
 </p-dialog>
 

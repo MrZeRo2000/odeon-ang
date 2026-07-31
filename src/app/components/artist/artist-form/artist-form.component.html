@@ -60,21 +60,17 @@
             <label for="biography">Biography</label>
             <textarea id="biography" pTextarea rows="20" cols="20" formControlName="biography"></textarea>
           </div>
-          <p-button
-            type="button"
-            label="Preview"
-            iconPos="right"
-            styleClass="p-button-outlined p-button-rounded"
-            icon="pi pi-window-maximize"
-            (click)="previewBiography()">
-          </p-button>
+          <button pButton type="button"
+            [outlined]="true"
+            [rounded]="true"
+            (click)="previewBiography()">Preview<i class="pi pi-window-maximize"></i></button>
         </p-fluid>
       </div>
     </form>
   </ng-template>
   <ng-template #footer>
-    <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-text" (click)="hideDialog()"></p-button>
-    <p-button label="Save" icon="pi pi-check" styleClass="p-button-text" (click)="save()"></p-button>
+    <button pButton type="button" [text]="true" (click)="hideDialog()"><i class="pi pi-times"></i>Cancel</button>
+    <button pButton type="button" [text]="true" (click)="save()"><i class="pi pi-check"></i>Save</button>
   </ng-template>
 
   @if (saveAction$ | async; as saver) {

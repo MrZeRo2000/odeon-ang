@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {TaggedFormComponent} from "./tagged-form/tagged-form.component";
 import {AutoComplete} from "primeng/autocomplete";
-import {Button} from "primeng/button";
+import {ButtonModule} from "primeng/button";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {Dialog} from "primeng/dialog";
 import {Fluid} from "primeng/fluid";
@@ -18,7 +18,7 @@ import {Ripple} from "primeng/ripple";
   imports: [
     CommonModule,
     AutoComplete,
-    Button,
+    ButtonModule,
     ConfirmPopupModule,
     Dialog,
     Fluid,

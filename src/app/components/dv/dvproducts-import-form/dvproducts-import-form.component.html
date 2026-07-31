@@ -85,8 +85,8 @@
   </ng-template>
 
   <ng-template #footer>
-    <p-button label="Analyze" icon="pi pi-search" styleClass="p-button-text" (click)="this.performAction(ImportAction.ACTION_ANALYZE)"></p-button>
-    <p-button label="Import" icon="pi pi-play" styleClass="p-button-text" (click)="this.performAction(ImportAction.ACTION_EXECUTE)"></p-button>
+    <button pButton type="button" [text]="true" (click)="this.performAction(ImportAction.ACTION_ANALYZE)"><i class="pi pi-search"></i>Analyze</button>
+    <button pButton type="button" [text]="true" (click)="this.performAction(ImportAction.ACTION_EXECUTE)"><i class="pi pi-play"></i>Import</button>
   </ng-template>
 </p-dialog>
 

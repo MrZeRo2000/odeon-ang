@@ -20,15 +20,15 @@
             }
             @if (!this.trackId) {
               <div class="flex items-center justify-end flex-grow-1">
-                <p-button
-                  icon="pi pi-download"
-                  styleClass="mr-2"
+                <button pButton type="button"
+                  class="mr-2"
                   [text]="true"
                   severity="secondary"
+                  [iconOnly]="true"
                   pTooltip="Load media files"
                   tooltipPosition="left"
-                  (onClick)="loadMediaFiles($event)"
-                ></p-button>
+                  (click)="loadMediaFiles($event)"
+                ><i class="pi pi-download"></i></button>
               </div>
             }
           </div>

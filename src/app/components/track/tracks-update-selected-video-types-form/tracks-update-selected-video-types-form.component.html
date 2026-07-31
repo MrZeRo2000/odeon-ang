@@ -20,7 +20,7 @@
   </ng-template>
 
   <ng-template #footer>
-    <p-button label="Update" icon="pi pi-play" styleClass="p-button-text" (click)="this.execute()"></p-button>
+    <button pButton type="button" [text]="true" (click)="this.execute()"><i class="pi pi-play"></i>Update</button>
   </ng-template>
 </p-dialog>
 

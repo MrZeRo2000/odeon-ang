@@ -92,15 +92,11 @@
               ></textarea>
             </div>
             <div class="flex mt-2 p-1">
-              <p-button type="button"
-                label="Preview"
-                iconPos="right"
-                styleClass="p-button-rounded"
-                [ngClass]="{'p-button-outlined': !editForm.value.description}"
-                icon="pi pi-window-maximize"
+              <button pButton type="button"
+                [rounded]="true"
+                [outlined]="!editForm.value.description"
                 (click)="previewDescription()"
-                >
-              </p-button>
+                >Preview<i class="pi pi-window-maximize"></i></button>
             </div>
           </div>
         </div>
@@ -128,8 +124,8 @@
     </form>
   </ng-template>
   <ng-template #footer>
-    <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-text" (click)="hideDialog()"></p-button>
-    <p-button label="Save" icon="pi pi-check" styleClass="p-button-text" (click)="save()"></p-button>
+    <button pButton type="button" [text]="true" (click)="hideDialog()"><i class="pi pi-times"></i>Cancel</button>
+    <button pButton type="button" [text]="true" (click)="save()"><i class="pi pi-check"></i>Save</button>
   </ng-template>
 
   @if (saveAction$ | async) {}

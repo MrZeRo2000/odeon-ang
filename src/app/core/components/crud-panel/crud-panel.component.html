@@ -1,25 +1,25 @@
 <div class="flex">
   @if (crudActions.indexOf(CRUDAction.EA_CREATE) !== -1) {
-    <p-button
-      icon="pi pi-plus"
-      styleClass="p-button-rounded p-button-primary p-button-outlined"
+    <button pButton type="button"
+      [rounded]="true" severity="primary" [outlined]="true" [iconOnly]="true"
       [ngClass]="crudActions.indexOf(CRUDAction.EA_DELETE) !==0 || crudActions.indexOf(CRUDAction.EA_UPDATE) !==0 ? 'mr-1' : ''"
       (click)="crudEvent.emit({action: CRUDAction.EA_CREATE, data: undefined})">
-    </p-button>
+      <i class="pi pi-plus"></i>
+    </button>
   }
   @if (crudActions.indexOf(CRUDAction.EA_UPDATE) !== -1) {
-    <p-button
-      icon="pi pi-pencil"
-      styleClass="p-button-rounded p-button-outlined p-button-primary"
+    <button pButton type="button"
+      [rounded]="true" [outlined]="true" severity="primary" [iconOnly]="true"
       [ngClass]="crudActions.indexOf(CRUDAction.EA_DELETE) !== 0 ? 'mr-1' : ''"
       (click)="crudEvent.emit({action: CRUDAction.EA_UPDATE, data})">
-    </p-button>
+      <i class="pi pi-pencil"></i>
+    </button>
   }
   @if (crudActions.indexOf(CRUDAction.EA_DELETE) !== -1) {
-    <p-button
-      icon="pi pi-trash"
-      styleClass="p-button-rounded p-button-outlined p-button-danger"
+    <button pButton type="button"
+      [rounded]="true" [outlined]="true" severity="danger" [iconOnly]="true"
       (click)="crudEvent.emit({action: CRUDAction.EA_DELETE, data})">
-    </p-button>
+      <i class="pi pi-trash"></i>
+    </button>
   }
 </div>

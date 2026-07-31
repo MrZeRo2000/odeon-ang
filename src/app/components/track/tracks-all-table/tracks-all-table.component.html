@@ -131,20 +131,20 @@
               </td>
             }
             <td class="flex app-crud-panel-small">
-              <p-button
-                icon="pi pi-info-circle"
+              <button pButton type="button"
                 [rounded]="true"
                 [text]="true"
                 severity="secondary"
+                [iconOnly]="true"
                 (click)="onMediaFileClick($event, item)"
-              ></p-button>
-              <p-button
-                icon="pi pi-arrow-circle-right"
+              ><i class="pi pi-info-circle"></i></button>
+              <button pButton type="button"
                 [rounded]="true"
                 [text]="true"
                 severity="secondary"
+                [iconOnly]="true"
                 (click)="onDetailClick($event, item)"
-              ></p-button>
+              ><i class="pi pi-arrow-circle-right"></i></button>
             </td>
           </tr>
         </ng-template>

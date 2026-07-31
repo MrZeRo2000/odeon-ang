@@ -87,7 +87,7 @@
             <tr>
               <td>{{item.artistName}}</td>
               <td>
-                <p-button label="{{item.title}}" [link]="true" (click)="displayLyrics($event, item)" styleClass="!p-0 !m-0"/>
+                <button pButton type="button" [link]="true" (click)="displayLyrics($event, item)" class="!p-0 !m-0">{{item.title}}</button>
               </td>
               <td>
                 <div class="app-crud-panel-small">

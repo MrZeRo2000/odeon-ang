@@ -16,13 +16,11 @@
 
     @if (editFormData$ | async; as editFormData) {
       <ng-template #footer>
-        <p-button
-          label="Load"
-          icon="pi pi-play"
-          styleClass="p-button-text"
+        <button pButton type="button"
+          [text]="true"
           [disabled]="!editFormData.selectedMediaFileNames || editFormData.selectedMediaFileNames.length === 0"
           (click)="this.execute($event, editFormData.selectedMediaFileNames)"
-        ></p-button>
+        ><i class="pi pi-play"></i>Load</button>
       </ng-template>
     }
   </p-dialog>

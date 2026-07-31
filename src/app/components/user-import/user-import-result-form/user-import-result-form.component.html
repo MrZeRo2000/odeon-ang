@@ -23,6 +23,6 @@
   </ng-template>
 
   <ng-template #footer>
-    <p-button label="Close" icon="pi pi-times" styleClass="p-button-text" (click)="hideDialog()"></p-button>
+    <button pButton type="button" [text]="true" (click)="hideDialog()"><i class="pi pi-times"></i>Close</button>
   </ng-template>
 </p-dialog>

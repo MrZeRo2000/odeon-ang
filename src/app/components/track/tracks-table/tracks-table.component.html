@@ -29,59 +29,59 @@
           }
           <div class="flex items-center justify-end flex-grow-1">
             @if (isArtifactVideoWithProducts || isArtifactTypeVideoMusic) {
-              <p-button
-                icon="pi pi-angle-up"
-                styleClass="mr-2"
+              <button pButton type="button"
+                class="mr-2"
                 [text]="true"
                 severity="secondary"
+                [iconOnly]="true"
                 pTooltip="Reset track numbers"
                 tooltipPosition="left"
-                (onClick)="resetTrackNumbers($event)"
-              ></p-button>
+                (click)="resetTrackNumbers($event)"
+              ><i class="pi pi-angle-up"></i></button>
             }
             @if (isArtifactTypeVideo) {
-              <p-button
-                icon="pi pi-arrows-h"
-                styleClass="mr-2"
+              <button pButton type="button"
+                class="mr-2"
                 [text]="true"
                 severity="secondary"
+                [iconOnly]="true"
                 pTooltip="Update durations"
                 tooltipPosition="left"
-                (onClick)="showUpdateDurations($event)"
-              ></p-button>
+                (click)="showUpdateDurations($event)"
+              ><i class="pi pi-arrows-h"></i></button>
             }
             @if (isArtifactTypeVideo && (selectedItems.length > 0)) {
-              <p-button
-                icon="pi pi-video"
-                styleClass="mr-2"
+              <button pButton type="button"
+                class="mr-2"
                 [text]="true"
                 severity="secondary"
+                [iconOnly]="true"
                 pTooltip="Update video types"
                 tooltipPosition="left"
-                (onClick)="showUpdateDVTypes($event)"
-              ></p-button>
+                (click)="showUpdateDVTypes($event)"
+              ><i class="pi pi-video"></i></button>
             }
             @if (selectedItems.length > 0) {
-              <p-button
-                icon="pi pi-tags"
-                styleClass="mr-2"
+              <button pButton type="button"
+                class="mr-2"
                 [text]="true"
                 severity="secondary"
+                [iconOnly]="true"
                 pTooltip="Update tags"
                 tooltipPosition="left"
-                (onClick)="showUpdateTags($event)"
-              ></p-button>
+                (click)="showUpdateTags($event)"
+              ><i class="pi pi-tags"></i></button>
             }
             @if (isArtifactVideoWithProducts || isArtifactTypeVideoMusic) {
-              <p-button
-                icon="pi pi-file-import"
-                styleClass="mr-2"
+              <button pButton type="button"
+                class="mr-2"
                 [text]="true"
                 severity="secondary"
+                [iconOnly]="true"
                 pTooltip="Import tracks"
                 tooltipPosition="left"
-                (onClick)="showImportTracks($event)"
-              ></p-button>
+                (click)="showImportTracks($event)"
+              ><i class="pi pi-file-import"></i></button>
             }
             <span class="p-input-icon-left flex items-center">
               <p-iconfield iconPosition="left" class="ml-auto">
@@ -131,15 +131,16 @@
           }
           @if (this.artifactId) {
             <th style="width:0">
-              <p-button
-                styleClass="mr-2"
+              <button pButton type="button"
+                class="mr-2"
                 [text]="true"
-                icon="pi pi-file"
+                [iconOnly]="true"
                 severity="secondary"
                 (click)="dt.exportCSV()"
                 pTooltip="CSV"
                 tooltipPosition="bottom">
-              </p-button>
+                <i class="pi pi-file"></i>
+              </button>
             </th>
           }
         </tr>
@@ -183,7 +184,7 @@
             <td style="text-align: center; white-space: nowrap">
               @if (item.dvProduct) {
                 <div class="flex justify-center app-crud-panel-small">
-                  <p-button icon="pi pi-info" styleClass="p-button-rounded p-button-secondary p-button-outlined" (click)="displayProduct(item)"></p-button>
+                  <button pButton type="button" [rounded]="true" severity="secondary" [outlined]="true" [iconOnly]="true" (click)="displayProduct(item)"><i class="pi pi-info"></i></button>
                 </div>
               }
             </td>
@@ -209,13 +210,13 @@
           @if (this.artifactId) {
             <td>
               <div class="flex flex-row app-crud-panel-small">
-                <p-button
-                  icon="pi pi-tags"
-                  styleClass="p-button-rounded p-button-outlined p-button-warn"
-                  ngClass="mr-1"
+                <button pButton type="button"
+                  [rounded]="true" [outlined]="true" severity="warn" [iconOnly]="true"
+                  class="mr-1"
                   (click)="onTagsButton($event, item)"
                   >
-                </p-button>
+                  <i class="pi pi-tags"></i>
+                </button>
                 <app-crud-panel [data]="item" [crudActions]="[CRUDAction.EA_UPDATE, CRUDAction.EA_DELETE]" (crudEvent)="crudEvent($event)"></app-crud-panel>
               </div>
             </td>

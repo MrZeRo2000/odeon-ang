@@ -163,8 +163,8 @@
     </form>
   </ng-template>
   <ng-template #footer>
-    <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-text" (click)="hideDialog()"></p-button>
-    <p-button label="Save" icon="pi pi-check" styleClass="p-button-text" (click)="save()"></p-button>
+    <button pButton type="button" [text]="true" (click)="hideDialog()"><i class="pi pi-times"></i>Cancel</button>
+    <button pButton type="button" [text]="true" (click)="save()"><i class="pi pi-check"></i>Save</button>
   </ng-template>
 
   @if (saveAction$ | async; as saver) {

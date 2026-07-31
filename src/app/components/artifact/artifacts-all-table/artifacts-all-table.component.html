@@ -127,13 +127,13 @@
             </td>
           }
           <td class="app-crud-panel-small">
-            <p-button
-              icon="pi pi-arrow-circle-right"
+            <button pButton type="button"
               [rounded]="true"
               [text]="true"
               severity="secondary"
+              [iconOnly]="true"
               (click)="onDetailClick($event, item)"
-            ></p-button>
+            ><i class="pi pi-arrow-circle-right"></i></button>
           </td>
         </tr>
       </ng-template>

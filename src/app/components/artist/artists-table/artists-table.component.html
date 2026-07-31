@@ -35,16 +35,16 @@
           <div class="flex items-center justify-between text-xl mr-2">Artists</div>
           <div class="flex self-center"><app-crud-panel [crudActions]="[CRUDAction.EA_CREATE]" (crudEvent)="crudEvent($event)"></app-crud-panel></div>
           @if (selectedItem) {
-            <p-button type="button" label="Artifacts" icon="pi pi-building" iconPos="left"
-              styleClass="ml-2 p-button-outlined p-button-secondary !p-2"
+            <button pButton type="button"
+              [outlined]="true" severity="secondary" class="ml-2 !p-2"
               (click)="onArtifactsButton($event)"
-            ></p-button>
+            ><i class="pi pi-building"></i>Artifacts</button>
           }
           @if (selectedItem) {
-            <p-button type="button" label="Tracks" icon="pi pi-list" iconPos="left"
-              styleClass="ml-2 p-button-outlined p-button-secondary !p-2"
+            <button pButton type="button"
+              [outlined]="true" severity="secondary" class="ml-2 !p-2"
               (click)="onTracksButton($event)"
-            ></p-button>
+            ><i class="pi pi-list"></i>Tracks</button>
           }
           <div class="flex justify-end flex-grow-1">
             <div class="flex items-center mr-2">
@@ -139,14 +139,14 @@
           <td>
             @if (item.detailId) {
               <div class="flex justify-center app-crud-panel-small">
-                <p-button icon="pi pi-info" styleClass="p-button-rounded p-button-secondary p-button-outlined" (click)="displayArtistDetail(item)"></p-button>
+                <button pButton type="button" [rounded]="true" severity="secondary" [outlined]="true" [iconOnly]="true" (click)="displayArtistDetail(item)"><i class="pi pi-info"></i></button>
               </div>
             }
           </td>
           <td>
             @if (item.hasLyrics) {
               <div class="flex justify-center app-crud-panel-small">
-                <p-button icon="pi pi-book" styleClass="p-button-rounded p-button-secondary p-button-outlined" (click)="displayLyrics(item)"></p-button>
+                <button pButton type="button" [rounded]="true" severity="secondary" [outlined]="true" [iconOnly]="true" (click)="displayLyrics(item)"><i class="pi pi-book"></i></button>
               </div>
             }
           </td>

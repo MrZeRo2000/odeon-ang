@@ -67,13 +67,12 @@
             Rows:&nbsp;<p-chip class="text-xs !p-2" label="{{dt.processedData.length}}"></p-chip>
           </div>
           <div class="flex justify-end items-center grow-1">
-            <p-button
-              icon="pi pi-file-import"
-              styleClass="p-button-secondary p-button-text mr-2"
+            <button pButton type="button"
+              severity="secondary" [text]="true" class="mr-2" [iconOnly]="true"
               pTooltip="Import products"
               tooltipPosition="left"
-              (onClick)="showImportDVProducts($event)"
-            ></p-button>
+              (click)="showImportDVProducts($event)"
+            ><i class="pi pi-file-import"></i></button>
             <span class="p-input-icon-left flex items-center">
               <p-iconfield iconPosition="left" class="ml-auto">
                 <p-inputicon>
@@ -175,10 +174,10 @@
             @if (item.hasNotes) {
               <div class="flex app-crud-panel-small">
                 <button
-                  pButton pRipple
-                  icon="pi pi-comment"
-                  class="p-button p-button-secondary p-button-text"
+                  pButton pRipple type="button"
+                  severity="secondary" [text]="true" [iconOnly]="true"
                   (click)="showNotes($event, item)">
+                  <i class="pi pi-comment"></i>
                 </button>
               </div>
             }
@@ -187,11 +186,10 @@
             @if (item.hasTracks) {
               <div class="flex justify-center app-crud-panel-small">
                 <button
-                  pButton pRipple
-                  icon="pi pi-book"
-                  class="p-button-rounded p-button-secondary p-button-outlined"
+                  pButton pRipple type="button"
+                  [rounded]="true" severity="secondary" [outlined]="true" [iconOnly]="true"
                   (click)="showTracks($event, item)"
-                ></button>
+                ><i class="pi pi-book"></i></button>
               </div>
             }
           </td>

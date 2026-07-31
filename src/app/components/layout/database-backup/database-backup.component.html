@@ -4,15 +4,16 @@
 
 @if (databaseBackupInfo$ | async; as databaseBackupInfo) {
   <div>
-    <p-button
-      icon="pi pi-file-export"
+    <button pButton type="button"
       [text]="true"
       severity="secondary"
+      [iconOnly]="true"
       [pTooltip]="getBackupTooltipText(databaseBackupInfo)"
       tooltipPosition="left"
-      (onClick)="backupSubject.next(undefined)"
+      (click)="backupSubject.next(undefined)"
       >
-    </p-button>
+      <i class="pi pi-file-export"></i>
+    </button>
     @if (backupAction$ | async) {
     }
   </div>

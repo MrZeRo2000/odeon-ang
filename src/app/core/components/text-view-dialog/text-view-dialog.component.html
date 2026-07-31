@@ -7,6 +7,6 @@
     <pre>{{text}}</pre>
   }
   <ng-template #footer>
-    <p-button icon="pi pi-check" (click)="displayProp=false" label="Ok" styleClass="p-button-text"></p-button>
+    <button pButton type="button" [text]="true" (click)="displayProp=false"><i class="pi pi-check"></i>Ok</button>
   </ng-template>
 </p-dialog>
