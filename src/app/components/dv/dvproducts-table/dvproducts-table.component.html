@@ -97,13 +97,13 @@
               Origin
               <p-column-filter field="dvOrigin.name" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template #filter let-value let-filter="filterCallback">
-                  <p-multi-select [ngModel]="value" [options]="dvOriginNames" placeholder="Any" (onChange)="filter($event.value)">
+                  <p-select [ngModel]="value" [multiple]="true" [options]="dvOriginNames" placeholder="Any" (onChange)="filter($event.value)">
                     <ng-template let-option #item>
                       <div class="inline-block align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
-                  </p-multi-select>
+                  </p-select>
                 </ng-template>
               </p-column-filter>
             </div>
@@ -116,13 +116,13 @@
               Category
               <p-column-filter field="dvCategories" matchMode="filter_categories" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template #filter let-value let-filter="filterCallback">
-                  <p-multi-select [ngModel]="value" [options]="dvCategoryNames" placeholder="Any" (onChange)="filter($event.value)">
+                  <p-select [ngModel]="value" [multiple]="true" [options]="dvCategoryNames" placeholder="Any" (onChange)="filter($event.value)">
                     <ng-template let-option #item>
                       <div class="inline-block align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
-                  </p-multi-select>
+                  </p-select>
                 </ng-template>
               </p-column-filter>
             </div>

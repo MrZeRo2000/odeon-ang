@@ -12,6 +12,7 @@ import {TableModule} from "primeng/table";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {MultiSelectModule} from "primeng/multiselect";
+import {SelectModule} from "primeng/select";
 import {ChipModule} from "primeng/chip";
 import {TagModule} from "primeng/tag";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
@@ -61,6 +62,7 @@ import {AutoFocusModule} from "primeng/autofocus";
     SelectButtonModule,
     AutoCompleteModule,
     MultiSelectModule,
+    SelectModule,
     ConfirmPopupModule,
     AutoFocusModule,
     // custom modules

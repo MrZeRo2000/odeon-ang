@@ -125,15 +125,16 @@
 
         <div class="col-span-2 mb-2">
           <label for="mediaFileIds">Media files</label>
-          <p-multi-select
+          <p-select
             [options]="mediaFileTable"
+            [multiple]="true"
             optionLabel="name"
             optionValue="id"
             id="mediaFileIds"
             formControlName="mediaFileIds"
             class="w-full"
             appendTo="body"
-          ></p-multi-select>
+          ></p-select>
         </div>
 
         @if (artifactTypeConfig?.hasProducts) {
