@@ -24,6 +24,7 @@ import {FluidModule} from "primeng/fluid";
 import {MessageModule} from "primeng/message";
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {AutoFocusModule} from "primeng/autofocus";
+import {Label} from "primeng/label";
 
 
 @NgModule({
@@ -40,31 +41,32 @@ import {AutoFocusModule} from "primeng/autofocus";
     ArtistLyricsTableComponent,
 
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    // primeng
-    ChipModule,
-    TextareaModule,
-    InputTextModule,
-    FluidModule,
-    MessageModule,
-    ToggleButtonModule,
-    IconFieldModule,
-    InputIconModule,
-    RippleModule,
-    TagModule,
-    ButtonModule,
-    DialogModule,
-    TableModule,
-    SelectButtonModule,
-    AutoCompleteModule,
-    MultiSelectModule,
-    ConfirmPopupModule,
-    AutoFocusModule,
-    // custom modules
-    CoreModule,
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        // primeng
+        ChipModule,
+        TextareaModule,
+        InputTextModule,
+        FluidModule,
+        MessageModule,
+        ToggleButtonModule,
+        IconFieldModule,
+        InputIconModule,
+        RippleModule,
+        TagModule,
+        ButtonModule,
+        DialogModule,
+        TableModule,
+        SelectButtonModule,
+        AutoCompleteModule,
+        MultiSelectModule,
+        ConfirmPopupModule,
+        AutoFocusModule,
+        // custom modules
+        CoreModule,
+        Label,
+    ]
 })
 export class ArtistModule { }

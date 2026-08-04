@@ -8,6 +8,7 @@
           <div class="mb-4">
             <label for="name">Name</label>
             <input #autofocused type="text" pInputText id="name" formControlName="artistName" required
+               class="mt-2"
               [ngClass]="{'ng-invalid ng-dirty': submitted && editForm.controls['artistName'].errors}"
               />
           </div>
@@ -56,9 +57,9 @@
         </p-fluid>
 
         <p-fluid>
-          <div class="mb-4">
+          <div class="flex flex-col mb-4">
             <label for="biography">Biography</label>
-            <textarea id="biography" pTextarea rows="20" cols="20" formControlName="biography"></textarea>
+            <textarea id="biography" pTextarea rows="20" cols="20" formControlName="biography" class="mt-2"></textarea>
           </div>
           <button pButton type="button"
             [outlined]="true"
