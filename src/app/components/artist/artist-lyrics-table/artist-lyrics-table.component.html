@@ -68,7 +68,9 @@
                         optionValue="name"
                         placeholder="All"
                         (onChange)="filter($event.value)"
-                        display="chip">
+                        display="chip"
+                        style="min-width: 14rem"
+                        [panelStyle]="{ minWidth: '16rem' }">
                       </p-multi-select>
                     </ng-template>
                   </p-column-filter>

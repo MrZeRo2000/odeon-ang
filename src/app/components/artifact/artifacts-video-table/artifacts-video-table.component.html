@@ -96,13 +96,13 @@
                 <p-sort-icon field="artist.artistName"></p-sort-icon>
                 <p-column-filter field="artist.artistName" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
                   <ng-template #filter let-value let-filter="filterCallback">
-                    <p-select [ngModel]="value" [multiple]="true" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)">
+                    <p-multi-select [ngModel]="value" [options]="filterArtists" placeholder="Any" (onChange)="filter($event.value)" style="min-width: 14rem" [panelStyle]="{ minWidth: '16rem' }">
                       <ng-template let-option #item>
                         <div class="inline-block align-middle">
                           <span>{{ option.label }}</span>
                         </div>
                       </ng-template>
-                    </p-select>
+                    </p-multi-select>
                   </ng-template>
                 </p-column-filter>
               </div>
@@ -119,13 +119,13 @@
             Tags
             <p-column-filter field="tags" matchMode="filter_tags" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template #filter let-value let-filter="filterCallback">
-                <p-select [ngModel]="value" [multiple]="true" [options]="filterTags" placeholder="Any" (onChange)="filter($event.value)">
+                <p-multi-select [ngModel]="value" [options]="filterTags" placeholder="Any" (onChange)="filter($event.value)" style="min-width: 14rem" [panelStyle]="{ minWidth: '16rem' }">
                   <ng-template let-option #item>
                     <div class="inline-block align-middle">
                       <span class="ml-1 mt-1">{{ option.label }}</span>
                     </div>
                   </ng-template>
-                </p-select>
+                </p-multi-select>
               </ng-template>
             </p-column-filter>
           </th>

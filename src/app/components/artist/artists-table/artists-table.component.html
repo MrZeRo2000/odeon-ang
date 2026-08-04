@@ -79,13 +79,13 @@
               Genre
               <p-column-filter field="genre" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template #filter let-value let-filter="filterCallback">
-                  <p-select [ngModel]="value" [multiple]="true" [options]="filterGenres" placeholder="Any" (onChange)="filter($event.value)">
+                  <p-multi-select [ngModel]="value" [options]="filterGenres" placeholder="Any" (onChange)="filter($event.value)" style="min-width: 14rem" [panelStyle]="{ minWidth: '16rem' }">
                     <ng-template let-option #item>
                       <div class="inline-block vertical-align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
-                  </p-select>
+                  </p-multi-select>
                 </ng-template>
               </p-column-filter>
             </div>
@@ -95,13 +95,13 @@
               Styles
               <p-column-filter field="styles" matchMode="filter_styles" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template #filter let-value let-filter="filterCallback">
-                  <p-select [ngModel]="value" [multiple]="true" [options]="filterStyles" placeholder="Any" (onChange)="filter($event.value)">
+                  <p-multi-select [ngModel]="value" [options]="filterStyles" placeholder="Any" (onChange)="filter($event.value)" style="min-width: 14rem" [panelStyle]="{ minWidth: '16rem' }">
                     <ng-template let-option #item>
                       <div class="inline-block vertical-align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
-                  </p-select>
+                  </p-multi-select>
                 </ng-template>
               </p-column-filter>
             </div>

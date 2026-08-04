@@ -97,13 +97,13 @@
               Origin
               <p-column-filter field="dvOrigin.name" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template #filter let-value let-filter="filterCallback">
-                  <p-select [ngModel]="value" [multiple]="true" [options]="dvOriginNames" placeholder="Any" (onChange)="filter($event.value)">
+                  <p-multi-select [ngModel]="value" [options]="dvOriginNames" placeholder="Any" (onChange)="filter($event.value)" style="min-width: 14rem" [panelStyle]="{ minWidth: '16rem' }">
                     <ng-template let-option #item>
                       <div class="inline-block align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
-                  </p-select>
+                  </p-multi-select>
                 </ng-template>
               </p-column-filter>
             </div>
@@ -116,13 +116,13 @@
               Category
               <p-column-filter field="dvCategories" matchMode="filter_categories" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template #filter let-value let-filter="filterCallback">
-                  <p-select [ngModel]="value" [multiple]="true" [options]="dvCategoryNames" placeholder="Any" (onChange)="filter($event.value)">
+                  <p-multi-select [ngModel]="value" [options]="dvCategoryNames" placeholder="Any" (onChange)="filter($event.value)" style="min-width: 14rem" [panelStyle]="{ minWidth: '16rem' }">
                     <ng-template let-option #item>
                       <div class="inline-block align-middle">
                         <span class="ml-1 mt-1">{{ option.label }}</span>
                       </div>
                     </ng-template>
-                  </p-select>
+                  </p-multi-select>
                 </ng-template>
               </p-column-filter>
             </div>

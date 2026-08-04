@@ -9,6 +9,7 @@ import {DialogModule} from "primeng/dialog";
 import {TableModule} from "primeng/table";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {AutoCompleteModule} from "primeng/autocomplete";
+import {MultiSelectModule} from "primeng/multiselect";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {InputTextModule} from "primeng/inputtext";
 import {CoreModule} from "../../core/core.module";
@@ -70,6 +71,7 @@ import {ConfirmationService} from "primeng/api";
     InputTextModule,
     TooltipModule,
     AutoCompleteModule,
+    MultiSelectModule,
     ConfirmPopupModule,
     TextareaModule,
     IconFieldModule,
