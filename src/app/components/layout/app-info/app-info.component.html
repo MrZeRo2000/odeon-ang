@@ -1,19 +1,19 @@
 <small>
-  <span (click)="onClick()">{{version}}</span>
+  <span (click)="onClick()" [pTooltip]="'Frontend: ' + version" class="p-1" tooltipPosition="left">{{version}}</span>
   @if (appInfo$ | async; as appInfo) {
     <span>
       @if (comparisonResult === ComparisonResult.CR_EQUAL) {
-        <span>
+        <span [pTooltip]="'Backend: ' + appInfo.version" class="p-1">
           ({{appInfo.version}})
         </span>
       }
       @if (comparisonResult === ComparisonResult.CR_MINOR_DIFFERENCE) {
-        <span>
+        <span [pTooltip]="'Backend: ' + appInfo.version + ', expected: ' + this.backendVersion" tooltipPosition="left" class="p-1">
           <p-tag severity="warn" value={{appInfo.version}}></p-tag>
         </span>
       }
       @if (comparisonResult === ComparisonResult.CR_MAJOR_DIFFERENCE) {
-        <span>
+        <span [pTooltip]="'Backend: ' + appInfo.version + ', expected: ' + this.backendVersion" tooltipPosition="left" class="p-1">
           <p-tag severity="danger" value={{appInfo.version}}></p-tag>
         </span>
       }
