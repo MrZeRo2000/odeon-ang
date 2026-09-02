@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {BackupService} from "../backup.service";
-import {catchError, EMPTY, Observable, of, Subject, switchMap, tap} from "rxjs";
+import {catchError, EMPTY, finalize, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {Message} from "../../../model/message";
 import {MessageService} from "primeng/api";
 import {DatabaseBackupInfo} from "../../../model/database-backup-info";
@@ -21,7 +21,7 @@ export class DatabaseBackupComponent {
 
   backupSubject = new Subject<void>();
 
-  displayProgress = false
+  displayProgress = signal(false)
 
   backupAction$ = this.backupSubject.asObservable().pipe(
     switchMap(() =>
@@ -39,10 +39,14 @@ export class DatabaseBackupComponent {
         })
       )
     ),
-    tap(() => { this.displayProgress = true }),
-    switchMap(() => this.backup()),
-    tap(v => {
-      this.displayProgress = false;
+    switchMap(() => {
+      this.displayProgress.set(true);
+      
+      return this.backup().pipe(
+        finalize(() => this.displayProgress.set(false))
+      )      
+    }),
+    tap(v => {      
       if (v.message) {
         this.databaseBackupInfoSharedHandler.refreshTable();
         this.messageService.add({
@@ -57,7 +61,7 @@ export class DatabaseBackupComponent {
           detail: 'Error creating backup'
         });
       }
-    })
+    }),    
   );
   constructor(
     private messageService: MessageService,
