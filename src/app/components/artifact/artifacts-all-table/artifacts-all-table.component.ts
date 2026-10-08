@@ -10,7 +10,7 @@ import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 import {ArtistService} from "../../../service/artist.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {artifactNavigation} from "../utils/navigation";
-import {getFilterArtists, getFilterTags, registerFilterService} from "../utils/filter";
+import {getFilterArtists, getFilterTags, registerFilterService, loadSavedTableFilters} from "../utils/filter";
 import {Table} from "primeng/table";
 
 @Component({
@@ -20,6 +20,8 @@ import {Table} from "primeng/table";
     standalone: false
 })
 export class ArtifactsAllTableComponent extends BaseTableComponent<Artifact> implements OnInit {
+  readonly tableFilters = loadSavedTableFilters("artifacts-all-table-session");
+
   private static readonly SESSION_KEY = "artifacts-all-table-filter-form";
 
   @ViewChild('dt') table: Table | undefined;

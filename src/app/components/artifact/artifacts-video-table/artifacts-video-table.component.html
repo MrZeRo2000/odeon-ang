@@ -14,6 +14,7 @@
       dataKey="id"
       stateStorage="session"
       stateKey="artifacts-video-table-session"
+      [filters]="tableFilters"
       [globalFilterFields]="['artistName', 'title']"
       (onFilter)="onFilter($event)"
       selectionMode="single"

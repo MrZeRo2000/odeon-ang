@@ -30,6 +30,7 @@
           dataKey="id"
           stateStorage="session"
           stateKey="artist-lyrics-table-session"
+          [filters]="tableFilters"
           [globalFilterFields]="['artistName', 'title']"
           (onFilter)="onFilter($event)">
           <ng-template #caption>

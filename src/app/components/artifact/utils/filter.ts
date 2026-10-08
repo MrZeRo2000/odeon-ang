@@ -31,3 +31,24 @@ export function registerFilterService(filterService: FilterService) {
     }
   )
 }
+
+/**
+ * PrimeNG 22.1.5: p-table's "sync filters" effect runs after restoreState() and resets the
+ * restored filters to the (empty) `filters` input, so stateful tables come back with blank
+ * column filters. Seeding `[filters]` with the saved filters makes that reset a no-op.
+ */
+export function loadSavedTableFilters(stateKey: string): Record<string, any> {
+  try {
+    const filters = JSON.parse(sessionStorage.getItem(stateKey) as string)?.filters ?? {};
+    // Same as Table.restoreState(): applyFilter makes the column filter icon show as active
+    Object.values<any>(filters).forEach(f => {
+      const constraint = Array.isArray(f) ? f[0] : f;
+      if (constraint?.value) {
+        constraint.applyFilter = true;
+      }
+    });
+    return filters;
+  } catch (e) {
+    return {};
+  }
+}

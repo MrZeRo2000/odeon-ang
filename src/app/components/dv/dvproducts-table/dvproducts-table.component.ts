@@ -25,6 +25,7 @@ import {ARTIFACT_EDIT_CONFIG, ARTIFACT_VIDEO_TYPES, CodeName} from "../../../mod
 import {FormBuilder, Validators} from "@angular/forms";
 import {IdTitleOriginalTitle, TextInterface} from "../../../model/common";
 import {Router} from "@angular/router";
+import {loadSavedTableFilters} from "../../artifact/utils/filter";
 
 @Component({
     selector: 'app-dvproducts-table',
@@ -35,6 +36,8 @@ import {Router} from "@angular/router";
 export class DVProductsTableComponent
   extends BaseCrudTableComponent<DVProduct, [DVProduct, Array<DVOrigin>, Array<DVCategory>, Array<IdTitleOriginalTitle>]>
   implements OnInit {
+  readonly tableFilters = loadSavedTableFilters("dvproducts-table-session");
+
   private static readonly SESSION_KEY = "dvproducts-table-filter-form";
 
   readonly ARTIFACT_TYPES = ARTIFACT_EDIT_CONFIG

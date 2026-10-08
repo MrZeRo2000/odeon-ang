@@ -13,6 +13,7 @@
       dataKey="id"
       stateStorage="session"
       stateKey="artifacts-all-table-session"
+      [filters]="tableFilters"
       [globalFilterFields]="['artist.artistName', 'title']"
       (onFilter)="onFilter($event)"
       sortField=""

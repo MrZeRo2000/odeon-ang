@@ -10,7 +10,7 @@ import {ARTIST_TYPE_CODE_ARTIST} from "../../../model/artists";
 import {TrackService} from "../../../service/track.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {artifactNavigation, mediaFileNavigation} from "../../artifact/utils/navigation";
-import {getFilterArtists, getFilterTags, registerFilterService} from "../../artifact/utils/filter";
+import {getFilterArtists, getFilterTags, loadSavedTableFilters, registerFilterService} from "../../artifact/utils/filter";
 import {Table} from "primeng/table";
 
 @Component({
@@ -22,6 +22,7 @@ import {Table} from "primeng/table";
 export class TracksAllTableComponent extends BaseTableComponent<Track> {
   private static readonly SESSION_KEY = "tracks-all-table-filter-form";
   readonly TABLE_SESSION_KEY = 'tracks-all-table-session';
+  readonly tableFilters = loadSavedTableFilters(this.TABLE_SESSION_KEY);
 
   @ViewChild('dt') table: Table | undefined;
 

@@ -9,6 +9,7 @@ import {catchError, forkJoin, iif, map, Observable, of, Subject, switchMap, tap}
 import {ActivatedRoute} from "@angular/router";
 import {IdName} from "../../../model/common";
 import {ArtistService} from "../../../service/artist.service";
+import {loadSavedTableFilters} from "../../artifact/utils/filter";
 
 export interface NameInterface {
   name: string
@@ -21,6 +22,8 @@ export interface NameInterface {
     standalone: false
 })
 export class ArtistLyricsTableComponent extends BaseCrudTableComponent<ArtistLyricsTableItem, [ArtistLyricsEditItem, IdName[]]> implements OnInit {
+  readonly tableFilters = loadSavedTableFilters("artist-lyrics-table-session");
+
   private artistId?: number;
 
   displayArtistLyricsText = false;

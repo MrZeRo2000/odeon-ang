@@ -15,7 +15,7 @@ import {catchError, forkJoin, iif, map, Observable, of, startWith, Subject, swit
 import {ARTIST_TYPE_CODE_ARTIST, ARTIST_TYPES} from "../../../model/artists";
 import {TaggedService} from "../../../service/tagged.service";
 import {Tagged} from "../../../model/tag";
-import {getFilterArtists, getFilterTags, registerFilterService} from "../utils/filter";
+import {getFilterArtists, getFilterTags, registerFilterService, loadSavedTableFilters} from "../utils/filter";
 
 interface FilterControlsConfig
 {
@@ -29,6 +29,8 @@ interface FilterControlsConfig
     standalone: false
 })
 export class ArtifactsVideoTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
+  readonly tableFilters = loadSavedTableFilters("artifacts-video-table-session");
+
   private static readonly SESSION_KEY = "artifacts-video-table-filter-form";
 
   readonly ARTIFACT_VIDEO_TYPES = ARTIFACT_VIDEO_TYPES;

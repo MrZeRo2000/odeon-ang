@@ -27,7 +27,7 @@ import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {IdName} from "../../../model/common";
 import {TaggedService} from "../../../service/tagged.service";
 import {Tagged} from "../../../model/tag";
-import {getFilterArtists, getFilterTags, registerFilterService} from "../utils/filter";
+import {getFilterArtists, getFilterTags, loadSavedTableFilters, registerFilterService} from "../utils/filter";
 
 interface FilterControlsConfig
 {
@@ -49,6 +49,10 @@ interface FilterControlsConfigValue
 })
 export class ArtifactsTableComponent extends BaseCrudTableComponent<Artifact, [IdName[], Artifact]> implements OnInit {
   private static readonly SESSION_KEY = "artifacts-table-filter-form";
+
+  readonly TABLE_STATE_KEY = "artifacts-table-session";
+
+  readonly tableFilters = loadSavedTableFilters(this.TABLE_STATE_KEY);
 
   readonly ARTIST_TYPES =  ARTIST_TYPES;
   readonly ARTIFACT_TYPES = ARTIFACT_MUSIC_TYPES;

@@ -9,6 +9,7 @@ import {CRUDResult} from "../../../model/crud";
 import {Router} from "@angular/router";
 import {BaseCrudTableComponent} from "../../base/base-crud-table.component";
 import {PrimeNG} from "primeng/config";
+import {loadSavedTableFilters} from "../../artifact/utils/filter";
 
 @Component({
     selector: 'app-artists-table',
@@ -17,6 +18,8 @@ import {PrimeNG} from "primeng/config";
     standalone: false
 })
 export class ArtistsTableComponent extends BaseCrudTableComponent<Artist, Artist> implements OnInit, AfterViewInit {
+  readonly tableFilters = loadSavedTableFilters("artist-table-session");
+
 
   displayArtistInfo = false;
   displayArtistName: string = "";

@@ -13,6 +13,7 @@
       dataKey="id"
       stateStorage="session"
       [stateKey]="TABLE_SESSION_KEY"
+      [filters]="tableFilters"
       [globalFilterFields]="['artist.artistName', 'title']"
       (onFilter)="onFilter($event)"
       (onStateSave)="onStateSave($event)"

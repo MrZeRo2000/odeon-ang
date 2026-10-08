@@ -25,6 +25,7 @@
       dataKey="id"
       stateStorage="session"
       stateKey="artist-table-session"
+      [filters]="tableFilters"
       [globalFilterFields]="['artistName']"
       (onFilter)="onFilter($event)"
       selectionMode="single"
