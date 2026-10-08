@@ -1,13 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProcessingFormComponent } from './processing-form.component';
-import {TreeModule} from "primeng/tree";
-import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {MessageService} from "primeng/api";
 import {DataSourceModule} from "../../../data-source/data-source.module";
-import {ToastModule} from "primeng/toast";
-import {ConfirmDialogComponent} from "../../../core/components/confirm-dialog/confirm-dialog.component";
-import {CoreModule} from "../../../core/core.module";
+import {ProcessingModule} from "../processing.module";
 
 describe('ProcessingComponent', () => {
   let component: ProcessingFormComponent;
@@ -15,16 +11,10 @@ describe('ProcessingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ConfirmDialogComponent,
-        ProcessingFormComponent
-      ],
       imports: [
-        TreeModule,
-        ConfirmDialogModule,
-        ToastModule,
+        // declares ProcessingFormComponent together with everything its template uses
+        ProcessingModule,
         DataSourceModule,
-        CoreModule,
       ],
       providers: [
         MessageService,

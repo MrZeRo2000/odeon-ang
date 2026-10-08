@@ -1,6 +1,6 @@
-# Angular on ^22.1.6 — history of a compiler regression that hit MultiSelect
+# Angular on ^22.2.1 — history of a compiler regression that hit MultiSelect
 
-`package.json` uses a normal caret range (`^22.1.6`) for all `@angular/*` packages.
+`package.json` uses a normal caret range (`^22.2.1`) for all `@angular/*` packages.
 It was pinned to an exact version for a while (first `22.0.8`, then briefly
 `22.1.6`) to guard against a compiler regression — see below. The exact pin has
 since been released: `^22.1.6` has a floor *above* every broken version
@@ -89,3 +89,18 @@ re-verify before taking a new Angular major version:
 4. As a manual sanity check, actually open a `p-multi-select` column filter (e.g.
    Artists table → Genre or Styles column) in a running app and watch the browser
    console before trusting any of the above.
+
+## Upgrade to 22.2 (2026-10-08)
+
+Moved `@angular/*` to `^22.2.1` (cdk/build/cli `^22.2.2`), `primeng` to `^22.1.2`. Verified: `ng build`
+clean, 55/55 Vitest files (80/80 tests), 9/9 Playwright e2e (including the `p-multi-select` check above).
+
+22.2's compiler reports template errors that 22.1 let through in the Vitest build:
+- `processing-form.component.spec.ts` now imports `ProcessingModule` instead of re-declaring
+  the component with a partial import list.
+- `app.component.spec.ts` references `AppModule`, otherwise the test build compiles `AppComponent`
+  without a module scope (`NG8001` for `p-toast`, `app-header`, `router-outlet`).
+
+PrimeNG 22.1.2 still resets restored table filters (the `filters` input effect runs after
+`restoreState()`), so the stateful tables keep `[filters]="tableFilters"` (`loadSavedTableFilters`
+in `artifact/utils/filter.ts`).
